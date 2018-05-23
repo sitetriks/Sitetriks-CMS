@@ -1,0 +1,36 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicAssembly
+
+@{
+    ViewBag.Title = "Dynamic";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("CreateClass", new { assemblyName = Model.Name })" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Class</a>
+</div>
+
+<div class="backend-wrapper">
+    <div>
+        <div>
+            @Html.DisplayFor(m => Model.Classes, "DynamicClasses", new { assemblyName = Model.Name })
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {            
+            $('body').on('click', '.delete', function (e) {
+                Loader.show('#fff', "/images/LOGO.png");
+
+                setTimeout(function () {               
+                    var currLocation = window.location.toString();
+                    var lastIndexOfSlash = currLocation.lastIndexOf('/');
+                    var newLocation = currLocation.substring(0, lastIndexOfSlash);
+                    window.location.reload(true);
+                }, 2000);
+            });
+        });
+    </script>
+}

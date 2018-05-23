@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Templates";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Template</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/delete-confirmation.js"></script>
+    <script type="text/javascript">
+        var grid = Grid();
+        var data = { link: "/sitetriks/templates/grid", serverSide: false, hasNesting: true, nestingPropertyName: "children" }
+        var columns = [
+            {
+                name: 'url',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: "title",
+                title: "Title",
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 3,
+                extraFields: ['url'],
+                headerTemplate: '<strong>#item#</strong>', // #item# is the placeholder for the content
+                contentTemplate: '<a href="/sitetriks/templates/editcontent?url=#item0#">#item#</a>'
+            },
+            {
+                name: "url",
+                title: "Url",
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 2,
+                contentTemplate: '<span class="text-danger">#item#</span>',
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "lastPublished",
+                title: "Last Published",
+                type: 'date',
+                size: 2,
+                contentTemplate: '<span class="text-danger">#item#</span>',
+                headerTemplate: '<b>#item#</b>'
+            }
+        ];
+
+        let buttons = [
+            {
+                title: 'Publish',
+                postUrl: '/sitetriks/templates/publish',
+                type: 'success',
+                collectionName: 'urls'
+            },
+            {
+                title: 'Delete',
+                postUrl: '/sitetriks/templates/delete',
+                type: 'danger',
+                collectionName: 'urls'
+            },
+            {
+                title: 'UnPublish',
+                postUrl: '/sitetriks/templates/unpublish',
+                type: 'warning',
+                collectionName: 'urls'
+            }
+        ];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+        let obj = grid.init('.grid', config);
+
+    </script>
+}

@@ -1,0 +1,44 @@
+﻿@model SiteTriks.Models.Roles.CreateRoleViewModel
+
+@{
+    ViewBag.Title = "Create Role";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Create", "Roles", FormMethod.Post, new { id = "create-roles-form" }))
+    {
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index", "Roles")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Role</button>
+        </div>
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>CreateRoleViewModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id = "name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    <span class="text-danger">@Model.Message</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/roles.js"></script>
+    <script>
+        createRole();
+    </script>
+}

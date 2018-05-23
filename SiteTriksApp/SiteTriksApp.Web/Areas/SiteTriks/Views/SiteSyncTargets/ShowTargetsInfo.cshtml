@@ -1,0 +1,43 @@
+﻿@model List<SiteTriks.SiteSync.Models.SiteSyncTargetViewModel>
+
+<div class="text-center">
+    <div>
+        <div class="dashboard-table">
+            <div class="panel panel-primary" style="border: none;">
+                <div class="controle-header panel-heading panel-heading-landing">
+                    <img src="~/images/dragable.svg">
+                    <h1 class="panel-title panel-title-landing">
+                        SiteSync Targets
+                    </h1>
+                </div>
+                <div class="controle-panel-heading panel-heading panel-heading-landing-box">
+                    Shows count of unsynced items
+                </div>
+                <div class="panel-body panel-body-landing">
+                    <table class="table">
+                        @if (Model.Count > 0)
+                        {
+                            foreach (var target in Model)
+                            {
+                                <tr>
+                                    <td width="50px">
+                                        @target.Name
+                                    </td>
+                                    <td>
+                                       @target.NotSyncedItemsCount
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>You havent site sync targets!</tr>
+                        }
+                    </table>
+                </div>
+                <div class="panel-footer panel-footer-landing">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

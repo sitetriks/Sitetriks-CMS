@@ -1,0 +1,31 @@
+﻿@model SiteTriks.Extentions.WidgetModels.WidgetModel
+
+@{ 
+    string displayName = SiteTriks.Extentions.WidgetRegistry.GetDisplayNameForType(Model.Type);
+}
+
+<div class="clearfix">
+    @if (Model.IsLocked)
+    {
+        if (User.IsInRole(UserRoles.SuperAdmin))
+        {
+            <div class="widget-name-label">@displayName</div>
+            <span class="glyphicon glyphicon-edit btn btn-warning edit-widget btn-edit" title="Edit" data-id="@Model.Id" data-type="@Model.Type" data-display="@displayName"></span>
+            <span class="glyphicon glyphicon-remove btn btn-danger btn-edit delete-widget" title="Delete" data-id="@Model.Id" data-type="@Model.Type"></span>
+            <label for="lock-widget-@Model.Type-@Model.Order">Lock widget</label>
+            <input type="checkbox" id="lock-widget-@Model.Type-@Model.Order" data-type="@Model.Type" data-order="@Model.Order" value="@Model.IsLocked" @if (Model.IsLocked) { <text> checked</text>} class="lock-widget" />
+        }
+    }
+    else
+    {
+        <div class="widget-name-label">@displayName</div>
+        <span class="glyphicon glyphicon-edit btn btn-warning edit-widget btn-edit" title="Edit" data-id="@Model.Id" data-type="@Model.Type" data-display="@displayName"></span>
+        <span class="glyphicon glyphicon-remove btn btn-danger btn-edit delete-widget" title="Delete" data-id="@Model.Id" data-type="@Model.Type"></span>
+
+        if (User.IsInRole(UserRoles.SuperAdmin))
+        {
+            <label for="lock-widget-@Model.Type-@Model.Order">Lock widget</label>
+            <input type="checkbox" id="lock-widget-@Model.Type-@Model.Order" data-type="@Model.Type" data-order="@Model.Order" class="lock-widget" @if (Model.IsLocked) { <text> checked</text>} />
+        }
+    }
+</div>

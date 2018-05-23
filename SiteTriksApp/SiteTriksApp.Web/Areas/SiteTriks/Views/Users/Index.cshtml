@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create User</a>
+</div>
+
+<div class="backend-wrapper">
+
+    @Html.Partial("DeleteModal")
+
+    <div class="grid">
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/delete-confirmation.js"></script>
+    <script type="text/javascript">
+        var grid = Grid();
+        var data = { link: "/sitetriks/users/grid", serverSide: false }
+        var columns = [
+            {
+                name: 'id',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: "email",
+                title: "Email",
+                type: 'string',
+                filter: true,
+                sort: true,
+                extraFields: ["id"],
+                size: 2,
+                headerTemplate: '<strong>#item#</strong>', // #item# is the placeholder for the content
+                contentTemplate: '<a href="/sitetriks/users/edit/#item0#">#item#</a>'
+            },
+            {
+                name: "company",
+                title: "Company",
+                type: 'string',
+                size: 2,
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "info",
+                title: "Info",
+                type: 'string',
+                size: 1,
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "userRoles",
+                title: "Roles",
+                type: 'list',
+                size: 3,
+                contentTemplate: '<span class="text-danger">#item#</span>',
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: 'isLocked',
+                title: '',
+                type: 'bool',
+                size: 1,
+                extraFields: ["Id"],
+                trueTemplate: '<a href="@Url.Action("Unlock")/#item0#" class="btn btn-warning">Unlock</a>',
+                falseTemplate: ''
+            }
+        ];
+
+        let buttons = [
+            {
+                title: 'Delete',
+                postUrl: '/sitetriks/users/delete',
+                type: 'danger'
+            },
+            {
+                title: 'Resset Password',
+                postUrl: '/sitetriks/users/RessetPassword',
+                type: 'warning'
+            }
+        ];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+        let obj = grid.init('.grid', config);
+    </script>
+}

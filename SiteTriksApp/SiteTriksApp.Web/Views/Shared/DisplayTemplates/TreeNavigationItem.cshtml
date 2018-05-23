@@ -1,0 +1,39 @@
+﻿@model SiteTriks.Helpers.TreeNode<SiteTriks.Models.Pages.NavigationPageViewModel>
+
+@{
+    string langUrl = $"/{Model.Value.Url}";
+    string lang = string.Empty;
+    if (ViewData != null && ViewData.ContainsKey("Lang") && ViewData["Lang"] != null)
+    {
+        lang = ViewData["Lang"].ToString();
+        if (!string.IsNullOrWhiteSpace(lang))
+        {
+            langUrl = $"/{lang}/{Model.Value.Url}";
+        }
+    }
+}
+
+@if (Model.ChildrenCount > 0)
+{
+    <a href="@langUrl">
+        @Html.DisplayFor(m => Model.Value.Title)
+        <span class="caret"></span>
+    </a>
+    <ul>
+        @for (int i = 0; i < Model.ChildrenCount; i++)
+        {
+            <li>
+                @{
+                    var child = Model.GetChild(i);
+                }
+                @Html.DisplayFor(m => child, "TreeNavigationItem", new { Lang = lang })
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <a href="@langUrl">
+        @Html.DisplayFor(m => Model.Value.Title)
+    </a>
+}

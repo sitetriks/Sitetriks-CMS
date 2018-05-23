@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Pages";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Page</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/delete-confirmation.js"></script>
+    <script type="text/javascript">
+        var grid = Grid();
+        var data = { link: "/sitetriks/pages/grid", serverSide: false, hasNesting: true, nestingPropertyName: "children" }
+        var columns = [
+            {
+                name: 'url',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: "title",
+                title: "Title",
+                type: 'string',
+                filter: true,
+                sort: true,
+                extraFields: ["url"],
+                size: 2,
+                headerTemplate: '<strong>#item#</strong>',
+                contentTemplate: '<a class="page-title-link" href="/sitetriks/pages/editcontent?url=#item0#">#item#</a>'
+            },
+            {
+                name: 'languages',
+                title: 'Languages',
+                type: 'list',
+                size: 1,
+                headerTemplate: '<strong>#item#</strong>',
+            },
+            {
+                name: "isHomePage",
+                title: "",
+                type: 'bool',
+                size: 1,
+                extraFields: ["url"],
+                headerTemplate: '<span class="glyphicon glyphicon-home"></span>',
+                falseTemplate: '<a href="/sitetriks/pages/sethomepage?url=#item0#"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>',
+                trueTemplate: '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>'
+            },
+            {
+                name: "url",
+                title: "Url",
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 2,
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "lastPublished",
+                title: "Last Published",
+                type: 'date',
+                size: 1,
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "dateToBePublished",
+                title: "Date to be published",
+                type: 'date',
+                size: 1,
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "pageStatus",
+                title: "Status",
+                type: 'string',
+                size: 1,
+                headerTemplate: '<b>#item#</b>'
+            }
+        ];
+
+        var buttons = [
+            {
+                title: 'Publish',
+                postUrl: '/sitetriks/pages/publish',
+                type: 'success',
+                collectionName: 'urls'
+            },
+            {
+                title: 'UnPublish',
+                postUrl: '/sitetriks/pages/unpublish',
+                type: 'warning',
+                collectionName: 'urls'
+            },
+            {
+                title: 'Delete',
+                postUrl: '/sitetriks/pages/delete',
+                type: 'danger',
+                collectionName: 'urls'
+            }
+        ];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+        var obj = grid.init('.grid', config);
+    </script>
+}

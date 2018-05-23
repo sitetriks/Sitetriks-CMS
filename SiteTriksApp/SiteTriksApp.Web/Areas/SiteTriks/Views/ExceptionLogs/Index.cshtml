@@ -1,0 +1,28 @@
+﻿@model Dictionary<string, List<SiteTriks.Models.ExceptionLogs.BaseExceptionLog>>
+
+@{
+    ViewBag.Title = "ExceptionLogs";
+}
+
+<div class="backend-wrapper">
+    <div class="fixed-top-2">
+        @await Html.PartialAsync("SecondNavHeader")
+    </div>
+    @foreach (var key in Model.Keys)
+    {
+
+        <table class="table table-responsive">
+
+            @foreach (var ex in Model[key])
+            {
+                <tr>
+                    <td>@ex.DateCreated</td>
+                    <td>@ex.Message</td>
+                </tr>
+
+            }
+        </table>
+
+    }
+</div>
+

@@ -1,0 +1,78 @@
+﻿@model SiteTriks.Models.Pages.CreatePageMainViewModel
+
+<div class="page-properties">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => Model.PageViewModel.EnId)
+
+    <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.EnTitle, "Title(Multilingual)", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => Model.PageViewModel.EnTitle, new { htmlAttributes = new { @class = "form-control title-field inline-block", Id = "title" } })
+        <span class="text-danger"></span>
+    </div>
+
+    <div class="form-group row description-row">
+        @Html.LabelFor(model => Model.PageViewModel.EnDescription, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => Model.PageViewModel.EnDescription, htmlAttributes: new { @class = "form-control content-field" })
+            @Html.ValidationMessageFor(model => Model.PageViewModel.EnDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.Url, htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.EditorFor(model => Model.PageViewModel.Url, new { htmlAttributes = new { @class = "form-control inline-block", Id = "url" } })
+        <span class="text-danger" id="url-validation"></span>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.IsInNavigation, "Is in navigation", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.EditorFor(model => Model.PageViewModel.IsInNavigation, new { htmlAttributes = new { @class = "custom-checkbox" } })
+        @Html.ValidationMessageFor(model => Model.PageViewModel.IsInNavigation, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group row" hidden>
+        @Html.LabelFor(model => Model.PageViewModel.NavigationPriority, "Navigation priority", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.EditorFor(model => Model.PageViewModel.NavigationPriority, new { htmlAttributes = new { @class = "form-control", min = 0, max = 1000 } })
+        @Html.ValidationMessageFor(model => Model.PageViewModel.NavigationPriority, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.ParentId, "Parent page", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.DropDownListFor(model => Model.PageViewModel.ParentId, new SelectList(Model.ParentList, "Id", "Title"), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.Template, "Template", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DisplayFor(model => Model.PageViewModel.Template, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => Model.PageViewModel.Template, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.SEOKeyword, "SEO Keywords", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.EditorFor(model => Model.PageViewModel.SEOKeyword, new { htmlAttributes = new { @class = "form-control inline-block", id = "seo-words" } })
+        <span id="seo-words-counter"></span>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Roles, new { @class = "control-label col-xs-2" })
+        <div class="col-md-9">
+            @Html.ListBoxFor(model => Model.RoleIds, Model.Roles,
+                                                        new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Roles,
+                                                        "", new { @class = "text-warning" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.EnDateToBePublished, "Date to be published", htmlAttributes: new { @class = "control-label col-xs-2" })
+        <div class="dtb-container">
+            <div class="input-group date-picker-group">
+                @Html.EditorFor(model => Model.PageViewModel.EnDateToBePublished, new { htmlAttributes = new { @class = "form-control", id = "date-picker", type = "text" } })
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(model => Model.PageViewModel.EnDateToBePublished, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

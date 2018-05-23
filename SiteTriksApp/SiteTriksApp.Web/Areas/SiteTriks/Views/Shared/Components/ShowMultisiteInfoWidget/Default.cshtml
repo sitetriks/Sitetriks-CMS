@@ -1,0 +1,30 @@
+﻿@model IEnumerable<SelectListItem>
+<div class="text-center">
+<div>
+    <div class="dashboard-table">
+        <div class="panel panel-primary" style="border: none;">
+            <div class="controle-header panel-heading panel-heading-landing">
+                <img src="~/images/dragable.svg">
+                <h1 class="panel-title panel-title-landing">
+                    Multisite
+                </h1>
+            </div>
+            <div class="panel-body panel-body-landing">
+                <div>
+                    @using (Html.BeginForm("ChangeCurrentSite", "Sites", FormMethod.Post, new { }))
+                    {
+                        <div>
+                            @Html.DropDownList("id", Model, new { @class = "form-control inline-block" })
+
+                            <input type="submit" id="submit" value="Change" class="btn btn-success" style="margin-left: 20px;" />
+                        </div>
+                    }
+                </div>
+                <hr />
+            </div>
+            <div class="panel-footer panel-footer-landing">
+            </div>
+        </div>
+    </div>
+</div>
+</div>

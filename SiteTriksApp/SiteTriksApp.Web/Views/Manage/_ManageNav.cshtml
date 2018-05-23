@@ -1,0 +1,92 @@
+﻿@using SiteTriksApp.Web.Views.Manage
+@using SiteTriks.Data.Models;
+
+@inject SignInManager<User> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<style>
+    .side-navigation {
+        height: calc(100vh - (160px ));
+        background-color: #F8F8F8;
+        border-right: 1px solid #989898;
+        font-size: 13px;
+        /*margin: 166px 0 35px 0;*/
+        /*position: fixed;
+        top: 0;
+        width: 16.66666667%;*/
+    }
+
+
+    .side-navigation-tree {
+        height: 100%;
+        overflow-y: auto;
+        line-height: 18px;
+        padding-top: 20px;
+    }
+
+        .side-navigation-tree ul {
+            list-style: none;
+            padding-left: 30px;
+        }
+
+            /*.side-navigation-tree ul li {
+                padding-left: 10px;
+            }*/
+
+            .side-navigation-tree ul li a {
+                text-transform: uppercase
+            }
+
+            .side-navigation-tree ul .section {
+                color: #9B9B9B;
+                text-transform: uppercase;
+                margin-top: 10px;
+                margin-bottom: 5px;
+            }
+
+            .side-navigation-tree ul .sub-section {
+                color: #B4B4B4;
+                padding-left: 20px;
+                text-transform: uppercase;
+                margin-top: 15px;
+            }
+
+            @@media(max-width: 991px){
+                .side-navigation {
+                    height: auto;
+                }
+            }
+</style>
+
+<div class="side-navigation">
+    <div class="side-navigation-tree">
+        <ul>
+            <li ><a asp-action="Index">Profile</a></li>
+            <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Password</a></li>
+            @if (hasExternalLogins)
+            {
+                <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
+            }
+            <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>
+            @*@if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.BackEnd))
+            {
+                <li>@Html.ActionLink("Dashboard", "Index", "Home", new { Area = "SiteTriks" }, new { })</li>
+            }*@
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

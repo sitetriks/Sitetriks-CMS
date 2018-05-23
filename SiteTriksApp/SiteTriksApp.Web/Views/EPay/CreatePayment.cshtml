@@ -1,0 +1,15 @@
+﻿@model SiteTriks.Models.EPay.EPayFormViewModel
+@{
+    ViewBag.Title = "Confirmed";
+    Layout = null;
+}
+
+<form id="epay" action="@Model.Url" method=post>
+    <input type="hidden" name="PAGE" value="paylogin">
+    <input type="hidden" name="INVOICE" value="@Model.Invoice">
+    <input type="hidden" name="ENCODED" value="@Model.Encoded">
+    <input type="hidden" name="CHECKSUM" value="@Model.Checksum">
+    <input type="hidden" name="URL_OK" value="@Model.UrlOk">
+    <input type="hidden" name="URL_CANCEL" value="@Model.UrlCancle">
+    <input type="submit" value="Confirm">
+</form>

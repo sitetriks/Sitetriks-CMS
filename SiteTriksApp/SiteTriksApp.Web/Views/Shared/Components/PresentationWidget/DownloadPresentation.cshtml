@@ -1,0 +1,6 @@
+﻿@model string
+
+<a href="@Url.Action("DownloadFileByUrl", "Files", new { area="sitetriks", url = $"{Model}" })" class="btn btn-success">
+    @Model
+    <span class="glyphicon glyphicon-arrow-down"></span>
+</a>

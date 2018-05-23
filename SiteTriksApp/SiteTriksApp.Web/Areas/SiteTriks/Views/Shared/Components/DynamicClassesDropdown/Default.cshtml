@@ -1,0 +1,9 @@
+﻿@model IDictionary<string, IEnumerable<Tuple<string, string>>>
+
+@foreach (var assembly in Model.Keys)
+{
+    foreach (var item in Model[assembly])
+    {
+        <li>@Html.ActionLink(string.IsNullOrWhiteSpace(item.Item2) ? item.Item1 : item.Item2, "ClassDetails", "Dynamic", new { assemblyName = assembly, className = item.Item1 }, new { })</li>
+    }
+}

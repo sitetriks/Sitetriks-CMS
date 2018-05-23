@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Not Authenticated";
+    Layout = "~/Views/Shared/_FrontEndLayout.cshtml";
+}
+
+<header id="placeholder-header" class="header-modern header-transparent header-dark">
+    <div class="navigation-widget">
+        @*@Html.Action("RenderNavigation", "NavigationWidget", new { area = "" })*@
+        *Drop navigation here*
+    </div>
+</header>
+
+<content>
+    <div class="row main-content content-placeholder">
+        <h1 class="text-danger">You do not have permission to access the backend!</h1>
+    </div>
+</content>
+
+@*@if (!User.Identity.IsAuthenticated)
+{
+    Response.Redirect("/");
+}*@

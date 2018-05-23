@@ -1,0 +1,75 @@
+﻿@model SiteTriks.Models.UserGroups.CreateEditUserGroupViewModel
+
+@{
+    ViewBag.Title = "User Groups";
+}
+
+<div class="backend-wrapper">
+    <div class="fixed-top-2">
+        @await Html.PartialAsync("SecondNavHeader")
+        <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create User Group</a>
+    </div>
+    <div class="grid">
+
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var grid = Grid();
+        var data = { link: "/sitetriks/userGroups/grid", serverSide: false }
+        var columns = [
+            {
+                name: "title",
+                title: "Group name",
+                type: 'string',
+                size: 3,
+                sort: true,
+                filter: true,
+                extraFields: ["id"],
+				contentTemplate: '<a href="/sitetriks/userGroups/edit/#item0#">#item#</a>',
+				headerTemplate: '<b>#item#</b>'
+            },           
+            {
+                name: "dateModified",
+                title: "Date modified",
+                type: 'date',
+                size: 2,
+                contentTemplate: '<span class="text-danger">#item#</span>',
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "dateCreated",
+                title: "Date created",
+                type: 'date',
+                size: 2,
+                sort: true,
+                contentTemplate: '<span class="text-danger">#item#</span>',
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: 'title',
+                title: 'Send email',
+                size: 2,
+                contentTemplate: '<a class="btn btn-warning" href="/sitetriks/emails/userGroupEmail/?userGroup=#item#"><i class="fa fa-pencil" aria-hidden="true"></i></a>',
+                headerTemplate: '<b>Send Email</b>'
+            },
+            {
+                name: "id",
+                title: "Edit",
+                type: 'string',
+                size: 1,
+                contentTemplate: '<a class="btn btn-warning" href="/sitetriks/userGroups/edit/#item#"><i class="fa fa-pencil" aria-hidden="true"></i></a>',
+                headerTemplate: '<b>Edit</b>'
+            }           
+        ];
+
+        let buttons = [
+           
+        ];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+        let obj = grid.init('.grid', config);
+    </script>
+}

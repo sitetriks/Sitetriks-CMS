@@ -1,0 +1,97 @@
+﻿@model IEnumerable<SiteTriks.Models.News.NewsByYearViewModel>
+
+<div class="row allnews-container @(ViewBag.Header ? "main-content" : "")">
+    <div class="col-xs-12 col-sm-4">
+        <h3>All News</h3>
+        <div class="accordion">
+            @foreach (var year in Model)
+            {
+                <h3 class="accordion-item">@year.Year</h3>
+                <div class="accordion-nested" data-year="@year.Year">
+                    @foreach (var month in year.Months)
+                    {
+                        <h3 class="accordion-item-nested-@year.Year">@month.Month</h3>
+                        <div class="allnews-item">
+                            @foreach (var news in month.News)
+                            {
+                                <div>
+                                    <a onclick="collapseAccordion()" class="detailed-news" data-id="@news.LinkId" data-url="@news.Url" href="@news.Url">@news.Title</a>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+        <div id="news-view-container">
+            @{ 
+                string[] urlValues = @Context.Request.Path.ToString().Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string newsUrl = string.Empty;
+                if (urlValues.Length > 1)
+                {
+                    if (urlValues[0].Length == 2)
+                    {
+                        if (urlValues.Length > 2)
+                        {
+                            newsUrl = urlValues[2];
+                        }
+                        else
+                        {
+                            newsUrl = urlValues[1];
+                        }
+                    }
+                    else
+                    {
+                        if (urlValues.Length == 1)
+                        {
+                            newsUrl = urlValues[0];
+                        }
+                        else
+                        {
+                            newsUrl = urlValues[1];
+                        }
+                    }
+                }
+
+                @await Component.InvokeAsync("DetailedNewsWidget", new { area = "", id = Guid.Parse(ViewBag.LinkId.ToString()), url = newsUrl, lang = ViewData["Lang"] })
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/js/meta-tags.js" type="text/javascript"></script>
+
+<script>
+    document.addEventListener('ready', reloadMetaTags, true);
+
+    function reloadMetaTags() {
+        var $title = $(".detailed-news-title").first();
+        var $content = $(".detailed-news-content").first();
+        var content = "";
+        var title = "";
+
+        if ($title !== null && $title !== undefined) {
+            title = $title.text();
+        }
+
+        if ($content !== null && $content !== undefined) {
+            content = $content.text();
+        }
+
+        document.title = title;
+        MetaTags.edit("description", title);
+
+        var metaTags = [];
+
+        metaTags.push({ title: "og:title", property: "og:title", content: title });
+        metaTags.push({ title: "og:type", property: "og:type", content: "article" });
+        metaTags.push({ title: "og:description", property: "og:description", content: content });
+        metaTags.push({ title: "article:section", property: "article:section", content: "News" });
+
+        MetaTags.add(metaTags);
+
+        document.removeEventListener('ready', reloadMetaTags, true);
+    }
+</script>

@@ -1,0 +1,35 @@
+﻿@model SiteTriks.Extentions.WidgetModels.GalleryWidgetModel
+
+@{
+    Layout = null;
+    var roles = Model.AllowedRoles.Split(';', StringSplitOptions.RemoveEmptyEntries);
+    var canView = roles.Length == 0;
+
+    foreach (var item in roles)
+    {
+        if (this.User.IsInRole(item))
+        {
+            canView = true;
+        }
+    }
+}
+
+@if (Model.IsPreview)
+{
+    <div class="preview-placeholder" data-identifier="@Model.Id">
+        @Html.Partial("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+
+        <div class="@Model.CssClass">
+            @await Component.InvokeAsync("GalleryWidget", new { area = "", element = Model.Element })
+        </div>
+    </div>
+}
+else
+{
+    if (canView)
+    {
+        <div class="@Model.CssClass">
+            @await Component.InvokeAsync("GalleryWidget", new { area = "", element = Model.Element })
+        </div>
+    }
+}

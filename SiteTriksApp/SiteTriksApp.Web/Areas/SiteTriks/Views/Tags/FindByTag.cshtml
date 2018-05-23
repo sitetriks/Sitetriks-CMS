@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SiteTriks.Services.Models.SearchServiceModel>
+
+@{
+    ViewBag.Title = "Search by tag";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+</div>
+
+<div class="backend-wrapper">
+    <div>
+        <input placeholder="search by tag" id="input-search" />
+        <button id="btn-search">Search</button>
+    </div>
+    <div><strong>Name</strong> | <strong>Type</strong></div>
+    @foreach (var item in Model)
+    {
+        <div><a href="@item.Link">@item.Name</a> | @item.Type</div>
+    }
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#btn-search').on('click', function (ev) {
+            let tag = $('#input-search').val() || '';
+
+            window.location.replace('/sitetriks/tags/findbytag?tag=' + tag);
+        })
+    </script>
+}

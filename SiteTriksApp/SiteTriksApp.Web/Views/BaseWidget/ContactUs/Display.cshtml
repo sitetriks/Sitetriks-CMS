@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+    var roles = Model.AllowedRoles.Split(';', StringSplitOptions.RemoveEmptyEntries);
+    var canView = roles.Length == 0;
+
+    foreach (var item in roles)
+    {
+        if (this.User.IsInRole(item))
+        {
+            canView = true;
+        }
+    }
+}
+
+@model SiteTriks.Extentions.WidgetModels.WidgetModel
+
+@{
+    var newsModel = Model as SiteTriks.Extentions.WidgetModels.ContactUsWidgetModel;
+}
+
+
+@if (Model.IsPreview)
+{
+<div class="preview-placeholder" data-identifier="@newsModel.Id">
+    @Html.Partial("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+   
+    <div class="@Model.CssClass">
+        @await Component.InvokeAsync("ContactUsWidget", new { area = "", lang = Model.Language })
+    </div>
+</div>
+}
+else
+{
+    if (canView)
+    {
+        <div class="@Model.CssClass">
+            @await Component.InvokeAsync("ContactUsWidget", new { area = "", lang = Model.Language })
+        </div>
+    }
+}

@@ -1,0 +1,70 @@
+{
+  "MaxMegaEventYearAheadFromThisYear": 5,
+  "WidgetConfigurations": {
+    "html": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "navigation": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "video": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "presentation": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "allNews": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "detailedNews": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "newsCarousel": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "changeUserInfo": [
+      "Admin"
+    ],
+    "css": [
+      "Admin"
+    ],
+    "javascript": [
+      "Admin"
+    ],
+    "layoutBuilder": [
+      "Admin"
+    ],
+    "search": [
+      "Admin"
+    ],
+    "image": [
+      "Admin"
+    ],
+    "documentation": [
+      "Admin"
+    ],
+    "gallery": [
+      "Admin"
+    ],
+    "contactUs": [
+      "Admin"
+    ],
+    "market": [
+      "Admin"
+    ],
+    "userOrders": [
+      "Admin"
+    ],
+    "subscription": [
+      "Admin",
+      "Authorized back-end"
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+﻿@model SiteTriks.RssFeedModule.Models.EditRssFeedViewModel
+
+@{
+    ViewBag.Title = "Edit RssFeed Configuration";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm())
+    {
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <input type="submit" value="Edit" class="btn-nav-2" />
+        </div>
+
+        <div class="page-properties">
+            <div class="form-group row">
+                <h4>Builder: @Model.BuilderName</h4>
+            </div>
+            <div id="fieldItems">
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(m => m.Name, Model.Name, new { htmlAttributes = new { @class = "form-control", Id = "title" } })
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => Model.Url, htmlAttributes: new { @class = "control-label col-xs-2" })
+                    @Html.EditorFor(model => Model.Url, new { htmlAttributes = new { @class = "form-control inline-block", Id = "url" } })
+                </div>
+                <hr />
+                @for (int i = 0; i < Model.RssFeedItems.Count; i++)
+                {
+                    <div class="form-group row description-row">
+                        <label class="control-label col-md-2">@Model.RssFeedItems[i].FieldName</label>
+                        @Html.HiddenFor(model => model.RssFeedItems[i].FieldName)
+                        @Html.EditorFor(x => Model.RssFeedItems[i].FieldValue, Model.RssFeedItems[i].FieldValue, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+
+                }
+                <hr />
+                <div class="form-group row">
+                    <h4>MappedFrom: @Model.MapFrom</h4>
+                    <div class="col-md-8">
+                        <h4>Item Mappings</h4>
+                        <hr />
+                        @for (int i = 0; i < Model.ItemMappings.Count; i++)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-md-2">@Model.ItemMappings[i].FieldTo</label>
+                                @Html.HiddenFor(model => model.ItemMappings[i].FieldTo)
+                                @Html.DropDownListFor(model => model.ItemMappings[i].FieldFrom, Model.ItemMappings[i].AvailablePropertiesSelectItems,
+                       new { @class = "form-control" })
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        <h5>Available properties</h5>
+                        <ul>
+                            @foreach (var prop in Model.BuilderProperties)
+                            {
+                                <li>@prop</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    <script src="~/js/leaving-warning.js"></script>
+    <script src="~/js/sitetriks/rss-feeds.js"></script>
+    <script>
+        editRssFeed('@Url.Action("ValidateUrl", "Pages")', '@Url.Action("BuilderFields")')
+    </script>
+}

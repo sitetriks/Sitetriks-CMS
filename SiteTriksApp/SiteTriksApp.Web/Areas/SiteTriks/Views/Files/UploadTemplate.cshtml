@@ -1,0 +1,6 @@
+﻿@model IEnumerable<SelectListItem>
+
+@Html.DropDownList("library", Model, "-- Select Library --", new { @class = "form-control inline-block" })
+
+<div><span id="accepted-formats"></span></div>
+<input type="file" name="Files" id="input-files" onchange="displayImages()" disabled @if (ViewBag.IsMultiple) { <text> multiple="multiple" </text> } />

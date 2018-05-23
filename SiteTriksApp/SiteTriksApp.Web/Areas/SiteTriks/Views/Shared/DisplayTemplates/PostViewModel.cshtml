@@ -1,0 +1,37 @@
+﻿@model SiteTriks.ForumModule.Models.PostViewModel
+
+<div class="row">
+    <div class="col-sm-2"></div>
+    @* NOTE: #comments-container, .cf_commentWrapper, .panel-body, .panel-header, #edit-post-content, .btn-edit-post, .btn-save-edited-post, .btn-cancel-edited-post and structure here are used for js logic, change with caution! *@
+    <div class="cf_commentWrapper" data-id="@Model.Id">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-user"></span>
+                <span>
+                    <b>
+                        @*@if (Model.Creator == Constants.MegaMentorDisplayName)
+                        {
+                            <span class="glyphicon glyphicon-flag"></span>
+                        }*@
+                        @Model.Creator
+                    </b>
+                </span>
+                <div style="float:right;">
+                    @if (!string.IsNullOrWhiteSpace(ViewData["userId"].ToString()) && ViewData["userId"].ToString() == Model.UserId)
+                    {
+                        <a class="btn btn-backend btn-edit-post">Edit</a>
+                        @Html.ActionLink("Delete", "Delete", "Posts", new { id = Model.Id, threadId = ViewData["threadId"] }, new { @class = "btn btn-backend" })
+                    }
+                    else if (User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.BackEnd) || User.IsInRole(UserRoles.SuperAdmin))
+                    {
+                        @Html.ActionLink("Delete", "Delete", "Posts", new { id = Model.Id, threadId = ViewData["threadId"] }, new { @class = "btn btn-backend" })
+                    }
+                    <span>Date created <span class="label label-default">@Model.DateCreated</span></span>
+                </div>
+            </div>
+            <div class="panel-body">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+    </div>
+</div>

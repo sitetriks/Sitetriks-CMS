@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Tags";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Tag</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var grid = Grid();
+        var data = { link: "/sitetriks/tags/grid", serverSide: false }
+        var columns = [
+            {
+                name: "name",
+                title: "Name",
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 5,
+                headerTemplate: '<strong>#item#</strong>'
+            },
+            {
+                name: 'type',
+                title: 'Type',
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 2,
+                headerTemplate: '<strong>#item#</strong>'
+            },
+            {
+                name: 'id',
+                title: 'Action',
+                type: 'string',
+                size: 3,
+                extraFields: [ "id" ],
+                headerTemplate: '<strong>#item#</strong>',
+                contentTemplate: '<a href="/sitetriks/tags/edit/#item#" class = "btn btn-warning">Edit</a><a href="/sitetriks/tags/delete/#item#" class = "btn btn-danger">Delete</a>'
+            }
+        ];
+
+        let buttons = [];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+        let obj = grid.init('.grid', config);
+    </script>
+}

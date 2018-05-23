@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "EndPoints";
+}
+
+<div class="backend-wrapper">
+    <div class="fixed-top-2">
+        @await Html.PartialAsync("SecondNavHeader")
+
+        <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create End Point</a>
+    </div>
+
+    <div class="grid"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function (ev) {
+
+            var grid = Grid();
+            var data = { link: "/sitetriks/endpoints/grid", serverSide: false }
+            var columns = [
+                {
+                    name: 'id',
+                    title: '',
+                    type: 'checkbox',
+                    size: 1
+                },
+                {
+                    name: "name",
+                    title: "Name",
+                    type: 'string',
+                    filter: true,
+                    sort: true,
+                    size: 1,
+                    headerTemplate: '<strong>#item#</strong>' // #item# is the placeholder for the content
+                },
+                {
+                    name: "type",
+                    title: "Type",
+                    type: 'string',
+                    filter: true,
+                    sort: true,
+                    size: 1,
+                    contentTemplate: '<span class="text-danger">#item#</span>',
+                    headerTemplate: '<strong>#item#</strong>'
+                },
+                {
+                    name: "requestType",
+                    title: "RequestType",
+                    type: 'string',
+                    filter: true,
+                    sort: true,
+                    size: 1,
+                    contentTemplate: '<span class="text-danger">#item#</span>',
+                    headerTemplate: '<strong>#item#</strong>'
+                },
+                {
+                    name: "skip",
+                    title: "Skip",
+                    type: 'string',
+                    size: 1,
+                    contentTemplate: '<span class="text-danger">#item#</span>',
+                    headerTemplate: '<strong>#item#</strong>'
+                },
+                {
+                    name: "take",
+                    title: "Take",
+                    type: 'string',
+                    size: 1,
+                    contentTemplate: '<span class="text-danger">#item#</span>',
+                    headerTemplate: '<strong>#item#</strong>'
+                },
+                {
+                    name: "id",
+                    title: "Action",
+                    type: 'string',
+                    size: 1,
+                    headerTemplate: '<strong>#item#</strong>',
+                    contentTemplate: '<a class="btn btn-warning" href="/sitetriks/endpoints/edit/#item#">Edit</a> | <a class="btn btn-danger" href="/sitetriks/endpoints/delete/#item#">Delete</a>'
+                }];
+
+            var config = grid.build(columns, [], grid.defaultPager, data);
+
+            var obj = grid.init('.grid', config);
+
+        });
+    </script>
+}

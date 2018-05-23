@@ -1,0 +1,88 @@
+﻿<div data-type="image" class="widget-container gallery-widget">
+    <div class="col-md-5">
+        <div class="type-of-gallery-select row">
+            <label for="" class="col-md-4">Type of Gallery</label>
+            <select class="form-control">
+                <option value="Grid">Grid</option>
+                <option value="Slider">Slider</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div id="image-container" class="gallery-main-image-container"></div>
+        <input type="text" name="NewsEN.MainImageUrlID" id="image" hidden="hidden" />
+        <div class="widget-form">
+            <div class="row mb-10">
+                <label for="input-width" class="col-md-4">Width</label>
+                <input id="input-width" class="form-control" />
+            </div>
+
+            <div class="row">
+                <label for="input-height" class="col-md-4">Height</label>
+                <input id="input-height" class="form-control" />
+            </div>
+
+            <hr />
+            <div class="row">
+                <label for="css-class" class="col-md-4">Css Class</label>
+                <input id="css-class" class="form-control" />
+            </div>
+            <div class="row">
+                <label for="allowed-role" class="col-md-4">Allowed Roles</label>
+                <input id="allowed-roles" class="form-control" />
+            </div>
+            <div class="row">
+                <label for="allowed-groups"class="col-md-4">Allowed Groups</label>
+                <input id="allowed-groups" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div id="upload-modal" class="col-md-7">
+        <div id="file-handler-notfier"></div>
+        <select id="gallery-source" class="form-control">
+            <option value="images">Images</option>
+            <option value="library">Library</option>
+        </select>
+            
+        @*<div id="file-handler-notfier"></div>*@
+
+        <div class="gallery-images">
+            @*<div>
+                <a class="btn btn-backend" id="btn-show-upload">Upload</a>
+                <a class="btn btn-backend" id="btn-show-choice">Choice</a>
+                <a class="btn btn-backend" id="btn-show-libraries">Choose All From Library</a>
+            </div>*@
+            @*<div id="upload-file" style="display: none !important;">*@
+            @*<div id="upload-container">
+                </div>*@
+            @*<div id="files-container">
+                </div>*@
+            @*<div class="modal-footer">
+                    <a class="btn btn-backend" id="btn-submit-images">Upload</a>
+                </div>*@
+
+            @*</div>*@
+            <div id="choice-file" hidden>
+                <div id="files-list">
+
+                </div>
+                <div class="files-handler-pager">
+                    <a id="previous-page" class="btn btn-default">Previous</a>
+                    <span id="page">0</span>
+                    <a id="next-page" class="btn btn-default">Next</a>
+                    <a class="btn btn-backend" id="btn-select">Select</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-library" style="display:none;">
+            <select id="gallery-libs" class="form-control"></select>
+            <div id="libraries-list">
+                <div>
+                    <a class="btn btn-backend" id="btn-select-library">Select</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,15 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
+
+<div class="dynamic-table">
+    @foreach (var item in Model.Entries)
+    {
+        <div>
+            <span>@Model.ClassHelper.GetPropertyValue(item, "Id")</span>
+            @foreach (var prop in Model.DynamicClass.Properties)
+            {
+                var value = Model.ClassHelper.GetPropertyValue(item, prop.Name);
+                <span>  |  @value</span>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,23 @@
+﻿@model SiteTriks.RssFeedModule.Models.CreateRssFeedViewModel
+
+<div class="col-md-8">
+    @for (int i = 0; i < Model.ItemMappings.Count; i++)
+    {
+    <div class="form-group row">
+        <label class="control-label col-md-2">@Model.ItemMappings[i].FieldTo</label>
+        @*@Html.LabelFor(m => m.ItemMappings[i].FieldTo, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        @Html.HiddenFor(model => model.ItemMappings[i].FieldTo)
+        @Html.DropDownListFor(model => model.ItemMappings[i].FieldFrom, Model.AvailablePropertiesSelectItems,
+      Model.ItemMappings[i].FieldFrom == null ? "" : Model.ItemMappings[i].FieldFrom, new { @class = "form-control" })
+    </div>
+    }
+</div>
+<div class="col-md-2">
+    <h5>Available properties</h5>
+    <ul>
+        @foreach (var prop in Model.BuilderProperties)
+        {
+            <li>@prop</li>
+        }
+    </ul>
+</div>

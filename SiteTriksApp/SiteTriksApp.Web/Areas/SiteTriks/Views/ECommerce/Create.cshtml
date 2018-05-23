@@ -1,0 +1,82 @@
+﻿@model SiteTriks.Models.ECommerce.ECommerceItemViewModel
+
+@{
+    ViewBag.Title = "Create Ecommerce item";
+}
+
+@section Styles {
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Create", "ECommerce", FormMethod.Post, new { id = "create-ecommerce-item-form", encoding = "multipart/form-data", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="fixed-top-2">
+            <p>@ViewBag.Title</p>
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create ECommerse</button>
+        </div>
+
+        <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
+        <div class="page-properties">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.Title, new { htmlAttributes = new { @class = "form-control title-field inline-block", id = "title" } })
+                    <span class="text-danger"></span>
+                    @Html.ValidationMessageFor(m => Model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => Model.Description, htmlAttributes: new { @class = "form-control content-field", rows = "8", id = "item-description" })
+                    @Html.ValidationMessageFor(m => Model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => Model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(m => Model.Price, new { htmlAttributes = new { @class = "form-control", id = "price", type = "decimal" } })
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="images-container">
+                <div class="image-buttons-container">
+                    <label>Main Image</label>
+                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(false, 'main-image', 'en-main-image')">Main Image</button>
+                </div>
+
+                <div id="en-main-image-container" class="news-main-image-container"></div>
+                <div class="image-buttons-container">
+                    <label>Images</label>
+                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'en-images')">Images</button>
+                </div>
+                <div id="en-images-container" class="news-images-container"></div>
+            </div>
+        </div>
+
+        <input type="text" name="MainImageUrlID" id="en-main-image" hidden="hidden" />
+        <input type="text" name="ImagesUrlsIDs" id="en-images" hidden="hidden" />
+    }
+</div>
+
+@Html.Partial("UploadTemplates/FileHandlerModal")
+
+<br />
+
+@section Scripts{
+    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="~/js/files-handler-2.2.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/e-commerce.js"></script>
+    <script>
+        createECommerce();
+    </script>
+}

@@ -1,0 +1,98 @@
+﻿@model SiteTriks.Models.News.NewsViewModel
+
+@{
+    ViewBag.Title = "Create News";
+}
+
+@section Styles {
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Create", "News", FormMethod.Post, new { id = "create-news-form", encoding = "multipart/form-data", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create News</button>
+        </div>
+
+        <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
+        <div class="page-properties">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.NewsEN.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.NewsEN.Title, new { htmlAttributes = new { @class = "form-control title-field inline-block", Id = "title" } })
+                    <strong><span class="text-danger"></span></strong>
+                    @Html.ValidationMessageFor(m => Model.NewsEN.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.NewsEN.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => Model.NewsEN.Content, htmlAttributes: new { @class = "form-control content-field", rows = "8", id = "news-en-content" })
+                    @Html.ValidationMessageFor(m => Model.NewsEN.Content, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => Model.NewsEN.Url, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(m => Model.NewsEN.Url, new { htmlAttributes = new { @class = "form-control", Id = "url" } })
+                <strong><span id="url-validation" class="text-danger"></span></strong>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => Model.NewsEN.SEOKeyword, "SEO Keywords", htmlAttributes: new { @class = "control-label col-xs-2" })
+                @Html.EditorFor(model => Model.NewsEN.SEOKeyword, new { htmlAttributes = new { @class = "form-control inline-block", id = "seo-words" } })
+                <span id="seo-words-counter"></span>
+            </div>
+
+            <div class="form-group row" style="position:relative;">
+                @Html.LabelFor(m => Model.NewsEN.DateToBePublished, "Date to be published", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="input-group date-picker-group">
+                    @Html.EditorFor(m => Model.NewsEN.DateToBePublished, new { htmlAttributes = new { @class = "form-control", Id = "date-picker", type = "text" } })
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="images-container">
+                <div class="image-buttons-container">
+                    <label>Main Image</label>
+                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(false, 'main-image', 'en-main-image')">Main Image</button>
+                </div>
+
+                <div id="en-main-image-container" class="news-main-image-container"></div>
+                <div class="image-buttons-container">
+                    <label>Images</label>
+                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'en-images')">Images</button>
+                </div>
+                <div id="en-images-container" class="news-images-container"></div>
+            </div>
+        </div>
+
+        <input type="text" name="NewsEN.MainImageUrlID" id="en-main-image" hidden="hidden" />
+        <input type="text" name="NewsEN.ImagesUrlsIDs" id="en-images" hidden="hidden" />
+    }
+</div>
+
+@Html.Partial("UploadTemplates/FileHandlerModal")
+
+<br />
+
+@section Scripts{
+    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>s
+    <script src="~/js/files-handler-2.2.js"></script>
+    <script src="~/js/text-editor.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/news.js"></script>
+    <script type="text/javascript">
+        createNews('@Url.Action("ValidateUrl", "News")');
+    </script>
+}

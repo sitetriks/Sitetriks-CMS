@@ -1,0 +1,8 @@
+﻿@model string
+
+@{ 
+    var elements = Model.Split("/");
+}
+
+<div>Presentation <i>@elements[1]</i> will be rendered here in <i>@elements[0]</i> mode!</div>
+

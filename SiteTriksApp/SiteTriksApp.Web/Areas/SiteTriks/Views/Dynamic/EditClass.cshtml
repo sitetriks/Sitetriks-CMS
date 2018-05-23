@@ -1,0 +1,91 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicClass
+
+@{
+    ViewBag.Title = "Edit Class";
+
+    // TODO: move!
+    var types = new SelectList(new List<SelectListItem>() {new SelectListItem(){Text = "Number", Value = "int"},
+    new SelectListItem(){Text = "String", Value = "string"},
+    new SelectListItem(){Text = "Html", Value = "string-html"},
+    new SelectListItem(){Text = "Decimal", Value = "decimal"},
+    new SelectListItem(){Text = "Bool", Value = "bool"},
+    new SelectListItem(){Text = "Guid", Value = "guild"},
+    new SelectListItem(){Text = "Images", Value = "images"}
+}, "Value", "Text");
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("EditClass", "Dynamic", FormMethod.Post, new { id = "form-edit-class" }))
+    {
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to assemblies</a>
+            <input type="submit" value="Save" class="btn-nav-2" />
+        </div>
+
+        <div class="page-properties">
+            <h4>DynamicClass</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control inline-block validate-field-name", id = "input-class-name" } })
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-class-title" } })
+                <span class="text-danger"></span>
+            </div>
+
+            <div id="fields-container">
+                @if (Model.Properties != null)
+                {
+                    foreach (var item in Model.Properties)
+                    {
+                        if (item != null)
+                        {
+                            <hr />
+                            <div class="field-item">
+                                <div class="form-group row">
+                                    <label class="control-label col-md-2">Field Name: </label>
+                                    <input type="text" class="form-control inline-block validate-field-name" value="@item.Name">
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-2">Field Type: </label>
+                                    <select asp-for="@item.Type" class="form-control inline-block validate-type-dropdown" asp-items="@types"></select>
+                                    <span class="text-danger"></span>
+                                    <a class="btn btn-backend btn-delete-field"><span class="glyphicon glyphicon-remove"></span></a>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+            <hr />
+            <a class="btn btn-backend" id="btn-add-field">Add field</a>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script src="~/js/leaving-warning.js"></script>
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/dynamics.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var modelName = '@Model.Name';
+            var assemblyName = '@ViewBag.AssemblyName';
+
+            editClass(modelName, assemblyName);
+        });
+    </script>
+}

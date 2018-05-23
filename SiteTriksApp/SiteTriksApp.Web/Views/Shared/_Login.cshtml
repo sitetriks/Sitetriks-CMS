@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SiteTriks.Data.Models;
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    using (Html.BeginForm("LogOut", "Account", new { area = "" }, FormMethod.Post, true, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="login-partial-loged">
+            @*<div>
+                @Html.ActionLink("Hello" + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+            </div>*@
+            <div style="float:right">
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="navbar-right">
+        <div class="login-partial-loged">
+            <div>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</div>
+            <div>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "loginLink" })</div>
+        </div>
+    </div>
+}

@@ -1,0 +1,38 @@
+﻿<div data-type="navigation" class="widget-container">
+    <div class="col-md-5 row">
+        <div class="row">
+            <label for="css-class" class="col-md-4">Css Class</label>
+            <input id="css-class" class="form-control" />
+        </div>
+        <div class="row">
+            <label for="allowed-role" class="col-md-4">Allowed Roles</label>
+            <input id="allowed-roles" class="form-control" />
+        </div>
+        <div class="row">
+            <label for="allowed-groups" class="col-md-4">Allowed Groups</label>
+            <input id="allowed-groups" class="form-control" />
+        </div>
+    </div>
+    <div class="col-md-12">
+        <hr>
+
+        <h3>Select pages with child depth</h3>
+        <select id="multiselect-pages" multiple></select>
+        <select id="depth-level" class="form-control" style="display:inline">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option selected="selected" value="@int.MaxValue">All</option>
+        </select>
+
+        <hr>
+        <h3>Sort pages</h3>
+
+        <div class="col-md-6">
+            <ul style="list-style-type: none;" id="pages-order"></ul>
+        </div>
+    </div>
+</div>

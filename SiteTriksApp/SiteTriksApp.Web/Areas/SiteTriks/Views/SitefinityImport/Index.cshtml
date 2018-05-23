@@ -1,0 +1,16 @@
+﻿@model bool
+<div style="margin-top:120px; margin-left:30px;">
+	<h1>Import data from sitefinity</h1>
+	<div>Enter the Url of your sitefinity site</div>
+	<em>Example: https://exampleSite.com</em>
+    @using (Html.BeginForm("GetData", "SitefinityImport", null, FormMethod.Get))
+    {
+        @Html.TextBox("Source")
+        <button type="submit">Get Data</button>
+    }
+
+	@if(Model)
+	{
+		<strong>Successful import</strong>
+	}
+</div>

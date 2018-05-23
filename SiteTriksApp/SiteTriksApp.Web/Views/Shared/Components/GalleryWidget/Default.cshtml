@@ -1,0 +1,27 @@
+﻿@model GalleryWidgetViewModel
+
+@{ 
+    string height = string.Empty;
+    string width = string.Empty;
+
+    if (!(Model.Height.HasValue || Model.Width.HasValue))
+    {
+        height = "200";
+    }
+    else
+    {
+        height = Model.Height.ToString();
+        width = Model.Width.ToString();
+    }
+}
+
+<div class="gallery-main-container">
+    @if (Model.FilesIds != null)
+    {
+        @foreach (var imageId in Model.FilesIds)
+        {
+            var imageSource = $"/files/id/{imageId}";
+            <div class="gallery-image-container"><img width="@width" height="@height" class="gallery-image" src=@imageSource alt="gallery image" title="Image from My Gallery"></div>
+        }
+    }
+</div>

@@ -1,0 +1,14 @@
+﻿{
+  "PaymentConfiguration": {
+    "EPay": {
+      "Environment": "Development", //Development or Production
+      "Min": "D327889732",
+      "Security": "8JI7BP38V0NI6MWVN6556JT5EQE094DB1FRTQ6JBE5J9LZVT2HT4VKQ78SM3CSTA"
+    },
+    "Paypal": {
+      "Environment": "Development", //Development or Production
+      "ClientId": "Aa78cjITc9o0Eq-PWtfOaPKJJZwtIEo6n0nQrY9E__D-xZczlDKlr1b2tkKSS1ZN2nHHjP-DY4oJtBTs",
+      "ClientSecret": "EJfLkYBVYH862WHMp1qwIrhrvS_hFv9I9cAGRfl1LVjMrkeGdU2W-RNCcV8c-Hm8ScyJIKjuhd4EP9zx"
+    }
+  }
+}

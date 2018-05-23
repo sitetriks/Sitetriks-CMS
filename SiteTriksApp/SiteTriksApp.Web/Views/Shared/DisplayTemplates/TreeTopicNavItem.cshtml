@@ -1,0 +1,50 @@
+﻿@using SiteTriks.DocumentationModule.Data.Enums;
+@model SiteTriks.Helpers.TreeNode<SiteTriks.DocumentationModule.Models.TopicNavViewModel>
+
+@{
+    string padding = (int)ViewData["indent"] * 20 + 25 + "px";
+    string type = string.Empty;
+    switch (Model.Value.TopicType)
+    {
+        case TopicType.developer:
+            type = "glyphicon glyphicon-cog";
+            break;
+        case TopicType.endUser:
+            type = "glyphicon glyphicon-user";
+            break;
+
+        default:
+            break;
+    }
+}
+
+@if (Model.ChildrenCount > 0)
+{
+    <div style="padding-left: @padding">
+        <span class="glyphicon glyphicon-plus"></span>
+        <span class="@type"></span>
+        <a class="" data-id="@Model.Value.Id" data-next="@Model.Value.Next" data-prev="@Model.Value.Prev">
+            @Html.DisplayFor(m => Model.Value.Name)
+        </a>
+    </div>
+    <ul style="display: none">
+        @for (int i = 0; i < Model.ChildrenCount; i++)
+        {
+            <li class="docs-menu-item">
+                @{
+                    var child = Model.GetChild(i);
+                }
+                @Html.DisplayFor(m => child, "TreeTopicNavItem", new { indent = (int)ViewData["indent"] + 1 })
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div style="padding-left: @padding">
+        <span class="@type childless"></span>
+        <a class="" data-id="@Model.Value.Id" data-next="@Model.Value.Next" data-prev="@Model.Value.Prev">
+            @Html.DisplayFor(m => Model.Value.Name)
+        </a>
+    </div>
+}

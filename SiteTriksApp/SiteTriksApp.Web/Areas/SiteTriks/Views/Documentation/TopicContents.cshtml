@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Topic Contents";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+    <a href="@Url.Action("CreateContent")" class="btn-nav-2">Create</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function (ev) {
+
+            var grid = Grid();
+            var data = { link: "/sitetriks/documentation/GridTopicContents", serverSide: false }
+            var columns = [{
+                name: 'id',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: "name",
+                title: "Name",
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 7,
+                headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
+            }, {
+                name: 'id',
+                title: 'Action',
+                type: 'string',
+                size: 2,
+                headerTemplate: '<b>#item#</b>',
+                contentTemplate: '<a class="btn btn-warning" href="/sitetriks/documentation/editcontent/#item#">Edit</a>'
+            }];
+
+            let buttons = [{
+                title: 'Delete',
+                postUrl: '/sitetriks/documentation/deletecontent',
+                type: 'danger',
+                callback: function (res) {
+                    console.log(res);
+                }
+            }];
+
+            var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+            let obj = grid.init('.grid', config);
+        });
+    </script>
+}

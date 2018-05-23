@@ -1,0 +1,78 @@
+﻿@using SiteTriks.Services.Extensions
+
+@model SiteTriks.Extentions.WidgetModels.HtmlWidgetModel
+
+@{
+    Layout = null;
+    Guid blockId;
+    bool isId = Guid.TryParse(Model.Element, out blockId);
+
+    bool canViewByRole = false;
+    bool canViewByGroup = false;
+
+    if (string.IsNullOrWhiteSpace(Model.AllowedRoles))
+    {
+        canViewByRole = true;
+    }
+    else
+    {
+        var roles = Model.AllowedRoles.Split(';', StringSplitOptions.RemoveEmptyEntries);
+
+        canViewByRole = roles.Length == 0;
+
+        foreach (var item in roles)
+        {
+            if (this.User.IsInRole(item))
+            {
+                canViewByRole = true;
+            }
+        }
+    }
+
+    if (string.IsNullOrWhiteSpace(Model.AllowedGroups))
+    {
+        canViewByGroup = true;
+    }
+    else
+    {
+        var groups = Model.AllowedGroups.Split(';', StringSplitOptions.RemoveEmptyEntries);
+
+        var service = this.Context.RequestServices;
+        canViewByGroup = this.User.IsInGroup(groups, service);
+    }
+}
+
+@if (Model.IsPreview)
+{
+    <div class="preview-placeholder" data-identifier="@Model.Id">
+        @Html.Partial("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+
+        <div class="@Model.CssClass">
+            @if (isId)
+            {
+                @await Component.InvokeAsync("HtmlWidget", new { id = blockId })
+            }
+            else
+            {
+                @Html.Raw(Model.Element)
+            }
+        </div>
+    </div>
+}
+else
+{
+    if (canViewByRole && canViewByGroup)
+    {
+        <div class="@Model.CssClass">
+            @if (isId)
+            {
+                @await Component.InvokeAsync("HtmlWidget", new { id = blockId })
+            }
+            else
+            {
+                @Html.Raw(Model.Element)
+            }
+        </div>
+    }
+
+}

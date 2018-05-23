@@ -1,0 +1,40 @@
+﻿@model SiteTriks.Models.PayPal.ConfirmedViewData
+
+
+@{
+    ViewBag.Title = "Confirmed";
+    Layout = "_FrontEndLayout";
+}
+
+@section Styles{
+    <link href="~/Content/custom/confirm-payment.css" rel="stylesheet">
+}
+
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <h1>Confirm Your Order</h1><br>
+            <div class="confirm-outter">
+                <div class="confirm-inner">
+                    <form action="/paypal/capture" method="post" class="inline-block">
+                        <input type="hidden" name="authorizationId" value="@Model.AuthorizationId" />
+                        <button class="btn btn-lg btn-success" type="submit">Submit</button>
+                    </form>
+
+                    <form action="/paypal/void" method="post" class="inline-block">
+                        <input type="hidden" name="authorizationId" value="@Model.AuthorizationId" />
+                        <button class="btn btn-lg btn-danger" type="submit">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script>
+        $(document).ready(function () {
+            $("#confirm-modal").modal("show");
+        });
+    </script>
+}

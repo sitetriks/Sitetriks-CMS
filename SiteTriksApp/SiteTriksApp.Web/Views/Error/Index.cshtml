@@ -1,0 +1,40 @@
+﻿@model SiteTriksApp.Web.Models.ErrorPages.ErrorPageMainViewModel
+
+@{ 
+    ViewBag.Title = "Error Pages";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-success" })
+</div>
+
+<div class="backend-wrapper">
+    <div id="error-pages">
+        <div>Code | Page</div>
+        @foreach (var item in Model.ErrorPages)
+        {
+            @Html.DisplayFor(m => item, new { Pages = Model.Pages });
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#error-pages').on('change', '.error-page-dropdown', function (ev) {
+            Loader.show("#fff");
+            let $trigger = $(this);
+            let body = {
+                pageMetaId: $trigger.val(),
+                errorPageId: $trigger.attr('data-id')
+            }
+
+            Data.postJson({ url: '/widget/error/edit', data: body }).then(function (res) {
+                if (res.success) {
+                    document.location.reload(true);
+                }
+            })
+        })
+    </script>
+}

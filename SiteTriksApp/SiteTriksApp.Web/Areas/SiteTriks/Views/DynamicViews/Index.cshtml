@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Dynamic Views";
+}
+
+<div class="fixed-top-2">
+    <p>@ViewBag.Title</p>
+
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Dynamic View</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid">
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var grid = Grid();
+        var data = { link: "/sitetriks/dynamicviews/getitems", serverSide: false }
+        var columns = [{
+            name: 'id',
+            title: '',
+            type: 'checkbox',
+            size: 1
+        },
+        {
+            name: "name",
+            title: "Name",
+            type: 'string',
+            filter: true,
+            sort: true,
+            extraFields: ['id'],
+            size: 2,
+            headerTemplate: '<b>#item#</b>', // #item# is the placeholder for the content
+            contentTemplate: '<a href="/sitetriks/dynamicviews/edit?id=#item0#">#item#</a>'
+        },
+        {
+            name: "widgetName",
+            title: "Widget name",
+            type: 'string',
+            filter: false,
+            sort: false,
+            extraFields: [],
+            size: 1,
+            headerTemplate: '<b>#item#</b>', // #item# is the placeholder for the content
+            contentTemplate: '<b>#item#</b>'
+        },
+        {
+            name: "dateCreated",
+            title: "Date Created",
+            type: 'date',
+            sort: true,
+            size: 1,
+            headerTemplate: '<b>#item#</b>'
+        }];
+
+        let buttons = [{
+            title: 'Delete',
+            postUrl: '/sitetriks/dynamicviews/delete',
+            type: 'danger'
+        }];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+        grid.init('.grid', config);
+    </script>
+}

@@ -1,0 +1,40 @@
+﻿@model SiteTriks.Services.Models.LayoutModel
+
+<div class="row">
+    @*@await Component.InvokeAsync("RenderWidget", new { content = new SiteTriks.Services.Models.Pages.ContentServiceModel { Type = "css", Element = Model.Css }, preview = "", lang = (string)ViewBag.Language })*@
+
+	@if(Model.LayoutRows == null)
+	{
+		return;
+
+	}
+
+    @foreach (var item in Model.LayoutRows)
+    {
+        @Html.Raw(string.Format("<{0} class='row {1}'>", item.Tag, item.CssClass))
+        @foreach (var column in item.Columns)
+        {
+            string placeholder = column.Properties.Placeholder;
+            string cssClasses = string.Empty;
+            foreach (var col in column.Resolutions)
+            {
+                cssClasses += $"col-{col.Key}-{col.Value.Size} col-{col.Key}-offset-{col.Value.Offset} ";
+
+                if ((bool)ViewBag.IsPreview)
+                {
+                    cssClasses += $"st-col-{col.Key}-{col.Value.Size} st-col-{col.Key}-offset-{col.Value.Offset} ";
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(column.Properties.CssClass))
+            {
+                cssClasses += " " + column.Properties.CssClass + " ";
+            }
+
+            <div data-placeholder="@placeholder" class="@((bool)ViewBag.IsPreview ? "drop drop-layout connected-widget-container placeholder" : "") @cssClasses">
+                @await Component.InvokeAsync("RenderPlaceholder", new { pageUrl = Model.PageUrl, preview = (bool)ViewBag.IsPreview ? "preview" : "", culture = (string)ViewBag.Language, placeholder = placeholder })
+            </div>
+        }
+        @Html.Raw(string.Format("</{0}>", item.Tag))
+    }
+</div>

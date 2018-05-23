@@ -1,0 +1,22 @@
+﻿@model SiteTriks.Helpers.Tree<SiteTriks.DocumentationModule.Models.TopicNavViewModel>
+
+<div class="row">
+    <div class="col-md-3">
+        <ul class="docs-menu">
+            @for (int i = 0; i < Model.Root.ChildrenCount; i++)
+            {
+                <li class="docs-menu-item">
+                    @{
+                        var child = Model.Root.GetChild(i);
+                    }
+                    @Html.DisplayFor(m => child, "TreeTopicNavItem", new { indent = 0 })
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="topic-details"></div>
+        <a id="prev-doc">Previous</a>
+        <a id="next-doc">Next</a>
+    </div>
+</div>

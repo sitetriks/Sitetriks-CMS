@@ -1,0 +1,130 @@
+﻿@model SiteTriks.Models.News.NewsViewModel
+
+@{
+    ViewBag.Title = "Edit News";
+}
+@section Styles {
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Edit", "News", new { url = Model.NewsEN.Url }, FormMethod.Post, true, new { id = "edit-news-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <input type="submit" value="Save" id="submit-form" class="btn-nav-2" />
+
+            <select id="languages" class="form-control inline-block">
+                <option value="">BackEnd/Default</option>
+            </select>
+        </div>
+
+        @*<div id="alerts"></div>*@
+        <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
+        <hr />
+
+        <div id="backend-info">
+            <div class="page-properties">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => Model.NewsEN.Id)
+
+                <div class="form-group row description-row">
+                    @Html.LabelFor(m => Model.NewsEN.Title, "Title(Multilingual)", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => Model.NewsEN.Title, new { htmlAttributes = new { @class = "form-control title-field inline-block", Id = "title" } })
+                        <strong><span class="text-danger"></span></strong>
+                        @Html.ValidationMessageFor(m => Model.NewsEN.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row description-row">
+                    @Html.LabelFor(m => Model.NewsEN.Content, "Content(Multilingual)", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(m => Model.NewsEN.Content, htmlAttributes: new { @class = "form-control content-field", rows = "8", id = "news-en-content" })
+                        @Html.ValidationMessageFor(m => Model.NewsEN.Content, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(m => Model.NewsEN.Url, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(m => Model.NewsEN.Url, new { htmlAttributes = new { @class = "form-control", @Value = Model.NewsEN.Url, Id = "url" } })
+                    <strong><span class="text-danger" id="url-validation"></span></strong>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => Model.NewsEN.SEOKeyword, "SEO Keywords", htmlAttributes: new { @class = "control-label col-xs-2" })
+                    @Html.EditorFor(model => Model.NewsEN.SEOKeyword, new { htmlAttributes = new { @class = "form-control inline-block", id = "seo-words" } })
+                    <span id="seo-words-counter"></span>
+                </div>
+
+                <div class="form-group row" style="position:relative;">
+                    @Html.LabelFor(m => Model.NewsEN.DateToBePublished, "Date to be published", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="input-group date-picker-group">
+                        @Html.EditorFor(m => Model.NewsEN.DateToBePublished, new { htmlAttributes = new { @class = "form-control", Id = "date-picker", type = "text" } })
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <input type="text" name="NewsEN.MainImageUrlID" id="en-main-image" hidden="hidden" value="@Model.NewsEN.MainImageUrlID" />
+                <input type="text" name="NewsEN.ImagesUrlsIDs" id="en-images" hidden="hidden" value="@Model.NewsEN.ImagesUrlsIDs" />
+
+            </div>
+            <div class="images-container">
+                <div class="image-buttons-container">
+                    <label>Main Image</label>
+                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(false, 'main-image', 'en-main-image')">Main Image</button>
+                </div>
+                <div class="news-main-image-container" id="en-main-image-container">
+                    @if (!string.IsNullOrEmpty(Model.NewsEN.MainImageUrlID))
+                    {
+                        <div class="news-listed-main-image-container">
+                            <div class="news-listed-image-delete" data-id="@Model.NewsEN.MainImageUrlID" data-field="en-main-image"><span class="glyphicon glyphicon-remove"></span></div>
+                            <img src="/files/id/@Model.NewsEN.MainImageUrlID" class="display-image" />
+                        </div>
+                    }
+                </div>
+                <div class="image-buttons-container">
+                    <label>Images</label>
+                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'en-images')">Images</button>
+                </div>
+                <div class="news-images-container" id="en-images-container">
+                    @if (!string.IsNullOrEmpty(Model.NewsEN.ImagesUrlsIDs))
+                    {
+                        foreach (var imageId in Model.NewsEN.ImagesUrlsIDs.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            <div class="news-listed-images-container">
+                                <div class="news-listed-image-delete" data-id="@imageId" data-field="en-images"><span class="glyphicon glyphicon-remove"></span></div>
+                                <img src="/files/id/@imageId" class="display-image" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div id="mlf-info">
+
+        </div>
+    }
+
+    @Html.Partial("UploadTemplates/FileHandlerModal")
+</div>
+
+@section Scripts{
+    <script src="~/js/leaving-warning.js"></script>
+    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="~/js/files-handler-2.2.js"></script>
+    <script src="~/js/text-editor.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/news.js"></script>
+    <script type="text/javascript">
+        var mlf = @Html.Raw(Json.Serialize(Model.NewsEN.MultiLingualFieds));
+        editNews(mlf, '@Url.Action("ValidateEditUrl", "News")', '@Model.NewsEN.Id', '@Url.Action("Mlf","News")');
+    </script>
+}

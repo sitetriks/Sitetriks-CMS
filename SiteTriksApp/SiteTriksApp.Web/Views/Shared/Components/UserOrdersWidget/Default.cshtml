@@ -1,0 +1,8 @@
+﻿@model UserOrdersWidgetViewModel
+
+@foreach (var order in Model.Orders)
+{
+    <h1>@order.ItemTitle</h1>
+    <span class="label label-info">@order.Status</span>
+    <span class="label label-info">@order.PaymentStatus</span>
+}

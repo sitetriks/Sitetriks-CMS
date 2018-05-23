@@ -1,0 +1,73 @@
+﻿@model SiteTriks.Models.Libraries.CreateLibraryViewModel
+
+@{
+    ViewBag.Title = "Create Library";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Create", "Libraries", FormMethod.Post, new { id = "create-library-form" }))
+    {
+
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Library</button>
+        </div>
+        @Html.AntiForgeryToken()
+
+        @*<div id="alerts"></div>*@
+
+        <div class="page-properties">
+            <hr />
+            <span>@ViewBag.Message</span>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-name" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <strong><span id="validation-name" class="text-danger"></span></strong>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Prefix, "Url Prefix", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-prefix" } })
+                @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                <strong><span id="validation-prefix" class="text-danger"></span></strong>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.AllowedTypes, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownListFor(model => model.AllowedTypes, new List<SelectListItem>() {
+                                                                   new SelectListItem() { Text= "Image",Value = "0"},
+                                                                   new SelectListItem() { Text= "Document",Value = "1"},
+                                                                   new SelectListItem() { Text= "Video",Value = "3"},
+                                                                   new SelectListItem() { Text= "Svg",Value = "4"}
+                                                               }, new { @class = "form-control inline-block", id="library-type" })
+                @Html.ValidationMessageFor(model => model.AllowedTypes, "", new { @class = "text-danger" })
+                <span id="allowed-types"></span>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => Model.Tags, htmlAttributes: new { @class = "control-label col-xs-2" })
+                @Html.EditorFor(model => Model.Tags, new { htmlAttributes = new { @class = "form-control inline-block", id = "tags" } })
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script src="~/js/tags.js"></script>
+    <script src="~/js/sitetriks/libraries.js"></script>
+    <script>
+        $(document).ready(function () {
+            Tags.init();
+
+            createLibrary('@Url.Action("ValidateUrl", "Pages")', '@Url.Action("IsNameAvaliable", "Libraries")');
+        });
+    </script>
+}

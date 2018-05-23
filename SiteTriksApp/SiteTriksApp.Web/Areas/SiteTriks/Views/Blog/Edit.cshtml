@@ -1,0 +1,61 @@
+﻿@model SiteTriks.BlogModule.Models.Blog.BlogPostViewModel
+
+@{
+    ViewBag.Title = "Edit Blog Post";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <input type="submit" value="Save" class="btn-nav-2" />
+        </div>
+
+        <div class="page-properties">
+            <hr />
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", id = "title" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Summary, new { @class = "form-control", id = "summary-area" })
+                    @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control", id = "content-area" })
+                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script src="~/js/text-editor.js"></script>
+    <script src="~/js/sitetriks/blog.js"></script>
+    <script type="text/javascript">
+        createEditBlog();
+    </script>
+}

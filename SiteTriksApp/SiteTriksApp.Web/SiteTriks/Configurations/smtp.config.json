@@ -1,0 +1,7 @@
+{
+  "Port": 26,
+  "Host": "127.0.0.1",
+  "Username": "root",
+  "Password": "123456",
+  "EnableSsl": false
+}

@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-SiteTriksApp.Web-F71A9A06-9896-4C70-BC66-76DAE646A823</UserSecretsId>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Content Remove="logs\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <None Remove="logs\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.6.17" />
+    <PackageReference Include="Hangfire.MySql.Core" Version="2.1.5" />
+    <PackageReference Include="HangFire.SqlServer" Version="1.6.17" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\SiteTriks\Controllers\DashboardWidgets\ViewComponents\" />
+    <Folder Include="Areas\SiteTriks\Controllers\ViewComponents\" />
+    <Folder Include="Areas\SiteTriks\Data\" />
+    <Folder Include="Areas\SiteTriks\Helpers\" />
+    <Folder Include="Extensions\WidgetModels\" />
+    <Folder Include="Views\Shared\Components\DocumentationWidget\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\images\contact-us\" />
+    <Folder Include="wwwroot\lib\custom\slider-master\" />
+    <Folder Include="wwwroot\lib\custom\slick\" />
+    <Folder Include="wwwroot\lib\custom\tinymce\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\modules\module-builder.js" />
+    <None Include="wwwroot\js\modules\scroll-control.js" />
+    <None Include="wwwroot\lib\custom\codemirror\mode\css.js" />
+    <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
+  </ItemGroup>
+
+ <!-- <Target Name="IncludePrecompiledViewsInPublishOutput" DependsOnTargets="_MvcRazorPrecompileOnBuild" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
+    <ItemGroup>
+      <_PrecompiledViewsOutput Include="$(MvcRazorOutputPath)$(MSBuildProjectName).PrecompiledViews.DLL" />
+      <_PrecompiledViewsOutput Include="$(MvcRazorOutputPath)$(MSBuildProjectName).PrecompiledViews.pdb" />
+      <ContentWithTargetPath Include="@(_PrecompiledViewsOutput->'%(FullPath)')" RelativePath="%(_PrecompiledViewsOutput.Identity)" TargetPath="%(_PrecompiledViewsOutput.Filename)%(_PrecompiledViewsOutput.Extension)" CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>  -->
+</Project>

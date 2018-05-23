@@ -1,0 +1,98 @@
+﻿@model IEnumerable<SiteTriks.Models.Libraries.LibraryIndexViewModel>
+
+@{
+    ViewBag.Title = "File Libraries";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <button class="btn-nav-2" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'grid', null, '#libs')">Upload file</button>
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Library</a>
+    <select id="libs" class="form-control inline-block">
+        <option value="">All files</option>
+        @foreach (var item in Model)
+        {
+            <option value="@item.Id" data-url="@item.Prefix">@item.Name</option>
+        }
+    </select>
+    <a id="btn-edit-lib" class="btn-nav-2" hidden>Edit</a>
+    <a id="btn-delete-lib" class="btn-nav-2" hidden>Delete</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid">
+    </div>
+</div>
+
+@Html.Partial("UploadTemplates/FileUploadModal")
+
+@section scripts{
+    <script type="text/javascript" src="~/js/files-handler-2.2.js"></script>
+    <script src="~/js/sitetriks/libraries.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var grid = Grid();
+            var data = { link: "/sitetriks/files/grid", serverSide: false }
+            var columns = [{
+                name: 'id',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: "title",
+                title: "Title",
+                type: 'string',
+                filter: true,
+                sort: true,
+                extraFields: ["url"],
+                size: 3,
+                headerTemplate: '<b>#item#</b>', // #item# is the placeholder for the content
+                contentTemplate: '<a href="/sitetriks/files/edit?url=#item0#">#item#</a>'
+            },
+            {
+                name: "url",
+                title: "Url",
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 2,
+                contentTemplate: '<span class="text-danger">#item#</span>',
+                headerTemplate: '<b>#item#</b>'
+			},
+			{
+				name: "url",
+				title: "Copy",
+				type: 'string',
+				filter: false,
+				sort: false,
+				size: 1,
+				headerTemplate: '<b class="copy">#item#</b>',
+				contentTemplate: '<button title="Copy link to clipboard" class="btn btn-info copy" data-url="#item#"><i class="fa fa-clipboard" aria-hidden="true"></i></button>'
+			},
+            {
+                name: "url",
+                title: "Preview",
+                size: 3,
+                type: 'image',
+                source: '/files/#item#',
+                headerTemplate: '<b>#item#</b>',
+                contentTemplate: '<img src="#item#" width="300" class="display-image" onerror="$(this).css(\'width\', \'100px\'); this.src = \'/Images/default-document-image.png\';" />'
+            }];
+
+            let buttons = [{
+                title: 'Delete',
+                postUrl: '/sitetriks/files/delete',
+                type: 'danger',
+                callback: function (res) {
+                    console.log(res);
+                }
+            }];
+
+            var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+            initLibraries(grid, config);
+        });
+    </script>
+}

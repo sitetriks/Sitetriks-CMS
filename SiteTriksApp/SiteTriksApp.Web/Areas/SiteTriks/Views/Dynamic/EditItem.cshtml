@@ -1,0 +1,122 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicItemViewModel
+
+@{
+    ViewBag.Title = "Edit class item";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to assemblies</a>
+    <a href="@Url.Action("ClassDetails", new { assemblyName = Model.AssemblyName, className = Model.DynamicClass.Name })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to Details</a>
+    <a class="btn-nav-2" id="btn-edit-item">Save</a>
+</div>
+
+<div class="backend-wrapper">
+    <h3>@Model.DynamicClass.Title</h3>
+    <div>
+        <span id="edit-class-notifier" class="text-danger"></span>
+    </div>
+    <div class="page-properties">
+        @foreach (var prop in Model.DynamicClass.Properties)
+        {
+            var v = Model.ClassHelper.Type.GetProperty(prop.Name).GetValue(Model.Item);
+            string value = string.Empty;
+            if (v != null)
+            {
+                value = v.ToString();
+            }
+
+            <div class="form-group row">
+                @if (prop.Name == "LinkId")
+                {
+                    <label class="col-md-2">Link: </label>
+                    <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" data-link="@value" value="@(value@*Html.Action("GetLinkValue",new { id = value })*@)" />
+                }
+                else if (prop.Name == "Images")
+                {
+                    <input class="class-property" id="dynamic-images" data-name="@prop.Name" data-type="@prop.Type" value="@value" hidden />
+                    <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'dynamic-images')">Images</button>
+                    <div id="dynamic-images-container">
+                        @* TODO: move to file-handler logic*@
+                        @foreach (var image in value.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            <div class="news-listed-images-container">
+                                <div class="news-listed-image-delete" data-id="@image" data-field="dynamic-images"><span class="glyphicon glyphicon-remove"></span></div>
+                                <img src="/files/id/@image" class="display-image">
+                            </div>
+                        }
+                    </div>
+                }
+                else if (prop.Type == "string-html")
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <div class="col-md-10" style="padding-left:0;">
+                        <textarea class="class-property" id="area-@prop.Name" data-name="@prop.Name" data-type="@prop.Type">@Html.Raw(value)</textarea>
+                    </div>
+                }
+                else if (prop.Type == "bool")
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <select class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type">
+                        <option value="0">False</option>
+                        @if (value.ToLower() == "true")
+                        {
+                            <option value="1" selected>True</option>
+                        }
+                        else
+                        {
+                            <option value="1">True</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <input class="class-property form-control inline-block " data-name="@prop.Name" data-type="@prop.Type" value="@value" />
+                }
+            </div>
+        }
+    </div>
+
+    @Html.Partial("UploadTemplates/FileHandlerModal")
+</div>
+
+@section scripts{
+    <script src="~/js/leaving-warning.js"></script>
+    <script type="text/javascript" src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/js/files-handler-2.2.js"></script>
+    <script type="text/javascript" src="~/js/text-editor.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/dynamics.js"></script>
+    <script type="text/javascript">
+        Loader.show('#fff');
+
+        $(document).ready(function (ev) {
+        @foreach (var item in Model.DynamicClass.Properties.Where(p => p.Type == "string-html"))
+        {
+            <text>
+            textEditor.init('#area-@item.Name', 500, 300, Loader.hide);
+            </text>
+        }
+
+            @if (Model.DynamicClass.Properties.Where(p => p.Type == "string-html").Count() == 0)
+        {
+            <text>
+            Loader.hide();
+            </text>
+        }
+
+            var id = '@Model.ClassHelper.Type.GetProperty("Id").GetValue(Model.Item)';
+
+            var className = '@Model.DynamicClass.Name';
+
+            var assemblyName = '@Model.AssemblyName';
+
+            editItem(id, className, assemblyName);
+        });
+    </script>
+}

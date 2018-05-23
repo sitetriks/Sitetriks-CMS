@@ -1,0 +1,58 @@
+﻿@model SiteTriks.SiteMapModule.Models.DashboardSiteMapViewModel
+
+<div class="text-center">
+    <div>
+        <div class="dashboard-table">
+            <div class="panel panel-primary" style="border: none;">
+                <div class="controle-header panel-heading panel-heading-landing">
+                    <img src="~/images/dragable.svg">
+                    <h1 class="panel-title panel-title-landing">
+                        Last SiteMap Updates
+                    </h1>
+                </div>
+                <div class="controle-panel-heading panel-heading panel-heading-landing-box">
+                    Show last SiteMap updates
+                </div>
+                <div class="panel-body panel-body-landing">
+                    @if (Model.ScheduledTime == null)
+                    {
+                        <div>
+                            Sitemap won't be updated automatically
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            Next sitemap update:
+                            <br>
+                            @String.Format("{0:dd/MMM - H}h", Model.ScheduledTime.Value)
+                        </div>
+                    }
+                    <table class="table">
+                        @if (Model.Files.Count > 0)
+                        {
+                            foreach (var file in Model.Files)
+                            {
+                                <tr>
+                                    <td width="90px">
+                                        <b>@(file.Title + file.Extension)</b>
+                                    </td>
+                                    <td>
+                                        <b>@String.Format("{0:dd/MMM - H}h", file.DateModified)</b>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>No project files</tr>
+                        }
+                    </table>
+                </div>
+                <div class="panel-footer panel-footer-landing">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

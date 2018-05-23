@@ -1,0 +1,187 @@
+﻿@inject IJsonHelper Json;
+
+@model SiteTriks.Models.Pages.EditPageContentViewModel
+
+@{
+    ViewBag.Title = "Edit Content";
+}
+
+@section Styles {
+    <link href="~/css/page-content-edit.css" rel="stylesheet">
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+    <link href="~/css/layout.css" rel="stylesheet" />
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+    <a id="btn-save-draft" class="btn-nav-2"><span class="st-icon-save-draft"></span>Save Draft</a>
+    <a id="btn-publish" class="btn-nav-2"><span class="st-icon-publish"></span>Publish</a>
+    <div class="nav-2-right">
+        <div class="languages-select-wrapper">
+            <select id="languages" class="form-control inline-block select-page-language"></select>
+            <div class="triangles">
+                <div class="triangle-up"></div>
+                <div class="triangle-down"></div>
+            </div>
+        </div>
+        <a id="btn-preview-page" class="btn-nav-2">
+            <span class="st-icon-preview single"></span>
+            <span class="tooltiptext">Preview current page</span>
+        </a>
+        <a id="btn-reset" class="btn-nav-2">
+            <span class="st-icon-reset single"></span>
+            <span class="tooltiptext">Reset</span>
+        </a>
+        <a id="btn-edit-page" href="@Url.Action("Edit", new { url = Model.Url })" class="btn-nav-2">
+            <span class="st-icon-properties single"></span>
+            <span class="tooltiptext">Edit the current page.</span>
+        </a>
+    </div>
+
+    <div class="page-title"><span>@Model.EnTitle</span></div>
+</div>
+
+<div class="backend-wrapper">
+
+    <div class="row">
+        <div class="col-xs-10">
+            <div>
+                <div class="inline-block revision-history-wrapper">
+                    <a class="btn btn-revision">
+                        Revision History<span class="glyphicon glyphicon-menu-right"></span>
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                    </a>
+                    <div id="version-control" hidden>
+                        <span>Ver.</span>
+                        <select id="versions" class="form-control inline-block"></select>
+                        <a id="btn-preview-version" class=""><span class="st-icon-preview single"></span><span class="tooltiptext">Preview the selected version</span></a>
+                        <a id="btn-revert-version" class=""><span class="st-icon-reset single"></span><span class="tooltiptext">Revert the selected version</span></a>
+                    </div>
+                </div>
+                <div class="resolutions-wrapper">
+                    <span class="rs-icon-mobile resolution" data-type="xs"></span>
+                    <span class="rs-icon-tablet resolution" data-type="sm"></span>
+                    <span class="rs-icon-desktop resolution" data-type="md"></span>
+                    <span class="rs-icon-desktop-hd resolution selected" data-type="lg"></span>
+                </div>
+            </div>
+            <div id="preview-layout" class="unselectable" hidden>
+                <div class="rows-holder"></div>
+                <div>
+                    <div class="add-row"><span class="glyphicon glyphicon-plus"></span></div>
+                </div>
+            </div>
+            <div id="preview-container"></div>
+        </div>
+        <div class="col-xs-2 widgets-list">
+            <div class="toggle-layout-content">
+                <div class="selected-option" data-type="content">
+                    <div class="circle"></div>
+                    <a class="show-content">Content</a>
+                </div>
+                <div data-type="layout">
+                    <a class="show-layout">Layout</a>
+                    <div class="circle"></div>
+                </div>
+            </div>
+            @await Component.InvokeAsync("ShowWidgets")
+            <div id="layout-properties" hidden>
+                <hr />
+                <a id="btn-save-layout" class="btn btn-backend hidden" >Save Layout</a>
+                <div id="main-layout-options"></div>
+
+                <!-- Delete confirmation modal -->
+                <div id="layout-delete-confirmation" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete confirmation modal</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>With deletion of rows/cols you will delete and inner content! Are you sure you want to continue?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="delete-layout-content" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("AddWidget")
+@Html.Partial("EditWidget")
+
+<div id="delete-confirm" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirm delete</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you absolutely sure you want to <b>delete?</b></p>
+                <input type="button" id="delete-confirm-yes" value="Yes, delete widget" class="btn btn-danger" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let customWidgets = {};
+    </script>
+    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script src="~/js/modules/utils.js"></script>
+    <script src="~/js/modules/widgets.js"></script>
+    <script src="~/js/modules/layout-control.js"></script>
+    <script src="~/js/modules/module-builder.js"></script>
+    <script src="~/js/widgets-draggable.js"></script>
+    <script src="~/js/text-editor.js"></script>
+    <script src="~/js/files-handler-2.2.js"></script>
+    <script src="~/js/shared-blocks.js"></script>
+    <script src="~/js/multiselect-setup.js"></script>
+    <script src="~/js/validator.js"></script>
+    <script src="~/js/sitetriks/pages.js"></script>
+
+    @foreach (var script in Model.WidgetsScripts)
+    {
+        string src = $"/js/widgets/{script}.js";
+        <script src="@src"></script>
+    }
+
+    <script type="text/javascript">
+        var pageContent = @Html.Raw(Json.Serialize(Model.Contents));
+        var originalPageContent = JSON.stringify(@Html.Raw(Json.Serialize(Model.Contents)));
+        var url = '@Model.Url'.replace("/", "%2F");
+
+        //===================================================================================================
+        // Widgets 2.0
+
+        var w = ModuleBuilder.createWidgets('#add-widget-container', customWidgets);
+
+        //===================================================================================================
+
+        $(document).ready(function (ev) {
+            var currentLanguage = '@Model.Culture';
+            var currentVersion = '@Model.Version';
+            var currentCulture = '@Model.Culture';
+            var currentTemplate = '@Model.Template';
+
+            editPageContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w);
+        });
+    </script>
+}
+

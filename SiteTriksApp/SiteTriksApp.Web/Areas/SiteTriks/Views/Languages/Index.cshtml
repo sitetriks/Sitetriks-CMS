@@ -1,0 +1,73 @@
+﻿@model IEnumerable<SiteTriks.Models.Languages.LanguageViewModel>
+
+@{
+    ViewBag.Title = "Languages";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Language</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var grid = Grid();
+        var data = { link: "/sitetriks/languages/grid", serverSide: false }
+        var columns = [
+            {
+                name: 'id',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: "culture",
+                title: "Culture",
+                type: 'string',
+                filter: true,
+                sort: true,
+                extraFields: ["id"],
+                size: 2,
+                headerTemplate: '<strong>#item#</strong>', // #item# is the placeholder for the content
+                contentTemplate: '<a href="@Url.Action("Edit")/#item0#">#item#</a>'
+            },
+            {
+                name: "urlPrefix",
+                title: "Url Prefix",
+                type: 'string',
+                size: 2,
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: "isDefault",
+                title: '',
+                type: 'bool',
+                size: 1,
+                extraFields: ["id"],
+                headerTemplate: '<span class="glyphicon glyphicon-home"></span>',
+                trueTemplate: '<span class="glyphicon glyphicon-star"></span>',
+                falseTemplate: `<a href="@Url.Action("SetDefault")/#item0#" title="WARNING: Changing default language will restart the application!" onclick="Loader.show(true)">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </a>`,
+            }
+        ];
+
+        let buttons = [
+            {
+                title: 'Delete',
+                postUrl: '/sitetriks/languages/delete',
+                type: 'danger'
+            }
+        ];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+        let obj = grid.init('.grid', config);
+    </script>
+}

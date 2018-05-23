@@ -1,0 +1,45 @@
+﻿@model SiteTriks.Models.Roles.EditRoleViewModel
+
+@{
+    ViewBag.Title = "Edit Role";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Edit", "Roles", FormMethod.Post, new { id = "edit-roles-form" }))
+    {
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index", "Roles")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>EditRoleViewModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id = "name" } })
+                    <span class="text-danger">@Model.Message</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    <script type="text/javascript" src="~/js/sitetriks/role.js"></script>
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script>
+        editRole();
+    </script>
+}

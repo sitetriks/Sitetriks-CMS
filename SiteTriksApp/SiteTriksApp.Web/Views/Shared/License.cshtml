@@ -1,0 +1,13 @@
+﻿@model string
+
+<div class="jumbotron">
+    <h1>@Model</h1>
+
+    <div>
+        <a href="javascript:void(0)">Click here for more information, new license or renewal.</a>
+    </div>
+
+    <div>
+        @Html.ActionLink("Recheck license?", "CheckLicense", "Home")
+    </div>
+</div>

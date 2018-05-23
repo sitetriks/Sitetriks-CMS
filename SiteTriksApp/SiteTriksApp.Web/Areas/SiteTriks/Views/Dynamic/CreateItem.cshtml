@@ -1,0 +1,95 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicClass
+
+@{
+    ViewBag.Title = "Create item";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to assemblies</a>
+    <a href="@Url.Action("ClassDetails", new { assemblyName = ViewBag.AssemblyName, className = Model.Name })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to Details</a>
+    <a class="btn-nav-2" id="btn-create-item"><span class="glyphicon glyphicon-plus"></span>Create Item</a>
+</div>
+
+<div class="backend-wrapper">
+    <div>
+        <span id="create-class-notifier" class="text-danger"></span>
+    </div>
+
+    <div class="page-properties">
+        @foreach (var prop in Model.Properties)
+        {
+            <div class="form-group row">
+                @if (prop.Name == "LinkId")
+                {
+                    <label class="col-md-2">Link: </label>
+                    <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
+                }
+                else if (prop.Type == "images")
+                {
+                    <input class="class-property" id="dynamic-images" data-name="@prop.Name" data-type="@prop.Type" hidden />
+                    <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'dynamic-images')">Images</button>
+                    <div id="dynamic-images-container"></div>
+                }
+                else if (prop.Type == "string-html")
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <div class="col-md-10" style="padding-left:0;">
+                        <textarea class="class-property" id="area-@prop.Name" data-name="@prop.Name" data-type="@prop.Type"></textarea>
+                    </div>
+                }
+                else if (prop.Type == "bool")
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <select class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type">
+                        <option value="0">False</option>
+                        <option value="1">True</option>
+                    </select>
+                }
+                else
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
+                }
+            </div>
+        }
+    </div>
+
+    @Html.Partial("UploadTemplates/FileHandlerModal")
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/js/files-handler-2.2.js"></script>
+    <script type="text/javascript" src="~/js/text-editor.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/dynamics.js"></script>
+    <script type="text/javascript">
+        Loader.show('#fff');
+
+        $(document).ready(function (ev) {
+            @foreach (var item in Model.Properties.Where(p => p.Type == "string-html"))
+            {
+                <text>
+                textEditor.init('#area-@item.Name', 500, 300, Loader.hide);
+                </text>
+            }
+
+            @if (Model.Properties.Where(p => p.Type == "string-html").Count() == 0)
+            {
+                <text>
+                Loader.hide();
+                </text>
+            }
+        })
+
+        var modelName = '@Model.Name';
+        var assemblyName = '@ViewBag.AssemblyName';
+
+        createItem(modelName, assemblyName);
+    </script>
+}

@@ -1,0 +1,79 @@
+﻿@model SiteTriks.DocumentationModule.Models.EditTopicViewModel
+
+@{
+    ViewBag.Title = "Edit Topic Versions";
+}
+
+@section Styles {
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+    @*<div id="alerts"></div>*@
+
+    @using (Html.BeginForm("Edit", "Documentation", FormMethod.Post, new { id = "form-edit-versions" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <input type="submit" value="Save" class="btn-nav-2" />
+        </div>
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            <input id="contentId" name="ContentId" hidden />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <span id="Name">@Model.Name</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Version">Versions</label>
+                <div class="col-md-10">
+                    <select id="Version" class="form-control inline-block" name="Version">
+                        @foreach (var item in Model.Versions)
+                        {
+                            <option value="@item.Id" data-content-id="@item.TopicContentId">@item.Version</option>
+                        }
+                    </select>
+
+                    <a class="btn btn-success" id="btn-add-version">Add Version</a>
+                    <a class="btn btn-danger" id="btn-delete-version">Delete Version</a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Title" class="control-label col-md-2">Title</label>
+                <div class="col-md-10">
+                    <input id="Title" name="Title" class="form-control" />
+                </div>
+            </div>
+
+            <div><strong>Content Name: </strong><span id="contentName"></span></div>
+            <a class="btn btn-warning" id="btn-edit-content">Edit Content</a>
+            <div id="Content" style="border: 1px solid black;"></div>
+        </div>
+    }
+
+    <div class="grid"></div>
+</div>
+
+@section scripts{
+    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script type="text/javascript" src="~/js/text-editor.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/documentation.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function (ev) {
+            editDocumentation(ev);
+        });
+    </script>
+}

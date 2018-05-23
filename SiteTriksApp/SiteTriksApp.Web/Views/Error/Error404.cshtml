@@ -1,0 +1,19 @@
+﻿@{
+
+    if (ViewBag.Preview == "partial")
+    {
+        Layout = null;
+    }
+    else
+    {
+        ViewBag.Title = "Error 404";
+        Layout = "~/Views/Shared/_FrontEndLayout.cshtml";
+    }
+}
+
+<content>
+    <div class="row main-content content-placeholder">
+        <h1 class="text-danger">Error 404!</h1>
+        <h2 class="text-danger">Page Not Found!</h2>
+    </div>
+</content>

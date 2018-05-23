@@ -1,0 +1,38 @@
+﻿@model SiteTriks.Models.Pages.CreatePageTemplateMainViewModel
+
+@{
+    ViewBag.Title = "Edit Template Properties";
+}
+
+@section Styles {
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="~/css/navbar-remove.css" rel="stylesheet" />
+}
+
+<div class="backend-wrapper">
+
+    @using (Html.BeginForm("Edit", "Templates", FormMethod.Post, new { id = "edit-page-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <a href="@Url.Action("EditContent", new { url = Model.PageViewModel.Url })" class="btn-nav-2">Content</a>
+            <input type="submit" id="submit" value="Save" class="btn-nav-2" />
+        </div>
+
+        <strong><span class="text-danger" id="notifier"></span></strong>
+
+        @Html.EditorFor(m => Model, "EditPageTemplateViewModel")
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/leaving-warning.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="~/js/sitetriks/templates.js"></script>
+    <script type="text/javascript">
+        editTemplate('@Url.Action("ValidateUrl", "Templates")');
+    </script>
+}

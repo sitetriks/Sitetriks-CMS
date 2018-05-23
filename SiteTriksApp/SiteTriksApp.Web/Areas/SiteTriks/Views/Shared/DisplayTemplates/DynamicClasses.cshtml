@@ -1,0 +1,20 @@
+﻿@model IEnumerable<SiteTriks.Dynamic.Models.DynamicClass>
+
+<div class="dynamic-table">
+    @foreach (var item in Model)
+    {
+        string title = string.IsNullOrWhiteSpace(item.Title) ? item.Name : item.Title;
+        <div class="row">
+            <div class="col-xs-6">
+                <h5>
+                    @Html.DisplayFor(modelItem => title)
+                </h5>
+            </div>
+            <div class="col-xs-6">
+                @Html.ActionLink("Edit", "ClassDetails", new { assemblyName = ViewData["assemblyName"], className = item.Name }, new { @class = "btn btn-backend" })
+                @Html.ActionLink("Configuration", "EditClass", new { assemblyName = ViewData["assemblyName"], className = item.Name }, new { @class = "btn btn-backend" })
+                @Html.ActionLink("Delete", "DeleteClass", new { assemblyName = ViewData["assemblyName"], className = item.Name }, new { @class = "btn btn-backend delete" })
+            </div>
+        </div>
+    }
+</div>

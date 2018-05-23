@@ -1,0 +1,73 @@
+﻿@model SiteTriks.Models.DynamicViewViewModel
+
+@{
+    ViewBag.Title = "Edit Dynamic View Item";
+}
+
+@section Styles {
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Edit", "DynamicViews", FormMethod.Post, new { id = "edit-dynamic-view-form", encoding = "multipart/form-data", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="fixed-top-2">
+            <p>@ViewBag.Title</p>
+
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to List</a>
+            <input type="submit" value="Edit" id="create-news" class="btn-nav-2" />
+        </div>
+
+        <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
+        <div class="page-properties">
+            @Html.HiddenFor(m => Model.Id)
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.Name, new { htmlAttributes = new { @class = "form-control title-field inline-block", Id = "name" } })
+                    <strong><span class="text-danger"></span></strong>
+                    @Html.ValidationMessageFor(m => Model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.WidgetName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <select asp-for="WidgetName">
+                        @foreach (var widgetName in Model.WidgetNames)
+                        {
+                            <option value="@widgetName">@widgetName</option>
+                        }
+                    </select>
+                    <strong><span class="text-danger"></span></strong>
+                    @Html.ValidationMessageFor(m => Model.WidgetName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <pre id="editor">@Model.Content</pre>
+                    <textarea hidden="hidden" asp-for="Content"></textarea>
+                    @Html.ValidationMessageFor(m => Model.Content, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<br />
+
+@section Scripts{
+    <script src="~/js/leaving-warning.js"></script>
+    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="~/lib/custom/ace/ace.js" charset="utf-8"></script>
+    <script src="~/lib/custom/ace/ext-language_tools.js" charset="utf-8"></script>
+
+    <script src="~/js/razor-views-editor.js" charset="utf-8"></script>
+    <script>
+        RazorViewsEditor.init(`@(Html.Raw(Model.Content))`, "#edit-dynamic-view-form", "#Content");
+    </script>
+}

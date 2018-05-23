@@ -1,0 +1,405 @@
+﻿#tableHeader {
+    border: 1px solid #eeeeee;
+    font-size: 20px;
+}
+
+.first-header-row {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+	.first-header-row .search-field {
+		border-radius: 3px;
+		width: 70%;
+		border: 2px solid #d4d4d4;
+		background-color: #f2f2f2;
+		text-align: left;
+		/*color: #cccccc;*/
+		font-size: 14px;
+		text-align: left;
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+
+        .first-header-row .search-field::-moz-placeholder { /* Firefox 19+ */
+            color: #cccccc;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .first-header-row .search-field:-moz-placeholder { /* Firefox 18- */
+            color: #cccccc;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .first-header-row .search-field::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: #cccccc;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .first-header-row .search-field:-ms-input-placeholder { /* IE 10+ */
+            color: #cccccc;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+.second-header-row li {
+    padding-left: 20px;
+}
+
+.bodyRow {
+    line-height: normal;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.bodyRow .col-1,
+.bodyRow .col-2,
+.bodyRow .col-3 {
+    /*max-height: 100px;*/
+    overflow: hidden;
+}
+
+.bodyRow .glyphicon.glyphicon-star,
+.bodyRow .glyphicon.glyphicon-star-empty {
+    padding-left: 1.4px;
+}
+
+tbody {
+    margin-bottom: 50px;
+}
+
+#pagerContainer {
+    font-size: 16px;
+}
+
+#pageSize, #pageNumber, #pagesCount {
+    display: inline-block;
+    border: 2px solid #737373;
+    border-radius: 10%;
+    padding: 3px 10px;
+}
+
+#pageSize {
+    margin-right: 10px;
+    border-radius: 15%;
+    padding: 2px 5px;
+    color: #878787;
+    border-color: #878787;
+}
+
+#pageNumber {
+    margin-left: 5px;
+    background-color: #ffffff;
+    color: #878787;
+    border-radius: 20%;
+    padding-left: 15px;
+    border-color: #878787;
+    border-right: none;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding-right: 0;
+}
+
+#pagesCount {
+    margin-right: 5px;
+    background-color: #ffffff;
+    color: #878787;
+    border-radius: 20%;
+    padding-right: 15px;
+    border-color: #878787;
+    border-left: none;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    padding-left:0;
+}
+
+#pagesCount::before {
+    content: '/';
+}
+
+    #pageSize:focus, #pageNumber:focus, #pagesCount:focus {
+        outline: none;
+    }
+
+.btn-pager {
+    font-size: 20px;
+    color: #428BCA;
+    width: 20px;
+}
+
+    .btn-pager:hover {
+        font-size: 21px;
+        text-shadow: 0 1px;
+    }
+
+.btn-disabled {
+    color: #aaa;
+}
+
+    .btn-disabled:hover {
+        font-size: 20px;
+        text-shadow: none;
+    }
+
+/*.search-field {
+    border-radius: 3px;
+    width: 200px;
+    border: 2px solid #158cba;
+}*/
+
+.search-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+    .search-container .search-field {
+        height: 100%;
+    }
+
+.search-field:active, .search-field:focus {
+    border: 3px solid #158cba;
+    outline: none;
+}
+
+.buttons-row {
+    color: #ffffff;
+    background-color: #c9c9c9;
+    /*border-color: transparent;*/
+    /*border-bottom: 1px solid transparent;*/
+    border: 2px solid #b0b0b0;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    padding: 5px;
+    padding-left: 35px;
+}
+
+.grid .btn {
+    margin: 5px;
+    padding: 5px 12px 5px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: #8c8c8c;
+    color: #fff;
+}
+
+    .grid .btn:hover {
+        background-color: gray;
+    }
+
+.grid .btn-grid {
+    background-color: #529ce4;
+    color: #ffffff;
+    border: 1px solid #758fa8;
+}
+
+    .grid .btn-grid .glyphicon {
+        margin-right: 10px;
+    }
+
+.buttons-row .btn:focus, #tableHeader .btn:focus, .child-expand:focus {
+    outline: none;
+}
+
+.tableBody .bodyRow .btn-xs.child-expand {
+    border: none;
+    border: 2px solid #6a6a6a;
+    background-color: #529ce4;
+    color: #ffffff;
+    border-color: #6a6a6a;
+    border-radius: 5px;
+    height: 16px;
+    width: 17px;
+    text-align: center;
+    padding-left: 3px;
+    padding-top: 0;
+    box-shadow: unset !important;
+    font-size: 8px;
+    display: inline-block;
+    margin-right: -20px;
+    margin-top: 3px;
+    position: absolute;
+    /*margin-top: -30px;*/
+}
+
+.tableBody .bodyRow.child .btn-xs.child-expand {
+    display: inline-block;
+    /*margin-left: 15px;*/
+}
+
+
+
+#pagerContainer {
+    height: 60px;
+    padding: 12px;
+    background-color: #eeeeee;
+    border-top: 1px solid transparent;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top: 2px solid #b3b3b3;
+    border-bottom: 1px solid #cfcfcf;
+    border-right: 1px solid #cfcfcf;
+    border-left: 1px solid #cfcfcf;
+    text-align: center;
+}
+
+    #pagerContainer #nextPageArrow {
+        display: inline-block;
+        /*margin-top: 10px;*/
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-left: 12px solid #959595;
+        border-bottom: 8px solid transparent;
+        margin-bottom: -2px;
+    }
+
+        #pagerContainer #nextPageArrow.btn-disabled {
+            opacity: 0;
+        }
+
+    #pagerContainer #previousPageArrow {
+        display: inline-block;
+        /*margin-top: 10px;*/
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-right: 12px solid #959595;
+        border-bottom: 8px solid transparent;
+        margin-bottom: -2px;
+    }
+
+        #pagerContainer #previousPageArrow.btn-disabled {
+            opacity: 0;
+        }
+
+.tableBody {
+    border: 1px solid #eeeeee;
+    margin-bottom: 30px;
+    /*line-height: 16px;*/
+}
+
+    .tableBody .glyphicon.glyphicon-star-empty {
+        color: #383838;
+    }
+
+.bodyRow, .second-header-row {
+	padding-right: 10px;
+}
+
+.bodyRow li {
+    padding-left: 20px;
+}
+
+.bodyRow:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.bodyRow.darkColor {
+    padding-right: 0;
+}
+
+    /*.bodyRow.darkColor:nth-of-type(even) {
+        background-color: transparent;
+        background-color: #f9f9f9;
+    }
+
+    .bodyRow.darkColor:nth-of-type(odd) {
+        background-color: transparent;
+        background-color: white !important;
+    }*/
+
+.vertical-line {
+    width: 3px;
+    height: 37px;
+    background-color: black;
+    position: absolute;
+}
+
+.grid img {
+    margin: 5px;
+    /*width: 90%;*/
+}
+
+.grid input[type="checkbox"] {
+    /*width: 20px;*/
+    /*height: 20px;*/
+    margin-left: 30px;
+}
+
+.search-icon-image {
+    background-image: url('../images/search icon white.svg');
+    background-repeat: no-repeat;
+    height: 19px;
+    width: 14px;
+    font-size: 15px;
+    display: inline-block;
+    background-size: 100%;
+}
+
+.search-container .search-btn {
+    margin-left: -2px;
+    display: none;
+    padding: 2px 10px;
+}
+
+@media screen and (max-width: 1358px) {
+	.search-field {
+        /*width: 100px;*/
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 961px) {
+    .second-header-row .col-1,
+    .second-header-row .col-2,
+    .second-header-row .col-3,
+    .second-header-row .col-4,
+    .second-header-row .col-5,
+    .second-header-row .col-6,
+    .bodyRow .col-1,
+    .bodyRow .col-2,
+    .bodyRow .col-3,
+    .bodyRow .col-4,
+    .bodyRow .col-5,
+    .bodyRow .col-6 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+	.search-container .search-btn {
+		display: block;
+	}
+
+	.search-field {
+		display: none;
+	}
+}
+
+@media (max-width: 960px) and (min-width: 678px) {
+    .second-header-row .col-1,
+    .second-header-row .col-2,
+    .second-header-row .col-3,
+    .second-header-row .col-4,
+    .second-header-row .col-5,
+    .second-header-row .col-6,
+    .bodyRow .col-1,
+    .bodyRow .col-2,
+    .bodyRow .col-3,
+    .bodyRow .col-4,
+    .bodyRow .col-5,
+    .bodyRow .col-6 {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 691px) {
+    .grid * {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,46 @@
+﻿@model SiteTriks.Models.DashboardConfiguration.DashboardConfigIndexViewModel
+
+@{
+    ViewBag.Title = "Dashboard widgets configs";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+    <input id="save-dashboard-config" type="button" value="Save" class="btn btn-success" />
+</div>
+
+<div class="backend-wrapper">
+    <div class="dashboard-config-wrapper">
+        @foreach (var category in Model.Categories)
+        {
+            <div class="checkboxes">
+                <div class="category-title" style="">
+                    <p>@category</p>
+                </div>
+
+                <ul class="list-unstyled">
+                    @foreach (var dashboardWidget in Model.DashboardWidgets.Where(x => x.Category == category).ToList())
+                    {
+                        @if (Model.SelectedDashboardWidgets.Contains(dashboardWidget.DisplayName))
+                        {
+
+                            <li>@Html.CheckBox(dashboardWidget.DisplayName, true) @dashboardWidget.DisplayName</li>
+                        }
+                        else
+                        {
+                            <li>@Html.CheckBox(dashboardWidget.DisplayName) @dashboardWidget.DisplayName</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/multiselect-setup.js"></script>
+    <script src="~/js/sitetriks/dashboard-configuration.js"></script>
+    <script>
+        initConfiguration();
+    </script>
+}

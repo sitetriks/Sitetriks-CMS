@@ -1,0 +1,75 @@
+﻿@inject SiteTriks.Configuration.LicenseManager LicenseManager
+
+@model List<SiteTriks.Models.DashboardConfiguration.DashboardConfigurationModel>
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+</div>
+
+<div class="dashboard-wrapper">
+    <div class="row">
+        <div class="side-navigation col-md-3 col-lg-2 col-sm-3 col-xs-3">
+            @await Html.PartialAsync("SideNavigation")
+        </div>
+        <div class="dashboard-content col-lg-10 col-md-9 col-sm-9 col-xs-9">
+            <div class="row" id="dashbpard-widgets">
+                @foreach (var dashboardConfig in Model)
+                {
+                    <div class="dashboard-conten-column dashboard-widget" data-type="@dashboardConfig.DisplayName">
+                        @await Component.InvokeAsync(dashboardConfig.ClassName)
+                    </div>
+                }
+
+                <div class="google-analytics col-lg-12 col-md-12 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="dashboard-table">
+                            <div class="panel panel-primary" style="border: none;">
+                                <div class="controle-header panel-heading panel-heading-landing">
+                                    <img src="~/images/dragable.svg">
+                                    <h1 class="panel-title panel-title-landing">
+                                        Google Analytics
+                                    </h1>
+                                </div>
+
+                                <div class="panel-body panel-body-landing">
+                                    <div class="col-lg-6 col-md-6 col-xs-6">
+                                        Page
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-xs-6">
+                                        Active Users
+                                    </div>
+                                    <table class="table"></table>
+                                </div>
+                                <div class="panel-footer panel-footer-landing">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{ 
+    <script>
+        $(document).ready(function (ev) {
+            $('#dashbpard-widgets').sortable({
+                stop: function (event, ui) {
+                    var sortedIDs = $('#dashbpard-widgets').sortable('toArray', { attribute: 'data-type' });
+
+                    Loader.show('#fff');
+                    Data.postJson({ url: '/sitetriks/dashboardconfiguration/save', data: { names: sortedIDs } }).then(function (res) {
+                        Loader.hide();
+                    }, Data.defaultError);
+                }
+            });
+        });
+
+        $('.side-nav-collapse').hide();
+    </script>
+}

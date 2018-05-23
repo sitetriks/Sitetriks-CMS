@@ -1,0 +1,53 @@
+﻿@model SiteTriks.Services.Models.Pages.DisplayPageServiceModel
+
+@{
+	string lang = ViewData["Lang"].ToString();
+	bool isPreview = ViewData["Preview"].ToString() == "preview";
+	if (isPreview || ViewData["Preview"].ToString() == "partial")
+	{
+		Layout = null;
+	}
+	else
+	{
+		Layout = "~/Views/Shared/_FrontEndLayout.cshtml";
+		ViewBag.Title = Model.Title;
+	}
+}
+
+<input name="SEOKeyword" value="@Model.SEOKeyword" type="hidden" />
+
+@{ var css = Model.Contents.Where(c => c.Placeholder == "css"); }
+@foreach (var item in css)
+{
+	@await Component.InvokeAsync("RenderWidget", new { content = item, preview = isPreview ? "preview" : "" })
+}
+@if (isPreview)
+{
+	<div class="placeholder" data-placeholder="css"></div>
+}
+
+<header></header>
+
+<div class="conntent-wrapper main-content">
+	<div class="row-content">
+		<div data-placeholder="body" class="placeholder row content-placeholder no-margin row-placeholder @(isPreview ? "preview-placeholder static" : "")">
+			@{ var content0 = Model.Contents.Where(c => c.Placeholder == "main").OrderBy(c => c.Order).ToArray(); }
+			@foreach (var item in content0)
+			{
+				@await Component.InvokeAsync("RenderWidget", new { content = item, preview = isPreview ? "preview" : "", lang });
+			}
+		</div>
+	</div>
+</div>
+
+@{ var javascript = Model.Contents.Where(c => c.Placeholder == "javascript"); }
+@foreach (var item in javascript)
+{
+	@await Component.InvokeAsync("RenderWidget", new { content = item, preview = isPreview ? "preview" : "" })
+}
+@if (isPreview)
+{
+	<div class="placeholder" data-placeholder="javascript"></div>
+}
+@*@{ var javascript = Model.Contents.Where(c => c.Placeholder == "javascript"); }
+	@Html.Action("RenderWidgets", "Display", new { area = "", contents = javascript, placeholder = "javascript", preview = isPreview ? "preview" : "" })*@

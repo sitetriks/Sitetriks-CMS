@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SiteTriks.Data.Models;
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <span>You are logged in as: </span>
+    @Html.ActionLink(UserManager.GetUserName(User), "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage", @class = "profile-link" })
+}
