@@ -1,14 +1,14 @@
 # SiteTriks-CMS
 
 
-Please refer to the licesens included in the solution for the terms and conditions of using Sitetriks
+Please refer to the licesence policy included in the solution for the terms and conditions of using Sitetriks
 
 # Getting started
 
 1. Install visual studio 2017.
-2. Install npm
+2. Install NPM
 3. Install bower
-4. Donwload the project
-5. Extract project
-6. Using the nuget packagets from the nuget package forlder in the solution to restore the nuget packages of the solution. Install only SiteTriks package.
-7. Project is ready for testing
+4. Download the project
+5. Extract the project
+6. Restore the NuGet packages from the NuGet package folder in the solution. (Install only the SiteTriks package).
+7. The project is ready for usage.
