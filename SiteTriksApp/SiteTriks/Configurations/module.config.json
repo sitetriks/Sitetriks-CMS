@@ -1,0 +1,96 @@
+{
+  "Available": [
+    {
+      "Name": "SiteTriks.BlogModule",
+      "IsActive": false,
+      "DisplayName": "Blog",
+      "Dependencies": [
+        "SiteTriks.SiteSync",
+        "SiteTriks.RssFeedModule"
+      ]
+    },
+    {
+      "Name": "SiteTriks.SiteSync",
+      "IsActive": false,
+      "DisplayName": "Site Sync",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.DocumentationModule",
+      "IsActive": false,
+      "DisplayName": "Documentation",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ForumModule",
+      "IsActive": false,
+      "DisplayName": "Forum",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.RssFeedModule",
+      "IsActive": false,
+      "DisplayName": "Rss Feed",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.MarketingEmailModule",
+      "IsActive": false,
+      "DisplayName": "Marketing Emails",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.SiteMapModule",
+      "IsActive": false,
+      "DisplayName": "Site Map",
+      "Dependencies": []
+    }
+  ],
+  "Installed": [
+    {
+      "Name": "SiteTriks.BlogModule",
+      "IsActive": false,
+      "DisplayName": "Blog",
+      "Dependencies": [
+        "SiteTriks.SiteSync",
+        "SiteTriks.RssFeedModule"
+      ]
+    },
+    {
+      "Name": "SiteTriks.SiteSync",
+      "IsActive": false,
+      "DisplayName": "Site Sync",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ForumModule",
+      "IsActive": false,
+      "DisplayName": "Forum",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.RssFeedModule",
+      "IsActive": false,
+      "DisplayName": "Rss Feed",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.MarketingEmailModule",
+      "IsActive": false,
+      "DisplayName": "Marketing Emails",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.SiteMapModule",
+      "IsActive": false,
+      "DisplayName": "Site Map",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.DocumentationModule",
+      "IsActive": false,
+      "DisplayName": "Documentation",
+      "Dependencies": []
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+[
+  {
+    "Name": "DynamicAssembly",
+    "Classes": [
+      {
+        "Name": "HomePageMenuItems",
+        "Title": "Home Page Menu",
+        "Properties": [
+          {
+            "Name": "Title",
+            "Type": "string"
+          },
+          {
+            "Name": "Position",
+            "Type": "int"
+          },
+          {
+            "Name": "Url",
+            "Type": "string"
+          },
+          {
+            "Name": "PrimaryImage",
+            "Type": "string"
+          },
+          {
+            "Name": "SecondaryImage",
+            "Type": "string"
+          }
+        ]
+      },
+      {
+        "Name": "HomePageTreeItems",
+        "Title": "Features",
+        "Properties": [
+          {
+            "Name": "Title",
+            "Type": "string"
+          },
+          {
+            "Name": "Position",
+            "Type": "int"
+          },
+          {
+            "Name": "HtmlContent",
+            "Type": "string-html"
+          },
+          {
+            "Name": "Images",
+            "Type": "images"
+          }
+        ]
+      },
+      {
+        "Name": "MiddleMenuItem",
+        "Title": "Middle menu item",
+        "Properties": [
+          {
+            "Name": "Title",
+            "Type": "string"
+          },
+          {
+            "Name": "IconPath",
+            "Type": "string"
+          },
+          {
+            "Name": "Content",
+            "Type": "string-html"
+          },
+          {
+            "Name": "Position",
+            "Type": "int"
+          },
+          {
+            "Name": "CustomId",
+            "Type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

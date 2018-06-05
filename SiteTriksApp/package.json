@@ -1,0 +1,22 @@
+{
+  "name": "sitetriksapp.web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-runtime": "^6.26.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel --presets es2015,stage-0 -d scripts_babel wwwroot/js",
+    "build-watch": "babel --presets es2015,stage-0 -d scripts_babel wwwroot/js --watch"
+  },
+  "author": "",
+  "license": "ISC"
+}

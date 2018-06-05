@@ -1,0 +1,294 @@
+﻿
+/*Bottom menu / Features section*/
+
+.features-section {
+    /* min-height: 610px; */
+    background-color: #123e7a;
+}
+
+    .features-section.bottom-menu {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    .features-section .row {
+        margin: 0;
+        padding: 0;
+        padding-top: 2px;
+    }
+
+.toggle-menu .features-section > .row:first-child > div {
+    padding: 0;
+    margin: 0;
+    /* border: 2px solid black; */
+    height: 610px;
+}
+
+.toggle-menu .features-section > .row:last-child > div {
+    padding: 0;
+    margin: 0;
+    /* border: 2px solid black; */
+    height: 610px;
+}
+
+.features-section > .row .menu-icon {
+    border: 2px solid #3876cf;
+    height: 121px;
+    box-sizing: border-box;
+}
+
+.features-section .menu-icon:hover {
+    border: 3px solid #0086fb;
+}
+
+.selected-feature {
+    border: 3px solid #1cbce5;
+    height: 600px;
+    margin-top: 3px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #3876cf;
+    display: block;
+    overflow-y: auto;
+}
+
+
+/*Toggle menu*/
+
+
+.toggle-menu {
+    display: inline-block;
+    /*display: none;*/
+    margin: 0;
+    padding: 0;
+    left: 0;
+    position: fixed;
+    margin-top: 5%;
+    /*width: 90%;*/
+    z-index: 1000;
+}
+
+    .toggle-menu .features-section {
+        border: solid 3px #005da8;
+        display: none;
+        float: left;
+        width: 90%;
+        height: 615px;
+        box-shadow: 0 0 15px black;
+    }
+
+        .toggle-menu .features-section .row {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            padding-top: 2px;
+            display: inline-block;
+        }
+
+    .toggle-menu .inline-button {
+        display: inline-block;
+        float: left;
+    }
+
+    .toggle-menu .features-section > .row:first-child > div {
+        padding: 0;
+        margin: 0;
+        /* border: 2px solid black; */
+        height: 610px;
+    }
+
+    .toggle-menu .features-section > .row:last-child > div {
+        padding: 0;
+        margin: 0;
+    }
+
+    .toggle-menu .features-section > .row .menu-icon {
+        border: 2px solid #3876cf;
+        height: 121px;
+        box-sizing: border-box;
+    }
+
+    .toggle-menu .features-section .menu-icon:hover {
+        border: 3px solid #0086fb;
+    }
+
+    .toggle-menu .selected-feature {
+        border: 3px solid #1cbce5;
+        /*height: 600px;*/
+        margin-top: 3px;
+        margin-left: 5px;
+        margin-right: 5px;
+        background-color: #3876cf;
+        display: block;
+    }
+
+.toggle-button {
+    /*margin-left: 1px;*/
+    border-radius: 0 70px 70px 0;
+    border: solid 4px #005da8;
+    height: 250px;
+    width: 50px;
+    /*background-color: #393939;*/
+    background-image: linear-gradient( to right,
+    rgba(81, 80, 80, 0.7),
+    rgba(81, 80, 80, 0.7) 20%,
+    #393939 1%,
+    #393939 85%);
+    box-shadow: 0 0 15px #24469d;
+}
+
+    .toggle-button .shrink-menu {
+        width: 35px;
+        height: 50px;
+        margin-top: 60px;
+        margin-left: 6px;
+
+    }
+
+        .toggle-button .shrink-menu img {
+            width: 100%;
+        }
+
+        .toggle-button .shrink-menu .leaf-button-text {
+            word-break: break-all;
+            width: 10px;
+            display: block;
+            font-weight: bolder;
+            font-size: 16px;
+            color: #296cf2;
+            margin-left: 10px;
+            /*animation-name: example;
+            animation-duration: 4s;*/
+        }
+
+            .toggle-button .shrink-menu .leaf-button-text .letter-1 {
+                color: #296cf2;
+                animation-name: displaybutton;
+                animation-duration: 1s;
+            }
+
+            .toggle-button .shrink-menu .leaf-button-text .letter-2 {
+                color: #296cf2;
+                animation-name: displaybutton;
+                animation-duration: 2s;
+            }
+
+            .toggle-button .shrink-menu .leaf-button-text .letter-3 {
+                color: #296cf2;
+                animation-name: displaybutton;
+                animation-duration: 4s;
+            }
+
+            .toggle-button .shrink-menu .leaf-button-text .letter-4 {
+                color: #296cf2;
+                animation-name: displaybutton;
+                animation-duration: 5s;
+            }
+
+        /*Animate other elements*/
+
+        .toggle-button .shrink-menu .leaf-button-1 {
+            animation-name: displaybutton;
+            animation-duration: 3s;
+        }
+
+    .toggle-button .close-menu .arrows-1 {
+        animation-name: displaybutton;
+        animation-duration: 3s;
+    }
+
+/*Animation*/
+
+@keyframes displaybutton {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.toggle-button .close-menu {
+    margin-top: 25px;
+    width: 24px;
+    height: 30px;
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+    .toggle-button .close-menu .arrows-2 {
+        margin-left: 10px;
+    }
+
+    .toggle-button .close-menu img {
+        width: 100%;
+    }
+
+.hidden-selected {
+    width: unset;
+    border: none;
+}
+
+
+.shrank-features {
+    width: 15%;
+}
+
+
+/*Toggle-menu icons*/
+
+
+.menu-icon .icon-image {
+    margin: auto;
+    display: block;
+    height: 40%;
+    /*margin-top: 15%;*/
+}
+
+.menu-icon .icon-name {
+    text-transform: uppercase;
+    color: #cfcdce;
+    font-family: Montserrat;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 10%;
+}
+
+    .menu-icon .icon-name.icon-fag {
+        text-transform: uppercase;
+        color: #cfcdce;
+        font-family: BlairMd;
+        font-size: 2.4em;
+        color: #CDCCCD;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+
+/* Classes to show and hide toggle menu on scroll down*/
+
+.visuallyhidden {
+    display: none;
+}
+
+/*.hidden {
+    display: none;
+}*/
+
+.toggleWidth {
+    width: 20%;
+    transition: width 2s;
+}
+
+/*-------------------------------------------------------------------------------------------*/
+
+.fade-in {
+    transition: opacity 1s ease-in;
+    opacity: 1;
+}
+
+fade-out {
+    transition: opacity 1s ease-out;
+    opacity: 0;
+}

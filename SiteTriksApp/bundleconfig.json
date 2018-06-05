@@ -1,0 +1,69 @@
+﻿// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/frontend.min.css",
+    "inputFiles": [
+      //"wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "wwwroot/css/site.css",
+      "wwwroot/lib/custom/slick/slick.css",
+      "wwwroot/lib/custom/slick/slick-theme.css",
+      "wwwroot/css/toggle-menu.css",
+      "wwwroot/css/multi-level-dropdown.css",
+      "wwwroot/css/front-end.css",
+      "wwwroot/css/home-page.css",
+      "wwwroot/lib/custom/jquery-ui/jquery-ui.css",
+      "wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css"    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "scripts_babel/frontend.min.js",
+    "inputFiles": [
+      "wwwroot/lib/custom/jquery-ui/jquery-ui-1.10.4.js",
+      "wwwroot/lib/custom/cookieNoticeJS/dist/cookie.notice.js",
+      "scripts_babel/data.js",
+      "scripts_babel/loader.js",
+      "scripts_babel/gallery-2.0.js",
+      "scripts_babel/validation.js",
+      "scripts_babel/carousel.js",
+      "scripts_babel/input-number-checker.js",
+      "scripts_babel/meta-tags.js",
+      "scripts_babel/all-news.js",
+      "scripts_babel/documentation-widget.js",
+      "lib/custom/slick/slick.min.js",
+      "scripts_babel/script-manager.js",
+      "scripts_babel/cookie-notification-configuration.js",
+      "scripts_babel/dynamic-widgets.js",
+      "scripts_babel/modules/module-builder.js",
+      "scripts_babel/modules/scroll-control.js",
+      "scripts_babel/toggle-menu.js",
+      "scripts_babel/licenses-widgets.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
+  }
+]
