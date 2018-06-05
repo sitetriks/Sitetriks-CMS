@@ -25,7 +25,7 @@
             contentType: false, // tell jQuery not to set contentType
             success: function success(response) {
                 if (response.success) {
-                    window.location.replace('/sitetriks/discussions');
+                    window.location.replace('/forum/discussions');
                 } else {
                     showError(response.message);
                 }
@@ -61,7 +61,7 @@ function editDiscussion() {
             contentType: false, // tell jQuery not to set contentType
             success: function success(response) {
                 if (response.success) {
-                    window.location.replace('/sitetriks/discussions');
+                    window.location.replace('/forum/discussions');
                 } else {
                     showError(response.message);
                 }

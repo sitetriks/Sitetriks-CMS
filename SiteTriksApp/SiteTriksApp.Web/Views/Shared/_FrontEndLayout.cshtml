@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
 
+    @await Html.PartialAsync("_Favicons")
+
     <environment include="Development">
         <link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link type="text/css" rel="stylesheet" href="~/css/site.css" />
@@ -16,7 +18,7 @@
         <link type="text/css" rel="stylesheet" href="~/css/front-end.css" />
         <link type="text/css" rel="stylesheet" href="~/css/home-page.css" />
         <link type="text/css" rel="stylesheet" href="~/lib/custom/jquery-ui/jquery-ui.css" />
-
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/tinymce/plugins/codesample/css/prism.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -27,10 +29,54 @@
 
     @await Html.PartialAsync("Polyfills")
 
+    @if (User.Identity.IsAuthenticated)
+    {
+        <style>
+            .login {
+                display: none;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            .logout {
+                display: none;
+            }
+        </style>
+
+    }
+
     @RenderSection("styles", required: false)
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119762809-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-119762809-1');
+    </script>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-W66P57R');</script>
+    <!-- End Google Tag Manager -->
 </head>
 <body class="wide">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W66P57R"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="wrapper" class="wrapper body-content">
 
         @RenderBody()
@@ -43,6 +89,7 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
 
         <script type="text/javascript" src="~/lib/custom/jquery-ui/jquery-ui-1.10.4.js"></script>
+        <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
         <script src="~/lib/custom/cookieNoticeJS/dist/cookie.notice.js"></script>
         <script type="text/javascript" src="~/js/data.js"></script>
         <script type="text/javascript" src="~/js/loader.js"></script>
@@ -65,7 +112,10 @@
         <script type="text/javascript" src="~/lib/custom/slider-master/js/jssor.slider.min.js"></script>
         <script type="text/javascript" src="~/js/subscription.js"></script>
         <script type="text/javascript" src="~/js/cookie-notification-configuration.js"></script>
-
+        <script type="text/javascript" src="~/js/licenses-widgets.js"></script>
+        <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+		<script type="text/javascript" src="~/js/sitetriks/licensesTable.js"></script>        
+        <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -80,7 +130,10 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
+        <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
         <script src="~/js/frontend.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+        <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
     </environment>
 
     @RenderSection("scripts", required: false)
@@ -103,17 +156,17 @@
 
             MetaTags.populateKeyWords('input[name=SEOKeyword]');
 
-            DocumentationWidget();
+             DocumentationWidget();
 
             // Tree items widget logic -  to move
             $('body').unbind().on('click', '.more-items', function (event, callback, target) {
-                console.log(callback);
+
                 if (callback && {}.toString.call(callback) === '[object Function]' && target) {
                     $('.hidden-section').slideToggle("slow", "swing", function () {
                         callback(target);
                     });
 
-                    if ($(window).width() <= 768) {
+                    if ($(window).width() <= 767) {
                         return;
 
                     } else {
@@ -124,7 +177,7 @@
                     }
                 } else {
                     $('.hidden-section').slideToggle("slow");
-                    if ($(window).width() <= 768) {
+                    if ($(window).width() <= 767) {
                         return;
 
                     } else {
@@ -141,17 +194,203 @@
 
     <script type="text/javascript">
         // 1.1 Adding the Video custom playlist logic directly here
+        $(document).ready(function () {
+            $('body').on('click', '.video-thumbnail', function () {
+                var iframeCurrentSource = $('.video-container iframe').attr('src');
+                var thunmbnailSource = $(this).attr('data-videoId');
 
-        $('body').on('click', '.video-thumbnail', function () {
-            console.log('in video');
-            var iframeCurrentSource = $('.video-container iframe').attr('src');
-            var thunmbnailSource = $(this).attr('data-videoId');
-            console.log(thunmbnailSource);
-
-            if (!(iframeCurrentSource == thunmbnailSource)) {
-                $('.video-container iframe').attr('src', thunmbnailSource);
-            }
+                if (!(iframeCurrentSource == thunmbnailSource)) {
+                    $('.video-container iframe').attr('src', thunmbnailSource);
+                }
+            });
         })
+
+        $(document).ready(function () {
+            $('body').on('click', '.playlist-thumbnail', function () {
+                var iframeCurrentSource = $('.video-container iframe').attr('src');
+                var thunmbnailSource = $(this).attr('data-videosource');
+
+                if (!(iframeCurrentSource == thunmbnailSource)) {
+                    $('.video-container iframe').attr('src', thunmbnailSource);
+                }
+            });
+        })
+
+    </script>
+
+    <script>
+        $(window).load(function () {
+            if ($('pre').length > 0) {
+                Prism.highlightAll();
+            }
+
+            if ($('.prettyprint').length > 0) {
+                prettify();
+            }
+        });
+
+
+        $(document).ready(function () {
+
+            $('body').on('click', '.bottom-menu .menu-icon', function () {
+                let pageUrl = ($(this).data("url"));
+                let pageInternalNavigation = 'Page Static Interal Navigation';
+                if ("ga" in window) {
+                    tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send("event", pageInternalNavigation, pageUrl);
+                }
+            });
+
+            $('body').on('click', '.toggle-menu .menu-icon', function () {
+                let pageUrl = ($(this).data("url"));
+                let pageInternalNavigation = 'Page Floating Interal Navigation';
+                if ("ga" in window) {
+                    tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send("event", pageInternalNavigation, pageUrl);
+                }
+            });
+
+            $('body').on('click', '.top-menu .menu-icon', function () {
+                let pageUrl = ($(this).data("url"));
+                let pageInternalNavigation = 'Page Mobile Interal Navigation';
+                if ("ga" in window) {
+                    tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send("event", pageInternalNavigation, pageUrl);
+                }
+            });
+        });
+    </script>
+
+    @*<script>
+            $(document).ready(function () {
+
+                function getYoutubeData() {
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=PL50C17441DA8A565D&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8 ',
+                    dataType: 'json'
+                }).done(function (data) {
+
+                    console.log(JSON.stringify(data.items[0].snippet.thumbnails.high.url));
+                    //$.map(data, function (unit, i) {
+                    //    $(".video-thumbnail").append('<h1>' + unit.title + '</h1>' + '<div>' + unit.body + '</div>');
+                    //})
+                })
+                }
+                getYoutubeData();
+            });
+
+        </script>*@
+
+
+    <script>
+        $(document).ready(function () {
+            if ($('body-content').find('.multiple-playlists')) {
+                // get all thumbnails ids
+                let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
+                let source;
+
+                $container.each(function (_, element) {
+                    source = $(this).data("videoid");
+                    let url = getYoutubeData(source).then(function (res) {
+
+                        let finalUrl = res.items[0].snippet.thumbnails.high.url;
+                        let title = res.items[0].snippet.title;
+
+                        $(element).children('img').attr('src', finalUrl);
+                        $(element).children('.playlist-title').text(title);
+                    })
+                    //,Data.defaultError);
+
+                })
+            }
+
+            /*******************Get Youtube Playlist Thumbnails ***********************/
+
+            function getYoutubeData(playlistId) {
+                //    return Data.getJson({ url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8" })
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8",
+                        method: 'GET',
+                        contentType: 'json',
+                        success: resolve,
+                        error: reject
+                    }).then(function (data) {
+                        let result = JSON.stringify(data.items[0].snippet.thumbnails.high.url);
+                        return result;
+                    }) // Data.defaultError)
+                });
+            }
+
+        });
+    </script>
+
+    <script>
+
+       // let staff = getChannelDatails("UCUsTZWP1OpyBXX2_CfMv1fA");
+        // console.log(staff)
+
+        //// Get all videos from our channel
+        //$(document).ready(function () {
+
+        //    if ($('body-content').find('.multiple-playlists')) {
+        //        // get all thumbnails ids
+        //        let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
+        //        let videos;
+        //        let channelId = "UCUsTZWP1OpyBXX2_CfMv1fA";
+
+        //        videos = getChannelDatails(channelId).then(function (result) {
+
+
+        //            console.log(JSON.stringify(result));
+        //        });
+
+
+        //    }
+
+        //    // Add search functionality to the widget
+        //    function getChannelDatails(channelId) {
+        //        //    return Data.getJson({ url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8" })
+        //        return new Promise((resolve, reject) => {
+        //            $.ajax({
+        //                url: "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCR5In4DZaTP6IEZQ0r1JceuvluJRzQNLE&channelId=" + channelId + "&part=snippet,id&order=date&maxResults=50",
+        //                method: 'GET',
+        //                contentType: 'json',
+        //                success: resolve,
+        //                error: reject
+        //            }).then(function (data) {
+        //                // let result = JSON.stringify(data.items[0].snippet.thumbnails.high.url);
+        //                let result = JSON.stringify(data)
+
+        //                return result;
+
+        //            },  Data.defaultError)
+        //        });
+        //    }
+
+        //    // Find matching video titles
+
+        //    function findMatches(wordToMatch, videos) {
+        //        return videos.filter(place => {
+        //            const regex = new RegExp(wordToMatch, 'gi')
+        //            return place.city.match(regex) || place.state.match(regex)
+        //        });
+
+        //    }
+
+        //});
+
+
+        // Populate them in a list for autocomplete
+
+        // when the video is selected play the corresponding playlist starting from that video
+
+        // 
+
     </script>
 
 </body>

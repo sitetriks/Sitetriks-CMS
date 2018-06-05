@@ -31,6 +31,7 @@
         background-color: #fff;
         z-index: 255;
         padding-top: 20px;
+        position: relative;
     }
 
 .logo-container {

@@ -48,7 +48,7 @@
                 <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
                     <div id="forgttenPassword">                      
                         @*<h3>@ViewData["Title"]</h3>*@
-                        <form method="post">
+                        <form method="post" class="clearfix">
                             <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="Username"></label>
@@ -64,6 +64,7 @@
                                 <input asp-for="PhoneNumber" class="form-control" />
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
+                            @Html.ActionLink("Delete account","DeleteAccount")
                             <button type="submit" class="btn btn-default">Save</button>
                         </form>
                     </div>
@@ -72,8 +73,6 @@
         </div>
     </content>
 </div>
-
-@await Html.PartialAsync("_AccountFooter")
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

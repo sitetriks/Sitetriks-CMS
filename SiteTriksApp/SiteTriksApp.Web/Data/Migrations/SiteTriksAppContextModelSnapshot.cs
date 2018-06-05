@@ -2,8 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using SiteTriks.Data.Models.Enums;
+using SiteTriks.Data.Models.Helpers;
+using SiteTriks.Data.Models.NewModels.Pages.Enums;
+using SiteTriks.Data.Models.NewModels.Url.Enums;
+using SiteTriks.DocumentationModule.Data.Enums;
+using SiteTriks.Extensions.Expressions;
 using SiteTriksApp.Web.Data;
 using System;
+using System.ComponentModel;
 
 namespace SiteTriksApp.Web.Migrations
 {
@@ -1087,6 +1097,9 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(150);
+
                     b.Property<string>("FullName")
                         .HasMaxLength(150);
 
@@ -1096,9 +1109,14 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<string>("Info")
                         .HasMaxLength(500);
 
+                    b.Property<bool>("IsApproved");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("IsGoogleAuthenticatorEnabled");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(150);
 
                     b.Property<bool>("LockoutEnabled");
 

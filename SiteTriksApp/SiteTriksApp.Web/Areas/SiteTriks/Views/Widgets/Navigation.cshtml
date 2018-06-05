@@ -1,17 +1,6 @@
 ﻿<div data-type="navigation" class="widget-container">
     <div class="col-md-5 row">
-        <div class="row">
-            <label for="css-class" class="col-md-4">Css Class</label>
-            <input id="css-class" class="form-control" />
-        </div>
-        <div class="row">
-            <label for="allowed-role" class="col-md-4">Allowed Roles</label>
-            <input id="allowed-roles" class="form-control" />
-        </div>
-        <div class="row">
-            <label for="allowed-groups" class="col-md-4">Allowed Groups</label>
-            <input id="allowed-groups" class="form-control" />
-        </div>
+        @await Html.PartialAsync("WidgetsForms")
     </div>
     <div class="col-md-12">
         <hr>

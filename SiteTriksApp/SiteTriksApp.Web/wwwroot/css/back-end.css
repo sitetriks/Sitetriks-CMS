@@ -39,7 +39,6 @@ div.ui-widget-content a.btn-backend {
 }
 
 .sitetriks-wrapper {
-    font-family: OpenSans;
     border-bottom: 2px solid #0089fa;
     padding-left: 2.5%;
     /*min-width: 768px !important;*/
@@ -58,6 +57,10 @@ div.ui-widget-content a.btn-backend {
         margin-left: 0;
         margin-right: 0;
     }
+
+.hidden-nested-divs {
+    background-color: inherit;
+}
 
 .sitetriks-body {
     padding-top: 0;
@@ -985,51 +988,11 @@ a.profile-link {
     margin-right: 10px;
 }
 
-
-/* Hints */
-
-.hint {
-    display: inline-block;
-    position: relative;
-}
-
-    .hint::after {
-        content: '?';
-        background: #008CFF;
-        border-radius: 50%;
-        cursor: pointer;
-        padding: 0 8px 0 7px;
-        font-weight: bold;
-        color: #fff;
-    }
-
-    .hint > span {
-        display: none;
-        position: absolute;
-        border: 1px solid black;
-        padding: 10px;
-        background: #eee;
-        bottom: 100%;
-        left: 10px;
-        width: 250px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
-    }
-
-    .hint:hover::after {
-        color: #000;
-    }
-
-    .hint:hover > span {
-        display: block;
-    }
-
 #editor {
     min-width: 500px;
     max-width: 1000px;
     min-height: 300px;
 }
-
 
 /* Notifier */
 
@@ -1224,6 +1187,15 @@ a.profile-link {
 /*Making the mobile resolution 767 to be compatible with the bootstrap hamburger menu */
 @media (max-width: 767px) {
 
+    .nav-section-separator {
+        background-color: inherit;
+    }
+
+        .nav-section-separator > span {
+            color: #fff;
+            background-color: inherit;
+        }
+
     /*Clearfix bootstrap*/
 
     .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
@@ -1415,3 +1387,4 @@ a.profile-link {
         background-color: #3876cf;
     }
 }
+

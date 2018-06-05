@@ -1237,12 +1237,58 @@ form.btn-group+form.btn-group {
     display: inline-block;
 }
 
+
+/*Documentation wrapper styles*/
+
+div.row.documentation-wrapper {
+    padding: 10px 20px;
+}
+
+.toggle-menu div.row.documentation-wrapper {
+    padding: 5px 10px;
+}
+
+.documentation-wrapper .col-md-9 {
+    font-size: 13px;
+    background: #ffffff;
+    /*height: 100%;*/
+   height: 560px;
+    overflow-y: auto;
+}
+
+.documentation-wrapper .col-md-9 .topic-details {
+    margin: 3% 5%;
+}
+
+        .documentation-wrapper .topic-details h3 {
+            margin-top: 5px;
+            color: #337ab7;
+            font-weight: bold;
+        }
+
+    .documentation-wrapper #prev-doc,
+    .documentation-wrapper #next-doc {
+        margin-left: 20px;
+        font-size: 18px;
+    }
+
+
 /* Documentation navigation tree */
+
 ul.docs-menu {
-    border: 1px solid #ddd;
-    border-bottom: none;
+    border: 2px solid #d3d3d3;
+    color: #ffffff;
     font-weight: 700;
     font-size: 14px;
+    background-color: #6d92cd;
+    height: 560px;
+    border-right: none;
+    overflow-y: auto;
+}
+
+.docs-menu .glyphicon {
+    margin-right : 15px;
+
 }
 
 ul.docs-menu, 
@@ -1253,6 +1299,7 @@ ul.docs-menu ul {
 
     ul.docs-menu a {
         cursor: pointer;
+        color: #ffffff;
     }
 
     ul.docs-menu span.childless {
@@ -1261,16 +1308,16 @@ ul.docs-menu ul {
 
     ul.docs-menu li.docs-menu-item > div {
         padding: 10px 15px;
-        background-color: #fff;
-        border-bottom: 1px solid #ddd;
+        /*background-color: #fff;*/
+        border-bottom: 2px solid #ddd;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
-        ul.docs-menu li.docs-menu-item > div:hover {
+        /*ul.docs-menu li.docs-menu-item > div:hover {
             background-color: #eee;
-        }
+        }*/
 
 
 /*------------------------------------------------------------
@@ -1328,3 +1375,109 @@ ul.docs-menu ul {
 #comments-container .btn{
     margin-right: 10px;
 }
+
+
+/*------------------------------------------------------------
+       Forum  styles
+    ---------------------------------------------------------------*/
+
+.forum-wrapper {
+    margin: 150px 50px 50px 50px;
+    padding-top: 10px;
+    min-width: 768px;
+}
+
+.forum-navigation {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+}
+
+.forum-navigation #hamburger-menu {
+    display: none;
+}
+
+    .forum-navigation .header-blue {
+        display: block;
+    }
+
+ .fixed-top-3{
+    top: 150px;
+    position: relative;
+    margin-left: 50px;
+}
+
+.fixed-top-3 .btn-nav-2 {
+    background-color: #529ce4;
+    color: #ffffff;
+    border: 1px solid #758fa8;
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+    .fixed-top-3 input.btn-nav-2 {
+        padding: 2px 10px;
+    }
+
+#create-discussion .fixed-top-3,
+#edit-discussion .fixed-top-3,
+#create-thread .fixed-top-3,
+#edit-thread .fixed-top-3{
+    top: 0;
+    margin-bottom: 30px;
+    margin-left: 0;
+}
+
+
+/* Hints */
+
+.st-info {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+    .st-info::after {
+        content: '?';
+        background: #008CFF;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0 7px 0 6px;
+        font-weight: bold;
+        color: #fff;
+        display: inline-block;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .st-info:hover::after {
+        color: #000;
+    }
+
+.st-hint {
+    position: relative;
+}
+
+    .st-hint > span.st-tooltip {
+        display: none;
+        position: absolute;
+        border: 1px solid black;
+        padding: 10px;
+        background: #eee;
+        bottom: 110%;
+        left: 10px;
+        width: 100%;
+        min-width: 250px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
+    }
+
+        .st-hint:hover > span.st-tooltip {
+            display: block;
+        }
+
+/*-------------------------------------------------------------------------------*/

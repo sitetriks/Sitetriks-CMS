@@ -114,7 +114,7 @@
 
     .toggle-menu .selected-feature {
         border: 3px solid #1cbce5;
-        height: 600px;
+        /*height: 600px;*/
         margin-top: 3px;
         margin-left: 5px;
         margin-right: 5px;

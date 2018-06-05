@@ -40,6 +40,8 @@
                             <option value="@widgetName">@widgetName</option>
                         }
                     </select>
+                    <br />
+                    <input id="location" class="title-field" asp-for="Location" hidden="hidden" placeholder="Custom view location..." />
                     <strong><span class="text-danger"></span></strong>
                     @Html.ValidationMessageFor(m => Model.WidgetName, "", new { @class = "text-danger" })
                 </div>
@@ -68,5 +70,16 @@
 
     <script>
         RazorViewsEditor.init("", "#create-dynamic-view-form", "#Content");
+
+        $('select[name="WidgetName"]').change(function () {
+            let $location = $("#location");
+            if ($(this).val() == "none") {
+                $location.removeAttr("hidden");
+            }
+            else {
+                $location.attr("hidden", "hidden");
+                $location.val("");
+            }
+        });
     </script>
 }

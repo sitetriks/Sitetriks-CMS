@@ -422,7 +422,23 @@
     <div class="form-wrapper" style="display: none;">
         <form id="subscriptionForm" action="">
             <label for="name">Name: </label><input type="text" name="name">
-            <label for="email">Emai: </label> <input type="text" name="email">
+            <label for="email">Email: </label> <input type="text" name="email">
+            <label for=""></label>
+
+            <div class="subscription-radio-group">
+                <span>I want to receive news from SiteTriks regarding new features and releases.</span>
+                <br />
+                <label class="radio-inline"><input type="radio" name="features-releases">Yes</label>
+                <label class="radio-inline"><input type="radio" name="features-releases">No</label>
+            </div>
+
+            <div class="subscription-radio-group">
+                <span>I want to receive promotional materials regarding SiteTriks.</span>
+                <br />
+                <label class="radio-inline"><input type="radio" name="promotional-materials">Yes</label>
+                <label class="radio-inline"><input type="radio" name="promotional-materials">No</label>
+            </div>
+
             <input type="button" onclick="myFunction()" value="Submit">
         </form>
     </div>

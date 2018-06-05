@@ -4,7 +4,6 @@
     Layout = "/Views/Shared/_AccountLayout.cshtml";
 }
 
-
 <div>
     <content>
         <div class="sitetriks-login container main-content content-placeholder">
@@ -14,10 +13,25 @@
                         <div class="register-form-container">
                             <img src="~/images/Sitetriks_logo.svg" />
                         </div>
-                        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" class="clearfix">
                             <h3>@ViewData["Title"]</h3>
                             <h4>Create a new account.</h4>
                             <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="FirstName"></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LastName"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CompanyName"></label>
+                                <input asp-for="CompanyName" class="form-control" />
+                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            </div>
                             <div class="form-group">
                                 <label asp-for="Email"></label>
                                 <input asp-for="Email" class="form-control" />
@@ -25,18 +39,35 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Password"></label>
-                                <input asp-for="Password" class="form-control" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
+                                <div class="st-hint" >
+                                    <input asp-for="Password" class="form-control" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                    <span class="st-tooltip">Password must be ateast 6 symbols and must contain special symbol, uppercase letter and digit.</span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label asp-for="ConfirmPassword"></label>
                                 <input asp-for="ConfirmPassword" class="form-control" />
                                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                             </div>
+                            <div class="form-group user-type-wrapper">
+                                <div class="inline-block">
+                                    <label asp-for="IsClient"></label>
+                                    <br />
+                                    <label asp-for="IsPartner"></label>
+                                </div>
+                                <div class="inline-block">
+                                    <input asp-for="IsClient" class="form-control user-type-checkbox" />
+                                    <span asp-validation-for="IsClient" class="text-danger"></span>
+                                    <br />
+                                    <input asp-for="IsPartner" class="form-control user-type-checkbox" />
+                                    <span asp-validation-for="IsPartner" class="text-danger"></span>
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-default">Register</button>
                         </form>
-                        </div>
                     </div>
+                </div>
             </div>
         </div>
     </content>
@@ -44,4 +75,11 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        $(document).ready(function (ev) {
+            $('.user-type-checkbox').on('change', function () {
+                $('.user-type-checkbox').not(this).prop('checked', false);
+            });
+        })
+    </script>
 }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model string
+
+@{
     ViewData["Title"] = "Confirm email";
     Layout = "/Views/Shared/_AccountLayout.cshtml";
 }
@@ -15,6 +17,9 @@
                         <h3>@ViewData["Title"]</h3>
                         <p>
                             Thank you for confirming your email. You can <a asp-action="Login">log in</a>.
+                        </p>
+                        <p>
+                            @Model
                         </p>
                     </div>
                 </div>

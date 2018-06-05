@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SiteTriks.Data.Models;
-using SiteTriks.Services.Contracts;
 using SiteTriksApp.Web.Extentions;
-using SiteTriksApp.Web.Models;
 using SiteTriksApp.Web.Models.ManageViewModels;
 using SiteTriksApp.Web.Services;
+using System;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace SiteTriksApp.Web.Controllers
 {
@@ -492,6 +488,36 @@ namespace SiteTriksApp.Web.Controllers
             var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
 
             return View(nameof(ShowRecoveryCodes), model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return this.RedirectToAction("Login", "Account");
+            }
+
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAccount(DeleteAccountViewModel viewModel)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (await _userManager.CheckPasswordAsync(user, viewModel.Password))
+            {
+                await _signInManager.SignOutAsync();
+                await _userManager.DeleteAsync(user);
+
+                return this.Redirect("/");
+            }
+            else
+            {
+                ModelState.AddModelError("Password", "Password is invalid.");
+                return this.View();
+            }
         }
 
         #region Helpers

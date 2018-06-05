@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SiteTriks.Controllers;
 using SiteTriks.Data.Models;
 using SiteTriks.Infrastructure.Common;
 using SiteTriks.Models.Users;
 using SiteTriks.Services.Contracts;
 using SiteTriks.Services.Models.Users;
-using SiteTriksApp.Web.Extentions;
-using SiteTriksApp.Web.Models;
 using SiteTriksApp.Web.Models.AccountViewModels;
 using SiteTriksApp.Web.Services;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace SiteTriksApp.Web.Controllers
 {
@@ -59,11 +52,11 @@ namespace SiteTriksApp.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            if(this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
-                if(this.User.IsInRole(UserRoles.Admin) || this.User.IsInRole(UserRoles.SuperAdmin) || this.User.IsInRole(UserRoles.SuperAdmin))
+                if (this.User.IsInRole(UserRoles.Admin) || this.User.IsInRole(UserRoles.SuperAdmin) || this.User.IsInRole(UserRoles.SuperAdmin))
                 {
-                    return this.RedirectToAction("Index", "Home");
+                    return this.RedirectToAction("Index", "Home", new { area = "sitetriks" });
                 }
                 else
                 {
@@ -103,7 +96,7 @@ namespace SiteTriksApp.Web.Controllers
                     _logger.LogWarning("User account locked out.");
                     return RedirectToAction(nameof(Lockout));
                 }
-                if(result.IsNotAllowed)
+                if (result.IsNotAllowed)
                 {
                     ModelState.AddModelError(string.Empty, "Your login email addres is not confirmed.");
                     return View(model);
@@ -244,7 +237,7 @@ namespace SiteTriksApp.Web.Controllers
             {
                 if (this.User.IsInRole(UserRoles.Admin) || this.User.IsInRole(UserRoles.SuperAdmin) || this.User.IsInRole(UserRoles.SuperAdmin))
                 {
-                    return this.RedirectToAction("Index", "Home");
+                    return this.RedirectToAction("Index", "Home", new { area = "sitetriks" });
                 }
                 else
                 {
@@ -264,10 +257,28 @@ namespace SiteTriksApp.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Company = model.CompanyName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (model.IsClient)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Client");
+                    }
+
+                    if (model.IsPartner)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Partner");
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -281,7 +292,7 @@ namespace SiteTriksApp.Web.Controllers
                 }
                 AddErrors(result);
             }
-            
+
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -298,7 +309,7 @@ namespace SiteTriksApp.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ResendConfirmationEmail(string email)
         {
-            if(email == null || email == string.Empty)
+            if (email == null || email == string.Empty)
             {
                 ModelState.AddModelError("", "Email cannot be empty");
                 return View();
@@ -306,13 +317,13 @@ namespace SiteTriksApp.Web.Controllers
 
             var user = await _userManager.FindByEmailAsync(email);
 
-            if(user == null)
+            if (user == null)
             {
                 ModelState.AddModelError("", "Invalid email.");
                 return View();
             }
 
-            if(user.EmailConfirmed == true)
+            if (user.EmailConfirmed == true)
             {
                 ModelState.AddModelError("", "This email has already been confirmed.");
                 return View();
@@ -336,6 +347,16 @@ namespace SiteTriksApp.Web.Controllers
             _logger.LogInformation("User logged out.");
 
             return this.RedirectToLocal(returnUrl);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+
+            return this.Redirect("/");
         }
 
         [HttpPost]
@@ -423,7 +444,7 @@ namespace SiteTriksApp.Web.Controllers
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "sitetriks" });
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -431,6 +452,16 @@ namespace SiteTriksApp.Web.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
+            if (result.Succeeded)
+            {
+                string message = string.Empty;
+                if (await _userManager.IsInRoleAsync(user, "Partner"))
+                {
+                    message = "Congratulations, you have successfully applied to become a SiteTriks partner. We will be in contact with you via email.";
+                }
+
+                return View("ConfirmEmail", message);
+            }
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -531,25 +562,25 @@ namespace SiteTriksApp.Web.Controllers
         [Authorize(Roles = UserRoles.SuperAdmin + ", " + UserRoles.Admin + ", " + UserRoles.BackEnd)]
         public async Task<IActionResult> CreateUserBackend(UserViewModel userViewModel)
         {
-            var user = this._mapper.Map<UserViewModel, UserServiceModel>(userViewModel);            
+            var user = this._mapper.Map<UserViewModel, UserServiceModel>(userViewModel);
             string password = RandomGenerator.GeneratePassword();
 
             //TODO: response for success and failure
             var result = this._userService.Create(user, password);
 
             if (result.Succeeded)
-            {                
+            {
                 var userInBase = this._userService.GetUserByEmail(user.Email);
                 var code = await _userManager.GeneratePasswordResetTokenAsync(userInBase);
                 var callbackUrl = Url.SetPasswordCallbackLink(userInBase.Id, code, Request.Scheme);
 
-                
+
 
                 await this._emailSender.SendEmailFromTemplateAsync(user.Email, "Account created", "CreateUserBackEndEmail", callbackUrl);
 
                 //await this._emailSender.SendEmailAsync(user.Email, "account created", message);
 
-                return this.RedirectToAction("Index", "Users", new { area="Sitetriks"});
+                return this.RedirectToAction("Index", "Users", new { area = "Sitetriks" });
             }
             else
             {
@@ -561,7 +592,7 @@ namespace SiteTriksApp.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> LogOut(string code, string userId)
+        public async Task<IActionResult> LogOff(string code, string userId)
         {
             await this._signInManager.SignOutAsync();
             this._logger.LogError("Log out when set password");
@@ -575,10 +606,10 @@ namespace SiteTriksApp.Web.Controllers
         {
             bool isAuthenticated = this.User.Identity.IsAuthenticated;
 
-            if(isAuthenticated)
+            if (isAuthenticated)
             {
                 this._logger.LogError("User is authenticated");
-                return this.RedirectToAction("LogOut", new { code, userId });
+                return this.RedirectToAction("LogOff", new { code, userId });
             }
 
             if (code == null)
@@ -650,7 +681,7 @@ namespace SiteTriksApp.Web.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "sitetriks" });
             }
         }
 

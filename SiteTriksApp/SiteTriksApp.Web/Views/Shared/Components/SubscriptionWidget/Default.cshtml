@@ -1,14 +1,35 @@
-﻿<div class="row" id="subscription-forms">
-    <div class="alert"></div>
-        <div class="subscription-form">
-            <label class="col-md-1">Name:</label>
-            <input id="name" type="text" name="name" class="form-control col-md-2" placeholder="Please enter your name" required="required">
-            <span></span>
+﻿<div class="row subscription-form-wrapper .desctop">
+    <div class="subscription-button">
+        <div>Subscribe now</div>
+    </div>
+    <div class="form-wrapper" style="display: none;">
+        <div id="subscriptionForm" action="">
+            <input type="text" name="name" placeholder="Name">
+            <span class="validation-output"></span>
+             <input type="text" name="email" placeholder="Email">
+            <span class="validation-output"></span>
+            <label for=""></label>
+
+            <div id="features-releases-group" class="subscription-radio-group">
+                <span>I want to receive news from SiteTriks regarding new features and releases.</span>
+                <br />
+                <label class="radio-inline"><input type="radio" name="features-releases">Yes</label>
+                <label class="radio-inline"><input type="radio" name="features-releases">No</label>
+                <span class="validation-output"></span>
+            </div>
+
+            <div id="promotional-materials-group" class="subscription-radio-group">
+                <span>I want to receive promotional materials regarding SiteTriks.</span>
+                <br />
+                <label class="radio-inline"><input type="radio" name="promotional-materials">Yes</label>
+                <label class="radio-inline"><input type="radio" name="promotional-materials">No</label>
+                <span class="validation-output"></span>
+            </div>
+
+            <input type="button" id="subscription-submit" value="Subscribe" class="btn " />
         </div>
-        <div class="subscription-form">
-            <label class="col-md-1">Email:</label>
-            <input id="email" type="text" name="email" class="form-control col-md-2" placeholder="Please enter your email" required="required">
-            <span></span>
-        </div>
-    <input type="submit" id="subscription-submit" value="Subscribe" class="btn col-md-1 col-md-offset-1" />
+    </div>
 </div>
+
+
+

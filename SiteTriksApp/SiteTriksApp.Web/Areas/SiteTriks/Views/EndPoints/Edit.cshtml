@@ -52,7 +52,10 @@
                     <span asp-validation-for="JoinKey" class="text-danger"></span>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="JoinFields" class="control-label col-xs-2"></label>
+                    <div class="col-xs-2">
+                        <label asp-for="JoinFields" class="control-label"></label>
+                        <div class="st-hint st-info"><span class="st-tooltip">Must specify exact names of the columns from join table separated with ';' and no whitespaces.</span></div>
+                    </div>
                     <input asp-for="JoinFields" class="form-control input-joinfields" />
                     <span asp-validation-for="JoinFields" class="text-danger"></span>
                 </div>

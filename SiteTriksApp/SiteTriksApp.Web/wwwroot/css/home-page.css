@@ -137,7 +137,7 @@ body {
     padding: 0;
     height: 30px;
     margin-right: 5%;
-    margin-top: 10px;
+    margin-top: 30px;
     font-size: 12px;
     float: right;
     background-color: #123e7a;
@@ -737,6 +737,27 @@ body {
 /*===================== Subscription form ===============*/
 /*========================================================================*/
 
+.subscription-radio-group  {
+    margin-top: 20px;
+    text-align: center;
+    margin-left: -12px;
+}
+
+#subscriptionForm div:nth-of-type(3) {
+    margin-top: 40px;
+}
+
+.subscription-radio-group span {
+    font-size: 13px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*.subscription-radio-group label {
+    font-size: 16px;
+    margin-left: 35%;
+}*/
 
 .row.subscription-form-wrapper {
     min-height: 80px;
@@ -772,22 +793,36 @@ body {
         }
 
     .row.subscription-form-wrapper .form-wrapper {
-        margin: 20px;
+        margin: 35px 20px;
         margin-bottom: 0;
         padding: 0;
         color: lightgray;
-        font-size: 1.8em;
-        width: 280px;
+        font-size: 1.5em;
+        width: 310px;
     }
 
-        .row.subscription-form-wrapper .form-wrapper input[type=text] {
-            outline: none;
-            color: black;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            float: right;
-            background-color: lightgray;
-        }
+    #subscriptionForm div {
+        min-height: 30px;
+    }
+
+    .row.subscription-form-wrapper .form-wrapper .validation-output {
+        color: red;
+        font-size:14px;
+        display: block;
+    }
+
+.row.subscription-form-wrapper .form-wrapper input[type=text] {
+    outline: none;
+    color: black;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    float: right;
+    background-color: lightgray;
+    width: 100%;
+    font-size: 15px;
+    margin-top: 10px;
+    max-width: inherit;
+}
 
         .row.subscription-form-wrapper .form-wrapper label {
             margin-bottom: 25px;
@@ -804,15 +839,18 @@ body {
             line-height: normal;
             background-color: #3c3c3c;
             border: 3px solid #3876cf;
-            /*margin-bottom: 20px;*/
-            float: right;
-            margin-right: 65px;
+            display: block;
+            margin: 0 auto;
         }
 
             .row.subscription-form-wrapper .form-wrapper input[type=button]:hover {
                 background-color: #3876cf;
                 color: #3c3c3c;
             }
+
+#features-releases-group {
+    margin-top: 100px;
+}
 /*Bottom menu / Features section*/
 .features-section {
     /* min-height: 610px; */
@@ -895,6 +933,10 @@ body {
             /*vertical-align: middle; */
             justify-content: center;
             align-items: center;
+        }
+
+        .homepage-footer .row .col-lg-10 p {
+            margin: 0;
         }
 
 
@@ -999,7 +1041,8 @@ body {
 
     .toggle-menu .features-section .row .menu-icon {
         border: 2px solid #3876cf;
-        height: 121px;
+        /*height: 121px;*/
+        height: 20%;
         box-sizing: border-box;
     }
 
@@ -1208,17 +1251,17 @@ body {
 
     /* Toggle menu */
 
-    .features-section.bottom-menu, .features-section.top-menu {
+    /*.features-section.bottom-menu, .features-section.top-menu {
         height: 555px;
-    }
+    }*/
 
-    .selected-feature {
+    /*.selected-feature {
         height: 543px;
     }
 
     .features-section .row div.menu-icon {
         height: 110px;
-    }
+    }*/
 
     .menu-icon .icon-name.icon-fag {
         font-size: 2em;
@@ -1468,7 +1511,7 @@ body {
     }
 
     .main {
-        margin-top: 75px;
+        margin-top: 56px;
     }
 
     /*Toggle side menu*/
@@ -1574,6 +1617,21 @@ body {
 
     .whiteText {
         color: #d0e8fe;
+    }
+
+    /*Subscription form*/
+    .row.subscription-form-wrapper {
+        border-bottom: none;
+    }
+
+    .subscription-radio-group span {
+       width: 80%;
+       text-align: center;
+    }
+
+    .homepage-footer {
+        padding-top: 0;
+        background-color: #ffffff;
     }
 
     /*Technology and advantages*/
@@ -1688,7 +1746,7 @@ body {
     }
 
         .advantages-block img, .technology-block img {
-            margin-top: 5px;
+            margin-top: -3px;
             float: right;
             padding-right: 20px;
             margin-left: -30px;
@@ -1840,13 +1898,15 @@ body {
 /*========================================================================*/
 
 
-@media (max-height: 480px) {
+@media (max-height: 800px) {
     .toggle-menu .features-section {
-        height: 70vh;
-        overflow-y: auto;
+        /*height: 70vh;
+        overflow-y: auto;*/
     }
 
     .toggle-menu {
-        margin-top: -50px;
+        margin-top: -100px;
     }
 }
+
+

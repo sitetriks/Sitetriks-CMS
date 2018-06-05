@@ -33,6 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Forum\Controllers\" />
+    <Folder Include="Areas\Forum\Data\" />
+    <Folder Include="Areas\Forum\Models\" />
     <Folder Include="Areas\SiteTriks\Controllers\DashboardWidgets\ViewComponents\" />
     <Folder Include="Areas\SiteTriks\Controllers\ViewComponents\" />
     <Folder Include="Areas\SiteTriks\Data\" />
@@ -52,6 +55,18 @@
     <None Include="wwwroot\js\modules\scroll-control.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\css.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SiteTriksLicenseManager\LicenseBuilder\LicenseBuilder.csproj" />
+    <ProjectReference Include="..\SiteTriks.BlogModule\SiteTriks.BlogModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.DocumentationModule\SiteTriks.DocumentationModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.ForumModule\SiteTriks.ForumModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.MarketingEmailModule\SiteTriks.MarketingEmailModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.RssFeedModule\SiteTriks.RssFeedModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.SiteMapModule\SiteTriks.SiteMapModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.SiteSync\SiteTriks.SiteSync.csproj" />
+    <ProjectReference Include="..\SiteTriks\SiteTriks.csproj" />
   </ItemGroup>
 
  <!-- <Target Name="IncludePrecompiledViewsInPublishOutput" DependsOnTargets="_MvcRazorPrecompileOnBuild" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">

@@ -214,12 +214,12 @@ div.ui-dialog .ui-dialog-content {
 .select-page-language {
     display: inline-block;
     border: none;
-    height: 28px;
+    height: 26px;
     width: unset;
     background-color: #fff;
     font-weight: bold;
     color: #048CFF;
-    padding-top: 3px;
+    padding-top: 2px;
     position: relative;
     top: -11px;
     text-transform: uppercase;
@@ -900,3 +900,33 @@ select#gallery-libs {
         visibility: visible;
         opacity: 1;
     }
+
+
+/*Internet explorer specific*/
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .languages-select-wrapper {
+        top: -12px;
+        padding-top: 2px;
+    }
+
+    .select-page-language {
+       top: 0;
+    }
+
+    .triangles {
+        display: none;
+    }
+}
+
+/*Chrome specific*/
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .revision-history-wrapper .btn-revision {
+        margin-top: -1px;
+    }
+
+    .revision-history-wrapper .btn-revision {
+        margin-top: -1px;
+    }
+}

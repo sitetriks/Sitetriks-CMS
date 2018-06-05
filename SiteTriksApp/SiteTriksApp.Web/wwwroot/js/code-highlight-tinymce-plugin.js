@@ -27,10 +27,10 @@
                     }
                 ],
                 onsubmit: function (e) {
-                    var heading = '<h5>' + e.data.language + ' Code: </h5>'
-                    var content = heading + ' <pre class="prettyprint">';
+                    var heading = '<h5>' + e.data.language + ' Code: </h5>';
+                    var content = heading + ' <pre class="prettyprint"><code>';
                     content += e.data.code;
-                    content += '</pre>';
+                    content += '</code></pre>';
                     editor.insertContent(content);
                 }
             });

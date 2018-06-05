@@ -28,6 +28,7 @@
 
                 .extensions-menu .module-name .toggle {
                     float: right;
+                    width: 55px;
                 }
 
                     .extensions-menu .module-name .toggle .toggle-on,
@@ -41,15 +42,20 @@
 
                     .extensions-menu .module-name .toggle .toggle-on {
                         background-color: #00b213;
+                        text-align: left;
+                        padding-left: 6px;
                     }
 
                     .extensions-menu .module-name .toggle .toggle-off {
                         padding-right: 0;
                         background-color: #9b9b9b;
+                        text-align: right;
+                        padding-right: 6px;
                     }
 
                     .extensions-menu .module-name .toggle .toggle-handle {
                         background-color: #d8d8d8;
+                        width: 50%;
                     }
 
             .extensions-menu .extensions-installed {
@@ -89,7 +95,7 @@
             }
 
             #drop-area .drop-info-btn {
-                font-size: 24px;
+                font-size: 20px;
                 padding: 10px;
                 padding-right: 20px;
                 display: inline-block;
@@ -98,6 +104,7 @@
                 background-color: #adadad;
                 cursor: pointer;
                 top: calc(50% - 120px);
+                padding-top: 9px;
             }
 
                 #drop-area .drop-info-btn span.glyphicon {
@@ -137,18 +144,83 @@
                 padding: 15px 20px;
                 cursor: pointer;
                 font-size: 18px;
-                color: #777777;
+                color: lightgray;
             }
 
                 .upload-tabs > a.active {
                     border: 1px solid #979797;
                     border-bottom: none;
+                    color: #777777;
                 }
 
                 .upload-tabs > a.empty {
                     flex-grow: 1;
                     cursor: default;
                 }
+
+        /*Tooltip styles*/
+
+        .upload-tabs {
+            position: relative;
+            /*display: inline-block;*/
+        }
+
+            .upload-tabs .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                margin-left: -60px;
+                opacity: 0;
+                transition: opacity 0.3s;
+                margin-top: 50px;
+                font-size: 12px;
+                line-height: 14px;
+                padding: 5px;
+                left: 50%;
+            }
+
+
+            .upload-tabs .tooltiptext {
+                /*margin-left: -20px;*/
+            }
+
+
+                .upload-tabs .tooltiptext::before {
+                    content: "";
+                    position: absolute;
+                    top: -10px;
+                    left: 50%;
+                    margin-left: -15px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: transparent transparent #555;
+                }
+
+                .inactive {
+                    position: relative;
+                }
+
+             .inactive:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+                pointer-events: none;
+            }
+
+        .uppercase {
+            line-height: 38px;
+        }
+
+            .uppercase img {
+                height: 38px;
+                margin-right: 15px;
+                margin-top: -8px;
+            }
     </style>
 }
 
@@ -164,7 +236,7 @@
             <div class="extensions-installed">
                 @foreach (var item in Model)
                 {
-                    <label class="module-name clearfix">@item.DisplayName <input class="activate-module" type="checkbox" data-size="mini" data-onstyle="success" data-toggle="toggle" @if (item.IsActive) { <text> checked </text> } data-name="@item.Name" /></label>
+                    <label class="module-name clearfix">@item.DisplayName <input class="activate-module" type="checkbox" data-size="mini" data-onstyle="success" data-toggle="toggle" @if (item.IsActive) { <text> checked </text>   } data-name="@item.Name" /></label>
                 }
             </div>
         </div>
@@ -172,12 +244,15 @@
             <div class="upload-extension ">
                 <div class="upload-tabs">
                     <a class="upload-tab active">Upload</a>
-                    <a class="upload-tab">Market Place</a>
+                    <a class="upload-tab inactive">
+                        Market Place
+                        <span class="tooltiptext">Not available for the moment.</span>
+                    </a>
                     <a class="empty"></a>
                 </div>
                 <div id="drop-area">
                     <div class="drop-info-btn">
-                        <a class="uppercase"><span class="glyphicon glyphicon-import"></span>Import/Browse</a>
+                        <a class="uppercase"><img src="/images/import_icon.svg"><span>Import/Browse</span></a>
                     </div>
                     <div class="drop-info-text">
                         <span class="">Drag and drop file here.</span>

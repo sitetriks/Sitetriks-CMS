@@ -29,7 +29,7 @@ function removeSideMenu(e) {
             $toggleMenu.removeClass('visuallyhidden');
         }, 30);
         //$toggleMenu.removeClass('hidden');
-      
+
     }
 }
 
@@ -81,10 +81,20 @@ $('body').on('resize ready', '.toggle-menu', function () {
 //    }
 //})();
 
+    var setFeatureWidth = "240px";
 
 $(".shrink-menu").on("click", expandMenu);
 
 function expandMenu(ev) {
+
+    // check window-height
+
+    //if ($(window).height() <= 800) {
+    //    setFeatureWidth = "260px"
+    //} else {
+    //    setFeatureWidth = "240px";
+    //}
+
     // check state
 
     if ($(".toggle-menu").attr("data-open-state") === "closed") {
@@ -92,7 +102,7 @@ function expandMenu(ev) {
     }
 
     animateWidth = $('.middle-section.col-lg-10').css('width') == "0px" ? "76%" : "0px";
-    var featuresFullWidth = $('.toggle-menu .features-section').css('width') == "240px" ? "90%" : "240px";
+    var featuresFullWidth = $('.toggle-menu .features-section').css('width') == setFeatureWidth ? "90%" : setFeatureWidth;
     var sideColsWidth = $('.side-section.col.col-lg-1').css('width') == "117px" ? "12%" : "117px";
     var selectedFeatureVisibility = $selectedFeature.css('display') == "block" ? "none" : "block";
 
@@ -166,7 +176,7 @@ $('.close-menu').on('click', function () {
     $(".leaf-button-1").toggle();
 
     // fix features section width
-    $featuresSection.css("width", "240px");
+    $featuresSection.css("width", setFeatureWidth);
     $sideCol.css("width", "117px");
     $middleSection.css("width", "0px");
     $selectedFeature.css("display", "none");
@@ -210,7 +220,7 @@ $(document).ready(function (ev) {
             if ($(this).hasClass('clicked')) {
                 $(this).children('.icon-image').toggle();
                 $(this).css('background-color', '#123e7a');
-        //$(this).css('border-color', '#3875cf');
+                //$(this).css('border-color', '#3875cf');
                 $(this).removeClass('clicked');
             }
         });
@@ -227,13 +237,37 @@ $(document).ready(function (ev) {
 
         $section.html('');
         Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
-          // console.log(res.url);
+            // console.log(res.url);
 
             if (res.success) {
                 $section.html(res.view);
 
+               // DocumentationWidget();
+
                 if ($toggleMenu.length > 0 && $toggleMenu.attr('data-open-state') !== 'expanded') {
                     expandMenu();
+                }
+
+                // check if I have the Playlist element loaded
+
+                if ($section.find('.multiple-playlists')) {
+                    // get all thumbnails ids
+                    let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
+                    let source;
+
+                    $container.each(function (_, element) {
+                        source = $(this).data("videoid");
+                        let url = getYoutubeData(source).then(function (res) {
+                          //  console.log(res);
+                            let finalUrl = res.items[0].snippet.thumbnails.high.url;
+                            let title = res.items[0].snippet.title;
+                         //   console.log(title);
+                            $(element).children('img').attr('src', finalUrl);
+                            $(element).children('.playlist-title').text( title );
+                        }, Data.defaultError);
+
+                    })
+
                 }
 
                 //if ($(window).width() > 768) {
@@ -249,24 +283,55 @@ $(document).ready(function (ev) {
         })
     }
 
-    $('.features-section').each(function (_, element) {
-        let $menuIcon = $($(this).find('.menu-icon')[2]);
-        loadSection.apply($menuIcon);
-    });
+    /*******************Get Youtube Playlist Thumbnails ***********************/
 
-    function onImgLoaded(callback) {
-        var img = document.querySelector('img');
 
-        if (img.complete) {
-            callback()
-        } else {
-            img.addEventListener('load', callback)
-            img.addEventListener('error', function () {
-                console.log('error')
-            })
-        }
+    function getYoutubeData(playlistId) {
+       return Data.getJson({ url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8"})
+        //return new Promise((resolve, reject) => {
+        //    $.ajax({
+        //        url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8",
+        //        method: 'GET',
+        //        contentType: 'json',
+        //        success: resolve,
+        //        error: reject
+        //    }).then(function (data) {
+        //        let result = JSON.stringify(data.items[0].snippet.thumbnails.high.url);
+        //        console.log(result);
+        //        return result;
+        //        }, Data.defaultError)
+        //});
     }
-})
+
+        /********************************** Try Button logic ****************************************/
+
+
+        $('.try-button-wrapper').on('click', function () {
+            $('.features-section').each(function (_, element) {
+                let $menuIcon = $($(this).find('.menu-icon')[4]);
+                loadSection.apply($menuIcon);
+            });
+        });
+
+
+        $('.features-section').each(function (_, element) {
+            let $menuIcon = $($(this).find('.menu-icon')[2]);
+            loadSection.apply($menuIcon);
+        });
+
+        function onImgLoaded(callback) {
+            var img = document.querySelector('img');
+
+            if (img.complete) {
+                callback()
+            } else {
+                img.addEventListener('load', callback)
+                img.addEventListener('error', function () {
+                    console.log('error')
+                })
+            }
+        }
+    })
 
 
 $(document).ready(function () {
@@ -284,11 +349,11 @@ $(document).ready(function () {
 /*To Move - Logic for Contact Us page*/
 
 function initSomeForm() {
-    $('body').on('click', '.phone-contact', function () {
-        $('.expanded-contacts.phone').css('display', 'block');
-        $('.contact-us-widget.main-container').css('display', 'none');
-        $('.expanded-contacts.mail').css('display', 'none');
-    })
+    //$('body').on('click', '.phone-contact', function () {
+    //    $('.expanded-contacts.phone').css('display', 'block');
+    //    $('.contact-us-widget.main-container').css('display', 'none');
+    //    $('.expanded-contacts.mail').css('display', 'none');
+    //})
 
     $('body').on('click', '.mail-contact', function () {
         $('.expanded-contacts.mail').css('display', 'block');
@@ -304,9 +369,9 @@ function initSomeForm() {
 
 };
 
- $(document).on('initSomeForm', initSomeForm);
+$(document).on('initSomeForm', initSomeForm);
 
- $(document).trigger('initSomeForm');
+$(document).trigger('initSomeForm');
 
 
 $('body').on('submit', '.contact-us-form', function (ev) {
@@ -351,36 +416,38 @@ $('body').on('submit', '.contact-us-form', function (ev) {
 
 /* Filter the phone number according to the selected */
 
-    $('body').on('click', '.list-of-regions li', function () {
+$('body').on('click', '.list-of-regions li', function () {
 
-        $('.list-of-regions li').each(function () {
-            if ($(this).hasClass('selected-region')) {
-                $(this).removeClass('selected-region');
-            }
-        });
-        $(this).toggleClass('selected-region');
-
-        switch ($(this).attr('data-region')) {
-            case "europe":
-                $('.list-of-contacts').html("<p>Contacts within Europe: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359876645789\">Bulgaria: +359876645789</a></li></ul>");
-                break;
-            case "north-america":
-                $('.list-of-contacts').html("<p>Contacts within North America: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +443 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
-                break;
-            case "south-america":
-                $('.list-of-contacts').html("<p>Contacts within South America: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
-                break;
-            case "asia":
-                $('.list-of-contacts').html("<p>Contacts within Asia: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
-                break;
-            case "australia":
-                $('.list-of-contacts').html("<p>Contacts within Australia: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
-                break;
-            case "africa":
-                $('.list-of-contacts').html("<p>Contacts within Africa</p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
-                break;
-            default:
-                $('.list-of-contacts').html("<p>Contacts within Europe: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
-                break;
+    $('.list-of-regions li').each(function () {
+        if ($(this).hasClass('selected-region')) {
+            $(this).removeClass('selected-region');
         }
     });
+    $(this).toggleClass('selected-region');
+
+    switch ($(this).attr('data-region')) {
+        case "europe":
+            $('.list-of-contacts').html("<p>Contacts within Europe: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359876645789\">Bulgaria: +359876645789</a></li></ul>");
+            break;
+        case "north-america":
+            $('.list-of-contacts').html("<p>Contacts within North America: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +443 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
+            break;
+        case "south-america":
+            $('.list-of-contacts').html("<p>Contacts within South America: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
+            break;
+        case "asia":
+            $('.list-of-contacts').html("<p>Contacts within Asia: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
+            break;
+        case "australia":
+            $('.list-of-contacts').html("<p>Contacts within Australia: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
+            break;
+        case "africa":
+            $('.list-of-contacts').html("<p>Contacts within Africa</p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44444 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
+            break;
+        default:
+            $('.list-of-contacts').html("<p>Contacts within Europe: </p><ul ><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+44 515 772 228\">UK: +44 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+49515772228\">Germany: +49 515 772 228</a></li><li><img src=\"/images/contact-us/tel_blue.svg\"><a href=\"tel:+359515772228\">Bulgaria: +359 515 772 228</a></li></ul>");
+            break;
+    }
+});
+
+

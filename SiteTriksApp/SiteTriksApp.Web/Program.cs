@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SiteTriks.Data;
 using SiteTriks.Data.Models;
@@ -59,7 +60,10 @@ namespace SiteTriksApp.Web
                 // Seed Database
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                UserSeeder.Seed(userManager, roleManager);
+
+                var configuration = services.GetRequiredService<IConfiguration>();
+
+                UserSeeder.Seed(userManager, roleManager, configuration);
 
                 SiteSeeder.Seed(dbContext);
 

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_FrontEndLayout.cshtml";
+}
+
+@section styles {
+    @RenderSection("Styles", required: false)
+}
+
+<div>
+    <div class="forum-navigation">
+        @await Component.InvokeAsync("NavigationWidget", new { area = "", noPages = true })
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="frontend-footer"></footer>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

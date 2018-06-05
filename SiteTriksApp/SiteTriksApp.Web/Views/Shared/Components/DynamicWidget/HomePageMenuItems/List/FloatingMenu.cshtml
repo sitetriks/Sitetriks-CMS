@@ -1,0 +1,91 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
+
+@{
+    var entries = Model.Entries.OrderBy(e => e.Position).ToList();
+}
+
+<div class="toggle-menu" data-open-state="closed">
+    <div class="features-section">
+        <div class="row">
+            <div class="side-section col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                @for (int i = 0; i < 10 && i < Model.Entries.Count(); i += 2)
+                {
+                    @*<div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")" title="@Model.ClassHelper.GetPropertyValue(entries[i], "HoverText")">
+                        @Model.ClassHelper.GetPropertyValue(entries[i], "DisplayText")
+                        @{
+                            string images = Model.ClassHelper.GetPropertyValue(entries[i], "Images");
+                            if (!string.IsNullOrWhiteSpace(images))
+                            {
+                                string value = images.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                                <img src="/files/id/@value" width="50" />
+                            }
+                        }
+                    </div>*@
+
+                    <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")">
+                        <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "PrimaryImage")">
+                        <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "SecondaryImage")" style="display:none">
+                    </div>
+                            }
+            </div>
+            <div class="middle-section col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                <div class="selected-feature" id="floating-section"><div class="feature-content"></div></div>
+            </div>
+            <div class="side-section col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                @for (int i = 1; i < 10 && i < Model.Entries.Count(); i += 2)
+                {
+                    @*<div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")" title="@Model.ClassHelper.GetPropertyValue(entries[i], "HoverText")">
+                        @Model.ClassHelper.GetPropertyValue(entries[i], "DisplayText")
+                        @{
+                            string images = Model.ClassHelper.GetPropertyValue(entries[i], "Images");
+                            if (!string.IsNullOrWhiteSpace(images))
+                            {
+                                string value = images.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                                <img src="/files/id/@value" width="50" />
+                            }
+                        }
+                    </div>*@
+                    <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")">
+                        <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "PrimaryImage")">
+                        <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "SecondaryImage")" style="display:none">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="inline-button">
+        <div class="toggle-button">
+            <div class="shrink-menu" disabled="true">
+                <div class="leaf-button-text">
+                    <div class="letter-1">M</div>
+                    <div class="letter-2">E</div>
+                    <div class="letter-3">N</div>
+                    <div class="letter-4">U</div>
+                </div>
+                <img class="leaf-button-1" style="display: none;" src="~/images/menu-buttons/leaf.png" disabled="true">
+                <img class="leaf-button-2" style="display: none;" src="~/images/menu-buttons/big screen.png" disabled="true">
+                <img class="leaf-button-3" style="display: none;" src="~/images/menu-buttons/Decrease_window.png" disabled="true">
+            </div>
+            <div class="close-menu" style="display: none;">
+                <img class="arrows-1" src="~/images/menu-buttons/expand arrows.png">
+                <img class="arrows-2" style="display: none;" src="~/images/menu-buttons/Decrease arrows.png">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
+<script>
+    $('.toggle-menu').on('click', '.menu-icon',  function () {
+        let pageUrl = ($(this).data("url"));
+        let pageInternalNavigation = 'Page Floating Interal Navigation';
+        console.log(pageUrl);
+        console.log(pageInternalNavigation);
+        if ("ga" in window) {
+            tracker = ga.getAll()[0];
+            if (tracker)
+                tracker.send("event", pageInternalNavigation, pageUrl);
+        }
+    });
+</script>*@

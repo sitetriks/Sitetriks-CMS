@@ -15,45 +15,43 @@
 
 @section scripts{
     <script type="text/javascript">
-        $(document).ready(function (ev) {
 
-            var grid = Grid();
-            var data = { link: "/sitetriks/documentation/GridTopics", serverSide: false, hasNesting: true, nestingPropertyName: "Children" }
-            var columns = [{
-                name: 'id',
-                title: '',
-                type: 'checkbox',
-                size: 1
-            },
-            {
-                name: "name",
-                title: "Name",
-                type: 'string',
-                filter: true,
-                sort: true,
-                size: 6,
-                headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
-            }, {
-                name: 'id',
-                title: 'Action',
-                type: 'string',
-                size: 2,
-                headerTemplate: '<b>#item#</b>',
-                contentTemplate: '<a class="btn btn-warning" href="/sitetriks/documentation/edit/#item#">Edit</a>'
-            }];
+        var grid = Grid();
+        var data = { link: "/sitetriks/documentation/GridTopics", serverSide: false, hasNesting: true, nestingPropertyName: "children" }
+        var columns = [{
+            name: 'id',
+            title: '',
+            type: 'checkbox',
+            size: 1
+        },
+        {
+            name: "name",
+            title: "Name",
+            type: 'string',
+            filter: true,
+            sort: true,
+            size: 6,
+            headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
+        }, {
+            name: 'id',
+            title: 'Action',
+            type: 'string',
+            size: 2,
+            headerTemplate: '<b>#item#</b>',
+            contentTemplate: '<a class="btn btn-warning" href="/sitetriks/documentation/edit/#item#">Edit</a>'
+        }];
 
-            let buttons = [{
-                title: 'Delete',
-                postUrl: '/sitetriks/documentation/delete',
-                type: 'danger',
-                callback: function (res) {
-                    console.log(res);
-                }
-            }];
+        let buttons = [{
+            title: 'Delete',
+            postUrl: '/sitetriks/documentation/delete',
+            type: 'danger',
+            callback: function (res) {
+                console.log(res);
+            }
+        }];
 
-            var config = grid.build(columns, buttons, grid.defaultPager, data);
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
 
-            let obj = grid.init('.grid', config);
-        });
+        let obj = grid.init('.grid', config);
     </script>
 }

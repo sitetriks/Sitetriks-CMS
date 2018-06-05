@@ -143,7 +143,7 @@ function addElement(height, width, angle, ratioOfRadius, selector, text, lines, 
 
         for (var i = 0; i < lines.length; i++) {
             $('.logo-center').css('z-index', '1046');
-             lines[i].addClass('hover');
+            lines[i].addClass('hover');
 
         }
     }, function () {
@@ -342,8 +342,8 @@ var drawSnowflake = function (halfwidth, elementSizeBase, parentDevider) {
     addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -167, 1.1, ".dandelion-menu", "tagging", eight, parentDevider, halfwidth, "tagging"); // 8
     addElement(0.6 * elementSizeBase, 0.7 * elementSizeBase * 3, -178, 1.25, ".dandelion-menu", "dynamic content", nineOclock, parentDevider, halfwidth, "dynamic_content"); // 9
     addElement(0.7 * elementSizeBase, 0.9 * elementSizeBase * 3, -185, 1.3, ".dandelion-menu", "multisite management", ten, parentDevider, halfwidth, "multisite_management"); // 10
-    addElement(0.7 * elementSizeBase, 0.7 * elementSizeBase * 3, 163, 1.2, ".dandelion-menu", "(DDOS) attack protection", tenThirty, parentDevider, halfwidth, "attack_protection"); // 10.5
-    addElement(0.9 * elementSizeBase, 0.9 * elementSizeBase * 3, 150, 1, ".dandelion-menu", "search " + '</br>' + "(Google integration)", eleven, parentDevider, halfwidth, "google_integration"); // 11
+    addElement(0.5 * elementSizeBase, 0.6 * elementSizeBase * 3, 165, 1.2, ".dandelion-menu", "personalization", tenThirty, parentDevider, halfwidth, "personalization"); // 10.5
+    addElement(0.7 * elementSizeBase, 0.9 * elementSizeBase * 3, 150, 1, ".dandelion-menu", "search " + '</br>' + "(Google integration)", eleven, parentDevider, halfwidth, "google_integration"); // 11
 
     addLine(".dandelion-menu", sixOclock, "sixOclock"); // 6
     addElement(80, 80, 180, 0, ".dandelion-menu", '<div class="logo-center"><img src="../../images/Sitetriks_logo.svg" alt="logo" style="width: 80px; height: 80px; padding-left:2px; margin-top:2px;"></div>', [], parentDevider, halfwidth); // 11
@@ -364,7 +364,6 @@ var state = -1;
 
 var reDrawSnowflake = function () {
     let windowWidth = $(window).width();
-
     let containerHalfWidth;
 
     if ((windowWidth > 1280) && !(state == 0)) {
@@ -396,6 +395,23 @@ var reDrawSnowflake = function () {
 $(window).ready(reDrawSnowflake);
 $(window).resize(reDrawSnowflake);
 
+/**
+ *Clean mobile menu on resize *
+ */
+
+var removeMobileMenu = function () {
+    let windowWidth = $(window).width();
+    console.log("in remove function");
+    if ((windowWidth > 767)) {
+        $('#mobile-view-top-menu').css('display', 'none');
+        $('.hidden-by-menu').css('display', 'block');
+
+    }
+}
+
+$(window).ready(removeMobileMenu);
+$(window).resize(removeMobileMenu);
+
 
 /* Hamburger menu */
 
@@ -415,7 +431,9 @@ $('#hamburger-menu img').click(function (ev) {
             $('.logo-container-mobile').css('background-color', '#123e7a');
         }, 800);
         clicked = true;
-        $('.hidden-by-menu').toggle();
+      //  $('.hidden-by-menu').toggle();
+        $('.hidden-by-menu').css('display', 'none');
+
 
     } else if (clicked == true) {
         $('#mobile-view-top-menu').slideUp("slow");
@@ -425,7 +443,8 @@ $('#hamburger-menu img').click(function (ev) {
             $('.logo-container-mobile').css('background-color', 'white');
         }, 800);
         clicked = false;
-        $('.hidden-by-menu').toggle();
+       // $('.hidden-by-menu').toggle();
+        $('.hidden-by-menu').css('display', 'block');
     }
 });
 
@@ -570,11 +589,11 @@ var selectedSection = "<div class=\"col col-xs-12\"><div class=\"selected-featur
 /*To Move - Logic for Contact Us page*/
 
 function initSomeForm() {
-    $('body').on('click', '.phone-contact', function () {
-        $('.expanded-contacts.phone').css('display', 'block');
-        $('.contact-us-widget.main-container').css('display', 'none');
-        $('.expanded-contacts.mail').css('display', 'none');
-    })
+    //$('body').on('click', '.phone-contact', function () {
+    //    $('.expanded-contacts.phone').css('display', 'block');
+    //    $('.contact-us-widget.main-container').css('display', 'none');
+    //    $('.expanded-contacts.mail').css('display', 'none');
+    //})
 
     $('body').on('click', '.mail-contact', function () {
         $('.expanded-contacts.mail').css('display', 'block');
@@ -604,14 +623,25 @@ $('body').on('submit', '.contact-us-form', function (ev) {
     let $number = $targer.find('.inputNumber').val();
     let $message = $targer.find('.textareaMessage').val();
     var $notifier = $targer.find('.file-handler-notifier');
+    if ($name) {
+        if ($name.length === 0 && $name || $email.length === 0 || $number.length === 0 || $message.length === 0) {
+            // alert("One or more fields were not filled in successfully. Please fill them in and try again.");
+            $notifier.addClass('alert alert-danger  fade in alert-dismissible');
+            $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
 
-    if ($name.length === 0 || $email.length === 0 || $number.length === 0 || $message.length === 0) {
-       // alert("One or more fields were not filled in successfully. Please fill them in and try again.");
-        $notifier.addClass('alert alert-danger  fade in alert-dismissible');
-        $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
-
-        return false;
+            return false;
+        }
     }
+    else {
+        if ($message.length === 0) {
+            // alert("One or more fields were not filled in successfully. Please fill them in and try again.");
+            $notifier.addClass('alert alert-danger  fade in alert-dismissible');
+            $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
+
+            return false;
+        }
+    }
+
 
     let formData = new FormData(this);
     // var $notifier = $('#test-form #file-handler-notfier');
@@ -634,6 +664,28 @@ $('body').on('submit', '.contact-us-form', function (ev) {
     return false;
 
 })
+
+$('body').on('submit', '.contact-us-form-1', function (ev) {
+    ev.preventDefault();
+    let $targer = $(this);
+    var $notifier = $targer.find('.file-handler-notifier');
+    var formData = new FormData(this);
+    // var $notifier = $('#test-form #file-handler-notfier');
+    Data.postForm({ url: this.action, formData: formData }).then(function (res) {
+
+        $("input").val("");
+        $("textarea").val("");
+
+        $notifier.addClass('alert alert-success  fade in alert-dismissible');
+        $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> Your request was sent successfully!');
+    }).catch(function (err) {
+        console.log(err);
+        $notifier.addClass('alert alert-danger  fade in alert-dismissible');
+        $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
+    });
+    ev.preventDefault();
+    return false;
+});
 
 
 
@@ -696,7 +748,7 @@ $(document).ready(function () {
         let targetclass = target.className.split(' ')[1];
         // find the corresponding element
         let $targetIcon;
-       //  $targetIcon = $(`#${targetclass}`);
+        //  $targetIcon = $(`#${targetclass}`);
 
         $targetIcon = $("#" + targetclass);
         let scrollDistance = $targetIcon.offset().top - 125;
@@ -714,7 +766,10 @@ $(document).ready(function () {
 
         if (!$('.more-items').hasClass('more-clicked')) {
             $('.more-items').unbind().trigger('click');
-            scrollcb(target);
+            setTimeout(function () {
+                scrollcb(target);
+            }, 500);
+
         } else {
             scrollcb(target);
         }
@@ -733,4 +788,62 @@ function toggleForm() {
     });
 };
 
- $(window).ready(toggleForm());
+$(window).ready(toggleForm());
+
+/********************************** Try Button logic ****************************************/
+
+function loadSection(ev) {
+    var $trigger = $(this);
+    // console.log($trigger);
+
+    $('.menu-icon').each(function () {
+        if ($(this).hasClass('clicked')) {
+            $(this).children('.icon-image').toggle();
+            $(this).css('background-color', '#123e7a');
+            //$(this).css('border-color', '#3875cf');
+            $(this).removeClass('clicked');
+        }
+    });
+
+    $trigger.addClass('clicked');
+    $trigger.css('background-color', '#3876cf');
+    //$trigger.css('border-color', '#1ac6e9');
+    $trigger.children('.icon-image').toggle();
+
+    var url = $trigger.attr('data-url') || '';
+    // console.log(url);
+    var $section = $trigger.parents('.features-section').find('.feature-content');
+    var $toggleMenu = $trigger.parents('.toggle-menu');
+
+    $section.html('');
+    Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
+        // console.log(res.url);
+
+        if (res.success) {
+            $section.html(res.view);
+
+            if ($toggleMenu.length > 0 && $toggleMenu.attr('data-open-state') !== 'expanded') {
+                expandMenu();
+            }
+
+            //if ($(window).width() > 768) {
+            //    $section.parent().data('scroll-bar').update();
+            //}
+
+            //onImgLoaded(function (ev) {
+            //    setTimeout(function () {
+            //        $section.parent().data('scroll-bar').update();
+            //    }, 200)
+            //});
+        }
+    });
+}
+
+
+
+$('.try-button-wrapper').on('click', function () {
+    $('.features-section').each(function (_, element) {
+        let $menuIcon = $($(this).find('.menu-icon')[3]);
+        loadSection.apply($menuIcon);
+    });
+});

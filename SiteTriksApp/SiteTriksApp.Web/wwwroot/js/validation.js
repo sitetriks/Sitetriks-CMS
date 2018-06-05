@@ -90,6 +90,21 @@ function parseYouTubeUrl(url) {
     return result;
 }
 
+//// Adding custom parse function for a list of urls
+
+//function parseYoutubeVideosList(input) {
+//    var videosList = input.split(";");
+//    console.log(videosList);
+//    var videoIds = [];
+
+//    for (let i = 0; i < videosList.length; i++) {
+//        let parsedUrl = parseYouTubeUrl(videosList[i]);
+//        videoIds.push(parsedUrl);
+//        console.log(videoIds);
+//    }
+//    return videoIds;
+//}
+
 // Adding custom parse function for a list of urls
 
 function parseYoutubeVideosList(input) {
@@ -97,10 +112,16 @@ function parseYoutubeVideosList(input) {
     console.log(videosList);
     var videoIds = [];
 
-    for (let i = 0; i < videosList.length; i++) {
-        let parsedUrl = parseYouTubeUrl(videosList[i]);
+    for (var i = 0; i < videosList.length; i++) {
+        let parsedUrl;
+        console.log(videosList[i]);
+        if (videosList[i].length == 11) {
+            parsedUrl = videosList[i];
+        } else {
+            parsedUrl = parseYouTubeUrl(videosList[i]);
+        }
         videoIds.push(parsedUrl);
-        console.log(videoIds);
+        // console.log(videoIds);
     }
     return videoIds;
 }

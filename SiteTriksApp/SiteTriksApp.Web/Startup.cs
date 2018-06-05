@@ -127,9 +127,12 @@ namespace SiteTriksApp.Web
             WidgetRegistry.RegisterWidget<DocumentationWidgetModel>("documentation", "Documentation");
             WidgetRegistry.RegisterWidget<GalleryWidgetModel>("gallery", "Gallery");
             WidgetRegistry.RegisterWidget<ContactUsWidgetModel>("contactUs", "Contact Us");
+            WidgetRegistry.RegisterWidget<ContactUsWidgetModel>("contactUsAlternative", "Contact Us Alternative");
             WidgetRegistry.RegisterWidget<MarketWidgetModel>("market", "Market");
             WidgetRegistry.RegisterWidget<UserOrdersWidgetModel>("userOrders", "User Orders");
             WidgetRegistry.RegisterWidget<SubscriptionWidgetModel>("subscription", "Subscription");
+            WidgetRegistry.RegisterWidget<LicensesTableWidgetModel>("licensesTable", "Licenses Table");
+            WidgetRegistry.RegisterWidget<LicenseGenerationWidgetModel>("licenseGeneration", "License Form");
 
             // -----------------------------------------------------------------------------------------------------------
             // user widget needs redesign.

@@ -1,44 +1,62 @@
 ﻿$(document).ready(function () {
-    if ($('#subscription-forms').length) {
-        let isHidden = false;
-        $(document).ready(function () {
-            $('#subscription-forms > div').hide();
-            isHidden = true;
+    function toggleForm() {
+        $('.subscription-button').on('click', function () {
+            console.log($(this));
+            $(this).next().toggle();
         });
+    };
 
-        $('#subscription-submit').on('click', function (e) {
-            if (isHidden) {
-                console.log(isHidden);
-                $('#subscription-forms > div').show();
-                isHidden = false;
-            } else {
-                let flag = true;
+    $(window).ready(toggleForm());
 
-                if (!Validator.validate($('#email'), 'Must enter valid email', function (val) {
-                    return Validator.validateEmail(val);
-                })) {
-                    flag = false;
-                }
+    $('#subscription-submit').on('click', function (e) {
+        let flag = true;
+        let $name = $('#subscriptionForm input[name="name"]');
+        let $email = $('#subscriptionForm input[name="email"]');
+        let $featuresReleases = $("input[name='features-releases']:checked");
+        let $promotionalMaterials = $("input[name='promotional-materials']:checked");
 
-                if (!Validator.validate($('#name'), 'Name must be at least 3 letters.', function (val) {
-                    return Validator.hasMinimumLength(val.trim(), 3) && Validator.isStartingWithLetter(val.trim());
-                })) {
-                    flag = false;
-                }
+        if (!Validator.validate($email, 'Must enter valid email', function (val) {
+            return Validator.validateEmail(val);
+        })) {
+            flag = false;
+        }
 
-                if (flag) {
-                    var subscriberData = {
-                        Name: $('#name').val(),
-                        Email: $('#email').val()
-                    };
+        if (!Validator.validate($name, 'Name must be at least 3 letters.', function (val) {
+            return Validator.hasMinimumLength(val.trim(), 3) && Validator.isStartingWithLetter(val.trim());
+        })) {
+            flag = false;
+        }
 
-                    Data.postJson({ url: '/sitetriks/marketingEmails/subscribe', data: subscriberData }).then(function (res) {
-                        Notifier.createAlert({ message: res.message, status: (res.success ? 'success' : 'warning') });
-                        isHidden = true;
-                        $('#subscription-forms > div').hide();
-                    }, Data.defaultError);
-                }
-            }
-        });
-    }
+        if (!$featuresReleases.val()) {
+            $('#features-releases-group .validation-output').text('Please check one of the options.');
+            flag = false;
+        }
+        else {
+            $('#features-releases-group .validation-output').text('');
+        }
+
+        if (!$promotionalMaterials.val()) {
+            $('#promotional-materials-group .validation-output').text('Please check one of the options.');
+            flag = false;
+        }
+        else {
+            $('#promotional-materials-group .validation-output').text('');
+        }
+
+        if (flag) {
+            var subscriberData = {
+                Name: $name.val(),
+                Email: $email.val()
+            };
+            
+            Data.postJson({ url: '/sitetriks/marketingEmails/subscribe', data: subscriberData }).then(function (res) {
+                Notifier.createAlert({ message: res.message, status: (res.success ? 'success' : 'warning') });
+                $name.val('');
+                $email.val('');
+                $promotionalMaterials.attr('checked', false);
+                $featuresReleases.attr('checked', false);
+                $('.subscription-button').click();
+            }, Data.defaultError);
+        }
+    });
 })

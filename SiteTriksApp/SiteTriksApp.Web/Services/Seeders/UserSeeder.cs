@@ -1,28 +1,31 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using SiteTriks.Data.Models;
 
 namespace SiteTriksApp.Web.Services.Seeders
 {
     public class UserSeeder
     {
-        public static void Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static void Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
+            IConfigurationSection superUserSection = configuration.GetSection("SuperUser");
+            var username = superUserSection.GetSection("Username").Value;
+            var password = superUserSection.GetSection("Password").Value;          
+
+            if(username.Contains("#") || string.IsNullOrEmpty(username))
+            {
+                username = "admin@mail.com";
+                password = "12345qQ!";
+            }
+
             string[] roles = new string[]
             {
                 "SuperAdmin",
                 "Admin",
                 "Authorized back-end",
                 "Authorized front-end",
-                "Unauthorized"
-            };
-
-            // Seeding users with roles based on the same index
-            string[] emails = new string[]
-            {
-                "superadmin@mail.bg",
-                "admin@mail.bg",
-                "backend@mail.bg",
-                "frontend@mail.bg"
+                "Partner",
+                "Client"
             };
 
             foreach (var role in roles)
@@ -33,13 +36,9 @@ namespace SiteTriksApp.Web.Services.Seeders
                 }
             }
 
-            for (int i = 0; i < emails.Length; i++)
+            if (userManager.FindByNameAsync(username).Result == null)
             {
-                string email = emails[i];
-                if (userManager.FindByNameAsync(email).Result == null)
-                {
-                    CreateUser(userManager, roles[i], email, "12345qQ!");
-                }
+                CreateUser(userManager, roles[0], username, password);
             }
         }
 

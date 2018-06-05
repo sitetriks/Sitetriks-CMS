@@ -41,6 +41,17 @@
                             <option value="@widgetName">@widgetName</option>
                         }
                     </select>
+                    <br />
+                    @if (Model.WidgetName == "none")
+                    {
+                        <input id="location" class="title-field" asp-for="Location" placeholder="Custom view location..." value="@Model.Location" />
+                    }
+                    else
+                    {
+                        <input id="location" class="title-field" asp-for="Location" hidden="hidden" placeholder="Custom view location..." />
+
+                    }
+
                     <strong><span class="text-danger"></span></strong>
                     @Html.ValidationMessageFor(m => Model.WidgetName, "", new { @class = "text-danger" })
                 </div>
@@ -69,5 +80,16 @@
     <script src="~/js/razor-views-editor.js" charset="utf-8"></script>
     <script>
         RazorViewsEditor.init(`@(Html.Raw(Model.Content))`, "#edit-dynamic-view-form", "#Content");
+
+        $('select[name="WidgetName"]').change(function () {
+            let $location = $("#location");
+            if ($(this).val() == "none") {
+                $location.removeAttr("hidden");
+            }
+            else {
+                $location.attr("hidden", "hidden");
+                $location.val("");
+            }
+        });
     </script>
 }

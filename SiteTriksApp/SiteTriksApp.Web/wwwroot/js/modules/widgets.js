@@ -1,10 +1,63 @@
 ﻿//===================================================================================================
-// Widgets 2.0
+// Widgets 2.01
+// - v. 2.01 - add func getRoles() and getUserGroups() for loading multiselect dropdowns
+//         for widgets AllowedRoles, AllowedGroups 
 //===================================================================================================
 
 function widgetsModule($widgetContainer, initFunctions) {
+    function getRoles(selectedRoles) {
+        if (!selectedRoles) {
+            var selectedRolesNames = [];
+        } else {
+            var selectedRolesNames = selectedRoles.split(';');
+        } 
+
+
+        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function(data) {
+            $.each(data.names, function (index, item) {
+                if (selectedRolesNames.indexOf(item) >= 0) {
+                    var option = $('<option></option>');
+                    option.val(item).html(item);
+                    option.attr('selected', 'selected');
+                    $('#allowed-roles').append(option);
+                } else {
+                    $('#allowed-roles').append(
+                        $('<option></option>').val(item).html(item)
+                    );
+                }
+
+            });
+            Multiselect.Setup('allowed-roles');
+        });
+    }
+
+    function getUserGroups(selectedUserGroups) {
+
+        if (!selectedUserGroups) {
+            var selectedUserGroupsNames = [];
+        } else {
+            var selectedUserGroupsNames = selectedUserGroups.split(';');
+        } 
+
+        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function(data) {
+            $.each(data.names, function (index, item) {
+                if (selectedUserGroupsNames.indexOf(item) >= 0) {
+                    var option = $('<option></option>');
+                    option.val(item).html(item);
+                    option.attr('selected', 'selected');
+                    $('#allowed-groups').append(option);
+                } else {
+                    $('#allowed-groups').append(
+                        $('<option></option>').val(item).html(item)
+                    );
+                }
+            });
+            Multiselect.Setup('allowed-groups');
+        });
+    }
 
     function LoadWidget(type) {
+        console.log("Load widget");
         $widgetContainer.html('<p>Loading...</p>');
 
         Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type }).then(function (res) {
@@ -13,6 +66,9 @@ function widgetsModule($widgetContainer, initFunctions) {
             if (initFunctions[type] && {}.toString.call(initFunctions[type].init) === '[object Function]') {
                 initFunctions[type].init();
             }
+
+            getRoles();
+            getUserGroups();
 
             $('.add-widget-dialog .btn-add-widget').prop('disabled', false);
             $('.add-widget-dialog .btn-add-widget').attr('data-type', type);
@@ -35,7 +91,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                     $('#add-widget-container').find('input:first').focus();
                 });
             }
-        });
+        });      
     }
 
     function createAlert(action, data, status, dialogId, modalId, isLocal) {
@@ -165,9 +221,9 @@ function widgetsModule($widgetContainer, initFunctions) {
 
         var cssClass = $('#css-class').val();
         var templateName = $("#template-selector").val();
-        var allowedRoles = $('#allowed-roles').val();
-        var allowedGroups = $('#allowed-groups').val();
-
+        var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
+        var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
+        
         var element;
 
         if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
@@ -320,8 +376,8 @@ function widgetsModule($widgetContainer, initFunctions) {
 
         var cssClass = $('#css-class').val();
         var templateName = $("#template-selector").val();
-        var allowedRoles = $('#allowed-roles').val();
-        var allowedGroups = $('#allowed-groups').val();
+        var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
+        var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
         let element;
         if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
             element = initFunctions[type].save(id);
@@ -427,8 +483,10 @@ function widgetsModule($widgetContainer, initFunctions) {
             }
 
             $('#css-class').val(data.cssClass);
-            $('#allowed-roles').val(data.allowedRoles);
-            $('#allowed-groups').val(data.allowedGroups);
+
+            //Add allowedGroups and Roles menus
+            getRoles(data.allowedRoles);
+            getUserGroups(data.allowedGroups);
 
             if (initFunctions[type] && {}.toString.call(initFunctions[type].show) === '[object Function]') {
                 initFunctions[type].show(element);

@@ -497,6 +497,9 @@ var ModuleBuilder = (function () {
                     case 'youtubeCustomPlaylist':
                         name = parseYoutubeVideosList($('#video-name').val()).join(';');
                         break;
+                    case 'youtubeMultiplePlaylists':
+                        name = $('#video-name').val();
+                        break;
                 }
 
                 return '' + source + '/' + name;
@@ -637,75 +640,15 @@ var ModuleBuilder = (function () {
         }
 
         initFunctions['market'] = {
-            init: function () {
-                Data.getJson({ url: '/widget/marketwidget/GetTemplateNames' }).then(function (data) {
-                    let templateNames = data.templateNames;
-                    let $select = $("#market-templates");
-
-                    for (let i = 0; i < templateNames.length; i++) {
-                        let $option = $("<option></option>");
-                        $option.text(templateNames[i]);
-                        $option.val(templateNames[i]);
-
-                        $select.append($option);
-                    }
-                });
-            },
-            show: function (element) {
-                Data.getJson({ url: '/widget/marketwidget/GetTemplateNames' }).then(function (data) {
-                    let templateNames = data.templateNames;
-                    let $select = $("#market-templates");
-
-                    for (let i = 0; i < templateNames.length; i++) {
-                        let $option = $("<option></option>");
-                        $option.text(templateNames[i]);
-                        $option.val(templateNames[i]);
-
-                        $select.append($option);
-                    }
-
-                    $select.val(JSON.parse(element).TemplateName);
-                });
-            },
-            save: function () {
-                return JSON.stringify({ TemplateName: $("#market-templates").val() });
-            }
+            init: function () { },
+            show: function (element) { },
+            save: function () { }
         }
 
         initFunctions['userOrders'] = {
-            init: function () {
-                Data.getJson({ url: '/widget/userorders/GetTemplateNames' }).then(function (data) {
-                    let templateNames = data.templateNames;
-                    let $select = $("#orders-templates");
-
-                    for (let i = 0; i < templateNames.length; i++) {
-                        let $option = $("<option></option>");
-                        $option.text(templateNames[i]);
-                        $option.val(templateNames[i]);
-
-                        $select.append($option);
-                    }
-                });
-            },
-            show: function (element) {
-                Data.getJson({ url: '/widget/userorders/GetTemplateNames' }).then(function (data) {
-                    let templateNames = data.templateNames;
-                    let $select = $("#orders-templates");
-
-                    for (let i = 0; i < templateNames.length; i++) {
-                        let $option = $("<option></option>");
-                        $option.text(templateNames[i]);
-                        $option.val(templateNames[i]);
-
-                        $select.append($option);
-                    }
-
-                    $select.val(JSON.parse(element).TemplateName);
-                });
-            },
-            save: function () {
-                return JSON.stringify({ TemplateName: $("#orders-templates").val() });
-            }
+            init: function () { },
+            show: function (element) { },
+            save: function () { }
         }
 
         return initFunctions;

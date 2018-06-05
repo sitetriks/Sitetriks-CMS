@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SiteTriksApp.Web</title>
 
+    @await Html.PartialAsync("_Favicons")
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -32,7 +34,7 @@
     <link type="text/css" rel="stylesheet" href="~/lib/custom/jquery-ui/jquery-ui.css" />
     <link type="text/css" rel="stylesheet" href="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicer.css" />
     <link type="text/css" rel="stylesheet" href="~/lib/custom/font-awesome/font-awesome.min.css" />
-
+    <link type="text/css" rel="stylesheet" href="~/lib/custom/tinymce/plugins/codesample/css/prism.css" />
     @await Html.PartialAsync("Polyfills")
 
     @RenderSection("Styles", required: false)
@@ -234,7 +236,8 @@
     <script type="text/javascript" src="~/lib/custom/moment/moment.min.js"></script>
     <script type="text/javascript" src="~/lib/custom/moment/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
-
+    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+    <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
     <script type="text/javascript" src="~/js/carousel.js"></script>
     @*@if (!LicenseManager.PersonalizationWithGroups)
         {*@
@@ -254,8 +257,15 @@
 
     @RenderSection("Scripts", required: false)
 
+    <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
     <script src="~/js/sitetriks/layout.js"></script>
     <script>
+        $(window).load(function () {
+            if ($('.prettyprint').length > 0) {
+                prettify();
+            }
+        });
+
         loadMainLayout();
 
         //Mobile menu logic

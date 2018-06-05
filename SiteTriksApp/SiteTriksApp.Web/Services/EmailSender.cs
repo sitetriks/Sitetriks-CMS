@@ -36,14 +36,14 @@ namespace SiteTriksApp.Web.Services
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            return this.SendEmailAsync(email, "mail@mail.com", subject, message);
+            return this.SendEmailAsync(email, "support@sitetriks.com", subject, message);
         }
 
         public Task SendEmailFromTemplateAsync(string reciever, string subject, string templateName, object parameters)
         {
             var emailContent = this.viewRenderService.RenderToStringAsync(this.ViewPath + templateName, parameters).Result;
 
-            return this.SendEmailAsync(reciever, "mail@mail.com", subject, emailContent);
+            return this.SendEmailAsync(reciever, "support@sitetriks.com", subject, emailContent);
         }
 
         public Task SendEmailAsync(string reciever, string sender, string subject, string message)

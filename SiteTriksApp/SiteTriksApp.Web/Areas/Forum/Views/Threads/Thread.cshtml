@@ -1,0 +1,104 @@
+﻿@using System.Security.Claims;
+@model SiteTriks.ForumModule.Models.ThreadViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="fixed-top-3">
+    @*@await Html.PartialAsync("SecondNavHeader")*@
+
+    <a href="/forum/discussions/discussion/@Model.DiscussionId" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Back to Threads</a>
+</div>
+
+<div class="forum-wrapper">
+
+    <div class="post-content">
+        <i>@Html.Raw(Model.Content)</i>
+    </div>
+
+    <div class="post-adt-info">
+        <i>Created by</i>
+        <span class="label label-default">
+            @*@if (Model.Creator == Constants.MegaMentorDisplayName)
+                {
+                    <span class="glyphicon glyphicon-flag"></span>
+                }*@
+            @Model.Creator
+        </span>
+
+        <i>Date created</i>
+        <span class="label label-default">@Model.DateCreated</span>
+
+        <i>Date modified</i>
+        <span class="label label-success">@Model.DateModified</span>
+    </div>
+
+    <div id="comments">
+        @if (Model.Comments.Count > 0)
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            string userId = string.Empty;
+            if (claimsIdentity != null)
+            {
+                var userIdClaim = claimsIdentity.Claims
+                    .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+                if (userIdClaim != null)
+                {
+                    userId = userIdClaim.Value;
+                }
+            }
+
+            <h3>Comments</h3>
+            <div id="comments-container">
+                @foreach (var item in Model.Comments)
+                {
+                    @Html.DisplayFor(c => item, new { userId = userId, threadId = Model.Id })
+                }
+            </div>
+        }
+        else
+        {
+            <div id="comments-container"></div>
+        }
+    </div>
+
+    <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+
+    <hr />
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        using (Html.BeginForm(actionName: "Create", controllerName: "Posts", method: FormMethod.Post, htmlAttributes: new { id = "create-post" }))
+        {
+            <label class="control-label">Add post</label>
+            <div class="form-group">
+                <textarea class="form-control should-validate-not-empty" id="content"></textarea>
+            </div>
+
+            <input id="btnSubmit" type="submit" value="Create post" class="btn btn-backend" />
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+            <strong>Warning!</strong> Log in to create comment!
+        </div>
+    }
+
+</div>
+
+@section scripts{
+    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
+    <script src="~/js/text-editor.js"></script>
+    <script src="~/js/sitetriks/threads.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            textEditor.initWithoutImages('#content', 600, 300);
+        })
+
+        initThread('@Model.Id');
+    </script>
+}

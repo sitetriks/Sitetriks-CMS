@@ -1,0 +1,32 @@
+﻿@model IEnumerable<string>
+
+@{
+    //var format = "https://www.youtube.com/embed/{0}";
+    var format = "https://www.youtube.com/embed/videoseries?list={0}";
+}
+
+@*<form class="search-form">
+    <input type="text" class="search-video" placeholder="Search For a Specific Video">
+    <ul class="suggestions">
+    </ul>
+</form>*@
+<div class="video-container multiple-playlists">
+    <div class="video-container col-lg-10 col-md-12">
+        <iframe src="@string.Format(format, Model.First())"
+                frameborder="0"
+                allowfullscreen></iframe>
+    </div>
+
+    <div class="playlist-thumbnails-list col-lg-2 col-md-6 col-xs-6" style="float: right">
+
+        @foreach (var videoId in Model)
+        {
+            var imageSource = $"{videoId}";
+            var videoSource = $"https://www.youtube.com/embed/videoseries?list={videoId}";
+
+            <div class="playlist-thumbnail" data-videosource=@videoSource data-videoId=@imageSource><div class="playlist-title"></div><img src=""></div>
+
+        }
+
+    </div>
+</div>

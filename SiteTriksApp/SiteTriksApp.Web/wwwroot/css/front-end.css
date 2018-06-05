@@ -61,7 +61,7 @@ body {
 #loginForm,
 #forgttenPassword,
 #registerForm {
-    margin: 20% auto;
+    margin: 15% auto;
     width: 70%;
     border-radius: 15px;
     color: #173b6d;
@@ -69,7 +69,7 @@ body {
     padding: 70px 10% 23px 10%;
     border: solid 3px #173b6d;
     font-size: 12px;
-    margin-bottom:0;
+    min-height: 260px;
     /*padding-top: 70px;*/
 }
 
@@ -103,13 +103,13 @@ body {
 }
 
 .input-form input {
-	height: 41px;
-	width: 100%;
-	margin: 0;
-	max-width: 100%;
-	background-color: #ebebeb;
-	margin-bottom: 4%;
-	border: solid 2px #258afb;
+    height: 41px;
+    width: 100%;
+    margin: 0;
+    max-width: 100%;
+    background-color: #ebebeb;
+    margin-bottom: 4%;
+    border: solid 2px #258afb;
 }
 
 /*.input-form {
@@ -180,17 +180,17 @@ body {
 
 #forgttenPassword input,
 #registerForm input {
-	max-width: unset;
-	margin-bottom: 10px;
-	border: solid 2px #258afb;
-	background-color: #ebebeb; 
+    max-width: inherit;
+    margin-bottom: 10px;
+    border: solid 2px #258afb;
+    background-color: #ebebeb;
 }
 
-	#forgttenPassword #Email:focus,
-	#registerForm input:focus {
-		border-color: #66afe9;
-		outline: 0;
-	}
+    #forgttenPassword #Email:focus,
+    #registerForm input:focus {
+        border-color: #66afe9;
+        outline: 0;
+    }
 
 .forgotten-password-container img,
 .register-form-container img {
@@ -212,18 +212,20 @@ body {
     padding-bottom: 18px;
     margin-bottom: 5%;
     margin-top: 20px;
-    margin-left: 75%;
+    /*margin-left: 75%;*/
     display: inline-block;
-    /*float: right;*/
+    float: right;
     text-transform: uppercase;
     font-size: 11px;
     font-weight: bold;
     color: #ddeeff;
-    width: 25%;
+    /*width: 25%;*/
     border-radius: 4px;
     background-color: #123e7a;
     border: solid 1px #73bcf9;
     height: 36px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #forgttenPassword h3,
@@ -233,6 +235,15 @@ body {
     text-align: center;
 }
 
+.user-type-wrapper div {
+    margin-right: 10px;
+}
+
+.user-type-wrapper .user-type-checkbox {
+    width: inherit;
+    display: inline-block;
+    height: inherit;
+}
 
 /*Custome only form Login pages*/
 .login-page-header .pageTitle {
@@ -286,9 +297,9 @@ body {
     border-top: solid 2px #008cff;
 }
 
-.frontend-footer img {
-    height: 55px;
-}
+    .frontend-footer img {
+        height: 55px;
+    }
 
 /***************************************************/
 
@@ -346,34 +357,63 @@ body {
 
 /*Video Custom Playlist styles*/
 
+#static-section .search-video {
+    width: 90%;
+    margin-bottom: 5px;
+    margin-left: 15px;
+}
+
 .video-container iframe {
     height: 580px;
     width: 99%;
     padding-left: 1%;
 }
 
-.thumbnails-list {
+.thumbnails-list,
+.playlist-thumbnails-list {
     height: 580px;
     overflow-y: auto;
     padding-left: 0;
     overflow-x: hidden;
 }
 
-    .thumbnails-list .col-md-2 {
+    .thumbnails-list .col-md-2,
+    .playlist-thumbnails-list .col-md-2 {
         float: none;
     }
 
-.video-thumbnail img {
+.video-thumbnail img,
+.playlist-thumbnail img {
     height: 200px;
     width: 100%;
     border: 2px solid #3876cf;
 }
 
-    .video-thumbnail img:hover {
-        border: 4px solid #3876cf;
+.playlist-title {
+    width: 100%;
+    text-align: center;
+    color: white;
+    margin-bottom: -30px;
+    height: 30px;
+    font-size: 12px;
+    font-family: Montserrat;
+    position: relative;
+}
+
+.playlist-title:hover {
+    font-size: 14px;
+}
+
+.video-thumbnail img:hover,
+.playlist-thumbnail img:hover {
+    border: 4px solid #3876cf;
+}
+
+    .playlist-thumbnail:hover .playlist-title {
+        font-size: 14px;
     }
 
-    /*custom styles for the floating menu*/
+/*custom styles for the floating menu*/
 
 
 #floating-section .video-container iframe {
@@ -381,7 +421,8 @@ body {
     width: 100%;
 }
 
-#floating-section .thumbnails-list {
+#floating-section .thumbnails-list,
+#floating-section .playlist-thumbnails-list {
     height: 570px;
     overflow-y: auto;
     padding-left: 0;
@@ -406,7 +447,7 @@ body {
 
 
 /*Custom Youtube playlist styles*/
- /*.youtube-playlist {
+/*.youtube-playlist {
     max-height: 580px;
     margin-top: 20px;
     overflow-y: auto;
@@ -650,6 +691,10 @@ body {
     margin-bottom: 35px;
 }
 
+/*.expanded-contacts .contacts-content-main .contacts-content-centered .social-media .skype-button img {
+    margin: 0;
+}*/
+
 /* Form styles*/
 
 .expanded-contacts .contacts-content-form {
@@ -742,9 +787,9 @@ body {
         padding-top: unset;
     }
 
-    .contact-us-widget .slogan p {
-        font-size: 30px;
-    }
+        .contact-us-widget .slogan p {
+            font-size: 30px;
+        }
 
     .contacts-content-form #saveForm {
         height: 60px;
@@ -754,30 +799,30 @@ body {
         padding-top: 20%;
     }
 
-    .expanded-contacts .contacts-content-main .contacts-content-centered p {
-        font-size: 14px;
-    }
-
-
-    .expanded-contacts .contacts-content-main .contacts-content-centered {
-        padding-left: 5%;
-        padding-right: 3%;
-    }
-
-        .expanded-contacts .contacts-content-main .contacts-content-centered .list-of-contacts ul,
-        .expanded-contacts .contacts-content-main .contacts-content-centered .list-of-regions ul {
+        .expanded-contacts .contacts-content-main .contacts-content-centered p {
             font-size: 14px;
-            padding: 3px;
         }
 
-            .expanded-contacts .contacts-content-main .contacts-content-centered .list-of-regions ul li {
-                padding-top: 5px;
-                padding-bottom: 5px;
+
+        .expanded-contacts .contacts-content-main .contacts-content-centered {
+            padding-left: 5%;
+            padding-right: 3%;
+        }
+
+            .expanded-contacts .contacts-content-main .contacts-content-centered .list-of-contacts ul,
+            .expanded-contacts .contacts-content-main .contacts-content-centered .list-of-regions ul {
+                font-size: 14px;
+                padding: 3px;
             }
 
-        .expanded-contacts .contacts-content-main .contacts-content-centered .social-media ul {
-            padding: 0;
-        }
+                .expanded-contacts .contacts-content-main .contacts-content-centered .list-of-regions ul li {
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }
+
+            .expanded-contacts .contacts-content-main .contacts-content-centered .social-media ul {
+                padding: 0;
+            }
 
     .go-back-to-menu div:nth-child(2) {
         font-size: 16px;
@@ -868,7 +913,7 @@ body {
     }
 
         #forgttenPassword .btn, #registerForm .btn {
-            width: 35%;
+            /*width: 35%;*/
         }
 
     /*Contact us page responsive*/

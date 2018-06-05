@@ -8,14 +8,14 @@
 
 <style>
     .side-navigation {
-        height: calc(100vh - (160px ));
+        height: 100vh;
         background-color: #F8F8F8;
         border-right: 1px solid #989898;
         font-size: 13px;
-        /*margin: 166px 0 35px 0;*/
-        /*position: fixed;
+        padding: 166px 0 35px 0;
+        position: fixed;
         top: 0;
-        width: 16.66666667%;*/
+        width: 16.66666667%;
     }
 
 
@@ -31,13 +31,27 @@
             padding-left: 30px;
         }
 
-            /*.side-navigation-tree ul li {
-                padding-left: 10px;
-            }*/
-
-            .side-navigation-tree ul li a {
-                text-transform: uppercase
+            .side-navigation-tree ul li {
+                background-color: inherit;
+                padding: 5px 15px;
+                margin-right: 15px;
             }
+
+                .side-navigation-tree ul li a {
+                    text-transform: uppercase;
+                    color: #9b9b9b;
+                    text-decoration: none;
+                    font-weight: bold;
+                    font-size: 15px;
+                }
+
+                .side-navigation-tree ul li.active {
+                    background-color: #c9c9c9;
+                }
+
+                    .side-navigation-tree ul li.active a {
+                        color: #008cff;
+                    }
 
             .side-navigation-tree ul .section {
                 color: #9B9B9B;
@@ -53,17 +67,17 @@
                 margin-top: 15px;
             }
 
-            @@media(max-width: 991px){
-                .side-navigation {
-                    height: auto;
-                }
-            }
+    @@media(max-width: 991px) {
+        .side-navigation {
+            display: none;
+        }
+    }
 </style>
 
 <div class="side-navigation">
     <div class="side-navigation-tree">
         <ul>
-            <li ><a asp-action="Index">Profile</a></li>
+            <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Profile</a></li>
             <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Password</a></li>
             @if (hasExternalLogins)
             {
@@ -71,9 +85,9 @@
             }
             <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>
             @*@if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.BackEnd))
-            {
-                <li>@Html.ActionLink("Dashboard", "Index", "Home", new { Area = "SiteTriks" }, new { })</li>
-            }*@
+                {
+                    <li>@Html.ActionLink("Dashboard", "Index", "Home", new { Area = "SiteTriks" }, new { })</li>
+                }*@
         </ul>
     </div>
 </div>

@@ -2,11 +2,11 @@
 
 var DocumentationWidget = (function () {
     if ($('.docs-menu').length < 1) {
-        console.log('--- Documentation Skipped! ---');
+        //console.log('--- Documentation Skipped! ---');
         return;
     }
 
-    console.log('--- Init Documentation Widget ---');
+    //console.log('--- Init Documentation Widget ---');
 
     let $first = $('.docs-menu').find('a').first();
     loadTopic($first.attr('data-id'));
@@ -50,7 +50,15 @@ var DocumentationWidget = (function () {
             $('.topic-details').html(res);
         }, function (res) {
             console.log(res);
-        })
+            }).then(function () {
+                if ($('pre').length > 0) {
+                    Prism.highlightAll();
+                }
+
+                if ($('.prettyprint').length > 0) {
+                    prettify();
+                }
+        });
     }
 
     $('#next-doc, #prev-doc').on('click', function (ev) {
@@ -62,12 +70,12 @@ var DocumentationWidget = (function () {
         $('.docs-menu a[data-id="' + id + '"]').click();
     })
 
-    $('.docs-menu').on('click', '.glyphicon-plus', function () {
+    $('.docs-menu').on('click', '.glyphicon-menu-right', function () {
         $(this).parent().next('ul').show();
-        $(this).removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        $(this).removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
     });
 
-    $('.docs-menu').on('click', '.glyphicon-minus', function () {
+    $('.docs-menu').on('click', '.glyphicon-menu-down', function () {
         let $toHide = $(this).parent().next('ul');
         $toHide.hide();
 
@@ -80,15 +88,15 @@ var DocumentationWidget = (function () {
             $(descendant).hide();
         });
 
-        $(this).removeClass('glyphicon-minus').addClass('glyphicon-plus');
+        $(this).removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
 
         let descendantIcons = Array.prototype.slice.call(
-            $toHide[0].querySelectorAll('span.glyphicon-minus'),
+            $toHide[0].querySelectorAll('span.glyphicon-menu-down'),
             0
         );
 
         descendantIcons.forEach(function (descendant) {
-            $(descendant).removeClass('glyphicon-minus').addClass('glyphicon-plus');
+            $(descendant).removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
         });
     });
 });

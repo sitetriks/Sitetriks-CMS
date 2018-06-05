@@ -56,6 +56,9 @@
     "contactUs": [
       "Admin"
     ],
+    "contactUsAlternative": [
+      "Admin"
+    ],
     "market": [
       "Admin"
     ],
@@ -63,6 +66,10 @@
       "Admin"
     ],
     "subscription": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "licenseGeneration": [
       "Admin",
       "Authorized back-end"
     ]

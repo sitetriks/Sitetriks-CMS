@@ -1,0 +1,36 @@
+﻿@model ContactUsWidgetViewModelAlternative
+
+@{ 
+    var s = 5;
+}
+<div id="emailForm" class="expanded-contacts mail" @*style="display:none"*@>
+    <form  action="/widget/contactuswidget/sendemailalternative" method="post" class="contact-us-form-1">
+        <div class="contacts-content-form">
+            <div class="row">
+                <div class="file-handler-notifier" style="font-size: 15px; padding: 10px 25px; margin-bottom: 5px;">
+                </div>
+                <div class="col-md-6">
+                    <p>What would you wish to enquire about?</p>
+                    <select asp-for="Type">
+                        <option value="sales">Sales</option>
+                        <option value="demo">Demo</option>
+                        <option value="support">Support</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-11 col-md-11 col-xs-11">
+                    <p>How can we help</p>
+                    <textarea asp-for="Message" class="textareaMessage" placeholder=""></textarea>
+                </div>
+                <div class="col-lg-1 col-md-1 col-xs-1">
+
+                    <input type="image" src="~/images/contact-us/Send Email.svg" name="saveForm2" class="btn-submit" id="saveForm2" />
+                    @*<button><img src="~/images/contact-us/Send Email.svg" /></button>*@
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

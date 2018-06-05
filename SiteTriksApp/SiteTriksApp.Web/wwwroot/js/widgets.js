@@ -90,6 +90,10 @@ function LoadWidget(type) {
             loadUploadTemplate(false, '', '');
         }
 
+        if (type === 'contactUsAlternative') {
+            loadUploadTemplate(false, '', '');
+        }
+
         $('.add-widget-dialog .btn-add-widget').prop('disabled', false);
         $('.add-widget-dialog .btn-add-widget').attr('data-type', type);
     })
@@ -372,7 +376,10 @@ function getElementForType(widgetType) {
                 });
             }
             break;
-        case 'contactUs': 
+        case 'contactUs':
+            console.log('contact widget');
+            break;
+        case 'contactUsAlternative':
             console.log('contact widget');
             break;
         case 'gallery':
@@ -382,17 +389,17 @@ function getElementForType(widgetType) {
             var currentType = "";
             if (selectFromLibrary) {
                 currentType = 'library';
-                
+
             } else {
                 currentType = 'images';
             }
-        
+
             element = JSON.stringify({
                 ids: $('#image').val(),
                 width: $('#input-width').val(),
                 height: $('#input-height').val(),
                 type: currentType,
-                libraryName : selectedLibrary
+                libraryName: selectedLibrary
             })
 
             console.log(element);
@@ -826,7 +833,7 @@ function showWidget(data) {
                         createImageView(fieldId, imagesLinksIds[i]);
                     }
                 }
-               
+
                 break;
             default:
                 break;

@@ -17,7 +17,7 @@
 
         Data.postForm({ formData: formData }).then(function (res) {
             if (res.success) {
-                window.location.replace('/sitetriks/threads/thread/' + res.threadId);
+                window.location.replace('/forum/threads/thread/' + res.threadId);
             } else {
                 showError(res.message);                
             }
@@ -46,7 +46,7 @@ function editThread() {
 
         Data.postForm({ formData: formData }).then(function (res) {
             if (res.success) {
-                window.location.replace('/sitetriks/threads/thread/' + res.threadId);
+                window.location.replace('/forum/threads/thread/' + res.threadId);
             } else {
                 showError(res.message);
             }
@@ -119,7 +119,7 @@ function initThread(modelId) {
             content: content
         }
 
-        Data.postJson({ url: '/sitetriks/posts/edit', data: body }).then(function (res) {
+        Data.postJson({ url: '/forum/posts/edit', data: body }).then(function (res) {
             console.log(res);
             if (res.success) {
                 textEditor.remove('edit-post-content');
@@ -155,7 +155,7 @@ function initThread(modelId) {
             formData.append('threadId', modelId);
         }
 
-        Data.postForm({ url: '/sitetriks/posts/create', formData: formData }).then(function (res) {
+        Data.postForm({ url: '/forum/posts/create', formData: formData }).then(function (res) {
             if (res.success) {
                 textEditor.clear('content');
                 window.location.reload();
