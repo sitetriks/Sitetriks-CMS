@@ -1,0 +1,137 @@
+License agreement and usage conditions for SiteTriks
+Introduction
+This license AGREEMENT (hereinafter "AGREEMENT") is a binding contract between “IT Digital Solutions Ltd  (hereinafter "LICENSOR") and you, in your own name as a natural person or as legal representatives of a legal entity (hereinafter "LICENSEE").
+
+Checking the box "Yes, I have read and understand the usage terms and want to purchase and use the SOFTWARE in accordance with these terms and conditions", and/or downloading the SOFTWARE, installing the SOFTWARE and/or advancing of the SOFTWARE in any other way can be construed as AGREEMENT to be bound by all of the following regulations. 
+SiteTriks is a IT Digital Solutions LTD proprietary SOFTWARE development tool that can be used to assist in the website development process. 
+The term SOFTWARE used in this AGREEMENT refers to the SiteTriks SOFTWARE, which you selected, download and/or installed from the download section of the LICENSOR’s website sitetriks.com The term SOFTWARE covers thereby also all modified versions or updated versions of this SOFTWARE, as well as modules or plug-ins of this SOFTWARE, which are, also with costs, made accessible by the LICENSOR for the LICENSEE.
+In order to use all functions of the SOFTWARE, the licensee needs additional SOFTWARE from third party suppliers. All stipulations herein apply to the SiteTriks SOFTWARE, which the LICENSOR offered in the download section of its website or the LICENSOR referred to. The further integration of third party SOFTWARE into the SiteTriks SOFTWARE, even if recommended by the LICENSOR, is not a component of this license AGREEMENT. The use/integration of third party SOFTWARE may be subject to one or more additional license conditions. The licensee is responsible to use/integrate this third party SOFTWARE into the SiteTriks SOFTWARE only in correspondence with its individual terms.
+This AGREEMENT does not permit the LICENSEE to make or install copies of the SOFTWARE. If the LICENSEE should act on behalf of a third party, he shall not use this SOFTWARE or parts of it anymore after it has been passed on (delivered) to the third party. If the LICENSEE intends to pass the SOFTWARE on to a third party, a separate SiteTriks License has to be purchased for every installation. The availability of such an additional license has to be cleared by the LICENSOR prior to any purchase.
+The LICENSOR reserves the right to deny issuing such an additional license to the LICENSEE, shall the LICENSEE violate the terms and conditions defined in the present License AGREEMENT such as any kind of violence-promoting, racist, criminal, legally protected or illegal contents. 
+The LICENSOR reserves the right to modify the SOFTWARE without prior notice. The SOFTWARE’s license AGREEMENT and the terms and conditions remain at any time. You as LICENSEE herby agree to be bound to all terms and conditions contained within this AGREEMENT.
+The technical specification and description of the functionality of the SOFTWARE are contained in the SOFTWARE’s documentation and is accessible from the website’s menu under documentation section.
+
+SOFTWARE license
+
+The LICENSOR offers the SOFTWARE in the following editions: 1. Business Edition; 2. Enterprise Edition. The LICENSOR also allows Free use of an edition of the SOFTWARE whereby the functionality of the SOFTWARE is limited. Special provisions apply to the free edition of the SOFTWARE in accordance to this AGREEMENT. 
+LICENSOR hereby grants to LICENSEE a non-exclusive license to use the SOFTWARE and Documentation, subject to the terms and conditions hereinafter set forth. 
+The license is effective when executed by both parties and the license granted to the SOFTWARE remains in force until LICENSEE stops using the SOFTWARE or until LICENSOR terminated this license because of LICENSEE’s failure to comply with any of its terms and conditions. 
+LICENSOR hereby grants to LICENSEE a nonexclusive license to install and use the SOFTWARE on one single instance in its possession, provided the SOFTWARE is in use on only one computer at any time. The SOFTWARE is in use on a computer when it is loaded into temporary memory or installed into the permanent memory of a computer. 
+The LICENSEE is obligated to provide the LICENSOR their complete and correct full contact information and information on the registered domains and subdomains to a specified extent before the SOFTWARE is downloaded. This information is stored and used confidentially in accordance with the LICENSOR’s privacy conditions. The LICENSEE is not entitled to change the domain designation once registered. There is no limitation to the number of subdomains within the Production Domain on which the LICENSEE may install and use the Software in the Enterprise Edition of the License.
+The LICENSEE may use the SOFTWARE only for the purpose stated in this AGREEMENT and in accordance with the function of the SOFTWARE.
+The LICENSEE is entitled to:
+Modify or let modify the non-compiled source code of the SOFTWARE to the full extent.
+Modify or let modify the template and style files to the full extent.
+Modify or let modify the database and/or its structure.
+Add or let add new source code in existing files of the SOFTWARE.
+Remove source code from existing files (files or folders) or whole parts of the SOFTWARE.
+Use the SOFTWARE by making a copy of the SOFTWARE for uploading and saving a web presentation in a computer – server memory, as well as for displaying, running and transmitting on the Internet, and for the purpose of making a web presentation accessible to the public. The extent of LICENSEE’s use of the SOFTWARE is dependent upon the variant of the SOFTWARE Version that LICENSEE has purchased under this AGREEMENT.
+Make a single backup copy of the SOFTWARE for archival purposes. LICENSEE must reproduce and include LICENSOR’s copyright and other intellectual property rights notices on the backup copy of the SOFTWARE. The LICENSEE shall with due care protect such copies against misuse.
+Use the source code for the sole purpose of modifying the SOFTWARE in connection with LICENSEE’s use of the SOFTWARE for its internal business purposes.
+The LICENSEE is not entitled to:
+Decompile or modify (e.g by patching) source code, which is only available as compiled data.
+Run the SOFTWARE on an internal server (intranet or extranet). 
+Run the SOFTWARE on more than one server, in case an additional license, respectively a module is not provided by the LICENSOR.
+Run the SOFTWARE on more than one portal, respectively one domain or to use it for multiple communities. LICENSEE therefore need an additional license from the LICENSOR. The creation of subdomains is allowed as well as the allocation of mirror sites (backup servers) is specifically allowed, for one single internet presence, as long as both these show the same data base.
+Forward, sell, lend or lease the SOFTWARE to a third party. The LICENSEE may not assign or sub-license its rights under this AGREEMENT, whether wholly or partially, to a third party without the prior written consent of the LICENSOR. Any authorized transferee of the SOFTWARE will be bound by the terms and conditions of this AGREEMENT and, upon such authorized transfer, LICENSEE’s license is automatically terminated.
+Use the functionalities of the SOFTWARE, use of which is disabled in the source code of the provided SOFTWARE edition or version. Further, the LICENSEE shall not enable the functionalities of the SOFTWARE according to the previous sentence by any means, especially by means of any modification of the source code of the SOFTWARE or use of its own code.
+LICENSOR shall provide to the LICENSEE a serial number after LICENSEE has paid the one-time license fee in full according to this Agreement. Upon receipt of the serial number, LICENSEE is permitted to generate a license key to the applicable Software by registering the serial number through LICENSOR’s client portal and is permitted to download copies of the Software from LICENSOR’s server. 
+Promptly after delivery of the SOFTWARE system to the site, LICENSOR shall install the SOFTWARE on the hardware (internal server or PC). LICENSOR shall successfully conduct all of its own testing procedures on the SOFTWARE. Thereafter, upon reasonable advance notice to and in presence of the representatives of LICENSEE, LICENSOR shall conduct acceptance testing procedure specified hereto, using a sample of data supplied by LICENSEE and converted and entered on the hardware by LICENSOR at its sole cost. 
+LICENSEE shall have the option to extend the license granted hereunder at any time by paying the price for the upgraded version of the software. 
+Support services and maintenance
+In connection with the provision of the SOFTWARE licensed under this AGREEMENT, the LICENSEE may use support services – technical support provided by the LICENSOR. The LICENSOR’s support services – technical support consist of solving functional and user problems of the SOFTWARE including providing technical support through means of distant communication (telephone, e-mail, web forum). The e-mail address of support services – technical support is support@sitetriks.com and the support services – technical support web form address is located at the support&requests section of the menu.
+The LICENSOR provides support services – technical support for a period of one year. The first Service Period shall run from the moment when the SOFTWARE license keys are handed over to the LICENSEE and shall end one year thereafter. Each following Service Period shall last one year from the expiration of the preceding Service Period. Fees for support services – technical support during the first Service Period are included in the license fee for the Business and Enterprise Edition. Support services – technical support for all subsequent Service Periods and for the free edition are provided only if the LICENSEE ordered support services – technical support and paid the applicable fee for such support services. SiteTricks shall not be obliged to provide maintenance and update services to Licensee who has not extended and paid due fees for Business and Enterprise Edition of the SOFTWARE. 
+In order to receive the SOFTWARE support service, LICENSEE acknowledges that it must have a licensed copy of the SOFTWARE. 
+LICENSOR may, at its discretion and by providing written notice prior to such service, charge an additional fee at its then standard rates to provide SOFTWARE support services, which are required due to:
+failure due to operator errors;
+modification of the SOFTWARE by the LICENSEE;
+the SOFTWARE being transferred to a different networking environment or hardware configuration without the prior written consent of LICENSOR;
+licensee’s use of the software that is not in accordance with the documentation;
+licensee negligence or improper use of the software;
+modifications to the software by any person or entity other that SiteTriks;
+ancillary services. 
+LICENSEE understands and agrees that all solutions, corrections, improvements, and new releases supported by the LICENSOR should be promptly implemented in the SOFTWARE. LICENSEE further recognized that its failure to so implement such solutions, corrections, improvements, and new releases may render the SOFTWARE unusable or nonconforming to the documentation, and LICENSEE agrees to assume all risks therefrom, and release LICENSOR from all liability in respect thereof. 
+LICENSOR warrants that all maintenance services will be provided in a workmanlike manner by dully qualified personnel in accordance with all applicable regulations governing such services. 
+As part of the SOFTWARE maintenance and update service, LICENSOR shall provide to LICENSEE:
+Any known problem resolutions relating to the SOFTWARE to LICENSOR on a periodic basis;
+Corrections for problems that LICENSOR diagnoses as defects in a currently supported version of the SOFTWARE;
+All modifications, refinements, and enhancement which LICENSOR elects to incorporate into and make a part of the SOFTWARE and does not separately price or market; new releases of the SOFTWARE which LICENSOR elects to make available to its general client base.
+Improvements required to allow the SOFTWARE to operate in conformance with new versions or releases of the hardware so long as such improvements are technically feasible. 
+Updated documentation on an annual basis. 
+4. License Fee 
+In return for the provision of the license according to the terms of this AGREEMENT, the LICENSEE shall pay to the LICENSOR a one-time license fee in the amount specified in the LICENSOR’s price list then in effect on the day when this AGREEMENT is executed. The LICENSOR’s Price List is contained in Schedule 1 to this AGREEMENT, which forms an integral and inseparable part of this AGREEMENT. 
+Notwithstanding the foregoing, in special circumstances, LICENSOR may offer alternative pricing for the SOFTWARE. If Schedule 1 to this AGREEMENT provides for alternative pricing, then the license fee payable shall be the fee set forth on Schedule 1, in which case LICENSOR’s Price List shall not apply. The one-time license fee is due on or before LICENSOR’s delivery of the license Serial Number to LICENSEE, which permits LICENSEE to generate license keys and download the SOFTWARE.
+Support fees for each Service Period (except for the first Service Period, which is included in the one-time license fee) shall be in the amount specified in the LICENSOR’s Price List then in effect on the first day of the applicable Service Period. The support fees payable for each Service Period are due on or before the start of the applicable Service Period. The LICENSOR shall not be obliged to provide the support services – technical support to the LICENSEE until the LICENSEE pays all due amounts.
+The LICENSEE understands and acknowledges that the LICENSOR’s Price list is subject to change from time to time. Changes in LICENSOR’s Price List are not applied retroactively to prior license purchases.
+Remuneration is payable either by: 
+Bank transfer to the LICENSOR’s 
+
+U.S. : 
+Account Holder: IT Digital Solutions EOOD
+Account number: 8310016979
+Wire Routing Number: 026073008
+ACH Routing Number: 026073150
+Address:
+TransferWise
+19 W 24th Street
+New York
+10010
+United States
+E.U.:
+TW Account Holder: IT Digital Solutions EOOD
+IBAN: DE39 7001 1110 6050 2905 55
+Bank code (SWIFT / BIC): DEKTDE7GXXX
+Address
+Handelsbank
+Elsenheimer Str. 41
+München
+80687
+Germany
+U.K.
+Account Holder: IT Digital Solutions EOOD
+Account number: 18332629
+UK Sort Code: 23-14-70
+Address
+TransferWise
+56 Shoreditch High Street
+London
+E1 6JJ
+United Kingdom
+
+In the event of LICENSEE’s default in the payment obligations under this AGREEMENT or if LICENSEE otherwise fails to comply with the terms of this AGREEMENT, the LICENSOR shall be entitled to suspend or limit the LICENSEE’s use of the SOFTWARE and any support services. Any limitation of the ability to use the SOFTWARE according to the previous sentence does not affect the LICENSOR’s right to receive license fees or support fees according to this AGREEMENT.
+In the event that the LICENSEE is overdue with the payment of any fees due under this AGREEMENT, in addition to any other remedy available to LICENSOR, the LICENSOR shall be entitled to interest on late payment amounting to 0.02% of the sum owed for each day of default.
+Software License Types
+The terms and conditions that apply to the LICENSEE use of the SOFTWARE depend on the type of license the Licensee elect to purchase. 
+Business Edition
+Enterprise edition
+Detailed description of the available functionalities and support and development services included in each edition can be found at the www.sitetriks.com. The Licensor reserves the right to modify from time to time the functionalities and services included in each edition of the software. 
+If LICENSEE is using the Free Edition of the Software the Software license is granted to the LICENSEE free of charge. Licensee is aware that the free edition of the software has limited functionalities. 
+On each web presentation (each page of the presentation) which is administered with the use of the Software, the LICENSEE shall display:
+The LICENSOR’s logo “Powered by SiteTriks” containing a hypertext link to the LICENSOR’s website located at the Internet address http://www.sitetriks.com the size of this logo shall be determined by the LICENSOR; or
+Text reading “Powered by SiteTriks“ containing a hypertext link to the LICENSOR’s website located at the Internet address http://www.sitetriks.com
+The LICENSEE shall not remove any logos or other marks of the LICENSOR from the Software;
+The LICENSOR is entitled to use the business or another name of the LICENSEE for marketing purposes as references in all types of promotional materials (irrespective of the form of these promotional materials or the form by which they are communicated) without any limitation.
+In no event will LICENSOR be liable to licensee for any losses or damages, whether direct, indirect, special, incidental, or consequential (including but not limited to, any lost profits, lost data, or lost savings, arising out of the use or inability to use the software or the documentation. 
+Termination
+LICENSOR shall have the right to immediately terminate this License if LICENSEE fails to perform any obligation required of the LICENSEE under this AGREEMENT. This license AGREEMENT takes effect upon LICENSEE’s use of the SOFTWARE and remains effective until terminated. LICENSEE may terminate it at any time by destroying all copies of the SOFTWARE and documentation in its possession. It will also automatically terminate if LICENSEE fails to comply with any term or condition of this license AGREEMENT. 
+Upon termination of this license, LICENSEE shall return to the LICENSOR or destroy the original and all copies of the SOFTWARE including partial copies and modifications. 
+The LICENSOR may terminate this Agreement if the LICENSEE has proceedings instituted by or against LICENSEE in bankruptcy or under insolvency laws or for reorganization, receivership, dissolution or liquidation; or has had an assignment for the benefit of creditors; or has become insolvent. Unless otherwise prohibited by law and without prejudice to SiteTriks’ other rights or remedies, and without limiting the generality of the foregoing, SiteTriks shall have the right to terminate this Agreement and the License granted hereunder immediately in the event that: the LICENSEE breach any of the License restrictions set forth herein, or engage in, or participate with any third party in the unauthorized manufacture, duplication, reverse-engineering, distribution of the SOFTWARE, or engage in any activities involving the Software that are prohibited by law; or the LICENSEE infringe upon any intellectual property right of SiteTriks.
+7. Limitation of Liability
+LICENSOR does not warrant that the functions contained in the Software will meet LICENSOR‘S requirements or that the operation of the Software will be uninterrupted or error-free. LICENSEE assumes full responsibility for the selection of the Software to achieve LICENSEE‘s intended results and for the installation, use, and results obtained from the Software.
+LICENSEE shall test the Software thoroughly and comprehensively before the Software is released into common use within the LICENSEE’s business or a business of other third persons.
+The LICENSEE acknowledges that the LICENSOR shall not be liable for defects of the Software resulting from unlawful or un-permitted interferences with the Software or from the LICENSEE or third parties’ use of the Software contrary to the Software documentation.
+The LICENSEE further acknowledges that the LICENSOR shall not be responsible for the functionality of the LICENSEE’s data network, functionality of a public data network, functionality of the LICENSEE’s hardware, backing-up of data by the LICENSEE, for the state of other programs used by the LICENSEE or for any potential interference by third parties with other programs used by the LICENSEE. In no event will LICENSOR be liable to licensee for any losses or damages, whether direct, indirect, special, incidental, or consequential, arising out of the use or inability to use the software or the documentation, even if the LICENSOR has been advised of the possibility of such losses or damages, or any claim by any other party. In no event will licensor’s liability for damages to licensee or any other person ever exceed the amount of 100 EUR (one hundred euro), regardless of the form of the claim.
+8. Indemnity
+The licensee agrees to indemnify, hold harmless, and defend SiteTriks, its LICENSORs and its resellers from and against any and all claims, lawsuits and proceedings (collectively "Claims"), and all expenses, costs (including attorney’s fees), judgments, damages and other liabilities resulting from such Claims, that arise or result from the licensee’s use or misuse of the SOFTWARE.
+9. Intellectual property
+All title and ownership rights in and to the Software (including but not limited to any images, photographs, animations, video, audio, music, text embedded in the Software), the intellectual property embodied in the Software, and any trademarks or service marks of SiteTriks that are used in connection with the Software are and shall at all times remain exclusively owned by SiteTriks and its licensors. Any and all rights in the Software not expressly granted to you hereunder are reserved in all respects by SiteTriks.
+Titles, owner rights, and rights related to intellectual property remain with the licensor and/or its suppliers. The LICENSEE does herby recognize these rights and will not try anything to endanger, limit, or impair these rights in any way. The SOFTWARE is protected by copyrights, other laws for the protection of the intellectual property and by international law and contracts. 
+
+10. Confidentiality
+Except as otherwise provided herein, each party expressly undertakes to retain in confidence all information and know-how transmitted or disclosed to it that the disclosing party has identified as being proprietary and/or confidential or that, by the nature of the circumstances surrounding the disclosure, ought in good faith to be treated as proprietary and/or confidential, and expressly undertakes to make no use of such information and know-how except under the terms and during the existence of this AGREEMENT. However, neither party shall have an obligation to maintain the confidentiality of information that (i) it received rightfully from a third party without an obligation to maintain such information in confidence; (ii) the disclosing party has disclosed to a third party without any obligation to maintain such information in confidence; (iii) was known to the receiving party prior to its disclosure by the disclosing party; or (iv) is independently developed by the receiving party without use of the confidential information of the disclosing party. Further, either party may disclose confidential information of the other party as required by governmental or judicial order, provided such party gives the other party prompt written notice prior to such disclosure and complies with any protective order (or equivalent) imposed on such disclosure. Without limiting the foregoing, LICENSEE shall treat any source code for the SOFTWARE as confidential information and shall not disclose, disseminate, or distribute such materials to any third party without LICENSOR prior written permission. Each party’s obligations under this Section shall apply at all times during the term of this AGREEMENT and for five (5) years following termination of this AGREEMENT, provided, however, that (i) obligations with respect to source code shall survive in perpetuity and (ii) trade secrets shall be maintained as such until they fall into the public domain.
+11.  Force Majeure
+Neither party shall be deemed in default of this AGREEMENT if failure or delay in performance is caused by an act of God, fire, flood, severe weather conditions, material shortage or unavailability of transportation, government ordinance, laws, regulations or restrictions, war or civil disorder, or any other cause beyond the reasonable control of such party.
+
+12. General terms
+This Agreement represents the complete AGREEMENT between the contracting parties regarding the contractual item. The Agreement and its regulations replace any previous AGREEMENTS; it overrules any other previously made AGREEMENT(s) of written or verbal kind regarding the contractual item. All rights, that are not explicitly regarded in this agreement remain reserved to the licensor. 
+This Agreement is subjected exclusively to the law of the Republic of Bulgaria. In case of any legal dispute about or in connection with this Agreement Sofia (Bulgaria) is agreed to be the area of jurisdiction.
