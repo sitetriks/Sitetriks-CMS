@@ -2,18 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
-using SiteTriks.Data.Models.Enums;
-using SiteTriks.Data.Models.Helpers;
-using SiteTriks.Data.Models.NewModels.Pages.Enums;
-using SiteTriks.Data.Models.NewModels.Url.Enums;
-using SiteTriks.DocumentationModule.Data.Enums;
-using SiteTriks.Extensions.Expressions;
 using SiteTriksApp.Web.Data;
 using System;
-using System.ComponentModel;
 
 namespace SiteTriksApp.Web.Migrations
 {
