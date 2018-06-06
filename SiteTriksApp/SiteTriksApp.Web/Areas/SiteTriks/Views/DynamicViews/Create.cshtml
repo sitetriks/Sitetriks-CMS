@@ -42,6 +42,8 @@
                     </select>
                     <br />
                     <input id="location" class="title-field" asp-for="Location" hidden="hidden" placeholder="Custom view location..." />
+                    <br />
+                    <span hidden="hidden" id="custom-location-info"></span>
                     <strong><span class="text-danger"></span></strong>
                     @Html.ValidationMessageFor(m => Model.WidgetName, "", new { @class = "text-danger" })
                 </div>
@@ -65,21 +67,11 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script src="~/lib/custom/ace/ace.js"></script>
     <script src="~/lib/custom/ace/ext-language_tools.js"></script>
-
+    <script src="~/js/dynamic-views.js"></script>
     <script src="~/js/razor-views-editor.js"></script>
 
     <script>
         RazorViewsEditor.init("", "#create-dynamic-view-form", "#Content");
-
-        $('select[name="WidgetName"]').change(function () {
-            let $location = $("#location");
-            if ($(this).val() == "none") {
-                $location.removeAttr("hidden");
-            }
-            else {
-                $location.attr("hidden", "hidden");
-                $location.val("");
-            }
-        });
+        DynamicViews.setupWidgetNameDropdown('select[name="WidgetName"]');
     </script>
 }
