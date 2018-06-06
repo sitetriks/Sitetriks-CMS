@@ -1,6 +1,4 @@
-'use strict';
-
-//===================================================================================================
+﻿//===================================================================================================
 // Widgets 2.01
 // - v. 2.01 - add func getRoles() and getUserGroups() for loading multiselect dropdowns
 //         for widgets AllowedRoles, AllowedGroups 
@@ -12,9 +10,10 @@ function widgetsModule($widgetContainer, initFunctions) {
             var selectedRolesNames = [];
         } else {
             var selectedRolesNames = selectedRoles.split(';');
-        }
+        } 
 
-        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function (data) {
+
+        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function(data) {
             $.each(data.names, function (index, item) {
                 if (selectedRolesNames.indexOf(item) >= 0) {
                     var option = $('<option></option>');
@@ -22,8 +21,11 @@ function widgetsModule($widgetContainer, initFunctions) {
                     option.attr('selected', 'selected');
                     $('#allowed-roles').append(option);
                 } else {
-                    $('#allowed-roles').append($('<option></option>').val(item).html(item));
+                    $('#allowed-roles').append(
+                        $('<option></option>').val(item).html(item)
+                    );
                 }
+
             });
             Multiselect.Setup('allowed-roles');
         });
@@ -35,9 +37,9 @@ function widgetsModule($widgetContainer, initFunctions) {
             var selectedUserGroupsNames = [];
         } else {
             var selectedUserGroupsNames = selectedUserGroups.split(';');
-        }
+        } 
 
-        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function (data) {
+        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function(data) {
             $.each(data.names, function (index, item) {
                 if (selectedUserGroupsNames.indexOf(item) >= 0) {
                     var option = $('<option></option>');
@@ -45,7 +47,9 @@ function widgetsModule($widgetContainer, initFunctions) {
                     option.attr('selected', 'selected');
                     $('#allowed-groups').append(option);
                 } else {
-                    $('#allowed-groups').append($('<option></option>').val(item).html(item));
+                    $('#allowed-groups').append(
+                        $('<option></option>').val(item).html(item)
+                    );
                 }
             });
             Multiselect.Setup('allowed-groups');
@@ -73,11 +77,11 @@ function widgetsModule($widgetContainer, initFunctions) {
 
             if ($templatesSelector.length) {
                 Data.getJson({ url: '/WidgetTemplatesController/GetTemplateNames/' + type }).then(function (data) {
-                    var templateNames = data.templateNames;
+                    let templateNames = data.templateNames;
                     $templatesSelector.empty();
 
-                    for (var i = 0; i < templateNames.length; i++) {
-                        var $option = $("<option></option>");
+                    for (let i = 0; i < templateNames.length; i++) {
+                        let $option = $("<option></option>");
                         $option.text(templateNames[i]);
                         $option.val(templateNames[i]);
 
@@ -87,7 +91,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                     $('#add-widget-container').find('input:first').focus();
                 });
             }
-        });
+        });      
     }
 
     function createAlert(action, data, status, dialogId, modalId, isLocal) {
@@ -120,7 +124,7 @@ function widgetsModule($widgetContainer, initFunctions) {
             accept: '.drag',
             greedy: true,
             tolerance: 'touch',
-            drop: function drop(event, ui) {
+            drop: function (event, ui) {
 
                 $('.drop').removeClass('drag-hover');
 
@@ -134,12 +138,13 @@ function widgetsModule($widgetContainer, initFunctions) {
 
                     LoadWidget(type);
                     return;
-                } else {
+                }
+                else {
                     //ui.helper.detach();
                     //$(event.target).append(ui.draggable);
                 }
             },
-            over: function over(event, ui) {
+            over: function (event, ui) {
                 $('.drop').removeClass('drag-hover');
                 $(event.target).addClass('drag-hover');
             }
@@ -165,25 +170,34 @@ function widgetsModule($widgetContainer, initFunctions) {
         }
 
         $widgetContainer.html('');
-        $('#Dialog-Box').data('placeholder', placeholder).dialog('option', 'width', '80%').dialog('option', 'height', 700).dialog('option', 'dialogClass', 'add-widget-dialog').dialog('open');
+        $('#Dialog-Box')
+            .data('placeholder', placeholder)
+            .dialog('option', 'width', '80%')
+            .dialog('option', 'height', 700)
+            .dialog('option', 'dialogClass', 'add-widget-dialog')
+            .dialog('open');
 
         $('#Dialog-Box').dialog('option', 'position', "20%");
-        $('#Dialog-Box').parent().css({ position: "fixed" }).css({ top: "10%" });
+        $('#Dialog-Box').parent().css({ position: "fixed" })
+            .css({ top: "10%" });
 
         $('.btn-add-widget').remove();
         $('.btn-edit-widget').remove();
 
         var $btnAddWidget = $(document.createElement('button'));
-        $btnAddWidget.html('<span class="glyphicon glyphicon-edit"></span> Save').addClass('btn btn-success btn-sm btn-add-widget').prop('disabled', true).attr('id', 'btn-save-widget');
+        $btnAddWidget.html('<span class="glyphicon glyphicon-edit"></span> Save')
+            .addClass('btn btn-success btn-sm btn-add-widget')
+            .prop('disabled', true)
+            .attr('id', 'btn-save-widget');
 
-        if (!$('.add-widget-dialog .ui-dialog-titlebar-close').hasClass('btn')) {
+        if (!($('.add-widget-dialog .ui-dialog-titlebar-close').hasClass('btn'))) {
             $('.add-widget-dialog .ui-dialog-titlebar-close').addClass('btn');
         }
 
         $btnAddWidget.appendTo('.ui-dialog-titlebar');
 
         $('.widget-dialog-title').remove();
-        var $title = $('<span></span>', {
+        let $title = $('<span></span>', {
             class: 'widget-dialog-title'
         }).appendTo('.ui-dialog-titlebar');
 
@@ -209,7 +223,7 @@ function widgetsModule($widgetContainer, initFunctions) {
         var templateName = $("#template-selector").val();
         var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
         var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
-
+        
         var element;
 
         if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
@@ -219,7 +233,7 @@ function widgetsModule($widgetContainer, initFunctions) {
         if (!element) {
 
             if (initFunctions[type] && {}.toString.call(initFunctions[type].validation) === '[object Function]') {
-                var result = initFunctions[type].validation();
+                let result = initFunctions[type].validation();
 
                 if (!result) {
                     Loader.hide();
@@ -238,9 +252,7 @@ function widgetsModule($widgetContainer, initFunctions) {
     });
 
     function addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups) {
-        var order = Math.max.apply(Math, pageContent.map(function (c) {
-            return c.order;
-        })) + 1;
+        let order = Math.max.apply(Math, pageContent.map(function (c) { return c.order; })) + 1;
 
         if (order == -Infinity) {
             order = 0;
@@ -259,7 +271,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                 order: order || 0
             },
             preview: 'preview'
-        };
+        }
 
         Loader.show(true);
 
@@ -281,14 +293,14 @@ function widgetsModule($widgetContainer, initFunctions) {
             $('.placeholder[data-placeholder="' + placeholder + '"]').append(data);
 
             if (type === 'layoutBuilder') {
-                console.log('init layout');
+                console.log('init layout')
                 //makeDrop($(".drop-layout"));
                 //$(".drop-layout").sortable();
                 WidgetsDraggable.init(w.makeDrop);
             }
 
-            createAlert('Added', { type: type }, 'success', '#Dialog-Box', null, true);
-        });
+            createAlert('Added', { type }, 'success', '#Dialog-Box', null, true);
+        })
     }
 
     //=================================================================================================================================================
@@ -303,30 +315,38 @@ function widgetsModule($widgetContainer, initFunctions) {
     });
 
     function OpenEditDialog(type, id, displayName) {
-        $('#Dialog-Box-Edit').dialog('option', 'width', '80%').dialog('option', 'height', 700).dialog('option', 'dialogClass', 'edit-widget-dialog').dialog('open');
+        $('#Dialog-Box-Edit')
+            .dialog('option', 'width', '80%')
+            .dialog('option', 'height', 700)
+            .dialog('option', 'dialogClass', 'edit-widget-dialog')
+            .dialog('open');
 
         $('#Dialog-Box-Edit').dialog('option', 'position', ["20%", "10%"]);
-        $('#Dialog-Box-Edit').parent().css({ position: "fixed" }).css({ top: "10%" });
+        $('#Dialog-Box-Edit').parent().css({ position: "fixed" })
+            .css({ top: "10%" });
 
         $('.btn-add-widget').remove();
         $('.btn-edit-widget').remove();
 
         var $btnEditWidget = $(document.createElement('button'));
-        $btnEditWidget.html('<span class="glyphicon glyphicon-edit"></span> Save').addClass('btn btn-success btn-sm btn-edit-widget').prop('disabled', true).attr('id', 'btn-edit-widget');
+        $btnEditWidget.html('<span class="glyphicon glyphicon-edit"></span> Save')
+            .addClass('btn btn-success btn-sm btn-edit-widget')
+            .prop('disabled', true)
+            .attr('id', 'btn-edit-widget');
 
-        if (!$('.edit-widget-dialog .ui-dialog-titlebar-close').hasClass('btn')) {
+        if (!($('.edit-widget-dialog .ui-dialog-titlebar-close').hasClass('btn'))) {
             $('.edit-widget-dialog .ui-dialog-titlebar-close').addClass('btn');
         }
 
         $btnEditWidget.appendTo('.edit-widget-dialog .ui-dialog-titlebar');
 
         $('.widget-dialog-title').remove();
-        var $title = $('<span></span>', {
+        let $title = $('<span></span>', {
             class: 'widget-dialog-title',
             text: displayName || type
         }).appendTo('.ui-dialog-titlebar');
 
-        editWidget(type, id);
+        editWidget(type, id)
     }
 
     function editWidget(type, id) {
@@ -337,7 +357,7 @@ function widgetsModule($widgetContainer, initFunctions) {
     }
 
     $('body').on('click', '.edit-widget', function (ev) {
-        var $trigger = $(this);
+        let $trigger = $(this);
 
         OpenEditDialog($trigger.attr('data-type'), $trigger.attr('data-id'), $trigger.attr('data-display'));
     });
@@ -358,13 +378,13 @@ function widgetsModule($widgetContainer, initFunctions) {
         var templateName = $("#template-selector").val();
         var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
         var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
-        var element = void 0;
+        let element;
         if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
             element = initFunctions[type].save(id);
         }
 
         if (element === null) {
-            var isValid = widgetValidation(type, 'edit');
+            let isValid = widgetValidation(type, 'edit');
 
             if (!isValid) {
                 return;
@@ -384,7 +404,7 @@ function widgetsModule($widgetContainer, initFunctions) {
         item.allowedGroups = allowedGroups;
         item.templateName = templateName;
 
-        var order = item.order;
+        let order = item.order;
 
         if (item.IsInherited) {
             item.IsModifiedOnChild = true;
@@ -404,7 +424,8 @@ function widgetsModule($widgetContainer, initFunctions) {
                 allowedRoles: allowedRoles,
                 allowedGroups: allowedGroups,
                 order: order,
-                isLocked: item.isLocked
+                isLocked: item.isLocked,
+                isStatic: item.isStatic
             },
             preview: 'preview'
         };
@@ -419,7 +440,7 @@ function widgetsModule($widgetContainer, initFunctions) {
             $old.remove();
 
             if (type === 'layoutBuilder') {
-                console.log('init layout');
+                console.log('init layout')
                 //makeDrop($(".drop-layout"));
                 //$(".drop-layout").sortable();
                 WidgetsDraggable.init(w.makeDrop);
@@ -448,11 +469,11 @@ function widgetsModule($widgetContainer, initFunctions) {
 
             if ($templatesSelector.length) {
                 Data.getJson({ url: '/WidgetTemplatesController/GetTemplateNames/' + type }).then(function (tempData) {
-                    var templateNames = tempData.templateNames;
+                    let templateNames = tempData.templateNames;
                     $templatesSelector.empty();
 
-                    for (var i = 0; i < templateNames.length; i++) {
-                        var $option = $("<option></option>");
+                    for (let i = 0; i < templateNames.length; i++) {
+                        let $option = $("<option></option>");
                         $option.text(templateNames[i]);
                         $option.val(templateNames[i]);
 
@@ -475,7 +496,7 @@ function widgetsModule($widgetContainer, initFunctions) {
             $('.edit-widget-dialog .btn-edit-widget').prop('disabled', false).attr('data-id', data.id).attr('data-placeholder', data.placeholder).attr('data-type', type).attr('data-order', data.order);
 
             // focus first element to avoid highlighting close button
-            var elementToFocus = $('#edit-widget-container').find('input:first');
+            let elementToFocus = $('#edit-widget-container').find('input:first');
             if (elementToFocus.length === 0) {
                 elementToFocus = $('#edit-widget-container').find('textarea:first');
             }
@@ -493,12 +514,10 @@ function widgetsModule($widgetContainer, initFunctions) {
     //=================================================================================================================================================
 
     function removeWidget(ev) {
-        var $element = $(this);
-        var type = $element.attr("data-type");
-        var id = $element.attr("data-id");
-        var item = pageContent.find(function (e) {
-            return e.type === type && e.id === id;
-        });
+        let $element = $(this);
+        let type = $element.attr("data-type");
+        let id = $element.attr("data-id");
+        let item = pageContent.find(e => e.type === type && e.id === id);
 
         // TODO: logic for deleting widgets with non-existing placeholders
         //if (item.type == "layoutBuilder") {
@@ -515,34 +534,34 @@ function widgetsModule($widgetContainer, initFunctions) {
         //    }
         //}
 
-        var index = pageContent.indexOf(item);
+        let index = pageContent.indexOf(item);
         pageContent.splice(index, 1);
 
         $element.parents('.preview-placeholder[data-identifier="' + id + '"]').remove();
-        createAlert('Removed', { type: type }, 'danger', null, '#delete-confirm', true);
+        createAlert('Removed', { type }, 'danger', null, '#delete-confirm', true);
     }
 
     $('body').on('click', '.delete-widget', removeWidget);
 
     return {
-        addWidgetLocal: addWidgetLocal,
-        saveEditWidgetLocal: saveEditWidgetLocal,
-        makeDrop: makeDrop
-    };
+        addWidgetLocal,
+        saveEditWidgetLocal,
+        makeDrop
+    }
 }
 
 function createErrorAlert(msg, type) {
-    var containerId = '#add-modal-alerts';
+    let containerId = '#add-modal-alerts';
 
     if (type == 'edit') {
-        containerId = '#edit-modal-alerts';
+        containerId = '#edit-modal-alerts'
     }
 
     Notifier.createAlert({
         containerId: containerId,
         message: msg,
         status: 'danger'
-    });
+    })
 }
 //MOVE TO CURRENT WIDGET LOGIC
 function widgetValidation(widgetType, method) {
@@ -561,11 +580,11 @@ function widgetValidation(widgetType, method) {
             return false;
             break;
         case 'gallery':
-            createErrorAlert('You must select images or library first!', method);
+            createErrorAlert('You must select images or library first!', method)
             return false;
             break;
         case 'dynamic':
-            createErrorAlert('You must select class!', method);
+            createErrorAlert('You must select class!', method)
             return false;
             break;
         default:

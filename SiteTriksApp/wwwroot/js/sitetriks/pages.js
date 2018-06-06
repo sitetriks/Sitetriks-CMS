@@ -1,6 +1,4 @@
-'use strict';
-
-function createPage(validateUrlUrl) {
+﻿function createPage(validateUrlUrl) {
     populateUrl('#title', '#url', validateUrlOnChange);
 
     Multiselect.Setup("multiselect-roles");
@@ -17,13 +15,13 @@ function createPage(validateUrlUrl) {
 
     $('.date-picker-group span').on('click', function () {
         $('#date-picker').focus();
-    });
+    })
 
     $('#seo-words').on('input change', countSEOWords);
 
     function countSEOWords(ev) {
-        var $trigger = $(this);
-        var words = $trigger.val().split(',');
+        let $trigger = $(this);
+        let words = $trigger.val().split(',');
         if (words.length === 1 && words[0].trim().length === 0) {
             $('#seo-words-counter').text('');
         } else {
@@ -77,17 +75,13 @@ function createPage(validateUrlUrl) {
         $notfier.text('');
         var flag = false;
 
-        $('.title-field').each(function (_, element) {
-            if (!Validator.validate($(element), 'Title must be atleast 3 characters!', function (val) {
-                return Validator.hasMinimumLength(val, 3);
-            })) {
+        $('.title-field').each((_, element) => {
+            if (!Validator.validate($(element), 'Title must be atleast 3 characters!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
                 flag = true;
             }
         });
 
-        if (!Validator.validate($urlField, 'Url must be atleast 3 characters and contain only english letters, numbers, dash(-) and underscore(_)!', function (val) {
-            return Validator.isUrlFriendly(val) && Validator.hasMinimumLength(val, 3);
-        })) {
+        if (!Validator.validate($urlField, 'Url must be atleast 3 characters and contain only english letters, numbers, dash(-) and underscore(_)!', function (val) { return Validator.isUrlFriendly(val) && Validator.hasMinimumLength(val, 3); })) {
             flag = true;
         }
 
@@ -96,12 +90,12 @@ function createPage(validateUrlUrl) {
             return false;
         }
 
-        var dateVal = $('#date-picker').val();
+        let dateVal = $('#date-picker').val();
 
         if (!!dateVal) {
-            var dateToBePublished = new Date(dateVal);
+            let dateToBePublished = new Date(dateVal);
 
-            if (!dateToBePublished.laterThan(new Date().addMinutes(10))) {
+            if (!dateToBePublished.laterThan((new Date()).addMinutes(10))) {
                 evt.preventDefault();
                 $notfier.text('Date to be published cannot be sooner than 10 minutes from now!');
                 return false;
@@ -116,9 +110,7 @@ function createPage(validateUrlUrl) {
                 $btnSubmit.attr("disabled", false);
                 return Data.post({ url: _this.action, data: $(_this).serialize() });
             } else {
-                Validator.validate($urlField, 'Url is invalid or already in use!', function (val) {
-                    return false;
-                });
+                Validator.validate($urlField, 'Url is invalid or already in use!', function (val) { return false; })
 
                 Loader.hide();
                 return Promise.reject('Url is invalid or already in use!');
@@ -157,10 +149,10 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
             }).appendTo('#languages');
         }
 
-        var template = Handlebars.compile(res);
+        let template = Handlebars.compile(res);
 
         $('#languages').on('change', function (ev) {
-            var lang = $(this).val();
+            let lang = $(this).val();
 
             if (!lang) {
                 $('#mlf-info').html('');
@@ -168,8 +160,8 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
             } else {
                 $('#backend-info').hide();
 
-                var current = mlf[lang];
-                var html = template({ lang: lang, title: current.Title });
+                let current = mlf[lang];
+                let html = template({ lang, title: current.Title });
 
                 $('#mlf-info').html(html);
             }
@@ -190,8 +182,8 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
     countSEOWords.apply($('#seo-words'));
 
     function countSEOWords(ev) {
-        var $trigger = $(this);
-        var words = $trigger.val().split(',');
+        let $trigger = $(this);
+        let words = $trigger.val().split(',');
         if (words.length === 1 && words[0].trim().length === 0) {
             $('#seo-words-counter').text('');
         } else {
@@ -242,24 +234,24 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 
         //--------------------------------------------------------
         // multi lingual fields logic
-        var lang = $('#languages').val();
+        let lang = $('#languages').val();
         if (lang) {
             Loader.show('#fff');
 
-            var $fields = $('[data-lang="' + lang + '"]');
-            var body = { lang: lang, parentId: pageId };
+            let $fields = $(`[data-lang="${lang}"]`);
+            let body = { lang: lang, parentId: pageId };
             $fields.each(function (index, element) {
-                var name = $(element).attr('data-name');
-                var value = $(element).val();
+                let name = $(element).attr('data-name');
+                let value = $(element).val();
                 body[name] = value;
             });
 
             Data.postJson({ url: mlfUrl, data: body }).then(function (res) {
                 if (res.success) {
                     mlf = res.mlf;
-                    Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
+                    Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' })
                 } else {
-                    Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: 'Page was not updated!', status: 'danger' });
+                    Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: 'Page was not updated!', status: 'danger' })
                 }
 
                 Loader.hide();
@@ -282,17 +274,13 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
             }
         });
 
-        $('.title-field').each(function (_, element) {
-            if (!Validator.validate($(element), 'Title must be atleast 3 characters!', function (val) {
-                return Validator.hasMinimumLength(val, 3);
-            })) {
+        $('.title-field').each((_, element) => {
+            if (!Validator.validate($(element), 'Title must be atleast 3 characters!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
                 flag = true;
             }
         });
 
-        if (!Validator.validate($urlField, 'Url must be atleast 3 characters and contain only english letters, numbers, dash(-) and underscore(_)!', function (val) {
-            return Validator.isUrlFriendly(val) && Validator.hasMinimumLength(val, 3);
-        })) {
+        if (!Validator.validate($urlField, 'Url must be atleast 3 characters and contain only english letters, numbers, dash(-) and underscore(_)!', function (val) { return Validator.isUrlFriendly(val) && Validator.hasMinimumLength(val, 3); })) {
             flag = true;
         }
 
@@ -307,12 +295,12 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
             return false;
         }
 
-        var dateVal = $('#date-picker').val();
+        let dateVal = $('#date-picker').val();
 
         if (!!dateVal) {
-            var dateToBePublished = new Date(dateVal);
+            let dateToBePublished = new Date(dateVal);
 
-            if (!dateToBePublished.laterThan(new Date().addMinutes(10))) {
+            if (!dateToBePublished.laterThan((new Date()).addMinutes(10))) {
                 evt.preventDefault();
                 $notfier.text('Date to be published cannot be sooner than 10 minutes from now!');
                 return false;
@@ -327,16 +315,14 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
                 $btnSubmit.attr("disabled", false);
                 return Data.post({ url: _this.action, data: $(_this).serialize() });
             } else {
-                Validator.validate($urlField, res.message, function (val) {
-                    return false;
-                });
+                Validator.validate($urlField, res.message, function (val) { return false; });
                 window.onbeforeunload = onUnload;
                 Loader.hide();
                 return Promise.reject(res.message);
             }
         }, Data.defaultError).then(function (res) {
             if (res.success) {
-                Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
+                Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' })
                 if (url !== initialUrl) {
                     // update url if
                     if (window.history.replaceState) {
@@ -347,7 +333,7 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
                     }
                 }
             } else {
-                Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' });
+                Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' })
                 window.onbeforeunload = onUnload;
             }
 
@@ -368,34 +354,34 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 
 function editPageContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
     function loadjscssfile(filename, filetype) {
-        if (filetype == "js") {
-            //if filename is a external JavaScript file
-            var fileref = document.createElement('script');
-            fileref.setAttribute("type", "text/javascript");
-            fileref.setAttribute("src", filename);
-        } else if (filetype == "css") {
-            //if filename is an external CSS file
-            var fileref = document.createElement("link");
-            fileref.setAttribute("rel", "stylesheet");
-            fileref.setAttribute("type", "text/css");
-            fileref.setAttribute("href", filename);
+        if (filetype == "js") { //if filename is a external JavaScript file
+            var fileref = document.createElement('script')
+            fileref.setAttribute("type", "text/javascript")
+            fileref.setAttribute("src", filename)
         }
-        if (typeof fileref != "undefined") document.getElementsByTagName("head")[0].appendChild(fileref);
+        else if (filetype == "css") { //if filename is an external CSS file
+            var fileref = document.createElement("link")
+            fileref.setAttribute("rel", "stylesheet")
+            fileref.setAttribute("type", "text/css")
+            fileref.setAttribute("href", filename)
+        }
+        if (typeof fileref != "undefined")
+            document.getElementsByTagName("head")[0].appendChild(fileref)
     }
 
     function removejscssfile(filename, filetype) {
-        var targetelement = filetype == "js" ? "script" : filetype == "css" ? "link" : "none"; //determine element type to create nodelist from
-        var targetattr = filetype == "js" ? "src" : filetype == "css" ? "href" : "none"; //determine corresponding attribute to test for
-        var allsuspects = document.getElementsByTagName(targetelement);
-        for (var i = allsuspects.length; i >= 0; i--) {
-            //search backwards within nodelist for matching elements to remove
-            if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) != null && allsuspects[i].getAttribute(targetattr).indexOf(filename) != -1) allsuspects[i].parentNode.removeChild(allsuspects[i]); //remove element by calling parentNode.removeChild()
+        var targetelement = (filetype == "js") ? "script" : (filetype == "css") ? "link" : "none" //determine element type to create nodelist from
+        var targetattr = (filetype == "js") ? "src" : (filetype == "css") ? "href" : "none" //determine corresponding attribute to test for
+        var allsuspects = document.getElementsByTagName(targetelement)
+        for (var i = allsuspects.length; i >= 0; i--) { //search backwards within nodelist for matching elements to remove
+            if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) != null && allsuspects[i].getAttribute(targetattr).indexOf(filename) != -1)
+                allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
         }
     }
 
     $('.resolution').on('click', function (ev) {
-        var active = $('.selected-option').attr('data-type');
-        var $target = $(this);
+        let active = $('.selected-option').attr('data-type');
+        let $target = $(this);
 
         if (active === 'content') {
             if ($target.hasClass('selected')) {
@@ -403,16 +389,16 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
             }
 
             $('.resolution.selected').each(function (_, element) {
-                var $el = $(element);
+                let $el = $(element);
                 $el.removeClass('selected');
-                var type = $el.attr('data-type');
+                let type = $el.attr('data-type');
 
-                removejscssfile('/css/sitetriks/st-' + type + '-preview.css', 'css');
+                removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
             });
 
             $target.addClass('selected');
-            var type = $target.attr('data-type');
-            loadjscssfile('/css/sitetriks/st-' + type + '-preview.css', 'css');
+            let type = $target.attr('data-type');
+            loadjscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css');
         }
     });
 
@@ -447,35 +433,29 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         $('#btn-save-layout').trigger('click');
 
         $('.resolution.selected').each(function (_, element) {
-            var $el = $(element);
+            let $el = $(element);
             $el.removeClass('selected');
-            var type = $el.attr('data-type');
+            let type = $el.attr('data-type');
 
-            removejscssfile('/css/sitetriks/st-' + type + '-preview.css', 'css');
+            removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
         });
 
         $('.resolution[data-type="lg"]').trigger('click');
     });
 
-    var layoutWidget = pageContent.find(function (c) {
-        return c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0;
-    });
+    let layoutWidget = pageContent.find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
     if (layoutWidget) {
-        var layout = JSON.parse(layoutWidget.element);
+        let layout = JSON.parse(layoutWidget.element);
 
-        ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () {
-            return $('.selected-option').attr('data-type') === 'layout';
-        });
+        ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout' });
 
         $('#btn-save-layout').on('click', function (ev) {
-            var l = ModuleBuilder.getInstance('#preview-layout');
-            layout.layoutRows = l.map(function (r) {
-                return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass };
-            });
+            let l = ModuleBuilder.getInstance('#preview-layout');
+            layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
             //$('.show-content').trigger('click');
 
             console.log(l.deletedPlaceholders);
-            for (var i = 0; i < l.deletedPlaceholders.length; i += 1) {
+            for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
                 removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
             }
 
@@ -487,30 +467,22 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     }
 
     function removeWidgetForPlaceholder(placeholder) {
-        var widgets = pageContent.filter(function (c) {
-            return c.placeholder === placeholder;
-        });
+        let widgets = pageContent.filter(c => c.placeholder === placeholder);
 
-        var _loop = function _loop(i) {
-            var index = pageContent.findIndex(function (c) {
-                return c.id === widgets[i].id;
-            });
+        for (let i = 0; i < widgets.length; i += 1) {
+            let index = pageContent.findIndex(c => c.id === widgets[i].id);
 
             if (index !== -1) {
                 pageContent.splice(index, 1);
                 if (widgets[i].type === 'layoutBuilder') {
-                    var _layout = JSON.parse(widgets[i].element);
-                    for (var j = 0; j < _layout.length; j += 1) {
-                        for (var k = 0; k < _layout[j].columns.length; k += 1) {
-                            removeWidget(_layout[j].columns[k].properties.placeholder);
+                    let layout = JSON.parse(widgets[i].element);
+                    for (let j = 0; j < layout.length; j += 1) {
+                        for (let k = 0; k < layout[j].columns.length; k += 1) {
+                            removeWidget(layout[j].columns[k].properties.placeholder);
                         }
                     }
                 }
             }
-        };
-
-        for (var i = 0; i < widgets.length; i += 1) {
-            _loop(i);
         }
     }
 
@@ -518,21 +490,21 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         $(this).next('.triangle').toggleClass('triangle-up');
     });
 
-    var $window = $(window);
-    var itemTop = 0;
+    let $window = $(window);
+    let itemTop = 0;
     $window.on('scroll resize', stickyWidgets);
     $window.trigger('scroll');
 
     function stickyWidgets() {
-        var scrollPosition = $window.scrollTop();
-        var $widgetsList = $('.widgets-list');
+        let scrollPosition = $window.scrollTop();
+        let $widgetsList = $('.widgets-list');
 
         if (!itemTop) {
             itemTop = $widgetsList.offset().top;
         }
 
         if ($widgetsList && $widgetsList.length === 1) {
-            if (scrollPosition > itemTop - 100) {
+            if (scrollPosition > (itemTop - 100)) {
                 $widgetsList.addClass('scrolling');
             } else {
                 $widgetsList.removeClass('scrolling');
@@ -540,25 +512,28 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         }
     }
 
-    $(document).on("updatePreview", {}, function () {
+    $(document).on("updatePreview", {
+    }, function () {
         updatePreview(url);
     });
 
     $(document).trigger("updatePreview");
 
     function loadVersions(lang) {
-        $('#versions').find('option').remove();
+        $('#versions')
+            .find('option')
+            .remove();
 
         return Data.getJson({ url: '/sitetriks/pages/getpageversions?url=' + url + '&lang=' + lang, disableCache: true }).then(function (res) {
             if (res.success) {
                 res.versions.forEach(function (element) {
-                    var $v = $('<option value="' + element + '">' + element + '</option>');
+                    let $v = $(`<option value="${element}">${element}</option>`)
                     if (element === +currentVersion) {
                         $v.attr('selected', 'selected');
                     }
 
                     $v.appendTo('#versions');
-                });
+                })
             }
 
             return res;
@@ -570,26 +545,26 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     Data.getJson({ url: '/sitetriks/pages/getlanguages', disableCache: true }).then(function (res) {
         if (res.success) {
             res.cultures.forEach(function (element) {
-                var $l = $('<option value="' + element + '">' + element + '</option>');
+                let $l = $('<option value="' + element + '">' + element + '</option>')
                 if (element === currentLanguage) {
                     $l.attr('selected', 'selected');
                 }
 
                 $l.appendTo('#languages');
-            });
+            })
         }
-    }, Data.defaultError);
+    }, Data.defaultError)
 
     $('#languages').on('change', function (ev) {
         updatePreview(url);
-        var lang = $('#languages').val();
+        let lang = $('#languages').val();
         currentLanguage = lang;
         loadVersions(lang);
     });
 
     function updatePreview(url) {
         var fullUrl = "/sitetriks/display/previewpage";
-        var lang = $('#languages').val() || '';
+        let lang = $('#languages').val() || '';
 
         $('#preview-container').html('');
         Loader.show(true);
@@ -623,9 +598,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         var type = $caller.attr('data-type');
         var order = $caller.attr('data-order');
 
-        var item = pageContent.find(function (e) {
-            return e.Order == order && e.Type == type;
-        });
+        let item = pageContent.find(e => e.Order == order && e.Type == type);
         item.IsLocked = !!status;
     });
 
@@ -634,11 +607,11 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     });
 
     $('#btn-publish').on('click', function (evt) {
-        var body = {
+        let body = {
             url: url,
             content: pageContent,
             lang: currentLanguage
-        };
+        }
 
         Data.postJson({ url: '/sitetriks/Pages/PublishPageWithContent', data: body }).then(function (res) {
             if (res.success) {
@@ -656,11 +629,11 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     });
 
     function saveDraft(callback) {
-        var body = {
+        let body = {
             url: url,
             content: pageContent,
             lang: currentLanguage
-        };
+        }
 
         Data.postJson({ url: '/sitetriks/Pages/SaveDraft', data: body }).then(function (res) {
             callback(res);
@@ -668,15 +641,15 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     }
 
     $('#btn-preview-page').on('click', function (evt) {
-        Loader.show('#fff');
+        Loader.show('#fff')
         saveDraft(function (res) {
             if (res.success) {
-                var body = {
+                let body = {
                     content: pageContent,
                     template: currentTemplate,
                     language: currentLanguage
-                };
-
+                }
+                
                 Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
                     createPreveiwWindow(res);
 
@@ -687,12 +660,12 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     });
 
     $('#btn-preview-version').on('click', function (evt) {
-        var lang = $('#languages').val();
-        var body = {
+        let lang = $('#languages').val();
+        let body = {
             version: $('#versions').val(),
             url: url,
             lang: lang
-        };
+        }
 
         Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
             createPreveiwWindow(res);
@@ -700,12 +673,12 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     });
 
     $('#btn-revert-version').on('click', function (evt) {
-        var lang = $('#languages').val();
-        var body = {
+        let lang = $('#languages').val();
+        let body = {
             version: $('#versions').val(),
             url: url,
             lang: lang
-        };
+        }
 
         Data.postJson({ url: '/sitetriks/pages/RevertVersion', data: body }).then(function (res) {
             location.reload(true);
@@ -717,7 +690,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     });
 
     $('.btn-revision').on('click', function (ev) {
-        var $span = $(this).children('span');
+        let $span = $(this).children('span');
         if ($span.hasClass('glyphicon-menu-right')) {
             $span.removeClass('glyphicon-menu-right');
             $span.addClass('glyphicon-menu-left');
@@ -728,7 +701,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
             $('#version-control').css('display', 'none');
         }
     });
-
+    
     function saveEditWidgetServer(type, element, id, placeholder, cssClass, templateName, allowedRoles, allowedGroups) {
         var item = pageContent.find(function (e) {
             return e.id === id && e.type === type;
@@ -739,12 +712,12 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         item.allowedGroups = allowedGroups;
         item.templateName = templateName;
 
-        var order = item.order;
+        let order = item.order;
 
         if (item.IsInherited) {
             item.IsModifiedOnChild = true;
         }
-
+        
         var $old = $('.preview-placeholder[data-identifier="' + id + '"]');
 
         var body = {
@@ -758,13 +731,14 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
                 allowedRoles: allowedRoles,
                 allowedGroups: allowedGroups,
                 order: order,
-                isLocked: item.isLocked
+                isLocked: item.isLocked,
+                isStatic: item.isStatic
             },
             preview: 'preview'
         };
 
         Loader.show(true);
-
+        
         saveDraft(function (res) {
             if (res.success) {
                 Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body }).then(function (data) {
@@ -775,7 +749,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
                     $old.remove();
 
                     if (type === 'layoutBuilder') {
-                        console.log('init layout');
+                        console.log('init layout')
                         WidgetsDraggable.init(w.makeDrop);
                     }
 
@@ -791,7 +765,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
     }
 
     function createPreveiwWindow(html) {
-        var newWindow = window.open("", "Preview");
+        let newWindow = window.open("", "Preview");
         if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
             //POPUP BLOCKED
             Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });

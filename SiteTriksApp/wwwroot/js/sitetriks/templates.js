@@ -1,35 +1,33 @@
-"use strict";
-
-function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
+﻿function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
     function loadjscssfile(filename, filetype) {
-        if (filetype == "js") {
-            //if filename is a external JavaScript file
-            var fileref = document.createElement('script');
-            fileref.setAttribute("type", "text/javascript");
-            fileref.setAttribute("src", filename);
-        } else if (filetype == "css") {
-            //if filename is an external CSS file
-            var fileref = document.createElement("link");
-            fileref.setAttribute("rel", "stylesheet");
-            fileref.setAttribute("type", "text/css");
-            fileref.setAttribute("href", filename);
+        if (filetype == "js") { //if filename is a external JavaScript file
+            var fileref = document.createElement('script')
+            fileref.setAttribute("type", "text/javascript")
+            fileref.setAttribute("src", filename)
         }
-        if (typeof fileref != "undefined") document.getElementsByTagName("head")[0].appendChild(fileref);
+        else if (filetype == "css") { //if filename is an external CSS file
+            var fileref = document.createElement("link")
+            fileref.setAttribute("rel", "stylesheet")
+            fileref.setAttribute("type", "text/css")
+            fileref.setAttribute("href", filename)
+        }
+        if (typeof fileref != "undefined")
+            document.getElementsByTagName("head")[0].appendChild(fileref)
     }
 
     function removejscssfile(filename, filetype) {
-        var targetelement = filetype == "js" ? "script" : filetype == "css" ? "link" : "none"; //determine element type to create nodelist from
-        var targetattr = filetype == "js" ? "src" : filetype == "css" ? "href" : "none"; //determine corresponding attribute to test for
-        var allsuspects = document.getElementsByTagName(targetelement);
-        for (var i = allsuspects.length; i >= 0; i--) {
-            //search backwards within nodelist for matching elements to remove
-            if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) != null && allsuspects[i].getAttribute(targetattr).indexOf(filename) != -1) allsuspects[i].parentNode.removeChild(allsuspects[i]); //remove element by calling parentNode.removeChild()
+        var targetelement = (filetype == "js") ? "script" : (filetype == "css") ? "link" : "none" //determine element type to create nodelist from
+        var targetattr = (filetype == "js") ? "src" : (filetype == "css") ? "href" : "none" //determine corresponding attribute to test for
+        var allsuspects = document.getElementsByTagName(targetelement)
+        for (var i = allsuspects.length; i >= 0; i--) { //search backwards within nodelist for matching elements to remove
+            if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) != null && allsuspects[i].getAttribute(targetattr).indexOf(filename) != -1)
+                allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
         }
     }
 
     $('.resolution').on('click', function (ev) {
-        var active = $('.selected-option').attr('data-type');
-        var $target = $(this);
+        let active = $('.selected-option').attr('data-type');
+        let $target = $(this);
 
         if (active === 'content') {
             if ($target.hasClass('selected')) {
@@ -37,16 +35,16 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
             }
 
             $('.resolution.selected').each(function (_, element) {
-                var $el = $(element);
+                let $el = $(element);
                 $el.removeClass('selected');
-                var type = $el.attr('data-type');
+                let type = $el.attr('data-type');
 
-                removejscssfile("/css/sitetriks/st-" + type + "-preview.css", 'css');
+                removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
             });
 
             $target.addClass('selected');
-            var type = $target.attr('data-type');
-            loadjscssfile("/css/sitetriks/st-" + type + "-preview.css", 'css');
+            let type = $target.attr('data-type');
+            loadjscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css');
         }
     });
 
@@ -81,35 +79,29 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         $('#btn-save-layout').trigger('click');
 
         $('.resolution.selected').each(function (_, element) {
-            var $el = $(element);
+            let $el = $(element);
             $el.removeClass('selected');
-            var type = $el.attr('data-type');
+            let type = $el.attr('data-type');
 
-            removejscssfile("/css/sitetriks/st-" + type + "-preview.css", 'css');
+            removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
         });
 
         $('.resolution[data-type="lg"]').trigger('click');
     });
 
-    var layoutWidget = pageContent.find(function (c) {
-        return c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0;
-    });
+    let layoutWidget = pageContent.find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
     if (layoutWidget) {
-        var layout = JSON.parse(layoutWidget.element);
+        let layout = JSON.parse(layoutWidget.element);
 
-        ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () {
-            return $('.selected-option').attr('data-type') === 'layout';
-        });
+        ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout' });
 
         $('#btn-save-layout').on('click', function (ev) {
-            var l = ModuleBuilder.getInstance('#preview-layout');
-            layout.layoutRows = l.map(function (r) {
-                return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass };
-            });
+            let l = ModuleBuilder.getInstance('#preview-layout');
+            layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
             //$('.show-content').trigger('click');
 
             console.log(l.deletedPlaceholders);
-            for (var i = 0; i < l.deletedPlaceholders.length; i += 1) {
+            for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
                 removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
             }
 
@@ -119,7 +111,8 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         console.error('Layout was not found!');
     }
 
-    $(document).on("updatePreview", {}, function () {
+    $(document).on("updatePreview", {
+    }, function () {
         updatePreview(url);
     });
 
@@ -132,18 +125,20 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     });
 
     function loadVersions(lang) {
-        $('#versions').find('option').remove();
+        $('#versions')
+            .find('option')
+            .remove();
 
         return Data.getJson({ url: '/sitetriks/templates/getpageversions?url=' + url + '&lang=' + lang, disableCache: true }).then(function (res) {
             if (res.success) {
                 res.versions.forEach(function (element) {
-                    var $v = $("<option value=\"" + element + "\">" + element + "</option>");
+                    let $v = $(`<option value="${element}">${element}</option>`)
                     if (element === +currentVersion) {
                         $v.attr('selected', 'selected');
                     }
 
                     $v.appendTo('#versions');
-                });
+                })
             }
         }, Data.defaultError);
     }
@@ -153,26 +148,26 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     Data.getJson({ url: '/sitetriks/templates/getlanguages', disableCache: true }).then(function (res) {
         if (res.success) {
             res.cultures.forEach(function (element) {
-                var $l = $('<option value="' + element + '">' + element + '</option>');
+                let $l = $('<option value="' + element + '">' + element + '</option>')
                 if (element === currentLanguage) {
                     $l.attr('selected', 'selected');
                 }
 
                 $l.appendTo('#languages');
-            });
+            })
         }
-    }, Data.defaultError);
+    }, Data.defaultError)
 
     $('#languages').on('change', function (ev) {
         updatePreview(url);
-        var lang = $('#languages').val();
+        let lang = $('#languages').val();
         currentLanguage = lang;
         loadVersions(lang);
     });
 
     function updatePreview(url) {
         var fullUrl = "/sitetriks/display/previewpage";
-        var lang = $('#languages').val() || '';
+        let lang = $('#languages').val() || '';
 
         $('#preview-container').html('');
         Loader.show(true);
@@ -206,9 +201,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         var type = $caller.attr('data-type');
         var order = $caller.attr('data-order');
 
-        var item = pageContent.find(function (e) {
-            return e.Order == order && e.Type == type;
-        });
+        let item = pageContent.find(e => e.Order == order && e.Type == type);
         item.IsLocked = !!status;
     });
 
@@ -217,7 +210,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     });
 
     $('#btn-publish').on('click', function (evt) {
-        var body = {
+        let body = {
             url: url
         };
 
@@ -278,11 +271,11 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     });
 
     function publishTemplate() {
-        var body = {
+        let body = {
             url: url,
             content: pageContent,
             lang: currentLanguage
-        };
+        }
 
         Data.postJson({ url: '/sitetriks/Templates/PublishPageWithContent', data: body }).then(function (res) {
             if (res.success) {
@@ -300,11 +293,11 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     });
 
     function saveDraft(callback) {
-        var body = {
+        let body = {
             url: url,
             content: pageContent,
             lang: currentLanguage
-        };
+        }
 
         Data.postJson({ url: '/sitetriks/Templates/SaveDraft', data: body }).then(function (res) {
             callback(res);
@@ -312,20 +305,17 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     }
 
     $('#btn-preview-page').on('click', function (evt) {
-        Loader.show('#fff');
+        Loader.show('#fff')
         saveDraft(function (res) {
             if (res.success) {
-                var body = {
+                let body = {
                     content: pageContent,
                     template: currentTemplate,
                     language: currentLanguage
-                };
-
-                var newWindow = window.open("", "Preview");
+                }
 
                 Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
-                    newWindow.document.write(res);
-                    newWindow.document.close();
+                    createPreveiwWindow(res);
 
                     Loader.hide();
                 }, Data.defaultError);
@@ -334,24 +324,21 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     });
 
     $('#btn-preview-version').on('click', function (evt) {
-        var body = {
+        let body = {
             version: $('#versions').val(),
             url: url
-        };
-
-        var newWindow = window.open("", "Preview");
-
+        }
+        
         Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
-            newWindow.document.write(res);
-            newWindow.document.close();
+            createPreveiwWindow(res);
         }, Data.defaultError);
     });
 
     $('#btn-revert-version').on('click', function (evt) {
-        var body = {
+        let body = {
             version: $('#versions').val(),
             url: url
-        };
+        }
 
         Data.postJson({ url: '/sitetriks/templates/RevertVersion', data: body }).then(function (res) {
             location.reload(true);
@@ -363,7 +350,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     });
 
     $('.btn-revision').on('click', function (ev) {
-        var $span = $(this).children('span');
+        let $span = $(this).children('span');
         if ($span.hasClass('glyphicon-menu-right')) {
             $span.removeClass('glyphicon-menu-right');
             $span.addClass('glyphicon-menu-left');
@@ -385,7 +372,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         item.allowedGroups = allowedGroups;
         item.templateName = templateName;
 
-        var order = item.order;
+        let order = item.order;
 
         if (item.IsInherited) {
             item.IsModifiedOnChild = true;
@@ -404,7 +391,8 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
                 allowedRoles: allowedRoles,
                 allowedGroups: allowedGroups,
                 order: order,
-                isLocked: item.isLocked
+                isLocked: item.isLocked,
+                isStatic: item.isStatic
             },
             preview: 'preview'
         };
@@ -421,7 +409,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
                     $old.remove();
 
                     if (type === 'layoutBuilder') {
-                        console.log('init layout');
+                        console.log('init layout')
                         WidgetsDraggable.init(w.makeDrop);
                     }
 
@@ -434,6 +422,18 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
                 });
             }
         });
+    }
+    
+    function createPreveiwWindow(html) {
+        let newWindow = window.open("", "Preview");
+        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+            //POPUP BLOCKED
+            Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
+        } else {
+            newWindow.document.write(html);
+            newWindow.document.close();
+            newWindow.focus();
+        }
     }
 }
 
@@ -515,12 +515,12 @@ function createTemplate(checkValidUrlLink) {
             return false;
         }
 
-        var dateVal = $('#date-picker').val();
+        let dateVal = $('#date-picker').val();
 
         if (!!dateVal) {
-            var dateToBePublished = new Date(dateVal);
+            let dateToBePublished = new Date(dateVal);
 
-            if (!dateToBePublished.laterThan(new Date().addMinutes(10))) {
+            if (!dateToBePublished.laterThan((new Date()).addMinutes(10))) {
                 evt.preventDefault();
                 $notfier.text('Date to be published cannot be sooner than 10 minutes from now!');
                 return false;
@@ -650,12 +650,12 @@ function editTemplate(checkValidUrlLink) {
             return false;
         }
 
-        var dateVal = $('#date-picker').val();
+        let dateVal = $('#date-picker').val();
 
         if (!!dateVal) {
-            var dateToBePublished = new Date(dateVal);
+            let dateToBePublished = new Date(dateVal);
 
-            if (!dateToBePublished.laterThan(new Date().addMinutes(10))) {
+            if (!dateToBePublished.laterThan((new Date()).addMinutes(10))) {
                 evt.preventDefault();
                 $notfier.text('Date to be published cannot be sooner than 10 minutes from now!');
                 return false;

@@ -758,7 +758,8 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
                 allowedRoles: allowedRoles,
                 allowedGroups: allowedGroups,
                 order: order,
-                isLocked: item.isLocked
+                isLocked: item.isLocked,
+                isStatic: item.isStatic
             },
             preview: 'preview'
         };
