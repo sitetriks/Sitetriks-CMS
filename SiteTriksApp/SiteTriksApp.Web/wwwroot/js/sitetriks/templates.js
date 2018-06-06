@@ -314,11 +314,8 @@
                     language: currentLanguage
                 }
 
-                let newWindow = window.open("", "Preview");
-
                 Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
-                    newWindow.document.write(res);
-                    newWindow.document.close();
+                    createPreveiwWindow(res);
 
                     Loader.hide();
                 }, Data.defaultError);
@@ -331,12 +328,9 @@
             version: $('#versions').val(),
             url: url
         }
-
-        let newWindow = window.open("", "Preview");
-
+        
         Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
-            newWindow.document.write(res);
-            newWindow.document.close();
+            createPreveiwWindow(res);
         }, Data.defaultError);
     });
 
@@ -397,7 +391,8 @@
                 allowedRoles: allowedRoles,
                 allowedGroups: allowedGroups,
                 order: order,
-                isLocked: item.isLocked
+                isLocked: item.isLocked,
+                isStatic: item.isStatic
             },
             preview: 'preview'
         };
@@ -427,6 +422,18 @@
                 });
             }
         });
+    }
+    
+    function createPreveiwWindow(html) {
+        let newWindow = window.open("", "Preview");
+        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+            //POPUP BLOCKED
+            Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
+        } else {
+            newWindow.document.write(html);
+            newWindow.document.close();
+            newWindow.focus();
+        }
     }
 }
 

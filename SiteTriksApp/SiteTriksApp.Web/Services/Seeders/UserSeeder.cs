@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using SiteTriks.Data.Models;
+using SiteTriks.Services.Models.Users;
+using System.Linq;
 
 namespace SiteTriksApp.Web.Services.Seeders
 {
@@ -8,14 +10,25 @@ namespace SiteTriksApp.Web.Services.Seeders
     {
         public static void Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
+            string defaultUsername = "admin@mail.com";
+            string defaultPassword = "12345qQ!";
+
             IConfigurationSection superUserSection = configuration.GetSection("SuperUser");
             var username = superUserSection.GetSection("Username").Value;
-            var password = superUserSection.GetSection("Password").Value;          
+            var password = superUserSection.GetSection("Password").Value;                  
 
-            if(username.Contains("#") || string.IsNullOrEmpty(username))
+            if (username == null || password == null)
             {
-                username = "admin@mail.com";
-                password = "12345qQ!";
+                username = defaultUsername;
+                password = defaultPassword;
+            }
+            else
+            {
+                if (username.Contains("#") || string.IsNullOrEmpty(username))
+                {
+                    username = defaultUsername;
+                    password = defaultPassword;
+                }
             }
 
             string[] roles = new string[]
@@ -32,23 +45,36 @@ namespace SiteTriksApp.Web.Services.Seeders
             {
                 if (!roleManager.RoleExistsAsync(role).Result)
                 {
-                    var result = roleManager.CreateAsync(new IdentityRole() { Name = role }).Result;
+                    roleManager.CreateAsync(new IdentityRole() { Name = role }).Wait();
                 }
             }
 
+            IdentityResult result = new IdentityResult();
             if (userManager.FindByNameAsync(username).Result == null)
             {
-                CreateUser(userManager, roles[0], username, password);
+                result = CreateUser(userManager, roles[0], username, password);
+            }
+            
+            if(!result.Succeeded)
+            {
+                CreateUser(userManager, roles[0], defaultUsername, defaultPassword);
             }
         }
 
-        private static void CreateUser(UserManager<User> userManager, string role, string email, string password)
+
+        private static IdentityResult CreateUser(UserManager<User> userManager, string role, string email, string password)
         {
             var user = new User { UserName = email, Email = email };
             user.EmailConfirmed = true;
             user.DashboardConfiguration = "";
-            userManager.CreateAsync(user, password).Wait();
-            userManager.AddToRoleAsync(user, role).Wait();
+            var result = userManager.CreateAsync(user, password).Result;
+
+            if(result.Succeeded)
+            {
+                userManager.AddToRoleAsync(user, role).Wait();
+            }
+
+            return result;
         }
     }
 }

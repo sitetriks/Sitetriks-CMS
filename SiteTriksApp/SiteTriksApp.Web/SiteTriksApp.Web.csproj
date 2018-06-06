@@ -4,7 +4,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-SiteTriksApp.Web-F71A9A06-9896-4C70-BC66-76DAE646A823</UserSecretsId>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,17 +47,117 @@
     <Folder Include="wwwroot\images\contact-us\" />
     <Folder Include="wwwroot\lib\custom\slider-master\" />
     <Folder Include="wwwroot\lib\custom\slick\" />
-    <Folder Include="wwwroot\lib\custom\tinymce\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\js\modules\module-builder.js" />
     <None Include="wwwroot\js\modules\scroll-control.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\COPYING" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-aea.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-agc.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-apollo.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-basic.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-cbm.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-cl.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-clj.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-css.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-dart.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-el.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-erl.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-erlang.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-fs.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-go.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-hs.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lasso.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lassoscript.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-latex.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lgt.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lisp.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ll.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-llvm.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-logtalk.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ls.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lsp.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lua.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-matlab.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ml.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-mumps.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-n.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-nemerle.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-pascal.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-proto.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-r.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-rd.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-rkt.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-rust.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-s.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-scala.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-scm.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-Splus.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-sql.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ss.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-swift.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-tcl.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-tex.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vb.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vbs.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vhd.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vhdl.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-wiki.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-xq.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-xquery.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-yaml.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-yml.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\prettify.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\loader\run_prettify.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-apollo.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-basic.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-clj.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-css.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-dart.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-erlang.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-go.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-hs.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-lasso.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-lisp.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-llvm.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-logtalk.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-lua.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-matlab.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-ml.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-mumps.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-n.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-pascal.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-proto.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-r.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-rd.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-rust.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-scala.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-sql.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-swift.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-tcl.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-tex.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-vb.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-vhdl.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-wiki.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-xq.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\lang-yaml.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\prettify.js" />
+    <None Include="wwwroot\lib\custom\code-prettify\src\run_prettify.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\css.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SiteTriksLicenseManager\LicenseBuilder\LicenseBuilder.csproj" />
+    <ProjectReference Include="..\SiteTriks.BlogModule\SiteTriks.BlogModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.DocumentationModule\SiteTriks.DocumentationModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.ForumModule\SiteTriks.ForumModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.MarketingEmailModule\SiteTriks.MarketingEmailModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.RssFeedModule\SiteTriks.RssFeedModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.SiteMapModule\SiteTriks.SiteMapModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.SiteSync\SiteTriks.SiteSync.csproj" />
+    <ProjectReference Include="..\SiteTriks\SiteTriks.csproj" />
   </ItemGroup>
 
  <!-- <Target Name="IncludePrecompiledViewsInPublishOutput" DependsOnTargets="_MvcRazorPrecompileOnBuild" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">

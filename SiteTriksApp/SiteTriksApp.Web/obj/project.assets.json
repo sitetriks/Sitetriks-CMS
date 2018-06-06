@@ -2,6 +2,49 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.0": {
+      "AutoMapper/6.1.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.3.0",
+          "System.Collections": "4.3.0",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Collections.Specialized": "4.3.0",
+          "System.ComponentModel.TypeConverter": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Dynamic.Runtime": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Linq.Expressions": "4.3.0",
+          "System.Linq.Queryable": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Extensions": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/AutoMapper.dll": {}
+        }
+      },
+      "AutoMapper.Extensions.Microsoft.DependencyInjection/3.2.0": {
+        "type": "package",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0",
+          "Microsoft.Extensions.DependencyModel": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
       "BuildBundlerMinifier/2.6.362": {
         "type": "package",
         "build": {
@@ -109,6 +152,21 @@
         },
         "runtime": {
           "lib/netstandard1.3/Hangfire.SqlServer.dll": {}
+        }
+      },
+      "HtmlAgilityPack/1.7.2": {
+        "type": "package",
+        "dependencies": {
+          "System.Net.Http": "4.3.2",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XPath.XmlDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/HtmlAgilityPack.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/HtmlAgilityPack.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -3037,6 +3095,35 @@
           "lib/netstandard1.3/NuGet.Frameworks.dll": {}
         }
       },
+      "PayPalCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.WebUtilities": "1.1.2",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Collections.Specialized": "4.3.0",
+          "System.Net.Requests": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.6/PayPalCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/PayPalCore.dll": {}
+        }
+      },
+      "PayPalCoreSDK/1.7.1": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/net451/PayPalCoreSDK.dll": {}
+        },
+        "runtime": {
+          "lib/net451/PayPalCoreSDK.dll": {}
+        }
+      },
       "Pomelo.EntityFrameworkCore.MySql/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -4140,17 +4227,17 @@
           "lib/netstandard1.3/System.Linq.Parallel.dll": {}
         }
       },
-      "System.Linq.Queryable/4.0.1": {
+      "System.Linq.Queryable/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Diagnostics.Debug": "4.0.11",
-          "System.Linq": "4.1.0",
-          "System.Linq.Expressions": "4.1.0",
-          "System.Reflection": "4.1.0",
-          "System.Reflection.Extensions": "4.0.1",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Linq.Expressions": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Extensions": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.0/System.Linq.Queryable.dll": {}
@@ -4159,7 +4246,7 @@
           "lib/netstandard1.3/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.2": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -4247,6 +4334,37 @@
           "ref/netstandard1.3/System.Net.Primitives.dll": {}
         }
       },
+      "System.Net.Requests/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.1.0",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Net.Requests.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.3/System.Net.Requests.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/netstandard1.3/System.Net.Requests.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "System.Net.Security/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4305,6 +4423,21 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
+        }
+      },
+      "System.Net.WebHeaderCollection/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
         }
       },
       "System.Numerics.Vectors/4.4.0": {
@@ -5234,7 +5367,7 @@
           "System.Xml.ReaderWriter": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Xml.XPath.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.dll": {}
@@ -5260,6 +5393,27 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "System.Xml.XPath.XmlDocument/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
+        }
+      },
       "WindowsAzure.Storage/8.1.4": {
         "type": "package",
         "dependencies": {
@@ -5274,10 +5428,336 @@
         "runtime": {
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
+      },
+      "LicenseBuilder/1.0.0.2": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "SiteTriksLicenseManager.Models": "1.0.0.2"
+        },
+        "compile": {
+          "bin/placeholder/LicenseBuilder.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LicenseBuilder.dll": {}
+        }
+      },
+      "SiteTriks/1.0.0.6": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "Hangfire.AspNetCore": "1.6.17",
+          "Hangfire.MySql.Core": "2.1.5",
+          "Hangfire.SqlServer": "1.6.17",
+          "HtmlAgilityPack": "1.7.2",
+          "LicenseBuilder": "1.0.0.2",
+          "Microsoft.AspNetCore": "2.0.1",
+          "Microsoft.AspNetCore.All": "2.0.5",
+          "Microsoft.EntityFrameworkCore": "2.0.1",
+          "Microsoft.Extensions.Caching.Memory": "2.0.0",
+          "PayPalCore": "1.0.0",
+          "PayPalCoreSDK": "1.7.1",
+          "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
+          "SiteTriks.Configuration": "1.0.0.4",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.DatabaseApi": "1.0.0.4",
+          "SiteTriks.Dynamic": "1.0.0.4",
+          "SiteTriks.Extensions": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4",
+          "SiteTriks.Services": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.dll": {}
+        }
+      },
+      "SiteTriks.BlogModule/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "Microsoft.AspNetCore.All": "2.0.5",
+          "Microsoft.EntityFrameworkCore": "2.0.1",
+          "Microsoft.EntityFrameworkCore.Tools": "2.0.1",
+          "SiteTriks": "1.0.0.6",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4",
+          "SiteTriks.RssFeedModule": "1.0.0.4",
+          "SiteTriks.Services": "1.0.0.4",
+          "SiteTriks.SiteSync": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.BlogModule.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.BlogModule.dll": {}
+        }
+      },
+      "SiteTriks.Configuration/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "LicenseBuilder": "1.0.0.2",
+          "Microsoft.AspNetCore": "2.0.1",
+          "Newtonsoft.Json": "10.0.3",
+          "SiteTriks.Infrastructure": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.Configuration.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.Configuration.dll": {}
+        }
+      },
+      "SiteTriks.Data/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.All": "2.0.5",
+          "Microsoft.EntityFrameworkCore": "2.0.1",
+          "Microsoft.EntityFrameworkCore.Tools": "2.0.1",
+          "Newtonsoft.Json": "10.0.3",
+          "SiteTriks.Configuration": "1.0.0.4",
+          "SiteTriks.Extensions": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.Data.dll": {}
+        }
+      },
+      "SiteTriks.DatabaseApi/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "2.0.1",
+          "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
+          "SiteTriks.Dynamic": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.DatabaseApi.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.DatabaseApi.dll": {}
+        }
+      },
+      "SiteTriks.DocumentationModule/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "Microsoft.AspNetCore.All": "2.0.5",
+          "SiteTriks": "1.0.0.6",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.Extensions": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4",
+          "SiteTriks.Services": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.DocumentationModule.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.DocumentationModule.dll": {}
+        }
+      },
+      "SiteTriks.Dynamic/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "2.0.0",
+          "SiteTriks.Configuration": "1.0.0.4",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.Dynamic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.Dynamic.dll": {}
+        }
+      },
+      "SiteTriks.Extensions/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "compile": {
+          "bin/placeholder/SiteTriks.Extensions.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.Extensions.dll": {}
+        }
+      },
+      "SiteTriks.ForumModule/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "SiteTriks": "1.0.0.6",
+          "SiteTriks.Infrastructure": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.ForumModule.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.ForumModule.dll": {}
+        }
+      },
+      "SiteTriks.Infrastructure/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.Infrastructure.dll": {}
+        }
+      },
+      "SiteTriks.MarketingEmailModule/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "SiteTriks": "1.0.0.6",
+          "SiteTriks.Infrastructure": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.MarketingEmailModule.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.MarketingEmailModule.dll": {}
+        }
+      },
+      "SiteTriks.RssFeedModule/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "Microsoft.EntityFrameworkCore": "2.0.1",
+          "SiteTriks": "1.0.0.6",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.DatabaseApi": "1.0.0.4",
+          "SiteTriks.Extensions": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4",
+          "SiteTriks.Services": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.RssFeedModule.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.RssFeedModule.dll": {}
+        }
+      },
+      "SiteTriks.Services/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "Hangfire.AspNetCore": "1.6.17",
+          "Microsoft.AspNetCore.All": "2.0.5",
+          "Microsoft.EntityFrameworkCore": "2.0.1",
+          "Newtonsoft.Json": "10.0.3",
+          "SiteTriks.Configuration": "1.0.0.4",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.Dynamic": "1.0.0.4",
+          "SiteTriks.Extensions": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.Services.dll": {}
+        }
+      },
+      "SiteTriks.SiteMapModule/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Hangfire.AspNetCore": "1.6.17",
+          "Microsoft.AspNetCore.All": "2.0.5",
+          "SiteTriks": "1.0.0.6",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4",
+          "SiteTriks.Services": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.SiteMapModule.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.SiteMapModule.dll": {}
+        }
+      },
+      "SiteTriks.SiteSync/1.0.0.4": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "AutoMapper": "6.1.1",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "Microsoft.AspNetCore.All": "2.0.5",
+          "SiteTriks": "1.0.0.6",
+          "SiteTriks.Configuration": "1.0.0.4",
+          "SiteTriks.Data": "1.0.0.4",
+          "SiteTriks.DatabaseApi": "1.0.0.4",
+          "SiteTriks.Dynamic": "1.0.0.4",
+          "SiteTriks.Infrastructure": "1.0.0.4",
+          "SiteTriks.Services": "1.0.0.4"
+        },
+        "compile": {
+          "bin/placeholder/SiteTriks.SiteSync.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriks.SiteSync.dll": {}
+        }
+      },
+      "SiteTriksLicenseManager.Models/1.0.0.2": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "compile": {
+          "bin/placeholder/SiteTriksLicenseManager.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SiteTriksLicenseManager.Models.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "AutoMapper/6.1.1": {
+      "sha512": "A+6PAblvzmkXPS20nFBQJvlNSW5oEdyfN5+cxT/Du35fTNyuP5pNDXT64KT/jBgxt7CPduOM0Y7oLnNe0E5IXg==",
+      "type": "package",
+      "path": "automapper/6.1.1",
+      "files": [
+        "automapper.6.1.1.nupkg.sha512",
+        "automapper.nuspec",
+        "lib/net45/AutoMapper.dll",
+        "lib/net45/AutoMapper.xml",
+        "lib/netstandard1.1/AutoMapper.dll",
+        "lib/netstandard1.1/AutoMapper.xml",
+        "lib/netstandard1.3/AutoMapper.dll",
+        "lib/netstandard1.3/AutoMapper.xml"
+      ]
+    },
+    "AutoMapper.Extensions.Microsoft.DependencyInjection/3.2.0": {
+      "sha512": "528nEpAwniNn8Z6Ae9qTiM/kN4f0BxmWE9mDMEkqKKGxbuElmv6Kj9DVvTXECJkIt6ARerb9+vYbOifNpcwvXQ==",
+      "type": "package",
+      "path": "automapper.extensions.microsoft.dependencyinjection/3.2.0",
+      "files": [
+        "automapper.extensions.microsoft.dependencyinjection.3.2.0.nupkg.sha512",
+        "automapper.extensions.microsoft.dependencyinjection.nuspec",
+        "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
+      ]
+    },
     "BuildBundlerMinifier/2.6.362": {
       "sha512": "J8vHrhvkvBAkzf5eA0zDu9Z4RbVlA8lYWGq0UyvWh98kKpqQZpzUe3yC89Rq9nQyiO0pdULrPPs9sSmx+xq8jA==",
       "type": "package",
@@ -5366,6 +5846,52 @@
         "lib/netstandard1.3/Hangfire.SqlServer.dll",
         "lib/netstandard1.3/Hangfire.SqlServer.xml",
         "tools/install.sql"
+      ]
+    },
+    "HtmlAgilityPack/1.7.2": {
+      "sha512": "URolDiAWoVXGzU1IeG/5wu/hDZ1qgNBj0AwRXtuokSpn3KUA4SOwEm6q4YyXnz1P5iEqVCMwWbCG9b8a8QfLdw==",
+      "type": "package",
+      "path": "htmlagilitypack/1.7.2",
+      "files": [
+        "htmlagilitypack.1.7.2.nupkg.sha512",
+        "htmlagilitypack.nuspec",
+        "lib/Net20/HtmlAgilityPack.dll",
+        "lib/Net20/HtmlAgilityPack.pdb",
+        "lib/Net20/HtmlAgilityPack.xml",
+        "lib/Net40-client/HtmlAgilityPack.dll",
+        "lib/Net40-client/HtmlAgilityPack.pdb",
+        "lib/Net40-client/HtmlAgilityPack.xml",
+        "lib/Net40/HtmlAgilityPack.XML",
+        "lib/Net40/HtmlAgilityPack.dll",
+        "lib/Net40/HtmlAgilityPack.pdb",
+        "lib/Net45/HtmlAgilityPack.XML",
+        "lib/Net45/HtmlAgilityPack.dll",
+        "lib/Net45/HtmlAgilityPack.pdb",
+        "lib/NetCore45/HtmlAgilityPack.XML",
+        "lib/NetCore45/HtmlAgilityPack.dll",
+        "lib/NetCore45/HtmlAgilityPack.pdb",
+        "lib/netstandard1.3/HtmlAgilityPack.deps.json",
+        "lib/netstandard1.3/HtmlAgilityPack.dll",
+        "lib/netstandard1.3/HtmlAgilityPack.pdb",
+        "lib/netstandard1.3/HtmlAgilityPack.xml",
+        "lib/netstandard1.6/HtmlAgilityPack.deps.json",
+        "lib/netstandard1.6/HtmlAgilityPack.dll",
+        "lib/netstandard1.6/HtmlAgilityPack.pdb",
+        "lib/netstandard1.6/HtmlAgilityPack.xml",
+        "lib/netstandard2.0/HtmlAgilityPack.deps.json",
+        "lib/netstandard2.0/HtmlAgilityPack.dll",
+        "lib/netstandard2.0/HtmlAgilityPack.pdb",
+        "lib/netstandard2.0/HtmlAgilityPack.xml",
+        "lib/portable-net45+netcore45+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.XML",
+        "lib/portable-net45+netcore45+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.dll",
+        "lib/portable-net45+netcore45+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.pdb",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.XML",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.pdb",
+        "lib/uap10.0/HtmlAgilityPack.XML",
+        "lib/uap10.0/HtmlAgilityPack.dll",
+        "lib/uap10.0/HtmlAgilityPack.pdb",
+        "lib/uap10.0/HtmlAgilityPack.pri"
       ]
     },
     "Libuv/1.10.0": {
@@ -7913,10 +8439,10 @@
       "path": "microsoft.netcore.platforms/2.0.0",
       "files": [
         "LICENSE.TXT",
-        "Microsoft.NETCore.Platforms.2.0.0.nupkg.sha512",
-        "Microsoft.NETCore.Platforms.nuspec",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
+        "microsoft.netcore.platforms.2.0.0.nupkg.sha512",
+        "microsoft.netcore.platforms.nuspec",
         "runtime.json",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -8483,6 +9009,30 @@
         "lib/netstandard1.3/NuGet.Frameworks.xml",
         "nuget.frameworks.4.0.0.nupkg.sha512",
         "nuget.frameworks.nuspec"
+      ]
+    },
+    "PayPalCore/1.0.0": {
+      "sha512": "mvYvNtJgzFHrCC3yloU5TwxC53SpjmStZC/r0PCAjmk3vVZBNVnLSSVvqJB8cTW1X2YHiWiTsybJkWjPs0RVFg==",
+      "type": "package",
+      "path": "paypalcore/1.0.0",
+      "files": [
+        "lib/netstandard1.6/PayPalCore.dll",
+        "paypalcore.1.0.0.nupkg.sha512",
+        "paypalcore.nuspec"
+      ]
+    },
+    "PayPalCoreSDK/1.7.1": {
+      "sha512": "hGOLo3X2vgOpOWJI91+vlBgr/Dchk3xZAF0bdIpKiAwjlRKMjzSC4zuT1eGwmQ8uVL1IaGBZwNGklyRHDniYlQ==",
+      "type": "package",
+      "path": "paypalcoresdk/1.7.1",
+      "files": [
+        "lib/net20/PayPalCoreSDK.dll",
+        "lib/net35/PayPalCoreSDK.dll",
+        "lib/net40/PayPalCoreSDK.dll",
+        "lib/net45/PayPalCoreSDK.dll",
+        "lib/net451/PayPalCoreSDK.dll",
+        "paypalcoresdk.1.7.1.nupkg.sha512",
+        "paypalcoresdk.nuspec"
       ]
     },
     "Pomelo.EntityFrameworkCore.MySql/2.0.1": {
@@ -10777,10 +11327,10 @@
         "system.linq.parallel.nuspec"
       ]
     },
-    "System.Linq.Queryable/4.0.1": {
-      "sha512": "Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
+    "System.Linq.Queryable/4.3.0": {
+      "sha512": "In1Bmmvl/j52yPu3xgakQSI0YIckPUr870w4K5+Lak3JCCa8hl+my65lABOuKfYs4ugmZy25ScFerC4nz8+b6g==",
       "type": "package",
-      "path": "system.linq.queryable/4.0.1",
+      "path": "system.linq.queryable/4.3.0",
       "files": [
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -10830,14 +11380,14 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
-        "system.linq.queryable.4.0.1.nupkg.sha512",
+        "system.linq.queryable.4.3.0.nupkg.sha512",
         "system.linq.queryable.nuspec"
       ]
     },
-    "System.Net.Http/4.3.0": {
-      "sha512": "sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
+    "System.Net.Http/4.3.2": {
+      "sha512": "y7hv0o0weI0j0mvEcBOdt1F3CAADiWlcw3e54m8TfYiRmBPDIsHElx8QUPDlY4x6yWXKPGN0Z2TuXCTPgkm5WQ==",
       "type": "package",
-      "path": "system.net.http/4.3.0",
+      "path": "system.net.http/4.3.2",
       "files": [
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -10857,49 +11407,9 @@
         "ref/monotouch10/_._",
         "ref/net45/_._",
         "ref/net46/System.Net.Http.dll",
-        "ref/net46/System.Net.Http.xml",
-        "ref/net46/de/System.Net.Http.xml",
-        "ref/net46/es/System.Net.Http.xml",
-        "ref/net46/fr/System.Net.Http.xml",
-        "ref/net46/it/System.Net.Http.xml",
-        "ref/net46/ja/System.Net.Http.xml",
-        "ref/net46/ko/System.Net.Http.xml",
-        "ref/net46/ru/System.Net.Http.xml",
-        "ref/net46/zh-hans/System.Net.Http.xml",
-        "ref/net46/zh-hant/System.Net.Http.xml",
         "ref/netcore50/System.Net.Http.dll",
-        "ref/netcore50/System.Net.Http.xml",
-        "ref/netcore50/de/System.Net.Http.xml",
-        "ref/netcore50/es/System.Net.Http.xml",
-        "ref/netcore50/fr/System.Net.Http.xml",
-        "ref/netcore50/it/System.Net.Http.xml",
-        "ref/netcore50/ja/System.Net.Http.xml",
-        "ref/netcore50/ko/System.Net.Http.xml",
-        "ref/netcore50/ru/System.Net.Http.xml",
-        "ref/netcore50/zh-hans/System.Net.Http.xml",
-        "ref/netcore50/zh-hant/System.Net.Http.xml",
         "ref/netstandard1.1/System.Net.Http.dll",
-        "ref/netstandard1.1/System.Net.Http.xml",
-        "ref/netstandard1.1/de/System.Net.Http.xml",
-        "ref/netstandard1.1/es/System.Net.Http.xml",
-        "ref/netstandard1.1/fr/System.Net.Http.xml",
-        "ref/netstandard1.1/it/System.Net.Http.xml",
-        "ref/netstandard1.1/ja/System.Net.Http.xml",
-        "ref/netstandard1.1/ko/System.Net.Http.xml",
-        "ref/netstandard1.1/ru/System.Net.Http.xml",
-        "ref/netstandard1.1/zh-hans/System.Net.Http.xml",
-        "ref/netstandard1.1/zh-hant/System.Net.Http.xml",
         "ref/netstandard1.3/System.Net.Http.dll",
-        "ref/netstandard1.3/System.Net.Http.xml",
-        "ref/netstandard1.3/de/System.Net.Http.xml",
-        "ref/netstandard1.3/es/System.Net.Http.xml",
-        "ref/netstandard1.3/fr/System.Net.Http.xml",
-        "ref/netstandard1.3/it/System.Net.Http.xml",
-        "ref/netstandard1.3/ja/System.Net.Http.xml",
-        "ref/netstandard1.3/ko/System.Net.Http.xml",
-        "ref/netstandard1.3/ru/System.Net.Http.xml",
-        "ref/netstandard1.3/zh-hans/System.Net.Http.xml",
-        "ref/netstandard1.3/zh-hant/System.Net.Http.xml",
         "ref/portable-net45+win8+wpa81/_._",
         "ref/win8/_._",
         "ref/wpa81/_._",
@@ -10910,7 +11420,7 @@
         "runtimes/win/lib/net46/System.Net.Http.dll",
         "runtimes/win/lib/netcore50/System.Net.Http.dll",
         "runtimes/win/lib/netstandard1.3/System.Net.Http.dll",
-        "system.net.http.4.3.0.nupkg.sha512",
+        "system.net.http.4.3.2.nupkg.sha512",
         "system.net.http.nuspec"
       ]
     },
@@ -11031,6 +11541,87 @@
         "system.net.primitives.nuspec"
       ]
     },
+    "System.Net.Requests/4.3.0": {
+      "sha512": "OZNUuAs0kDXUzm7U5NZ1ojVta5YFZmgT2yxBqsQ7Eseq5Ahz88LInGRuNLJ/NP2F8W1q7tse1pKDthj3reF5QA==",
+      "type": "package",
+      "path": "system.net.requests/4.3.0",
+      "files": [
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/portable-net45+win8+wp8+wpa81/_._",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/net46/_._",
+        "ref/netcore50/System.Net.Requests.dll",
+        "ref/netcore50/System.Net.Requests.xml",
+        "ref/netcore50/de/System.Net.Requests.xml",
+        "ref/netcore50/es/System.Net.Requests.xml",
+        "ref/netcore50/fr/System.Net.Requests.xml",
+        "ref/netcore50/it/System.Net.Requests.xml",
+        "ref/netcore50/ja/System.Net.Requests.xml",
+        "ref/netcore50/ko/System.Net.Requests.xml",
+        "ref/netcore50/ru/System.Net.Requests.xml",
+        "ref/netcore50/zh-hans/System.Net.Requests.xml",
+        "ref/netcore50/zh-hant/System.Net.Requests.xml",
+        "ref/netstandard1.0/System.Net.Requests.dll",
+        "ref/netstandard1.0/System.Net.Requests.xml",
+        "ref/netstandard1.0/de/System.Net.Requests.xml",
+        "ref/netstandard1.0/es/System.Net.Requests.xml",
+        "ref/netstandard1.0/fr/System.Net.Requests.xml",
+        "ref/netstandard1.0/it/System.Net.Requests.xml",
+        "ref/netstandard1.0/ja/System.Net.Requests.xml",
+        "ref/netstandard1.0/ko/System.Net.Requests.xml",
+        "ref/netstandard1.0/ru/System.Net.Requests.xml",
+        "ref/netstandard1.0/zh-hans/System.Net.Requests.xml",
+        "ref/netstandard1.0/zh-hant/System.Net.Requests.xml",
+        "ref/netstandard1.1/System.Net.Requests.dll",
+        "ref/netstandard1.1/System.Net.Requests.xml",
+        "ref/netstandard1.1/de/System.Net.Requests.xml",
+        "ref/netstandard1.1/es/System.Net.Requests.xml",
+        "ref/netstandard1.1/fr/System.Net.Requests.xml",
+        "ref/netstandard1.1/it/System.Net.Requests.xml",
+        "ref/netstandard1.1/ja/System.Net.Requests.xml",
+        "ref/netstandard1.1/ko/System.Net.Requests.xml",
+        "ref/netstandard1.1/ru/System.Net.Requests.xml",
+        "ref/netstandard1.1/zh-hans/System.Net.Requests.xml",
+        "ref/netstandard1.1/zh-hant/System.Net.Requests.xml",
+        "ref/netstandard1.3/System.Net.Requests.dll",
+        "ref/netstandard1.3/System.Net.Requests.xml",
+        "ref/netstandard1.3/de/System.Net.Requests.xml",
+        "ref/netstandard1.3/es/System.Net.Requests.xml",
+        "ref/netstandard1.3/fr/System.Net.Requests.xml",
+        "ref/netstandard1.3/it/System.Net.Requests.xml",
+        "ref/netstandard1.3/ja/System.Net.Requests.xml",
+        "ref/netstandard1.3/ko/System.Net.Requests.xml",
+        "ref/netstandard1.3/ru/System.Net.Requests.xml",
+        "ref/netstandard1.3/zh-hans/System.Net.Requests.xml",
+        "ref/netstandard1.3/zh-hant/System.Net.Requests.xml",
+        "ref/portable-net45+win8+wp8+wpa81/_._",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netstandard1.3/System.Net.Requests.dll",
+        "runtimes/win/lib/net46/_._",
+        "runtimes/win/lib/netstandard1.3/System.Net.Requests.dll",
+        "system.net.requests.4.3.0.nupkg.sha512",
+        "system.net.requests.nuspec"
+      ]
+    },
     "System.Net.Security/4.3.0": {
       "sha512": "IgJKNfALqw7JRWp5LMQ5SWHNKvXVz094U6wNE3c1i8bOkMQvgBL+MMQuNt3xl9Qg9iWpj3lFxPZEY6XHmROjMQ==",
       "type": "package",
@@ -11105,6 +11696,43 @@
         "ref/xamarinwatchos10/_._",
         "system.net.sockets.4.3.0.nupkg.sha512",
         "system.net.sockets.nuspec"
+      ]
+    },
+    "System.Net.WebHeaderCollection/4.3.0": {
+      "sha512": "XZrXYG3c7QV/GpWeoaRC02rM6LH2JJetfVYskf35wdC/w2fFDFMphec4gmVH2dkll6abtW14u9Rt96pxd9YH2A==",
+      "type": "package",
+      "path": "system.net.webheadercollection/4.3.0",
+      "files": [
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/_._",
+        "lib/netstandard1.3/System.Net.WebHeaderCollection.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/_._",
+        "ref/netstandard1.3/System.Net.WebHeaderCollection.dll",
+        "ref/netstandard1.3/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/de/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/es/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/fr/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/it/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/ja/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/ko/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/ru/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/zh-hans/System.Net.WebHeaderCollection.xml",
+        "ref/netstandard1.3/zh-hant/System.Net.WebHeaderCollection.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.net.webheadercollection.4.3.0.nupkg.sha512",
+        "system.net.webheadercollection.nuspec"
       ]
     },
     "System.Numerics.Vectors/4.4.0": {
@@ -13687,6 +14315,42 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "System.Xml.XPath.XmlDocument/4.3.0": {
+      "sha512": "A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
+      "type": "package",
+      "path": "system.xml.xpath.xmldocument/4.3.0",
+      "files": [
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Xml.XPath.XmlDocument.dll",
+        "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll",
+        "ref/netstandard1.3/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/de/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/es/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/fr/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/it/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/ja/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/ko/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/ru/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/zh-hans/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/zh-hant/System.Xml.XPath.XmlDocument.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
+        "system.xml.xpath.xmldocument.nuspec"
+      ]
+    },
     "WindowsAzure.Storage/8.1.4": {
       "sha512": "W6ZZ0/o7+3Qb77mRAQyLjPudHG3OMeeQ4p9yY13PUdJArmRCx2cLMm5F4tpIjJXxzHC0ew0oK7DMDGILMdfCnw==",
       "type": "package",
@@ -13708,6 +14372,91 @@
         "windowsazure.storage.8.1.4.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
+    },
+    "LicenseBuilder/1.0.0.2": {
+      "type": "project",
+      "path": "../../SiteTriksLicenseManager/LicenseBuilder/LicenseBuilder.csproj",
+      "msbuildProject": "../../SiteTriksLicenseManager/LicenseBuilder/LicenseBuilder.csproj"
+    },
+    "SiteTriks/1.0.0.6": {
+      "type": "project",
+      "path": "../SiteTriks/SiteTriks.csproj",
+      "msbuildProject": "../SiteTriks/SiteTriks.csproj"
+    },
+    "SiteTriks.BlogModule/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.BlogModule/SiteTriks.BlogModule.csproj",
+      "msbuildProject": "../SiteTriks.BlogModule/SiteTriks.BlogModule.csproj"
+    },
+    "SiteTriks.Configuration/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.Configuration/SiteTriks.Configuration.csproj",
+      "msbuildProject": "../SiteTriks.Configuration/SiteTriks.Configuration.csproj"
+    },
+    "SiteTriks.Data/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.Data/SiteTriks.Data.csproj",
+      "msbuildProject": "../SiteTriks.Data/SiteTriks.Data.csproj"
+    },
+    "SiteTriks.DatabaseApi/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.DatabaseApi/SiteTriks.DatabaseApi.csproj",
+      "msbuildProject": "../SiteTriks.DatabaseApi/SiteTriks.DatabaseApi.csproj"
+    },
+    "SiteTriks.DocumentationModule/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.DocumentationModule/SiteTriks.DocumentationModule.csproj",
+      "msbuildProject": "../SiteTriks.DocumentationModule/SiteTriks.DocumentationModule.csproj"
+    },
+    "SiteTriks.Dynamic/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.Dynamic/SiteTriks.Dynamic.csproj",
+      "msbuildProject": "../SiteTriks.Dynamic/SiteTriks.Dynamic.csproj"
+    },
+    "SiteTriks.Extensions/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.Extensions/SiteTriks.Extensions.csproj",
+      "msbuildProject": "../SiteTriks.Extensions/SiteTriks.Extensions.csproj"
+    },
+    "SiteTriks.ForumModule/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.ForumModule/SiteTriks.ForumModule.csproj",
+      "msbuildProject": "../SiteTriks.ForumModule/SiteTriks.ForumModule.csproj"
+    },
+    "SiteTriks.Infrastructure/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.Infrastructure/SiteTriks.Infrastructure.csproj",
+      "msbuildProject": "../SiteTriks.Infrastructure/SiteTriks.Infrastructure.csproj"
+    },
+    "SiteTriks.MarketingEmailModule/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.MarketingEmailModule/SiteTriks.MarketingEmailModule.csproj",
+      "msbuildProject": "../SiteTriks.MarketingEmailModule/SiteTriks.MarketingEmailModule.csproj"
+    },
+    "SiteTriks.RssFeedModule/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.RssFeedModule/SiteTriks.RssFeedModule.csproj",
+      "msbuildProject": "../SiteTriks.RssFeedModule/SiteTriks.RssFeedModule.csproj"
+    },
+    "SiteTriks.Services/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.Services/SiteTriks.Services.csproj",
+      "msbuildProject": "../SiteTriks.Services/SiteTriks.Services.csproj"
+    },
+    "SiteTriks.SiteMapModule/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.SiteMapModule/SiteTriks.SiteMapModule.csproj",
+      "msbuildProject": "../SiteTriks.SiteMapModule/SiteTriks.SiteMapModule.csproj"
+    },
+    "SiteTriks.SiteSync/1.0.0.4": {
+      "type": "project",
+      "path": "../SiteTriks.SiteSync/SiteTriks.SiteSync.csproj",
+      "msbuildProject": "../SiteTriks.SiteSync/SiteTriks.SiteSync.csproj"
+    },
+    "SiteTriksLicenseManager.Models/1.0.0.2": {
+      "type": "project",
+      "path": "../../SiteTriksLicenseManager/SiteTriksLicenseManager.Models/SiteTriksLicenseManager.Models.csproj",
+      "msbuildProject": "../../SiteTriksLicenseManager/SiteTriksLicenseManager.Models/SiteTriksLicenseManager.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -13716,32 +14465,41 @@
       "HangFire.SqlServer >= 1.6.17",
       "Hangfire.AspNetCore >= 1.6.17",
       "Hangfire.MySql.Core >= 2.1.5",
+      "LicenseBuilder >= 1.0.0.2",
       "Microsoft.AspNetCore.All >= 2.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 2.0.1",
       "Microsoft.NETCore.App >= 2.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.2",
       "Microsoft.Win32.Registry >= 4.4.0",
-      "Pomelo.EntityFrameworkCore.MySql >= 2.0.1"
+      "Pomelo.EntityFrameworkCore.MySql >= 2.0.1",
+      "SiteTriks >= 1.0.0.6",
+      "SiteTriks.BlogModule >= 1.0.0.4",
+      "SiteTriks.DocumentationModule >= 1.0.0.4",
+      "SiteTriks.ForumModule >= 1.0.0.4",
+      "SiteTriks.MarketingEmailModule >= 1.0.0.4",
+      "SiteTriks.RssFeedModule >= 1.0.0.4",
+      "SiteTriks.SiteMapModule >= 1.0.0.4",
+      "SiteTriks.SiteSync >= 1.0.0.4"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pavtov\\.nuget\\packages\\": {},
+    "C:\\Users\\kirkov\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\SiteTriks-CMS\\SiteTriksApp\\SiteTriksApp.Web\\SiteTriksApp.Web.csproj",
+      "projectUniqueName": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriksApp.Web\\SiteTriksApp.Web.csproj",
       "projectName": "SiteTriksApp.Web",
-      "projectPath": "D:\\Projects\\SiteTriks-CMS\\SiteTriksApp\\SiteTriksApp.Web\\SiteTriksApp.Web.csproj",
-      "packagesPath": "C:\\Users\\pavtov\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\SiteTriks-CMS\\SiteTriksApp\\SiteTriksApp.Web\\obj\\",
+      "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriksApp.Web\\SiteTriksApp.Web.csproj",
+      "packagesPath": "C:\\Users\\kirkov\\.nuget\\packages\\",
+      "outputPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriksApp.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\pavtov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\kirkov\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13749,14 +14507,40 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "D:\\Projects\\SiteTriks-CMS\\SiteTriksApp\\nupkgs": {},
-        "http://192.168.100.35/nuget/SiteriksDev/": {},
         "http://nuget.sitefinity.com/nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.BlogModule\\SiteTriks.BlogModule.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.BlogModule\\SiteTriks.BlogModule.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.DocumentationModule\\SiteTriks.DocumentationModule.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.DocumentationModule\\SiteTriks.DocumentationModule.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.ForumModule\\SiteTriks.ForumModule.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.ForumModule\\SiteTriks.ForumModule.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.MarketingEmailModule\\SiteTriks.MarketingEmailModule.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.MarketingEmailModule\\SiteTriks.MarketingEmailModule.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.RssFeedModule\\SiteTriks.RssFeedModule.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.RssFeedModule\\SiteTriks.RssFeedModule.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.SiteMapModule\\SiteTriks.SiteMapModule.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.SiteMapModule\\SiteTriks.SiteMapModule.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.SiteSync\\SiteTriks.SiteSync.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks.SiteSync\\SiteTriks.SiteSync.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks\\SiteTriks.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksApp\\SiteTriks\\SiteTriks.csproj"
+            },
+            "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksLicenseManager\\LicenseBuilder\\LicenseBuilder.csproj": {
+              "projectPath": "E:\\Kaloyan\\Core\\SiteTriksCurrent\\SiteTriks\\SiteTriksLicenseManager\\LicenseBuilder\\LicenseBuilder.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -13819,5 +14603,17 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PayPalCoreSDK 1.7.1' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PayPalCoreSDK",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.0"
+      ]
+    }
+  ]
 }

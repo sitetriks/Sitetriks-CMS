@@ -125,11 +125,53 @@ function showChoice(ev) {
     uploadedFiles = [];
     $('#files-container').html('');
     $('#files-list').html('');
+
+    $('#image-libs').html('');
+
+    let selected = $('#' + $('#upload-modal').attr('data-id')).val();
+
+    let $option = $('<option></option>', {
+        value: 'all',
+        text: 'All Images'
+    });
+    $option.appendTo('#image-libs')
+
+    Data.getJson({ url: '/sitetriks/libraries/GetAllImageLibraries' }).then(function (res) {
+        if (res.success) {
+            console.log(res)
+            for (let i = 0; i < res.libraries.length; i++) {
+                let $option = $('<option></option>', {
+                    value: res.libraries[i].id,
+                    text: res.libraries[i].name
+                });
+
+                if ((selected && selected === res.libraries[i].id)) {
+                    $option.attr('selected', true);
+                }
+
+                $option.appendTo('#image-libs')
+            }
+        }
+    }, Data.defaultError);    
+
     loadImages();
     $('#choice-file').show();
     $('#upload-file').hide();
     cleanUp();
 }
+
+$('body').on('change', '#image-libs', function () {
+    $('#files-container').html('');
+    $('#files-list').html('');
+
+    var id = $('#image-libs option:selected').val();
+
+    if (id == 'all') {
+        loadImages();
+    } else {
+        loadImages(id);
+    }
+});
 
 $('body').on('click', '#btn-show-upload', function (e) {
     $('#page').text('0');
@@ -165,6 +207,7 @@ $('body').on('change', '#gallery-source', function (e) {
 
             Data.getJson({ url: '/sitetriks/libraries/GetAllImageLibraries' }).then(function (res) {
                 if (res.success) {
+                    console.log(res)
                     for (let i = 0; i < res.libraries.length; i++) {
                         let $option = $('<option></option>', {
                             value: res.libraries[i].id,
@@ -468,11 +511,11 @@ $(document).on('click', '.news-listed-image-delete', function () {
     $trigger.parent().remove();
 });
 
-function loadImages() {
+function loadImages(id = '') {
     let page = $('#page').text();
     $('#files-list').html('<p>Loading...</p>');
 
-    Data.getJson({ url: '/sitetriks/files/getimages?page=' + page })
+    Data.getJson({ url: '/sitetriks/files/getimages?page=' + page + '&libraryId=' + id })
         .then(function (res) {
             if (res.success) {
                 $('#files-list').html('');
