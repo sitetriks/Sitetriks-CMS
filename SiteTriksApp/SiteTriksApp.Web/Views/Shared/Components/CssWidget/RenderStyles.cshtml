@@ -1,5 +1,12 @@
-﻿@model string
+﻿@model SiteTriks.Models.CoreWidgets.FireResourceWidgetViewModel
 
-<style data-style="head-bot">
-    @Html.Raw(Model)
-</style>
+@if (Model.IsRaw)
+{
+    <style data-style="head-bot">
+        @Html.Raw(Model)
+    </style>
+}
+else
+{
+    <link data-style="head-bot" rel="stylesheet" type="text/css" href="@Model.Url">
+}

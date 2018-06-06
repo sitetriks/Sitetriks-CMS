@@ -152,13 +152,38 @@ var ModuleBuilder = (function () {
                     lineNumbers: true,
                     mode: 'css'
                 });
-                if (editor) {
-                    editor.setValue(element);
+
+                let model = JSON.parse(element);
+
+                if (model.IsRaw) {
+                    if (editor) {
+                        editor.setValue(model.RawCode);
+                    }
+                }
+                else {
+                    $("#css-url").val(model.Url);
                 }
             },
             save: function () {
-                if (editor) {
-                    return editor.getValue();
+                let $resourceUrl = $("#css-url");
+
+                if ($resourceUrl.val() != "") {
+                    let model = {
+                        IsRaw: false,
+                        Url: $resourceUrl.val()
+                    };
+
+                    return JSON.stringify(model);
+                }
+                else {
+                    if (editor) {
+                        let model = {
+                            IsRaw: true,
+                            RawCode: editor.getValue()
+                        };
+
+                        return JSON.stringify(model);
+                    }
                 }
 
                 return '';
@@ -177,13 +202,38 @@ var ModuleBuilder = (function () {
                     lineNumbers: true,
                     mode: 'javascript'
                 });
-                if (editor) {
-                    editor.setValue(element);
+
+                let model = JSON.parse(element);
+
+                if (model.IsRaw) {
+                    if (editor) {
+                        editor.setValue(model.RawCode);
+                    }
+                }
+                else {
+                    $("#javascript-url").val(model.Url);
                 }
             },
             save: function () {
-                if (editor) {
-                    return editor.getValue();
+                let $resourceUrl = $("#javascript-url");
+
+                if ($resourceUrl.val() != "") {
+                    let model = {
+                        IsRaw: false,
+                        Url: $resourceUrl.val()
+                    };
+
+                    return JSON.stringify(model);
+                }
+                else {
+                    if (editor) {
+                        let model = {
+                            IsRaw: true,
+                            RawCode: editor.getValue()
+                        };
+
+                        return JSON.stringify(model);
+                    }
                 }
             }
         }        

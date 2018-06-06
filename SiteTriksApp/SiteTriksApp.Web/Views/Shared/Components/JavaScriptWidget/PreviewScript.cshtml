@@ -1,5 +1,12 @@
-﻿@model string
+﻿@model SiteTriks.Models.CoreWidgets.FireResourceWidgetViewModel
 
 <div>
-    @Model
+    @if (Model.IsRaw)
+    {
+        @Model
+    }
+    else
+    {
+        <b>External javascript resource from @Model.Url</b>
+    }
 </div>

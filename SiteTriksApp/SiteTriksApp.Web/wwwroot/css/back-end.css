@@ -1388,3 +1388,11 @@ a.profile-link {
     }
 }
 
+#location{
+    width: 700px;
+}
+
+#custom-location-info{
+    color: deepskyblue;
+}
+
