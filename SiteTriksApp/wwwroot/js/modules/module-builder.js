@@ -1,7 +1,7 @@
-'use strict';
+﻿
 
-var ModuleBuilder = function () {
-    var mCache = {};
+var ModuleBuilder = (function () {
+    let mCache = {};
 
     /**
      * Create scroll control.
@@ -11,8 +11,8 @@ var ModuleBuilder = function () {
      * @param {{styles: Map<string, string>}} config
      */
     function createScroll(wrapperId, scrollViewClass, innerContentClass, config) {
-        var $element = $(wrapperId);
-        var scroll = scrollControl($element, scrollViewClass, innerContentClass, config);
+        let $element = $(wrapperId);
+        let scroll = scrollControl($element, scrollViewClass, innerContentClass, config);
 
         $element.data('scroll-bar', scroll);
         mCache[wrapperId] = scroll;
@@ -21,7 +21,7 @@ var ModuleBuilder = function () {
     }
 
     function createWidgets(addWidgetContainerId, customWidgets) {
-        var initFunctions = getSiteTriksWidgets();
+        let initFunctions = getSiteTriksWidgets();
 
         if (!customWidgets) {
             customWidgets = {};
@@ -29,20 +29,20 @@ var ModuleBuilder = function () {
 
         for (var key in customWidgets) {
             if (initFunctions[key]) {
-                console.warn('Widget "' + key + '" already exists and will not be duplicated!');
+                console.warn(`Widget "${key}" already exists and will not be duplicated!`);
             } else {
                 initFunctions[key] = customWidgets[key];
             }
         }
 
-        var widgets = widgetsModule($(addWidgetContainerId), initFunctions);
+        let widgets = widgetsModule($(addWidgetContainerId), initFunctions);
         mCache[addWidgetContainerId] = widgets;
 
         return widgets;
     }
 
     function initializeLayout(wrapperSelector, layout, resolutionsSelector, optionsSelector, resolutionValidation) {
-        var $wrapper = $(wrapperSelector);
+        let $wrapper = $(wrapperSelector);
 
         initLayout($wrapper, layout, $(resolutionsSelector), $(optionsSelector), resolutionValidation);
 
@@ -56,7 +56,7 @@ var ModuleBuilder = function () {
 
         var editor;
 
-        var initFunctions = {};
+        let initFunctions = {};
 
         function newsTitlesInputKeyUp(ev, selectId) {
             var val = $(ev.target).val();
@@ -68,31 +68,33 @@ var ModuleBuilder = function () {
             Data.getJson({ url: '/sitetriks/news/getallnewstitles?count=10&text=' + val }).then(function (response) {
                 $("#" + selectId).autocomplete({
                     source: response.suggestions,
-                    select: function select(event, ui) {
+                    select: function (event, ui) {
                         $("#" + selectId).val(ui.item.label);
                         $("#" + selectId).attr("data-id", ui.item.id);
 
                         return false;
                     }
                 }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                    return $("<li>").append("<a data-id=" + item.id + ">" + item.label + "</a>").appendTo(ul);
+                    return $("<li>")
+                        .append("<a data-id=" + item.id + ">" + item.label + "</a>")
+                        .appendTo(ul);
                 };
-            });
+            })
         }
 
         function appendNewsTitles(selectId) {
             $('#' + selectId).unbind('keyup');
             $("#" + selectId).keyup(function (ev) {
-                newsTitlesInputKeyUp(ev, selectId);
+                newsTitlesInputKeyUp(ev, selectId)
             });
         }
 
         initFunctions['html'] = {
-            init: function init() {
-                var $container = $("#html-widget-holder");
-                var $list = $("#html-options-list");
+            init: function () {
+                let $container = $("#html-widget-holder");
+                let $list = $("#html-options-list");
 
-                var $textarea = $("<textarea></textarea>", {
+                let $textarea = $("<textarea></textarea>", {
                     id: "add-html-content"
                 });
 
@@ -103,7 +105,7 @@ var ModuleBuilder = function () {
                 SharedBlocks.addSetup($list, $container, "shared-block-titles");
                 SharedBlocks.addShare($container, "add-html-content");
             },
-            show: function show(element) {
+            show: function (element) {
                 var $container = $("#html-widget-holder");
                 var $list = $("#html-options-list");
 
@@ -125,75 +127,126 @@ var ModuleBuilder = function () {
                     $("#html-options-list").val("new").change();
                 }
             },
-            save: function save() {
-                var state = $("#html-options-list").find(":selected").val();
+            save: function () {
+                let state = $("#html-options-list").find(":selected").val();
                 var id = $("#shared-block-id").val();
 
                 if (state == "shared") {
                     return $("#shared-block-id").val();
-                } else {
+                }
+                else {
                     return tinymce.get('add-html-content').getContent();
                 }
             }
-        };
+        }
 
         initFunctions['css'] = {
-            init: function init() {
+            init: function () {
                 editor = CodeMirror.fromTextArea(document.getElementById('css-rules'), {
                     lineNumbers: true,
                     mode: 'css'
                 });
             },
-            show: function show(element) {
+            show: function (element) {
                 editor = CodeMirror.fromTextArea(document.getElementById('css-rules'), {
                     lineNumbers: true,
                     mode: 'css'
                 });
-                if (editor) {
-                    editor.setValue(element);
+
+                let model = JSON.parse(element);
+
+                if (model.IsRaw) {
+                    if (editor) {
+                        editor.setValue(model.RawCode);
+                    }
+                }
+                else {
+                    $("#css-url").val(model.Url);
                 }
             },
-            save: function save() {
-                if (editor) {
-                    return editor.getValue();
+            save: function () {
+                let $resourceUrl = $("#css-url");
+
+                if ($resourceUrl.val() != "") {
+                    let model = {
+                        IsRaw: false,
+                        Url: $resourceUrl.val()
+                    };
+
+                    return JSON.stringify(model);
+                }
+                else {
+                    if (editor) {
+                        let model = {
+                            IsRaw: true,
+                            RawCode: editor.getValue()
+                        };
+
+                        return JSON.stringify(model);
+                    }
                 }
 
                 return '';
             }
-        };
+        }
 
         initFunctions['javascript'] = {
-            init: function init() {
+            init: function () {
                 editor = CodeMirror.fromTextArea(document.getElementById('js-scripts'), {
                     lineNumbers: true,
                     mode: 'javascript'
                 });
             },
-            show: function show(element) {
+            show: function (element) {
                 editor = CodeMirror.fromTextArea(document.getElementById('js-scripts'), {
                     lineNumbers: true,
                     mode: 'javascript'
                 });
-                if (editor) {
-                    editor.setValue(element);
+
+                let model = JSON.parse(element);
+
+                if (model.IsRaw) {
+                    if (editor) {
+                        editor.setValue(model.RawCode);
+                    }
+                }
+                else {
+                    $("#javascript-url").val(model.Url);
                 }
             },
-            save: function save() {
-                if (editor) {
-                    return editor.getValue();
+            save: function () {
+                let $resourceUrl = $("#javascript-url");
+
+                if ($resourceUrl.val() != "") {
+                    let model = {
+                        IsRaw: false,
+                        Url: $resourceUrl.val()
+                    };
+
+                    return JSON.stringify(model);
+                }
+                else {
+                    if (editor) {
+                        let model = {
+                            IsRaw: true,
+                            RawCode: editor.getValue()
+                        };
+
+                        return JSON.stringify(model);
+                    }
                 }
             }
-        };
+        }        
 
         initFunctions['image'] = {
-            init: function init() {
+            init: function () {
                 loadUploadTemplate(false, 'main-image', 'image');
             },
-            show: function show(element) {
+            show: function (element) {
                 loadUploadTemplate(false, 'main-image', 'image');
             },
-            save: function save() {
-                var id = $('#image').val();
+            save: function () {
+                let id = $('#image').val();
                 if (id) {
                     return JSON.stringify({
                         id: id,
@@ -204,10 +257,10 @@ var ModuleBuilder = function () {
 
                 return '';
             }
-        };
+        }
 
         initFunctions['gallery'] = {
-            init: function init() {
+            init: function () {
                 loadUploadTemplate(true, 'images', 'image').then(function (res) {
                     $('#gallery-source').trigger('change');
 
@@ -218,23 +271,23 @@ var ModuleBuilder = function () {
                             message: 'Library was selected!',
                             status: 'success'
                         });
-                    });
+                    })
                 });
             },
-            show: function show(element) {
-                var galleryConfig = JSON.parse(element);
-                var fieldId = 'image';
-                var $field = $('#' + fieldId);
+            show: function (element) {
+                let galleryConfig = JSON.parse(element);
+                let fieldId = 'image';
+                let $field = $('#' + fieldId);
                 $field.val(galleryConfig.ids);
 
                 $('#input-width').val(galleryConfig.width);
                 $('#input-height').val(galleryConfig.height);
-                $('#gallery-source').val(galleryConfig.type);
+                $('#gallery-source').val(galleryConfig.type)
 
                 if (galleryConfig.type === 'images') {
-                    var imagesLinksIds = galleryConfig.ids.split(';');
+                    let imagesLinksIds = galleryConfig.ids.split(';');
 
-                    for (var i = 0; i < imagesLinksIds.length; i++) {
+                    for (let i = 0; i < imagesLinksIds.length; i++) {
                         if (imagesLinksIds[i] != "") {
                             createImageView(fieldId, imagesLinksIds[i]);
                         }
@@ -243,9 +296,9 @@ var ModuleBuilder = function () {
 
                 this.init();
             },
-            save: function save() {
-                var currentType = $('#gallery-source').val();
-                var ids = $('#image').val();
+            save: function () {
+                let currentType = $('#gallery-source').val();
+                let ids = $('#image').val();
 
                 if (currentType == 'images' && ids.indexOf(';') !== 0) {
                     ids = ids.substring(ids.indexOf(';'), ids.length);
@@ -271,31 +324,25 @@ var ModuleBuilder = function () {
                     type: currentType
                 });
             }
-        };
+        }
 
         initFunctions['layoutBuilder'] = {
-            init: function init() {
-                var l = [];
-                ModuleBuilder.initializeLayout('#layout-widget-wrapper', [], '.resolution-widget', '#layout-widget-options', function () {
-                    return true;
-                });
+            init: function () {
+                let l = [];
+                ModuleBuilder.initializeLayout('#layout-widget-wrapper', [], '.resolution-widget', '#layout-widget-options', function () { return true });
             },
-            show: function show(element) {
-                var el = JSON.parse(element);
-                ModuleBuilder.initializeLayout('#layout-widget-wrapper', el.layoutRows, '.resolutions-widget', '#layout-widget-options', function () {
-                    return true;
-                });
+            show: function (element) {
+                let el = JSON.parse(element);
+                ModuleBuilder.initializeLayout('#layout-widget-wrapper', el.layoutRows, '.resolutions-widget', '#layout-widget-options', function () { return true });
             },
-            save: function save() {
-                var css = '';
+            save: function () {
+                let css = '';
 
-                var pageUrl = url;
+                let pageUrl = url;
 
-                var layout = ModuleBuilder.getInstance('#layout-widget-wrapper').map(function (r) {
-                    return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass };
-                });
+                let layout = ModuleBuilder.getInstance('#layout-widget-wrapper').map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
 
-                var model = {
+                let model = {
                     PageUrl: pageUrl,
                     css: css,
                     layoutRows: layout
@@ -303,10 +350,10 @@ var ModuleBuilder = function () {
 
                 return JSON.stringify(model);
             }
-        };
+        }
 
         initFunctions['navigation'] = {
-            init: function init() {
+            init: function () {
                 Data.getJson({ url: '/sitetriks/Display/GetAllParentPages' }).then(function (data) {
                     var pages = JSON.parse(data);
 
@@ -324,26 +371,27 @@ var ModuleBuilder = function () {
                         if (!checked) {
                             var el = $("#pages-order").children("li[data-identifier='" + opselected + "']").first();
                             el.remove();
-                        } else {
-                            var $li = $('<li></li>', {
+                        }
+                        else {
+                            let $li = $('<li></li>', {
                                 class: 'ui-state-default',
                                 'data-identifier': opselected
                             });
-                            var $span = $('<span></span>', {
+                            let $span = $('<span></span>', {
                                 class: 'ui-icon ui-icon-arrowthick-2-n-s'
                             });
 
-                            $li.append($span).append(pages.find(function (p) {
-                                return p.Id == opselected;
-                            }).Title).appendTo('#pages-order');
+                            $li.append($span)
+                                .append(pages.find(p => p.Id == opselected).Title)
+                                .appendTo('#pages-order');
                         }
                     });
 
                     $("#pages-order").sortable({ opacity: 0.5 });
                     $("#pages-order").disableSelection();
-                });
+                })
             },
-            show: function show(element) {
+            show: function (element) {
                 Data.getJson({ url: '/sitetriks/Display/GetAllParentPages' }).then(function (data) {
                     var pages = JSON.parse(data);
 
@@ -401,7 +449,7 @@ var ModuleBuilder = function () {
                     $("#pages-order").disableSelection();
                 });
             },
-            save: function save() {
+            save: function () {
                 var ordered = [];
 
                 $("#pages-order").children().each(function () {
@@ -412,30 +460,32 @@ var ModuleBuilder = function () {
 
                 return JSON.stringify({ pageIds: ordered, maxDepth: depthLevel });
             }
-        };
+        }
 
         initFunctions['detailedNews'] = {
-            init: function init() {
+            init: function () {
                 appendNewsTitles('news-list');
             },
-            show: function show(element) {
+            show: function (element) {
                 appendNewsTitles('news-list');
             },
-            save: function save() {
+            save: function () {
                 return $('#news-list').attr('data-id') || null;
             }
-        };
+        }
 
         initFunctions['subscription'] = {
-            init: function init() {},
-            show: function show(element) {},
-            save: function save() {}
-        };
+            init: function () {
+
+            },
+            show: function (element) { },
+            save: function () { }
+        }
 
         initFunctions['newsCarousel'] = {
-            init: function init() {},
-            show: function show(element) {
-                var elements = element.split('/');
+            init: function () { },
+            show: function (element) {
+                let elements = element.split('/');
                 $('#order-by-date').prop('checked', elements[0] === 'true');
                 $('input[type="radio"][value="' + elements[1] + '"]').prop('checked', true);
                 if ($.isNumeric(elements[2])) {
@@ -445,13 +495,13 @@ var ModuleBuilder = function () {
                     $('#news-type').val(elements[2]);
                 }
             },
-            save: function save() {
-                var template = $('input[type="radio"][name="template"]:checked').val() || 'all';
-                var isAscending = $('#order-by-date').prop('checked');
-                var element = '';
+            save: function () {
+                let template = $('input[type="radio"][name="template"]:checked').val() || 'all';
+                let isAscending = $('#order-by-date').prop('checked');
+                let element = '';
 
                 element = isAscending + '/' + template;
-                var openType = $('#news-type').val();
+                let openType = $('#news-type').val();
 
                 if (template === 'latest') {
                     // 3 news if it is not specified
@@ -462,18 +512,18 @@ var ModuleBuilder = function () {
 
                 return element;
             }
-        };
+        }
 
         initFunctions['allNews'] = {
-            init: function init() {},
-            show: function show() {},
-            save: function save() {}
-        };
+            init: function () { },
+            show: function () { },
+            save: function () { }
+        }
 
         initFunctions['video'] = {
-            init: function init() {},
-            show: function show(element) {
-                var elements = element.split('/');
+            init: function () { },
+            show: function (element) {
+                let elements = element.split('/');
                 $('#video-source').val(elements[0]);
                 if (elements[0] === 'youtube') {
                     $('#video-name').val('https://www.youtube.com/watch?v=' + elements[1]);
@@ -481,9 +531,9 @@ var ModuleBuilder = function () {
                     $('#video-name').val(elements[1]);
                 }
             },
-            save: function save() {
-                var source = $('#video-source').val();
-                var name = '';
+            save: function () {
+                let source = $('#video-source').val();
+                let name = '';
                 switch (source) {
                     case 'youtube':
                         name = parseYouTubeUrl($('#video-name').val());
@@ -504,18 +554,18 @@ var ModuleBuilder = function () {
 
                 return '' + source + '/' + name;
             }
-        };
+        }
 
         initFunctions['presentation'] = {
-            init: function init() {},
-            show: function show(element) {
-                var elements = element.split('/');
+            init: function () { },
+            show: function (element) {
+                let elements = element.split('/');
                 $('#presentation-type').val(elements[0]);
                 $('#presentation-url').val(elements[1]);
             },
-            save: function save() {
-                var type = $('#presentation-type').val();
-                var url = $('#presentation-url').val();
+            save: function () {
+                let type = $('#presentation-type').val();
+                let url = $('#presentation-url').val();
 
                 if (url == '') {
                     return null;
@@ -527,41 +577,41 @@ var ModuleBuilder = function () {
 
                 return null;
             }
-        };
+        }
 
         initFunctions['dynamic'] = {
-            init: function init() {
+            init: function () {
                 initDynamic();
             },
-            show: function show(element) {
-                var elements = element.split('/');
+            show: function (element) {
+                let elements = element.split('/');
 
-                var selectedClass = elements[0];
-                var selectedType = elements[1];
-                var selectedTemplate = elements[2];
+                let selectedClass = elements[0];
+                let selectedType = elements[1];
+                let selectedTemplate = elements[2];
 
                 initDynamic(selectedClass, selectedType, selectedTemplate);
             },
-            save: function save() {
-                var klass = $('#dropdown-classes').val();
+            save: function () {
+                let klass = $('#dropdown-classes').val();
                 if (!klass) {
                     return null;
                 }
 
-                var t = $('#dropdown-types').val() || '';
-                var templ = $('#dropdown-templates').val() || '';
+                let t = $('#dropdown-types').val() || '';
+                let templ = $('#dropdown-templates').val() || '';
 
-                return klass + '/' + t + '/' + templ;
+                return `${klass}/${t}/${templ}`;
             }
-        };
+        }
 
         function initDynamic(selectedClass, selectedType, selectedTemplate) {
-            var model = void 0;
+            let model;
 
             Data.getJson({ url: '/sitetriks/widgets/widgettemplates' }).then(function (res) {
                 model = res.model;
 
-                var $classes = $(document.createElement('select')).attr('id', 'dropdown-classes');
+                let $classes = $(document.createElement('select')).attr('id', 'dropdown-classes');
 
                 $('<option></option>', {
                     text: '-- Select Class --',
@@ -576,7 +626,7 @@ var ModuleBuilder = function () {
                     }).appendTo($classes);
                 }
 
-                $classes.appendTo('#dynamic-container');
+                $classes.appendTo('#dynamic-container')
                 $classes.trigger('change');
                 selectedClass = '';
             }, Data.defaultError);
@@ -584,13 +634,13 @@ var ModuleBuilder = function () {
             $('#dynamic-container').on('change', '#dropdown-classes', function (ev) {
                 $('#dropdown-types').remove();
                 $('#dropdown-templates').remove();
-                var klass = $('#dropdown-classes').val();
+                let klass = $('#dropdown-classes').val();
 
                 if (!klass || klass === '') {
                     return;
                 }
 
-                var $types = $(document.createElement('select')).attr('id', 'dropdown-types');
+                let $types = $(document.createElement('select')).attr('id', 'dropdown-types');
 
                 $('<option></option>', {
                     text: '-- Select Type --',
@@ -612,44 +662,26 @@ var ModuleBuilder = function () {
 
             $('#dynamic-container').on('change', '#dropdown-types', function (ev) {
                 $('#dropdown-templates').remove();
-                var klass = $('#dropdown-classes').val();
-                var type = $('#dropdown-types').val();
+                let klass = $('#dropdown-classes').val();
+                let type = $('#dropdown-types').val();
 
                 if (!type || type === '' || !klass || klass === '') {
                     return;
                 }
 
-                var $templates = $(document.createElement('select')).attr('id', 'dropdown-templates');
+                let $templates = $(document.createElement('select')).attr('id', 'dropdown-templates');
 
-                $(document.createElement('option')).val('').text('-- Select Template --').appendTo($templates);
+                $(document.createElement('option'))
+                    .val('')
+                    .text('-- Select Template --')
+                    .appendTo($templates);
 
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
-
-                try {
-                    for (var _iterator = model[klass][type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var template = _step.value;
-
-                        $('<option></option>', {
-                            text: template,
-                            value: template,
-                            selected: selectedTemplate === template
-                        }).appendTo($templates);
-                    }
-                } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
-                        }
-                    } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
-                        }
-                    }
+                for (var template of model[klass][type]) {
+                    $('<option></option>', {
+                        text: template,
+                        value: template,
+                        selected: selectedTemplate === template
+                    }).appendTo($templates);
                 }
 
                 $templates.appendTo('#dynamic-container');
@@ -658,16 +690,16 @@ var ModuleBuilder = function () {
         }
 
         initFunctions['market'] = {
-            init: function init() {},
-            show: function show(element) {},
-            save: function save() {}
-        };
+            init: function () { },
+            show: function (element) { },
+            save: function () { }
+        }
 
         initFunctions['userOrders'] = {
-            init: function init() {},
-            show: function show(element) {},
-            save: function save() {}
-        };
+            init: function () { },
+            show: function (element) { },
+            save: function () { }
+        }
 
         return initFunctions;
     }
@@ -698,9 +730,9 @@ var ModuleBuilder = function () {
     }
 
     return {
-        createScroll: createScroll,
-        createWidgets: createWidgets,
-        getInstance: getInstance,
-        initializeLayout: initializeLayout
-    };
-}();
+        createScroll,
+        createWidgets,
+        getInstance,
+        initializeLayout
+    }
+}())

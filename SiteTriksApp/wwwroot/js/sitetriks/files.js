@@ -1,6 +1,4 @@
-'use strict';
-
-function initFilesEdit(expirationDate, libraryAllowed) {
+﻿function initFilesEdit(expirationDate, libraryAllowed) {
     var $notifier = '#file-edit-notfier';
 
     $('#date-picker').datetimepicker({
@@ -9,7 +7,7 @@ function initFilesEdit(expirationDate, libraryAllowed) {
 
     $('.date-picker-group span').on('click', function () {
         $('#date-picker').focus();
-    });
+    })
 
     var libraryAllowed = replaceAll(replaceAll(libraryAllowed, '*', ''), ',', '|');
 
@@ -45,9 +43,7 @@ function initFilesEdit(expirationDate, libraryAllowed) {
         Loader.show('#fff');
         var flag = false;
 
-        if (!Validator.validate($('#title'), 'Name must be atleast 3 characters!', function (val) {
-            return Validator.hasMinimumLength(val.trim(), 3);
-        })) {
+        if (!Validator.validate($('#title'), 'Name must be atleast 3 characters!', function (val) { return Validator.hasMinimumLength(val.trim(), 3); })) {
             flag = true;
         }
 
@@ -64,8 +60,9 @@ function initFilesEdit(expirationDate, libraryAllowed) {
                         status: 'danger'
                     });
                 }
-            });
-        } else {
+            })
+        }
+        else {
             Loader.hide();
         }
 

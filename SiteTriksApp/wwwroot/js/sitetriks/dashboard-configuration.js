@@ -1,6 +1,4 @@
-"use strict";
-
-function initConfiguration() {
+﻿function initConfiguration() {
     $(document).ready(function () {
         $("#save-dashboard-config").on('click', function () {
             var dashboardWidgetNames = [];
@@ -13,10 +11,12 @@ function initConfiguration() {
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ names: dashboardWidgetNames }),
-                success: function success(data) {
+                success: function (data) {
                     window.location.replace('/sitetriks');
                 },
-                error: function error() {}
+                error: function () {
+
+                }
             });
         });
     });

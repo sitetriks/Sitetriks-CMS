@@ -1,8 +1,6 @@
-'use strict';
-
-function createECommerce() {
+﻿function createECommerce() {
     $('#create-ecommerce-item-form').on('submit', function (e) {
-        var flag = true;
+        let flag = true;
 
         if (!Validator.validate($('#price'), 'Price is empty or is not a valid number', function (val) {
             return Validator.isNumber(val);
@@ -20,12 +18,12 @@ function createECommerce() {
 
             e.preventDefault();
         }
-    });
+    })
 }
 
 function editEcommerce() {
     $('#edit-ecommerce-item-form').on('submit', function (e) {
-        var flag = true;
+        let flag = true;
 
         if (!Validator.validate($('#price'), 'Price is empty or is not a valid number', function (val) {
             return Validator.isNumber(val);
@@ -42,5 +40,5 @@ function editEcommerce() {
         if (!flag) {
             e.preventDefault();
         }
-    });
+    })
 }

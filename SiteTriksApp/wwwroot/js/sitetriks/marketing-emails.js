@@ -1,8 +1,6 @@
-'use strict';
-
-function editSubscribeInfo() {
+﻿function editSubscribeInfo() {
     $('input[type=submit]').on('click', function (e) {
-        var flag = true;
+        let flag = true;
 
         if (!Validator.validate($('#email'), 'Must enter valid email', function (val) {
             return Validator.validateEmail(val);
@@ -27,7 +25,7 @@ function sendEmails() {
 
         e.preventDefault();
 
-        var flag = true;
+        let flag = true;
 
         if (!Validator.validate($('#sender'), 'Must enter valid email', function (val) {
             return Validator.validateEmail(val);
@@ -47,12 +45,12 @@ function sendEmails() {
                 url: '/sitetriks/marketingEmails/sendEmails',
                 contentType: 'application/json',
                 data: emailData,
-                success: function success(data, status) {
+                success: function (data, status) {
                     Notifier.createAlert({ containerId: '#alert', message: 'Email was send successfully', success: 'success' });
                     window.location = '/sitetriks/marketingemails/sendemails';
                 },
-                error: function error(err) {
-                    console.log(err);
+                error: function (err) {
+                    console.log(err)
                 }
             });
         }

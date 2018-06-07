@@ -49,7 +49,7 @@
   "Installed": [
     {
       "Name": "SiteTriks.BlogModule",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Blog",
       "Dependencies": [
         "SiteTriks.SiteSync",
@@ -58,37 +58,37 @@
     },
     {
       "Name": "SiteTriks.SiteSync",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Site Sync",
       "Dependencies": []
     },
     {
       "Name": "SiteTriks.ForumModule",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Forum",
       "Dependencies": []
     },
     {
       "Name": "SiteTriks.RssFeedModule",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Rss Feed",
       "Dependencies": []
     },
     {
       "Name": "SiteTriks.MarketingEmailModule",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Marketing Emails",
       "Dependencies": []
     },
     {
       "Name": "SiteTriks.SiteMapModule",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Site Map",
       "Dependencies": []
     },
     {
       "Name": "SiteTriks.DocumentationModule",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Documentation",
       "Dependencies": []
     }

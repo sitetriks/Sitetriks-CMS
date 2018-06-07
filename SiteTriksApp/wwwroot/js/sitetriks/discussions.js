@@ -1,6 +1,4 @@
-'use strict';
-
-function createDiscussion() {
+﻿function createDiscussion() {
     textEditor.initWithoutImages('#content', 500, 300);
 
     $('#create-discussion').on('submit', function (evt) {

@@ -149,13 +149,36 @@ var ModuleBuilder = function () {
                     lineNumbers: true,
                     mode: 'css'
                 });
-                if (editor) {
-                    editor.setValue(element);
+
+                var model = JSON.parse(element);
+
+                if (model.IsRaw) {
+                    if (editor) {
+                        editor.setValue(model.RawCode);
+                    }
+                } else {
+                    $("#css-url").val(model.Url);
                 }
             },
             save: function save() {
-                if (editor) {
-                    return editor.getValue();
+                var $resourceUrl = $("#css-url");
+
+                if ($resourceUrl.val() != "") {
+                    var model = {
+                        IsRaw: false,
+                        Url: $resourceUrl.val()
+                    };
+
+                    return JSON.stringify(model);
+                } else {
+                    if (editor) {
+                        var _model = {
+                            IsRaw: true,
+                            RawCode: editor.getValue()
+                        };
+
+                        return JSON.stringify(_model);
+                    }
                 }
 
                 return '';
@@ -174,13 +197,36 @@ var ModuleBuilder = function () {
                     lineNumbers: true,
                     mode: 'javascript'
                 });
-                if (editor) {
-                    editor.setValue(element);
+
+                var model = JSON.parse(element);
+
+                if (model.IsRaw) {
+                    if (editor) {
+                        editor.setValue(model.RawCode);
+                    }
+                } else {
+                    $("#javascript-url").val(model.Url);
                 }
             },
             save: function save() {
-                if (editor) {
-                    return editor.getValue();
+                var $resourceUrl = $("#javascript-url");
+
+                if ($resourceUrl.val() != "") {
+                    var model = {
+                        IsRaw: false,
+                        Url: $resourceUrl.val()
+                    };
+
+                    return JSON.stringify(model);
+                } else {
+                    if (editor) {
+                        var _model2 = {
+                            IsRaw: true,
+                            RawCode: editor.getValue()
+                        };
+
+                        return JSON.stringify(_model2);
+                    }
                 }
             }
         };

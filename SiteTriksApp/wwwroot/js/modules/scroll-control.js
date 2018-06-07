@@ -1,43 +1,47 @@
-'use strict';
-
-/**
-* Create scroll control.
-* @param {JQuery} $scrollView
-* @param {string} scrollContent
-* @param {string} innerContent
-* @param {{styles: Map<string, string>}} config
-*/
+﻿/**
+ * Create scroll control.
+ * @param {JQuery} $scrollView
+ * @param {string} scrollContent
+ * @param {string} innerContent
+ * @param {{styles: Map<string, string>}} config
+ */
 
 function scrollControl($scrollView, scrollContent, innerContent, config) {
-    var $scrollContent = $scrollView.find(scrollContent);
-    var forbidenStyles = ['top', 'bottom', 'left', 'right', 'width', 'height', 'position'];
+    let $scrollContent = $scrollView.find(scrollContent);
+    let forbidenStyles = ['top', 'bottom', 'left', 'right', 'width', 'height', 'position'];
 
     // hide browser scrollbar and setup
-    $scrollView.css('overflow', 'hidden').css('position', 'relative');
-    $scrollContent.css('position', 'absolute').css('top', 0).css('bottom', 0).css('left', 0).css('right', -17).css('overflow-y', 'scroll');
+    $scrollView.css('overflow', 'hidden')
+        .css('position', 'relative');
+    $scrollContent.css('position', 'absolute')
+        .css('top', 0)
+        .css('bottom', 0)
+        .css('left', 0)
+        .css('right', -17)
+        .css('overflow-y', 'scroll');
 
     $scrollContent.on('scroll', function (ev) {
-        var $trigger = $(this);
+        let $trigger = $(this);
         // return if called while draging ($.scrollTop() uses the same event)
         if ($trigger.attr('data-drag')) {
             $trigger.removeAttr('data-drag');
             return;
         }
 
-        var contentHeight = $trigger.find(innerContent).height();
-        var $scrollbar = $scrollView.find('.st-scrollbar');
+        let contentHeight = $trigger.find(innerContent).height();
+        let $scrollbar = $scrollView.find('.st-scrollbar');
 
-        $scrollbar.css('top', $trigger.scrollTop() / contentHeight * 100 + '%');
+        $scrollbar.css('top', ($trigger.scrollTop() / contentHeight) * 100 + '%');
     });
 
     // build or update scrollbar
     function buildScrollbar(newStyles) {
-        var selectorHeight = $scrollContent.height();
-        var contentHeight = $scrollContent.find(innerContent).height();
-        var scrollHeight = selectorHeight / contentHeight * 100;
+        let selectorHeight = $scrollContent.height();
+        let contentHeight = $scrollContent.find(innerContent).height();
+        let scrollHeight = (selectorHeight / contentHeight) * 100;
 
         // Update scrollbar if already exists.
-        var $scroll = $scrollView.find('.st-scrollbar');
+        let $scroll = $scrollView.find('.st-scrollbar');
         if ($scroll.length > 0) {
             if (contentHeight < selectorHeight) {
                 // hide scrollbar if content is small enough
@@ -58,7 +62,10 @@ function scrollControl($scrollView, scrollContent, innerContent, config) {
         // Build scrollbar, styles should be inline
         $scroll = $('<div></div>', {
             class: 'st-scrollbar'
-        }).css('background-color', '#000').css('top', 0).css('position', 'sticky').css('opacity', 0);
+        }).css('background-color', '#000')
+            .css('top', 0)
+            .css('position', 'sticky')
+            .css('opacity', 0);
 
         if (config && config.styles) {
             updateStyles($scroll, config.styles);
@@ -73,7 +80,7 @@ function scrollControl($scrollView, scrollContent, innerContent, config) {
         }
 
         // Build scroll wrapper and attach needed events.
-        var $wrapper = $('<div></div>', {
+        let $wrapper = $('<div></div>', {
             width: 20,
             height: '100%'
         }).on('mousedown', function (ev) {
@@ -86,14 +93,14 @@ function scrollControl($scrollView, scrollContent, innerContent, config) {
                 return;
             }
 
-            var $scroll = $(this).find('.st-scrollbar');
-            var top = +$scroll.css('top').replace('px', '').replace('%', '');
-            var height = $scroll.height();
-            var y = ev.clientY;
-            var maxHeight = $(this).height();
-            var contentHeight = $scrollContent.find(innerContent).height();
-            var case1 = height / 2 < y;
-            var case2 = y + height / 2 < maxHeight - height / 2;
+            let $scroll = $(this).find('.st-scrollbar');
+            let top = +($scroll.css('top').replace('px', '').replace('%', ''));
+            let height = $scroll.height();
+            let y = ev.clientY;
+            let maxHeight = $(this).height();
+            let contentHeight = $scrollContent.find(innerContent).height();
+            let case1 = (height / 2 < y);
+            let case2 = ((y + height / 2) < (maxHeight - height / 2));
 
             if (case1 && case2) {
                 top = (y - height / 2) / maxHeight * 100;
@@ -105,7 +112,12 @@ function scrollControl($scrollView, scrollContent, innerContent, config) {
 
             $scroll.css('top', top + '%');
             $scrollContent.scrollTop(top * contentHeight / 100);
-        }).css('position', 'sticky').css('float', 'right').css('top', 0).css('z-index', 110).append($scroll).appendTo($scrollView);
+        }).css('position', 'sticky')
+            .css('float', 'right')
+            .css('top', 0)
+            .css('z-index', 110)
+            .append($scroll)
+            .appendTo($scrollView);
     }
 
     // show scrollbar when mouseover the wrapper
@@ -122,18 +134,18 @@ function scrollControl($scrollView, scrollContent, innerContent, config) {
 
     // Drag event handler
     function dragScroll(ev) {
-        var $trigger = $(ev.target).first('.st-scrollbar');
+        let $trigger = $(ev.target).first('.st-scrollbar');
         if ($trigger.length !== 1) {
             return;
         }
 
-        var move = ev.clientY - $trigger.attr('data-y');
-        var top = +$trigger.css('top').replace('px', '').replace('%', '');
-        var height = $trigger.height();
-        var maxHeight = $trigger.parent().height();
-        var contentHeight = $scrollContent.find(innerContent).height();
-        var newTop = (top + move) / maxHeight * 100;
-        if (newTop < 100 - height / maxHeight * 100) {
+        let move = ev.clientY - $trigger.attr('data-y');
+        let top = +($trigger.css('top').replace('px', '').replace('%', ''));
+        let height = $trigger.height();
+        let maxHeight = $trigger.parent().height();
+        let contentHeight = $scrollContent.find(innerContent).height();
+        let newTop = (top + move) / maxHeight * 100;
+        if (newTop < 100 - (height / maxHeight * 100)) {
             $trigger.css('top', newTop + '%');
         } else if (newTop < 0) {
             newTop = 0;
@@ -157,5 +169,5 @@ function scrollControl($scrollView, scrollContent, innerContent, config) {
 
     return {
         update: buildScrollbar
-    };
+    }
 }

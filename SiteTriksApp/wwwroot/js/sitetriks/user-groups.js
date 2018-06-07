@@ -1,6 +1,4 @@
-'use strict';
-
-function createUserGroup(url) {
+﻿function createUserGroup(url) {
     $('.move-to-right').on('click', function () {
         $('.users-to-role-select').removeClass('hidden');
         $('.all-users-select option:selected').each(function () {
@@ -20,6 +18,7 @@ function createUserGroup(url) {
                 text: $(this).val()
             }));
         });
+
     });
 
     function getAllUsersToAddRole() {
@@ -32,7 +31,7 @@ function createUserGroup(url) {
     }
 
     $('#submit').on('click', function (e) {
-        var flag = true;
+        let flag = true;
         if ($('#title').val().length < 3) {
             Notifier.createAlert({ containerId: '#alert', message: 'Title must has more than 3 characters', success: 'danger' });
             flag = false;
@@ -55,12 +54,16 @@ function createUserGroup(url) {
                 contentType: 'application/json',
                 dataType: 'json',
                 data: userGroup,
-                success: function success(data, status) {
+                success: function (data, status) {
                     window.location = '/sitetriks/userGroups';
                 },
-                error: function error(err) {}
+                error: function (err) {
+                }
             });
+
         }
+
+
     });
 }
 
@@ -85,6 +88,7 @@ function editUserGroup(url) {
                 text: $(this).val()
             }));
         });
+
     });
 
     function getAllUsersToAddRole() {
@@ -109,10 +113,10 @@ function editUserGroup(url) {
             contentType: 'application/json',
             dataType: 'json',
             data: userGroup,
-            success: function success(data, status) {
+            success: function (data, status) {
                 Notifier.createAlert({ containerId: '#alerts', title: 'Success!', message: 'User Group was edited successfully', status: 'success' });
             },
-            error: function error(_error) {
+            error: function (error) {
                 Notifier.createAlert('alerts', 'Something went wrong');
             }
         });
@@ -130,10 +134,12 @@ function editUserGroup(url) {
             url: url,
             contentType: 'application/json',
             data: userGroup,
-            success: function success() {
+            success: function () {
                 window.location.replace('/sitetriks/userGroups');
             },
-            error: function error() {}
-        });
-    });
+            error: function () {
+            }
+        })
+
+    })
 }

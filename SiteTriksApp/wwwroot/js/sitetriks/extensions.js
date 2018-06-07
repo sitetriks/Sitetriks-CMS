@@ -1,12 +1,10 @@
-'use strict';
-
-function initExtensions() {
+﻿function initExtensions() {
     $('body').on('change', '.activate-module', function (ev) {
-        var isActive = this.checked;
-        var name = $(this).attr('data-name');
+        let isActive = this.checked;
+        let name = $(this).attr('data-name');
 
         Loader.show('#fff');
-        Data.postJson({ url: '/sitetriks/extensions/UpdateModule', data: { isActive: isActive, name: name } }).then(function (res) {
+        Data.postJson({ url: '/sitetriks/extensions/UpdateModule', data: { isActive, name } }).then(function (res) {
             if (res.success) {
                 if (res.doNotRefresh) {
                     Loader.hide();
@@ -24,14 +22,14 @@ function initExtensions() {
 
     $('.drop-info-btn').on('click', function (ev) {
         $('#input-files').trigger('click');
-    });
+    })
 
     $('#input-files').on('change', function (ev) {
         upload(this.files);
     });
 
     function upload(files) {
-        var formData = new FormData();
+        let formData = new FormData();
 
         for (var i = 0; i < files.length; i++) {
             formData.append('files', files[i], files[i].name);
@@ -39,11 +37,11 @@ function initExtensions() {
 
         Loader.show('#fff');
         Data.postForm({ url: '/sitetriks/extensions/index', formData: formData }).then(function (res) {
-            var $extensions = $('.extensions-installed');
+            let $extensions = $('.extensions-installed');
 
             if (res.success) {
-                for (var _i = 0; _i < res.installed.length; _i += 1) {
-                    $extensions.append('<label class="module-name clearfix">' + res.installed[_i].displayName + ' <input class="activate-module" type="checkbox" data-size="mini" data-onstyle="success" data-toggle="toggle"  data-name="' + res.installed[_i].name + '" /></label>');
+                for (let i = 0; i < res.installed.length; i += 1) {
+                    $extensions.append('<label class="module-name clearfix">' + res.installed[i].displayName + ' <input class="activate-module" type="checkbox" data-size="mini" data-onstyle="success" data-toggle="toggle"  data-name="' + res.installed[i].name + '" /></label>');
                 }
 
                 $('.activate-module').bootstrapToggle();
@@ -55,33 +53,45 @@ function initExtensions() {
         }, Data.defaultError);
     };
 
-    $('#drop-area').on('dragover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-    });
+    $('#drop-area').on(
+        'dragover',
+        function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    );
 
-    $('#drop-area').on('dragenter', function (e) {
-        $(this).addClass('drop-highlight');
-        e.preventDefault();
-        e.stopPropagation();
-    });
+    $('#drop-area').on(
+        'dragenter',
+        function (e) {
+            $(this).addClass('drop-highlight');
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    );
 
-    $('#drop-area').on('dragleave', function (e) {
-        $(this).removeClass('drop-highlight');
-        e.preventDefault();
-        e.stopPropagation();
-    });
+    $('#drop-area').on(
+        'dragleave',
+        function (e) {
+            $(this).removeClass('drop-highlight');
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    );
 
-    $('#drop-area').on('drop', function (e) {
-        if (e.originalEvent.dataTransfer) {
-            if (e.originalEvent.dataTransfer.files.length) {
-                e.preventDefault();
-                e.stopPropagation();
+    $('#drop-area').on(
+        'drop',
+        function (e) {
+            if (e.originalEvent.dataTransfer) {
+                if (e.originalEvent.dataTransfer.files.length) {
+                    e.preventDefault();
+                    e.stopPropagation();
 
-                upload(e.originalEvent.dataTransfer.files);
+                    upload(e.originalEvent.dataTransfer.files);
+                }
             }
         }
-    });
+    );
 
     $('.upload-tab').on('click', function (ev) {
         $('.upload-tab.active').removeClass('active');
