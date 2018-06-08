@@ -1242,6 +1242,8 @@ form.btn-group+form.btn-group {
 
 div.row.documentation-wrapper {
     padding: 10px 20px;
+    min-width: 767px;
+    overflow-x: auto;
 }
 
 .toggle-menu div.row.documentation-wrapper {
@@ -1352,7 +1354,7 @@ ul.docs-menu ul {
 /*------------------------------------------------------------
        Upload Files in Library styles
     ---------------------------------------------------------------*/
-#library {
+select#library {
     margin-bottom: 20px;
 }
 

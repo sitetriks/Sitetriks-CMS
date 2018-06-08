@@ -323,10 +323,12 @@ $(window).resize(reDrawSnowflake);
 
 var removeMobileMenu = function removeMobileMenu() {
     var windowWidth = $(window).width();
-    console.log("in remove function");
-    if (windowWidth > 767) {
+    var windowHeight = $(window).height();
+
+    if (windowWidth > 767 && windowHeight > 620) {
         $('#mobile-view-top-menu').css('display', 'none');
-        $('.hidden-by-menu').css('display', 'block');
+        // $('.hidden-by-menu').css('display', 'block');
+        closeMobileMenu();
     }
 };
 
@@ -338,33 +340,45 @@ $(window).resize(removeMobileMenu);
 var clicked = false;
 var hamburgerCompress = '/images/mobile/Compress.gif';
 var hamburgerExpand = '/images/mobile/Expand.gif';
+var logoDark = '/images/mobile/LOGO_mob.svg';
+var logoWhite = '/images/mobile/LOGO_mob_w.svg';
 
 $('#hamburger-menu img').click(function (ev) {
     if ($(':animated').length) {
         return false;
     };
     if (clicked == false) {
-        $('#mobile-view-top-menu').slideDown("slow");
-        $('.hamburger-image').attr('src', hamburgerCompress);
-        setTimeout(function () {
-            $('.logo-mobile-image').toggle();
-            $('.logo-container-mobile').css('background-color', '#123e7a');
-        }, 800);
+        expandMobileMenu();
         clicked = true;
-        //  $('.hidden-by-menu').toggle();
-        $('.hidden-by-menu').css('display', 'none');
     } else if (clicked == true) {
-        $('#mobile-view-top-menu').slideUp("slow");
-        $('.hamburger-image').attr('src', hamburgerExpand);
-        setTimeout(function () {
-            $('.logo-mobile-image').toggle();
-            $('.logo-container-mobile').css('background-color', 'white');
-        }, 800);
+        closeMobileMenu();
         clicked = false;
-        // $('.hidden-by-menu').toggle();
-        $('.hidden-by-menu').css('display', 'block');
     }
 });
+
+function closeMobileMenu() {
+    $('#mobile-view-top-menu').slideUp("slow");
+    $('.hamburger-image').attr('src', hamburgerExpand);
+    setTimeout(function () {
+        $('.logo-mobile-image').attr('src', logoDark);
+        $('.logo-container-mobile').css('background-color', 'white');
+    }, 800);
+    $('.hidden-by-menu').css('display', 'block');
+};
+
+function expandMobileMenu() {
+    var windowWidth = $(window).width();
+    $('#mobile-view-top-menu').slideDown("slow");
+    $('.hamburger-image').attr('src', hamburgerCompress);
+    setTimeout(function () {
+        $('.logo-mobile-image').attr('src', logoWhite);
+        $('.logo-container-mobile').css('background-color', '#123e7a');
+    }, 800);
+    console.log('close');
+    if (windowWidth < 768) {
+        $('.hidden-by-menu').css('display', 'none');
+    }
+};
 
 /* Hamburger menu functionality as bottom menu */
 

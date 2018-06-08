@@ -142,6 +142,9 @@ var ModuleBuilder = (function () {
 
         initFunctions['css'] = {
             init: function () {
+                WidgetToggleGenerator.generate("#css-widget-options",
+                    { firstId: "raw-btn", firstLabel: "Switch to code", secondId: "url-btn", secondLabel: "Switch to url" }, "#raw-css-container", "#url-css-container");
+
                 editor = CodeMirror.fromTextArea(document.getElementById('css-rules'), {
                     lineNumbers: true,
                     mode: 'css'
@@ -153,21 +156,46 @@ var ModuleBuilder = (function () {
                     mode: 'css'
                 });
 
-                let model = JSON.parse(element);
+                WidgetToggleGenerator.generate("#css-widget-options",
+                    { firstId: "raw-btn", firstLabel: "Switch to code", secondId: "url-btn", secondLabel: "Switch to url" }, "#raw-css-container", "#url-css-container");
 
-                if (model.IsRaw) {
-                    if (editor) {
-                        editor.setValue(model.RawCode);
+                let $cssWidgetOptions = $('#css-widget-options');
+                let $selectedValue = $("#option-selected-id");
+
+                try {
+                    let model = JSON.parse(element);
+
+                    if (model.IsRaw) {
+                        $cssWidgetOptions.val("Switch to code");
+                        $selectedValue.val("url-btn");
+                        $cssWidgetOptions.click();
+
+                        if (editor) {
+                            editor.setValue(model.RawCode);
+                        }
+                    }
+                    else {
+                        $cssWidgetOptions.val("Switch to url");
+                        $selectedValue.val("raw-btn");
+                        $cssWidgetOptions.click();
+
+                        $("#css-url").val(model.Url);
                     }
                 }
-                else {
-                    $("#css-url").val(model.Url);
+                catch(ex){
+                    $cssWidgetOptions.val("Switch to code");
+                    $selectedValue.val("url-btn");
+                    $cssWidgetOptions.click();
+
+                    if (editor) {
+                        editor.setValue(element);
+                    }
                 }
             },
             save: function () {
                 let $resourceUrl = $("#css-url");
 
-                if ($resourceUrl.val() != "") {
+                if ($("#option-selected-id").val() == "url-btn") {
                     let model = {
                         IsRaw: false,
                         Url: $resourceUrl.val()
@@ -192,6 +220,9 @@ var ModuleBuilder = (function () {
 
         initFunctions['javascript'] = {
             init: function () {
+                WidgetToggleGenerator.generate("#js-widget-options",
+                    { firstId: "raw-btn", firstLabel: "Switch to code", secondId: "url-btn", secondLabel: "Switch to url" }, "#raw-js-container", "#url-js-container");
+
                 editor = CodeMirror.fromTextArea(document.getElementById('js-scripts'), {
                     lineNumbers: true,
                     mode: 'javascript'
@@ -201,23 +232,50 @@ var ModuleBuilder = (function () {
                 editor = CodeMirror.fromTextArea(document.getElementById('js-scripts'), {
                     lineNumbers: true,
                     mode: 'javascript'
+
                 });
 
-                let model = JSON.parse(element);
+                WidgetToggleGenerator.generate("#js-widget-options",
+                    { firstId: "raw-btn", firstLabel: "Switch to code", secondId: "url-btn", secondLabel: "Switch to url" }, "#raw-js-container", "#url-js-container");
 
-                if (model.IsRaw) {
-                    if (editor) {
-                        editor.setValue(model.RawCode);
+                let $jsWidgetOptions = $('#js-widget-options');
+                let $selectedValue = $("#option-selected-id");
+
+                try {
+                    let model = JSON.parse(element);
+
+                    if (model.IsRaw) {
+                        $jsWidgetOptions.val("Switch to code");
+                        $selectedValue.val("url-btn");
+                        $jsWidgetOptions.click();
+
+                        if (editor) {
+                            editor.setValue(model.RawCode);
+                        }
+                    }
+                    else {
+                        $jsWidgetOptions.val("Switch to url");
+                        $selectedValue.val("raw-btn");
+                        $jsWidgetOptions.click();
+
+                        $("#javascript-url").val(model.Url);
                     }
                 }
-                else {
-                    $("#javascript-url").val(model.Url);
+                catch(ex){
+                    $jsWidgetOptions.val("Switch to code");
+                    $selectedValue.val("url-btn");
+                    $jsWidgetOptions.click();
+                    
+                    if (editor) {
+                        editor.setValue(element);
+                    }
                 }
+                
             },
             save: function () {
                 let $resourceUrl = $("#javascript-url");
 
-                if ($resourceUrl.val() != "") {
+                if ($("#option-selected-id").val() == "url-btn") {
                     let model = {
                         IsRaw: false,
                         Url: $resourceUrl.val()
@@ -243,7 +301,22 @@ var ModuleBuilder = (function () {
                 loadUploadTemplate(false, 'main-image', 'image');
             },
             show: function (element) {
+                let parsedElement = JSON.parse(element)
+                let id = parsedElement.id;  
                 loadUploadTemplate(false, 'main-image', 'image');
+
+                if (parsedElement.width != '') {
+                    $('#input-width').val(parsedElement.width);
+                }
+
+                if (parsedElement.height != '') {
+                    $('#input-height').val(parsedElement.height);
+                }
+                $('#image').val(id);
+
+                if (id != "") {
+                    createImageView('image', id);                    
+                }
             },
             save: function () {
                 let id = $('#image').val();
@@ -255,14 +328,15 @@ var ModuleBuilder = (function () {
                     });
                 }
 
-                return '';
+                return null;
             }
         }
 
         initFunctions['gallery'] = {
             init: function () {
                 loadUploadTemplate(true, 'images', 'image').then(function (res) {
-                    $('#gallery-source').trigger('change');
+                    $('#gallery-source a#images').trigger('click');
+
 
                     $('#btn-select-library').on('click', function (e) {
                         $('#image').val($('#gallery-libs').val());
@@ -282,7 +356,8 @@ var ModuleBuilder = (function () {
 
                 $('#input-width').val(galleryConfig.width);
                 $('#input-height').val(galleryConfig.height);
-                $('#gallery-source').val(galleryConfig.type)
+                $('#gallery-source').data("source-type", galleryConfig.type)
+                $('#gallery-show-type option[value=' + galleryConfig.showType + ']').attr('selected', 'selected');
 
                 if (galleryConfig.type === 'images') {
                     let imagesLinksIds = galleryConfig.ids.split(';');
@@ -297,7 +372,8 @@ var ModuleBuilder = (function () {
                 this.init();
             },
             save: function () {
-                let currentType = $('#gallery-source').val();
+                let currentType = $('#gallery-source').data('source-type');
+                let showType = $('#gallery-show-type option:selected').val();
                 let ids = $('#image').val();
 
                 if (currentType == 'images' && ids.indexOf(';') !== 0) {
@@ -321,7 +397,8 @@ var ModuleBuilder = (function () {
                     ids: ids,
                     width: $('#input-width').val(),
                     height: $('#input-height').val(),
-                    type: currentType
+                    type: currentType,
+                    showType: showType
                 });
             }
         }

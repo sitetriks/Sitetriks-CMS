@@ -8,6 +8,7 @@
 */
 
 function loadUploadTemplate(isMultiple, type, fieldId, libraryField) {
+    $('#btn-show-upload').hide();
     var $modal = $('#upload-modal');
     var $container = $('#upload-container');
     $('#files-container').html('');
@@ -118,6 +119,8 @@ $('body').on('change', '#library', function () {
 $('body').on('click', '#btn-show-choice', showChoice);
 
 function showChoice(ev) {
+    $('#btn-show-choice').hide();
+    $('#btn-show-upload').show();
     files = [];
     uploadedFiles = [];
     $('#files-container').html('');
@@ -135,7 +138,6 @@ function showChoice(ev) {
 
     Data.getJson({ url: '/sitetriks/libraries/GetAllImageLibraries' }).then(function (res) {
         if (res.success) {
-            console.log(res);
             for (var i = 0; i < res.libraries.length; i++) {
                 var _$option = $('<option></option>', {
                     value: res.libraries[i].id,
@@ -171,22 +173,27 @@ $('body').on('change', '#image-libs', function () {
 });
 
 $('body').on('click', '#btn-show-upload', function (e) {
+    $('#btn-show-upload').hide();
+    $('#btn-show-choice').show();
     $('#page').text('0');
     $('#files-list').html('');
     $('#choice-file').hide();
     $('#upload-file').show();
 });
 
-$('body').on('change', '#gallery-source', function (e) {
-    var source = $(this).val();
+$('body').on('click', '#gallery-source a', function (e) {
+    var source = $(this).attr('id');
+    $('#gallery-source').data('source-type', source);
+    $('#' + source).hide();
     switch (source) {
         case 'images':
             showChoice();
             $('.gallery-library').hide();
             $('.gallery-images').show();
-
+            $('#library').show();
             break;
         case 'library':
+            $('#images').show();
             files = [];
             uploadedFiles = [];
             $('#files-container').html('');

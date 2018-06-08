@@ -237,7 +237,7 @@ $(document).ready(function (ev) {
             if (res.success) {
                 $section.html(res.view);
 
-                // DocumentationWidget();
+                DocumentationWidget();
 
                 if ($toggleMenu.length > 0 && $toggleMenu.attr('data-open-state') !== 'expanded') {
                     expandMenu();

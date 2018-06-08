@@ -71,13 +71,12 @@
     padding-left: 40px;
 }
 
-    #add-widget-container input {
+    #add-widget-container .col-md-5 .row,
+    #edit-widget-container .col-md-5 .row {
         margin-bottom: 15px;
+        margin-top: 15px;
     }
 
-#edit-widget-container input {
-    margin-bottom: 15px;
-}
 
 .widget-container {
     font-family: OpenSans, Helvetica, Arial, sans-serif;

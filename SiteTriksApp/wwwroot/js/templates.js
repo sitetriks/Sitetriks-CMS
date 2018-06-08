@@ -203,13 +203,12 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     $('#preview-container').on('click', '.lock-widget', function (ev) {
         var $caller = $(this);
         var status = $caller.prop('checked');
-        var type = $caller.attr('data-type');
-        var order = $caller.attr('data-order');
+        var id = $caller.attr('data-id');
 
-        var item = pageContent.find(function (e) {
-            return e.Order == order && e.Type == type;
+        var item = pageContent.find(function (c) {
+            return c.id === id;
         });
-        item.IsLocked = !!status;
+        item.isLocked = !!status;
     });
 
     $(document).on('keyup', '#video-input', function () {

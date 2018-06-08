@@ -132,20 +132,31 @@ body {
 .try-button {
     margin: 0;
     padding: 0;
-    width: 85px;
+
     /* TODO - check real sizes later */
     padding: 0;
     height: 30px;
-    margin-right: 5%;
+    margin-right: 3%;
     margin-top: 30px;
-    font-size: 12px;
     float: right;
-    background-color: #123e7a;
+    /*background-color: #123e7a;
+    font-size: 12px;
     border-width: 0px 1px 4px 0px;
     border-style: solid;
     border-color: #418acd;
     font-weight: bold;
-    color: white;
+    color: white;*/
+}
+
+.homepage-login {
+    margin: 0;
+    padding: 0;
+    padding: 0;
+    height: 40px;
+    margin-right: 2%;
+    margin-top: 30px;
+    font-size: 12px;
+    float: right;
 }
 
 .header-blue {
@@ -536,15 +547,19 @@ body {
 
 .item-header {
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     text-transform: uppercase;
     /*margin-top: 28px;
     margin-bottom: 34px;*/
-    padding-top: 25px;
+    /*padding-top: 25px;
     padding-bottom: 25px;
-    padding-right: 10px;
+    padding-right: 10px;*/
     font-family: Montserrat;
     pointer-events: none;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .item-body {
@@ -1443,11 +1458,16 @@ body {
 
 /*Mobile*/
 
-@media (max-width: 767px) {
+
+@media (max-width: 767px ) {
 
     /*Header style*/
     #homepage-header {
         height: 100px;
+    }
+
+    .login-button-wrapper {
+        display: none;
     }
 
     .try-button {
@@ -1470,8 +1490,9 @@ body {
     .logo-container-mobile {
         display: flex;
         width: 100%;
-        height: 100px;
+        height: 80px;
         align-items: center;
+        justify-content: center;
         position: relative;
     }
 
@@ -1479,7 +1500,8 @@ body {
         height: 30px;
         width: 30px;
         display: inline-block;
-        margin-left: 10%;
+        position: absolute;
+        left: 5%;
     }
 
         #hamburger-menu img {
@@ -1490,11 +1512,12 @@ body {
     .logo-mobile {
         display: inline-block;
         width: 150px;
-        position: absolute;
+        margin-left: 5%;
+        /*position: absolute;
         top: 50%;
         left: 50%;
         margin-right: -50%;
-        transform: translate(-50%, -50%)
+        transform: translate(-50%, -50%)*/
     }
 
     img.logo-mobile {
@@ -1512,6 +1535,14 @@ body {
 
     .main {
         margin-top: 56px;
+    }
+
+    .technology-list .row .technology-description .bullets ul > li::before {
+        display: none;
+    }
+
+    .technology-list .row .technology-description .bullets.second-column {
+        border-right: none;
     }
 
     /*Toggle side menu*/
@@ -1544,8 +1575,8 @@ body {
     }
 
         #middle-box .main-arrows {
-            height: 40px;
-            width: 40px;
+            height: 30px;
+            width: 30px;
             margin-top: 20px;
         }
 
@@ -1591,19 +1622,16 @@ body {
     }
 
         .item-header .arrow-down, .item-header .side-arrow {
-            float: left;
-            margin-left: 15px;
+            /*float: left;*/
+            /*margin-left: 15px;*/
             height: 25px;
             width: 25px;
+            position: absolute;
+            left: 10px;
         }
 
     .item-right {
         border: none;
-    }
-
-    .tree-item.more-items .item-header {
-        padding-right: 0;
-        padding-left: 30px;
     }
 
 
@@ -1625,8 +1653,8 @@ body {
     }
 
     .subscription-radio-group span {
-       width: 80%;
-       text-align: center;
+        width: 80%;
+        text-align: center;
     }
 
     .homepage-footer {
@@ -1885,28 +1913,154 @@ body {
     }
 }
 
-@media (max-width: 320px) {
 
-    #middle-box .main-arrows {
+@media (max-height: 620px) {
+
+    /*Header style*/
+    #homepage-header {
+        height: 100px;
+    }
+
+    .login-button-wrapper {
+        display: none;
+    }
+
+    .try-button {
+        display: none;
+    }
+
+    .logo-container {
+        display: none;
+    }
+
+    logo-container-mobile {
+        display: block;
+    }
+
+
+    .logo-container-mobile {
+        display: flex;
+        width: 100%;
+        height: 80px;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    #hamburger-menu {
         height: 30px;
         width: 30px;
+        display: inline-block;
+        position: absolute;
+        left: 5%;
     }
-}
 
-/*========================================================================*/
-/*===================== Responsive design for height change===============*/
-/*========================================================================*/
+        #hamburger-menu img {
+            width: 100%;
+            height: 100%;
+        }
 
-
-@media (max-height: 800px) {
-    .toggle-menu .features-section {
-        /*height: 70vh;
-        overflow-y: auto;*/
+    .logo-mobile {
+        display: inline-block;
+        width: 150px;
+        /*margin-left: 5%;*/
+        /*position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)*/
     }
+
+    img.logo-mobile {
+        height: 100%;
+        width: 180px;
+    }
+
+    .header-white {
+        border-bottom: 2px solid #008cff;
+    }
+
+    .header-blue {
+        display: none;
+    }
+
+    .main {
+        margin-top: 56px;
+    }
+
+    /*Toggle side menu*/
 
     .toggle-menu {
-        margin-top: -100px;
+        display: none;
     }
+
+    .features-section .row {
+        padding-top: 0;
+    }
+
+    /*Jumbotron section*/
+
+    .jumbotron-section {
+        display: none;
+    }
+
 }
 
+    @media (max-width: 540px) {
+
+        .item-header div {
+            max-width: 210px;
+        }
+
+        .item-header {
+            font-size: 14px;
+        }
+    }
+
+
+    @media (max-width: 320px) {
+
+        #middle-box .main-arrows {
+            height: 30px;
+            width: 30px;
+        }
+    }
+
+    /*========================================================================*/
+    /*===================== Responsive design for height change===============*/
+    /*========================================================================*/
+
+
+    @media (max-height: 790px) {
+        .toggle-menu .features-section {
+            /*height: 70vh;
+        overflow-y: auto;*/
+        }
+
+        .toggle-menu {
+            margin-top: 30px;
+        }
+    }
+
+    @media (max-height: 740px) {
+
+        .toggle-menu {
+            margin-top: 0px;
+        }
+    }
+
+
+    @media (max-height: 700px) {
+
+        .toggle-menu {
+            margin-top: -50px;
+        }
+    }
+
+    @media (max-height: 650px) {
+
+        .toggle-menu {
+            margin-top: -80px;
+        }
+    }
 
