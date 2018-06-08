@@ -41,6 +41,7 @@ var DocumentationWidget = (function () {
         $btnPrev.attr('data-id', prevId);
 
         let id = $trigger.attr('data-id');
+
         loadTopic(id);
     })
 

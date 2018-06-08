@@ -12,6 +12,11 @@
             canView = true;
         }
     }
+
+    if (item == "Unauthorized" && !this.User.Identity.IsAuthenticated)
+    {
+        canView = true;
+    }
 }
 
 @if (Model.IsPreview)

@@ -68,7 +68,7 @@
                                 <img src="~/images/mobile/side arrow dark.svg" alt="shrank" class="side-arrow item-arrow" />
                                 @*Title*@
                                 @*Envirement sync*@
-                                @Model.ClassHelper.GetPropertyValue(entries[i], "Title")
+                                <div>@Model.ClassHelper.GetPropertyValue(entries[i], "Title")</div>
                             </div>
                             @*// item contents*@
                             <div class="item-body @if(flagLastText) {<text> hidden-section-last-body </text> }" @if (flagLastText) {<text> style="display: none" </text> }>
@@ -104,7 +104,7 @@
                                     <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="arrow-down item-arrow" />
                                     <img src="~/images/mobile/side arrow dark.svg" alt="shrank" class="side-arrow item-arrow" />
                                     @*Title*@
-                                    @Model.ClassHelper.GetPropertyValue(entries[i + 1], "Title")
+                                    <div>@Model.ClassHelper.GetPropertyValue(entries[i + 1], "Title")</div>
                                 </div>
                                 @*// item contents*@
                                 <div class="item-body">

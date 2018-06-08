@@ -26,6 +26,12 @@
             {
                 canViewByRole = true;
             }
+
+            if (item == "Unauthorized" && !this.User.Identity.IsAuthenticated)
+            {
+                canViewByRole = true;
+            }
+
         }
     }
 

@@ -114,7 +114,7 @@
         <script type="text/javascript" src="~/js/cookie-notification-configuration.js"></script>
         <script type="text/javascript" src="~/js/licenses-widgets.js"></script>
         <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
-		<script type="text/javascript" src="~/js/sitetriks/licensesTable.js"></script>        
+        <script type="text/javascript" src="~/js/sitetriks/licensesTable.js"></script>
         <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
     </environment>
     <environment exclude="Development">
@@ -156,10 +156,10 @@
 
             MetaTags.populateKeyWords('input[name=SEOKeyword]');
 
-             DocumentationWidget();
+            DocumentationWidget();
 
             // Tree items widget logic -  to move
-            $('body').unbind().on('click', '.more-items', function (event, callback, target) {
+            $('body').on('click', '.more-items', function (event, callback, target) {
 
                 if (callback && {}.toString.call(callback) === '[object Function]' && target) {
                     $('.hidden-section').slideToggle("slow", "swing", function () {
@@ -331,65 +331,116 @@
 
     <script>
 
-       // let staff = getChannelDatails("UCUsTZWP1OpyBXX2_CfMv1fA");
-        // console.log(staff)
 
-        //// Get all videos from our channel
-        //$(document).ready(function () {
+        // Get all videos from our channel
+        $(document).ready(function () {
 
-        //    if ($('body-content').find('.multiple-playlists')) {
-        //        // get all thumbnails ids
-        //        let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
-        //        let videos;
-        //        let channelId = "UCUsTZWP1OpyBXX2_CfMv1fA";
-
-        //        videos = getChannelDatails(channelId).then(function (result) {
-
-
-        //            console.log(JSON.stringify(result));
-        //        });
-
-
-        //    }
-
-        //    // Add search functionality to the widget
-        //    function getChannelDatails(channelId) {
-        //        //    return Data.getJson({ url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8" })
-        //        return new Promise((resolve, reject) => {
-        //            $.ajax({
-        //                url: "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCR5In4DZaTP6IEZQ0r1JceuvluJRzQNLE&channelId=" + channelId + "&part=snippet,id&order=date&maxResults=50",
-        //                method: 'GET',
-        //                contentType: 'json',
-        //                success: resolve,
-        //                error: reject
-        //            }).then(function (data) {
-        //                // let result = JSON.stringify(data.items[0].snippet.thumbnails.high.url);
-        //                let result = JSON.stringify(data)
-
-        //                return result;
-
-        //            },  Data.defaultError)
-        //        });
-        //    }
-
-        //    // Find matching video titles
-
-        //    function findMatches(wordToMatch, videos) {
-        //        return videos.filter(place => {
-        //            const regex = new RegExp(wordToMatch, 'gi')
-        //            return place.city.match(regex) || place.state.match(regex)
-        //        });
-
-        //    }
-
-        //});
+            // Add search functionality to the widget
+            function getChannelDatails(channelId) {
+                //    return Data.getJson({ url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8" })
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "https://www.googleapis.com/youtube/v3/channels?key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8&part=contentDetails&id=" + channelId,
+                        method: 'GET',
+                        contentType: 'json',
+                        success: resolve,
+                        error: reject
+                    })
+                })
+                    .then(function (data) {
+                        let channelUpload = data.items[0].contentDetails.relatedPlaylists.uploads;
+                        return new Promise((resolve, reject) => {
+                            $.ajax({
+                                url: "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=" + channelUpload + "&key=AIzaSyCR5In4DZaTP6IEZQ0r1JceuvluJRzQNLE&part=snippet&maxResults=50",
+                                method: 'GET',
+                                contentType: 'json',
+                                success: resolve,
+                                error: reject
+                            })
+                        });
+                    })
+            };
 
 
-        // Populate them in a list for autocomplete
+            $('body').on('click', '.search-video', function () {
+                $('.suggestions').css('display', 'block');
+                // get all thumbnails ids
+                let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
+                let fullData;
+                let channelId = "UCUsTZWP1OpyBXX2_CfMv1fA";
+                let titles = [];
 
-        // when the video is selected play the corresponding playlist starting from that video
+                fullData = getChannelDatails(channelId);
+                fullData.then(function (result) {
+                    var myData = result;
 
-        // 
+                    for (i = 0; i < myData.items.length; i += 1) {
+                        titles.push(myData.items[i].snippet.title)
+                    }
+
+                    // Find matches
+
+                    function findMatches(wordToMatch, videos) {
+                        return videos.filter(title => {
+                            const regex = new RegExp(wordToMatch, 'gi')
+                            return title.match(regex)
+                        });
+
+                    }
+
+                    // Display the matches in a dropdown
+
+                    function displayMatches() {
+                        const matchArrays = findMatches(this.value, titles);
+
+                        const html = matchArrays.map(title => {
+                            let itemPosition = titles.indexOf(title);
+                            let videoId = myData.items[itemPosition].snippet.resourceId.videoId
+                            return `                <li class="name" data-id ="${videoId}">${title}</li>
+                `;
+                        }).join('');
+                        suggestions.innerHTML = html;
+                    }
+
+                    // Detect video select
+
+                    const searchInput = document.querySelector('.search-video');
+                    const suggestions = document.querySelector('.suggestions');
+
+                    searchInput.addEventListener('change', displayMatches);
+                    searchInput.addEventListener('keyup', displayMatches);
+
+                    // Display playlist starting from the given video
+
+                });
+            })
+
+            function selectVideo () {
+                let selected = $(this).text();
+                console.log(selected);
+                //  let itemPosition = titles.indexOf(selected);
+
+                // let playlistId = myData.items[itemPosition].snippet.playlistId;
+                //  let videoId = myData.items[itemPosition].snippet.resourceId.videoId;
+                let videoId = $(this).attr('data-id');
+
+                console.log(videoId);
+
+                $('.search-video').val(selected);
+
+                $('.video-container iframe').attr('src', `https://www.youtube.com/embed/${videoId}`);
+
+                // Clean the input
+                $('.search-video').val('');
+                $('.suggestions').css('display', 'none');
+            }
+
+            // Select specific video
+            $('body').on('click', '.name', selectVideo);
+
+        });
+
+        //
 
     </script>
 

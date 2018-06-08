@@ -1,9 +1,9 @@
-﻿@model SiteTriks.Models.CoreWidgets.FireResourceWidgetViewModel
+﻿@model SiteTriks.Models.CoreWidgets.FileResourceWidgetViewModel
 
 @if (Model.IsRaw)
 {
     <style data-style="head-bot">
-        @Html.Raw(Model)
+        @Html.Raw(Model.RawCode)
     </style>
 }
 else
