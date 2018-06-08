@@ -198,11 +198,10 @@
     $('#preview-container').on('click', '.lock-widget', function (ev) {
         var $caller = $(this);
         var status = $caller.prop('checked');
-        var type = $caller.attr('data-type');
-        var order = $caller.attr('data-order');
+        var id = $caller.attr('data-id');
 
-        let item = pageContent.find(e => e.Order == order && e.Type == type);
-        item.IsLocked = !!status;
+        let item = pageContent.find(c => c.id === id);
+        item.isLocked = !!status;
     });
 
     $(document).on('keyup', '#video-input', function () {
@@ -328,7 +327,7 @@
             version: $('#versions').val(),
             url: url
         }
-        
+
         Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
             createPreveiwWindow(res);
         }, Data.defaultError);
@@ -423,7 +422,7 @@
             }
         });
     }
-    
+
     function createPreveiwWindow(html) {
         let newWindow = window.open("", "Preview");
         if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {

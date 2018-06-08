@@ -38,7 +38,8 @@ namespace SiteTriksApp.Web.Services.Seeders
                 "Authorized back-end",
                 "Authorized front-end",
                 "Partner",
-                "Client"
+                "Client",
+                "Unauthorized"
             };
 
             foreach (var role in roles)

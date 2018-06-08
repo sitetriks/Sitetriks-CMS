@@ -357,10 +357,35 @@ body {
 
 /*Video Custom Playlist styles*/
 
-#static-section .search-video {
-    width: 90%;
+ .search-video {
+    width: 98%;
     margin-bottom: 5px;
+    margin-left: 1%;
+    max-width: unset;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+ .suggestions {
+     font-size: 14px;
+    position: absolute;
+    z-index: 1;
+    background: white;
+    max-height: 500px;
+    width: 90%;
     margin-left: 15px;
+    overflow-y: auto;
+}
+
+    .suggestions {
+        list-style-type: none;
+    }
+
+.suggestions {
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
 }
 
 .video-container iframe {

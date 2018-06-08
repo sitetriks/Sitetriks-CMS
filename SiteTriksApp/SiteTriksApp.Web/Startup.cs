@@ -131,7 +131,6 @@ namespace SiteTriksApp.Web
             WidgetRegistry.RegisterWidget<MarketWidgetModel>("market", "Market");
             WidgetRegistry.RegisterWidget<UserOrdersWidgetModel>("userOrders", "User Orders");
             WidgetRegistry.RegisterWidget<SubscriptionWidgetModel>("subscription", "Subscription");
-            WidgetRegistry.RegisterWidget<LicensesTableWidgetModel>("licensesTable", "Licenses Table");
             WidgetRegistry.RegisterWidget<LicenseGenerationWidgetModel>("licenseGeneration", "License Form");
 
             // -----------------------------------------------------------------------------------------------------------

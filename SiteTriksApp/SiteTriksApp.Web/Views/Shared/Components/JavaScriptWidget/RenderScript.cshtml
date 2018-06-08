@@ -1,9 +1,9 @@
-﻿@model SiteTriks.Models.CoreWidgets.FireResourceWidgetViewModel
+﻿@model SiteTriks.Models.CoreWidgets.FileResourceWidgetViewModel
 
 @if (Model.IsRaw)
 {
     <script data-script="body-bot" type="text/javascript">
-        @Html.Raw(Model)
+        @Html.Raw(Model.RawCode)
     </script>
 }
 else
