@@ -182,7 +182,7 @@ var ModuleBuilder = (function () {
                         $("#css-url").val(model.Url);
                     }
                 }
-                catch{
+                catch(ex){
                     $cssWidgetOptions.val("Switch to code");
                     $selectedValue.val("url-btn");
                     $cssWidgetOptions.click();
@@ -261,7 +261,7 @@ var ModuleBuilder = (function () {
                         $("#javascript-url").val(model.Url);
                     }
                 }
-                catch{
+                catch(ex){
                     $jsWidgetOptions.val("Switch to code");
                     $selectedValue.val("url-btn");
                     $jsWidgetOptions.click();
