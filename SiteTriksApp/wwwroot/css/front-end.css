@@ -20,6 +20,17 @@
     src: url("../fonts/Blaimim.ttf")
 }
 
+@font-face {
+    font-family: LucidaGrande;
+    src: url("../fonts/LucidaGrande.ttf")
+}
+
+@font-face {
+    font-family: LucidaGrande;
+    font-weight: bold;
+    src: url("../fonts/LucidaGrandeBold.ttf")
+}
+
 
 body {
     font-size: 10px;
@@ -44,14 +55,23 @@ body {
 }
 
 
+/*Manage Profile styles*/
+
+.manage-profile-container .enable-authenticator-wrapper {
+    padding: 20px;
+    font-size: 12px;
+    margin-bottom: 50px;
+}
+
+.enable-authenticator-wrapper label,
+.enable-authenticator-wrapper input,
+.enable-authenticator-wrapper span{
+   margin-bottom: 10px;
+}
+
 /* Login page */
-
 /* Header - see navbar*/
-
-
-
 /*Login form*/
-
 .row {
     margin: 0;
     padding: 0;
@@ -290,7 +310,7 @@ body {
     position: fixed;
     left: 0px;
     bottom: 0px;
-    height: 30px;
+    height: 35px;
     width: 100%;
     background: #313131;
     margin-top: 30px;
@@ -301,24 +321,28 @@ body {
         height: 55px;
     }
 
-/***************************************************/
-
-/*Navbar widjet form Front-end pages + multilevel dropdown*/
-
-/*Manage color-profile pages*/
-
-#manageProfile {
-    margin: 25% auto;
-    border-radius: 15px;
-    border: 1px solid #123e7a;
-    color: #ddeeff;
-    background-color: #123e7a;
-    padding-top: 70px;
-    width: 70%;
-    font-family: Montserrat;
-    /*font-weight: bold;*/
-    font-size: 1.4em;
-}
+    .frontend-footer .ta-center {
+        color: #eee;
+        font-size: 14px;
+        line-height: 24px;
+        font-family: OpenSans, Helvetica, Arial, sans-serif;
+        margin-top: 5px;
+    }
+    /***************************************************/
+    /*Navbar widjet form Front-end pages + multilevel dropdown*/
+    /*Manage color-profile pages*/
+    #manageProfile {
+        margin: 25% auto;
+        border-radius: 15px;
+        border: 1px solid #123e7a;
+        color: #ddeeff;
+        background-color: #123e7a;
+        padding-top: 70px;
+        width: 70%;
+        font-family: Montserrat;
+        /*font-weight: bold;*/
+        font-size: 1.4em;
+    }
 
     #manageProfile .login-logo-container {
         /*margin-bottom: 30px;*/
@@ -357,13 +381,14 @@ body {
 
 /*Video Custom Playlist styles*/
 
- .search-video {
+.search-video {
     width: 98%;
     margin-bottom: 5px;
     margin-left: 1%;
     max-width: unset;
     font-size: 14px;
     border-radius: 5px;
+    padding-left: 10px;
 }
 
 
@@ -372,31 +397,24 @@ body {
     position: absolute;
     z-index: 1;
     background: white;
-    max-height: 500px;
-    width: 90%;
+    max-height: 300px;
+    width: 98%;
     margin-left: 15px;
     overflow-y: auto;
-}
-
-    .suggestions {
-        list-style-type: none;
-    }
-
-.suggestions {
+     list-style-type: none;
     cursor: pointer;
     display: inline-block;
-    width: 100%;
 }
 
 .video-container iframe {
-    height: 580px;
+    height: 540px;
     width: 99%;
     padding-left: 1%;
 }
 
 .thumbnails-list,
 .playlist-thumbnails-list {
-    height: 580px;
+    height: 540px;
     overflow-y: auto;
     padding-left: 0;
     overflow-x: hidden;
@@ -442,13 +460,13 @@ body {
 
 
 #floating-section .video-container iframe {
-    height: 570px;
+    height: 550px;
     width: 100%;
 }
 
 #floating-section .thumbnails-list,
 #floating-section .playlist-thumbnails-list {
-    height: 570px;
+    height: 550px;
     overflow-y: auto;
     padding-left: 0;
     overflow-x: hidden;
@@ -854,6 +872,38 @@ body {
     }
 }
 
+@media (max-width: 767px), (max-height: 620px) {
+
+
+/*Navigation widget custom css*/
+
+.navigation-widget-wrapper .header-wrapper.header-white {
+    height: 102px;
+}
+
+.navigation-widget-wrapper.expanded .header-blue {
+    display: block;
+    height: 100%;
+    padding: 0;
+}
+
+.navigation-widget-wrapper.expanded .multi-level-navigation {
+    position: relative;
+    width: 100%;
+}
+
+    .navigation-widget-wrapper.expanded .multi-level-navigation .main-navigation{
+        padding: 0;
+    }
+
+    .navigation-widget-wrapper.expanded .multi-level-navigation .main-navigation > li.nav-right {
+        float: unset;
+        display: block;
+        text-align: left;
+        border-bottom: 1px solid #008cff;
+    }
+}
+
 @media (max-width: 640px) {
 
     /*Contact us widget responsive design*/
@@ -986,8 +1036,16 @@ body {
 }
 
 .two-factor-auth {
-    padding-top: 70px;
+    padding-top: 50px;
+    padding-left: 20px;
 }
+
+    .two-factor-auth h4,
+    .two-factor-auth h5,
+    .two-factor-auth a {
+      margin-bottom: 20px;
+}
+
 
 /*@media (max-width: 1320px) {
     .navbar-nav > li > a {

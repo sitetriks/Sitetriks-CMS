@@ -82,24 +82,33 @@ function createClass(assemblyName) {
 
             Data.postForm({ formData: formData }).then(function (res) {
                 if (res.success) {
-                    window.location.replace('/sitetriks/dynamic');
+                    handleAppRestart({});
+                } else {
+                    Notifier.createAlert({ containerId: '#alerts', message: 'Dynamic class with this name already exist.', status: 'danger' });
+                    Loader.hide();
                 }
             }, function (res) {
                 console.log(res);
             });
 
-            setTimeout(function () {
-                var currLocation = window.location.toString();
-                var lastIndexOfSlash = currLocation.lastIndexOf('/');
-
-                var newLocation = currLocation.substring(0, lastIndexOfSlash);
-
-                window.location = newLocation;
-            }, 4000);
-
             e.preventDefault();
             return false;
         });
+    });
+}
+
+function deleteClass(element) {
+    var assemblyName = $(element).data('assemblyName');
+    var className = $(element).data('className');
+
+    $.ajax({
+        method: 'GET',
+        url: '/sitetriks/dynamic/deleteClass?assemblyName=' + assemblyName + '&className=' + className,
+        contentType: 'application/json',
+        success: function success(res) {
+            console.log(res);
+            handleAppRestart({ url: '/sitetriks/dynamic' });
+        }
     });
 }
 
@@ -137,6 +146,13 @@ function createItem(modelName, assemblyName) {
 
                 case 'string-html':
                     value = textEditor.getContent($item.attr('id'));
+                    break;
+
+                case 'string-long':
+                    if (value && value.length > 3999) {
+                        $notifier.text(name + ' must be shorter than 4000 symbols!');
+                        flag = true;
+                    }
                     break;
 
                 default:
@@ -261,20 +277,11 @@ function editClass(modelName, assemblyName) {
 
             Data.postForm({ formData: formData }).then(function (res) {
                 if (res.success) {
-                    window.location.replace('/sitetriks/dynamic');
+                    handleAppRestart({});
                 }
             }, function (res) {
                 console.log(res);
             });
-
-            setTimeout(function () {
-                var currLocation = window.location.toString();
-                var lastIndexOfSlash = currLocation.lastIndexOf('/');
-
-                var newLocation = currLocation.substring(0, lastIndexOfSlash);
-
-                window.location = newLocation;
-            }, 4000);
 
             e.preventDefault();
             return false;
@@ -323,6 +330,13 @@ function editItem(id, className, assemblyName) {
                     break;
                 case 'string-html':
                     value = textEditor.getContent($item.attr('id'));
+                    break;
+
+                case 'string-long':
+                    if (value && value.length > 3999) {
+                        $notifier.text(name + ' must be shorter than 4000 symbols!');
+                        flag = true;
+                    }
                     break;
 
                 default:

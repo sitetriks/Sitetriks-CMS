@@ -416,7 +416,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         $('.resolution').each(function (_, element) {
             element.classList.add('selected');
         });
-        ModuleBuilder.getInstance('#preview-layout').resolutions = ['xs', 'sm', 'md', 'lg'];
+        $('#preview-layout').data('layout-control').resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 
     $('.show-content').on('click', function (ev) {
@@ -450,16 +450,15 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout' });
 
         $('#btn-save-layout').on('click', function (ev) {
-            let l = ModuleBuilder.getInstance('#preview-layout');
+            let layoutWidget = pageContent.find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
+            let layout = JSON.parse(layoutWidget.element);
+            let l = $('#preview-layout').data('layout-control');
             layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
-            //$('.show-content').trigger('click');
-
-            console.log(l.deletedPlaceholders);
+            
             for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
                 removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
             }
-
-            // w.saveEditWidgetLocal
+            
             saveEditWidgetServer(layoutWidget.type, JSON.stringify(layout), layoutWidget.id, layoutWidget.placeholder, layoutWidget.cssClass, layoutWidget.templateName, layoutWidget.allowedRoles, layoutWidget.allowedGroups);
         });
     } else {
@@ -585,6 +584,15 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
             $('#displayed-version').text(res.version);
 
             WidgetsDraggable.init(w.makeDrop);
+
+            let layoutWidget = pageContent.find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
+            if (layoutWidget) {
+                let layout = JSON.parse(layoutWidget.element);
+
+                $('#preview-layout').data('layout-control', layout.layoutRows);
+                document.getElementById('preview-layout').dispatchEvent(new CustomEvent('rebuildLayout', { detail: { l: layout.layoutRows } }));
+            }
+
         }, function (data, textStatus, XMLHttpRequest) {
             console.log(data);
             console.log(textStatus);
@@ -733,7 +741,8 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
                 isLocked: item.isLocked,
                 isStatic: item.isStatic
             },
-            preview: 'preview'
+            preview: 'preview',
+            lang: currentLanguage
         };
 
         Loader.show(true);

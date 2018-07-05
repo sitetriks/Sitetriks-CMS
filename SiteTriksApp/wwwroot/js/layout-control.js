@@ -528,6 +528,14 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         $options.append(html);
     });
 
+    $wrapper[0].addEventListener('rebuildLayout', function (ev) {
+        l = ev.detail.l;
+        l.resolutions = ['xs', 'sm', 'md', 'lg'];
+        l.deletedPlaceholders = [];
+
+        buildLayout($wrapper, l);
+    });
+
     //-----------------------------------------------------------------------------
     // Methods
     function buildLayout($wrapper, l) {

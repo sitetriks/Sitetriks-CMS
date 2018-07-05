@@ -1,6 +1,0 @@
-warn: Microsoft.AspNetCore.Identity.UserManager[13]
-      User 1f9428a2-773b-4166-a80c-17bce7320eac validation failed: DuplicateUserName.
-Hosting environment: Production
-Content root path: E:\Kaloyan\Core\Deploy\published\SiteTriks-CMS\SiteTriksApp
-Now listening on: http://localhost:17887
-Application started. Press Ctrl+C to shut down.

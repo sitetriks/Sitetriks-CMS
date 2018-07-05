@@ -1242,8 +1242,7 @@ form.btn-group+form.btn-group {
 
 div.row.documentation-wrapper {
     padding: 10px 20px;
-    min-width: 767px;
-    overflow-x: auto;
+    min-width: 767px; overflow-x: auto;
 }
 
 .toggle-menu div.row.documentation-wrapper {
@@ -1314,13 +1313,20 @@ ul.docs-menu ul {
         border-bottom: 2px solid #ddd;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
+        /*white-space: nowrap;*/
     }
 
         /*ul.docs-menu li.docs-menu-item > div:hover {
             background-color: #eee;
         }*/
 
+        /*Bottm menu custom styles*/
+
+/*Bottom menu*/
+
+.toggle-bottom-menu.container .documentation-wrapper .col-md-9 {
+    height: auto;
+}
 
 /*------------------------------------------------------------
        Documentation Edit page styles

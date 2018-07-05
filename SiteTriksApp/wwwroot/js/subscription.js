@@ -3,7 +3,6 @@
 $(document).ready(function () {
     function toggleForm() {
         $('.subscription-button').on('click', function () {
-            console.log($(this));
             $(this).next().toggle();
         });
     };
@@ -29,14 +28,14 @@ $(document).ready(function () {
             flag = false;
         }
 
-        if (!$featuresReleases.val()) {
+        if (!$featuresReleases.length > 0) {
             $('#features-releases-group .validation-output').text('Please check one of the options.');
             flag = false;
         } else {
             $('#features-releases-group .validation-output').text('');
         }
 
-        if (!$promotionalMaterials.val()) {
+        if (!$promotionalMaterials.length > 0) {
             $('#promotional-materials-group .validation-output').text('Please check one of the options.');
             flag = false;
         } else {
@@ -44,13 +43,19 @@ $(document).ready(function () {
         }
 
         if (flag) {
+
+            var emailGroups = $featuresReleases.val().toString() + $promotionalMaterials.val().toString();
+            console.log(emailGroups);
+
             var subscriberData = {
                 Name: $name.val(),
-                Email: $email.val()
+                Email: $email.val(),
+                Groups: emailGroups
             };
 
             Data.postJson({ url: '/sitetriks/marketingEmails/subscribe', data: subscriberData }).then(function (res) {
-                Notifier.createAlert({ message: res.message, status: res.success ? 'success' : 'warning' });
+                Notifier.createAlert({ containerId: '#subscription-form-container', message: res.message, status: res.success ? 'info' : 'warning', seconds: 5 });
+
                 $name.val('');
                 $email.val('');
                 $promotionalMaterials.attr('checked', false);

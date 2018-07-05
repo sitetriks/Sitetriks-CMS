@@ -566,10 +566,7 @@ var ModuleBuilder = (function () {
                 $('#order-by-date').prop('checked', elements[0] === 'true');
                 $('input[type="radio"][value="' + elements[1] + '"]').prop('checked', true);
                 if ($.isNumeric(elements[2])) {
-                    $('#news-type').val(elements[3]);
                     $('#latest-news-count').val(elements[2]);
-                } else {
-                    $('#news-type').val(elements[2]);
                 }
             },
             save: function () {
@@ -578,14 +575,11 @@ var ModuleBuilder = (function () {
                 let element = '';
 
                 element = isAscending + '/' + template;
-                let openType = $('#news-type').val();
 
                 if (template === 'latest') {
                     // 3 news if it is not specified
                     element += '/' + ($('#latest-news-count').val() || 3);
                 }
-
-                element += '/' + openType;
 
                 return element;
             }
@@ -600,8 +594,11 @@ var ModuleBuilder = (function () {
         initFunctions['video'] = {
             init: function () { },
             show: function (element) {
+                console.log(element);
                 let elements = element.split('/');
                 $('#video-source').val(elements[0]);
+                $('#default-video').val(elements[2]);
+
                 if (elements[0] === 'youtube') {
                     $('#video-name').val('https://www.youtube.com/watch?v=' + elements[1]);
                 } else {
@@ -611,6 +608,7 @@ var ModuleBuilder = (function () {
             save: function () {
                 let source = $('#video-source').val();
                 let name = '';
+                let defaultVideo = '';
                 switch (source) {
                     case 'youtube':
                         name = parseYouTubeUrl($('#video-name').val());
@@ -626,10 +624,10 @@ var ModuleBuilder = (function () {
                         break;
                     case 'youtubeMultiplePlaylists':
                         name = $('#video-name').val();
+                        defaultVideo = $('#default-video').val();
                         break;
                 }
-
-                return '' + source + '/' + name;
+                return '' + source + '/' + name + '/' + defaultVideo;
             }
         }
 

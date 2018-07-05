@@ -34,61 +34,37 @@ var $selectedFeature = $(".toggle-menu .selected-feature");
 var $featuresSection = $('.toggle-menu .features-section');
 var $sideCol = $('.side-section.col.col-lg-1');
 var $middleSection = $('.middle-section.col-lg-10');
+var menuState = $(".toggle-menu").attr("data-open-state");
 
 var screenWidth = $(window).width();
 
 // var $fullToggleMenu = $('.toggle-menu');
-function setToggleWidth() {
-    $('.toggle-menu').css("width", "40%");
+//function setToggleWidth() {
+//    $('.toggle-menu').css("width", "auto");
 
-    if (screenWidth >= 1000) {
-        $('.toggle-menu').css("width", "40%");
-    }
-    if (screenWidth <= 1000 && screenWidth > 768) {
-        $('.toggle-menu').css("width", "45%");
-    }
-    if (screenWidth <= 768) {
-        $('.toggle-menu').css("width", "60%");
-    }
-};
+//    if (screenWidth >= 1000) {
+//        $('.toggle-menu').css("width", "auto");
+//    }
+//    if (screenWidth <= 1000 && screenWidth > 768) {
+//        $('.toggle-menu').css("width", "auto");
+//    }
+//    //if (screenWidth <= 768) {
+//    //    $('.toggle-menu').css("width", "60%");
+//    //}
+//};
 
 $('body').on('resize ready', '.toggle-menu', function () {
-    setToggleWidth();
     if ($(".toggle-menu").attr("data-open-state") === "expanded") {
         $(".shrink-menu").children('img').attr('src', '/Content/Images/menu-buttons/Decrease_window.png');
-        setToggleWidth();
     }
-    if ($(".toggle-menu").attr("data-open-state") === "closed" || $(".toggle-menu").attr("data-open-state") === "opened") {
-        setToggleWidth();
-    }
+    if ($(".toggle-menu").attr("data-open-state") === "closed" || $(".toggle-menu").attr("data-open-state") === "opened") {}
 });
-
-//(function () {
-//    setToggleWidth();
-//    if ($(".toggle-menu").attr("data-open-state") === "expanded") {
-//        $(".shrink-menu").children('img').attr('src', '/Content/Images/menu-buttons/Decrease_window.png');
-//        setToggleWidth();
-//    }
-//    if ($(".toggle-menu").attr("data-open-state") === "closed" || $(".toggle-menu").attr("data-open-state") === "opened") {
-//        setToggleWidth();
-//    }
-//})();
 
 var setFeatureWidth = "240px";
 
 $(".shrink-menu").on("click", expandMenu);
 
 function expandMenu(ev) {
-
-    // check window-height
-
-    //if ($(window).height() <= 800) {
-    //    setFeatureWidth = "260px"
-    //} else {
-    //    setFeatureWidth = "240px";
-    //}
-
-    // check state
 
     if ($(".toggle-menu").attr("data-open-state") === "closed") {
         return;
@@ -120,6 +96,8 @@ function expandMenu(ev) {
 
     $selectedFeature.animate({ display: selectedFeatureVisibility }, anumationDuration, function () {
         if ($selectedFeature.css('display') === "none") {
+            var $menuIcon = $($(this).parents('.toggle-menu').find('.menu-icon')[4]);
+            loadSection.apply($menuIcon);
             Blur.add({
                 color: color,
                 opacity: '0.5'
@@ -137,22 +115,18 @@ function expandMenu(ev) {
     if ($(".toggle-menu").attr("data-open-state") === "opened") {
         $(".toggle-menu").attr("data-open-state", "expanded");
         $('.toggle-menu').css("width", "90%");
-        //$(".shrink-menu").children('img').attr('src', '/Content/Images/menu-buttons/Decrease_window.png');
     } else {
         $(".toggle-menu").attr("data-open-state", "opened");
-        // $('.toggle-menu').addClass('toggleWidth');
-        // $('.toggle-menu').css("width", "20%")
-        setToggleWidth();
+
         $('.toggle-menu').css("transition", "width 2s");
+        $('.toggle-menu').css("width", "auto");
     }
 }
 
 // Close menu
 
 $('.close-menu').on('click', function () {
-
     // check state
-
     if ($(".toggle-menu").attr("data-open-state") === "expanded") {
         return;
     }
@@ -179,8 +153,10 @@ $('.close-menu').on('click', function () {
 
     if ($(".toggle-menu").attr("data-open-state") === "closed") {
         $(".toggle-menu").attr("data-open-state", "opened");
+        $('.toggle-menu').css("width", "auto");
     } else {
         $(".toggle-menu").attr("data-open-state", "closed");
+        $('.toggle-menu').css("width", "auto");
     }
 });
 
@@ -189,16 +165,6 @@ $('.close-menu').on('click', function () {
 
 $(document).ready(function (ev) {
     $('.features-section').on('click', '.menu-icon', loadSection);
-    //let config = {
-    //    styles: {}
-    //};
-
-    //config.styles['background-color'] = '#1ac6e9';
-    //config.styles['border'] = '2px solid #1ac6e9';
-    //config.styles['border-radius'] = '10px';
-
-    //ModuleBuilder.createScroll('#static-section', '.feature-content', '.template-content', config);
-    //ModuleBuilder.createScroll('#floating-section', '.feature-content', '.template-content', config);
 
     function loadSection(ev) {
         var $trigger = $(this);
@@ -221,18 +187,31 @@ $(document).ready(function (ev) {
         var url = $trigger.attr('data-url') || '';
         // console.log(url);
         var $section = $trigger.parents('.features-section').find('.feature-content');
+        var $bottomSection = $('.toggle-bottom-menu.container');
         var $toggleMenu = $trigger.parents('.toggle-menu');
 
         $section.html('');
+        $bottomSection.html('');
         Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
             // console.log(res.url);
 
             if (res.success) {
-                $section.html(res.view);
+                // 
+
+
+                if ($(".toggle-menu").attr("data-open-state") === "opened") {
+                    $bottomSection.html(res.view);
+                    scrollToElement($bottomSection);
+                    $('.close-menu').click();
+                } else if ($(".toggle-menu").attr("data-open-state") === "expanded") {
+                    $section.html(res.view);
+                } else if ($(window).width() <= 767) {
+                    $section.html(res.view);
+                }
 
                 DocumentationWidget();
 
-                if ($toggleMenu.length > 0 && $toggleMenu.attr('data-open-state') !== 'expanded') {
+                if ($toggleMenu.length > 0 && $toggleMenu.attr('data-open-state') !== 'expanded' && $toggleMenu.attr('data-open-state') !== 'opened') {
                     expandMenu();
                 }
 
@@ -246,46 +225,24 @@ $(document).ready(function (ev) {
                     $container.each(function (_, element) {
                         source = $(this).data("videoid");
                         var url = getYoutubeData(source).then(function (res) {
-                            //  console.log(res);
+
                             var finalUrl = res.items[0].snippet.thumbnails.high.url;
                             var title = res.items[0].snippet.title;
-                            //   console.log(title);
                             $(element).children('img').attr('src', finalUrl);
                             $(element).children('.playlist-title').text(title);
                         }, Data.defaultError);
                     });
                 }
-
-                //if ($(window).width() > 768) {
-                //    $section.parent().data('scroll-bar').update();
-                //}
-
-                //onImgLoaded(function (ev) {
-                //    setTimeout(function () {
-                //        $section.parent().data('scroll-bar').update();
-                //    }, 200)
-                //});
             }
         });
     }
+
+    /*************************Bottom section default content******************************************/
 
     /*******************Get Youtube Playlist Thumbnails ***********************/
 
     function getYoutubeData(playlistId) {
         return Data.getJson({ url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8" });
-        //return new Promise((resolve, reject) => {
-        //    $.ajax({
-        //        url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=" + playlistId + "&key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8",
-        //        method: 'GET',
-        //        contentType: 'json',
-        //        success: resolve,
-        //        error: reject
-        //    }).then(function (data) {
-        //        let result = JSON.stringify(data.items[0].snippet.thumbnails.high.url);
-        //        console.log(result);
-        //        return result;
-        //        }, Data.defaultError)
-        //});
     }
 
     /********************************** Try Button logic ****************************************/
@@ -324,14 +281,15 @@ $(document).ready(function () {
     });
 });
 
+function scrollToElement(targetElement) {
+    $('html, body').animate({
+        scrollTop: $(targetElement).offset().top
+    }, 200);
+}
+
 /*To Move - Logic for Contact Us page*/
 
 function initSomeForm() {
-    //$('body').on('click', '.phone-contact', function () {
-    //    $('.expanded-contacts.phone').css('display', 'block');
-    //    $('.contact-us-widget.main-container').css('display', 'none');
-    //    $('.expanded-contacts.mail').css('display', 'none');
-    //})
 
     $('body').on('click', '.mail-contact', function () {
         $('.expanded-contacts.mail').css('display', 'block');

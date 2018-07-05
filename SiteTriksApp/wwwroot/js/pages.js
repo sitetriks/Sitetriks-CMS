@@ -430,7 +430,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         $('.resolution').each(function (_, element) {
             element.classList.add('selected');
         });
-        ModuleBuilder.getInstance('#preview-layout').resolutions = ['xs', 'sm', 'md', 'lg'];
+        $('#preview-layout').data('layout-control').resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 
     $('.show-content').on('click', function (ev) {
@@ -468,18 +468,19 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         });
 
         $('#btn-save-layout').on('click', function (ev) {
-            var l = ModuleBuilder.getInstance('#preview-layout');
+            var layoutWidget = pageContent.find(function (c) {
+                return c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0;
+            });
+            var layout = JSON.parse(layoutWidget.element);
+            var l = $('#preview-layout').data('layout-control');
             layout.layoutRows = l.map(function (r) {
                 return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass };
             });
-            //$('.show-content').trigger('click');
 
-            console.log(l.deletedPlaceholders);
             for (var i = 0; i < l.deletedPlaceholders.length; i += 1) {
                 removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
             }
 
-            // w.saveEditWidgetLocal
             saveEditWidgetServer(layoutWidget.type, JSON.stringify(layout), layoutWidget.id, layoutWidget.placeholder, layoutWidget.cssClass, layoutWidget.templateName, layoutWidget.allowedRoles, layoutWidget.allowedGroups);
         });
     } else {
@@ -610,6 +611,16 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
             $('#displayed-version').text(res.version);
 
             WidgetsDraggable.init(w.makeDrop);
+
+            var layoutWidget = pageContent.find(function (c) {
+                return c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0;
+            });
+            if (layoutWidget) {
+                var _layout2 = JSON.parse(layoutWidget.element);
+
+                $('#preview-layout').data('layout-control', _layout2.layoutRows);
+                document.getElementById('preview-layout').dispatchEvent(new CustomEvent('rebuildLayout', { detail: { l: _layout2.layoutRows } }));
+            }
         }, function (data, textStatus, XMLHttpRequest) {
             console.log(data);
             console.log(textStatus);
@@ -760,7 +771,8 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
                 isLocked: item.isLocked,
                 isStatic: item.isStatic
             },
-            preview: 'preview'
+            preview: 'preview',
+            lang: currentLanguage
         };
 
         Loader.show(true);
