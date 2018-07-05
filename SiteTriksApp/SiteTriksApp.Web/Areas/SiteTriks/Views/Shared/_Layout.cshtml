@@ -10,7 +10,7 @@
     @await Html.PartialAsync("_Favicons")
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -20,11 +20,11 @@
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
 
-    <link type="text/css" rel="stylesheet" href="~/css/back-end.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/grid.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/st-grid.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/resolutions-icons.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/Glyphter.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/back-end.css" asp-append-version="true"/>
+    <link type="text/css" rel="stylesheet" href="~/css/grid.css"  asp-append-version="true"/>
+    <link type="text/css" rel="stylesheet" href="~/css/st-grid.css"  asp-append-version="true"/>
+    <link type="text/css" rel="stylesheet" href="~/css/resolutions-icons.css"/>
+    <link type="text/css" rel="stylesheet" href="~/css/Glyphter.css"/>
 
     @* Manually added librarires. TODO: use package manager *@
     <link type="text/css" rel="stylesheet" href="~/lib/custom/slick/slick.css" />
@@ -216,14 +216,14 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    <script type="text/javascript" src="~/js/data.js"></script>
-    <script type="text/javascript" src="~/js/loader.js"></script>
-    <script type="text/javascript" src="~/js/gallery-2.0.js"></script>
-    <script type="text/javascript" src="~/js/notifier.js"></script>
-    <script type="text/javascript" src="~/js/validation.js"></script>
-    <script type="text/javascript" src="~/js/populate-url.js"></script>
-    <script type="text/javascript" src="~/js/grid.js"></script>
-    <script type="text/javascript" src="~/js/all-news.js"></script>
+    <script type="text/javascript" src="~/js/data.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/loader.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/gallery-2.0.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/notifier.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/validation.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/populate-url.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/grid.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/all-news.js"  asp-append-version="true"></script>
 
     @* Manually added librarires. TODO: use package manager *@
     <script type="text/javascript" src="~/lib/custom/slick/slick.min.js"></script>
@@ -238,7 +238,7 @@
     <script type="text/javascript" src="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
     <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
-    <script type="text/javascript" src="~/js/carousel.js"></script>
+    <script type="text/javascript" src="~/js/carousel.js"  asp-append-version="true"></script>
     @*@if (!LicenseManager.PersonalizationWithGroups)
         {*@
     <script>
@@ -258,7 +258,7 @@
     @RenderSection("Scripts", required: false)
 
     <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
-    <script src="~/js/sitetriks/layout.js"></script>
+    <script src="~/js/sitetriks/layout.js"  asp-append-version="true"></script>
     <script>
         $(window).load(function () {
             if ($('.prettyprint').length > 0) {

@@ -72,7 +72,11 @@
 }
 
     #add-widget-container .col-md-5 .row,
-    #edit-widget-container .col-md-5 .row {
+    #edit-widget-container .col-md-5 .row,
+    #add-widget-container .col-md-6 .row,
+    #edit-widget-container .col-md-6 .row,
+    #add-widget-container .col-md-4 .row,
+    #edit-widget-container .col-md-4 .row {
         margin-bottom: 15px;
         margin-top: 15px;
     }

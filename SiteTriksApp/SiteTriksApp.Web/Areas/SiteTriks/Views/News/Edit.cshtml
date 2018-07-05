@@ -57,7 +57,7 @@
 
                 <div class="form-group row">
                     @Html.LabelFor(model => Model.NewsEN.SEOKeyword, "SEO Keywords", htmlAttributes: new { @class = "control-label col-xs-2" })
-                    @Html.EditorFor(model => Model.NewsEN.SEOKeyword, new { htmlAttributes = new { @class = "form-control inline-block", id = "seo-words" } })
+                    @Html.EditorFor(model => Model.NewsEN.SEOKeyword, new { htmlAttributes = new { @class = "form-control inline-block", id = "seo-words", placeholder = "The keywords should be separate by comma!" } })
                     <span id="seo-words-counter"></span>
                 </div>
 

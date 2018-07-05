@@ -17,7 +17,15 @@
             {
                 <tr>
                     <td>@ex.DateCreated</td>
-                    <td>@ex.Message</td>
+                    <td>
+                        @ex.Message
+
+                        @if(ex.InnerExceptionMessage != null)
+                        {
+                        <p><strong>Inner exception Message:</strong> @ex.InnerExceptionMessage</p>
+
+                        }
+                    </td>
                 </tr>
 
             }

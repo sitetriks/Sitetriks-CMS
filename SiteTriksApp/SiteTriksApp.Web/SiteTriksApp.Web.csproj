@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-SiteTriksApp.Web-F71A9A06-9896-4C70-BC66-76DAE646A823</UserSecretsId>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,17 +14,25 @@
     <None Remove="logs\**" />
   </ItemGroup>
 
-
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.17" />
     <PackageReference Include="Hangfire.MySql.Core" Version="2.1.5" />
     <PackageReference Include="HangFire.SqlServer" Version="1.6.17" />
+    <PackageReference Include="MailKit" Version="2.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
+    <PackageReference Include="SiteTriks" Version="1.0.0.9" />
+    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.0.5" />
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.0.5" />
+    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.0.5" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.0.5" />
+    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.0.5" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.0.5" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.0.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -148,17 +157,6 @@
     <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\SiteTriksLicenseManager\LicenseBuilder\LicenseBuilder.csproj" />
-    <ProjectReference Include="..\SiteTriks.BlogModule\SiteTriks.BlogModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.DocumentationModule\SiteTriks.DocumentationModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.ForumModule\SiteTriks.ForumModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.MarketingEmailModule\SiteTriks.MarketingEmailModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.RssFeedModule\SiteTriks.RssFeedModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.SiteMapModule\SiteTriks.SiteMapModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.SiteSync\SiteTriks.SiteSync.csproj" />
-    <ProjectReference Include="..\SiteTriks\SiteTriks.csproj" />
-  </ItemGroup>
 
  <!-- <Target Name="IncludePrecompiledViewsInPublishOutput" DependsOnTargets="_MvcRazorPrecompileOnBuild" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
     <ItemGroup>

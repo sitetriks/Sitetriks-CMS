@@ -24,39 +24,46 @@
     <div class="page-properties">
         @foreach (var prop in Model.Properties)
         {
-            <div class="form-group row">
-                @if (prop.Name == "LinkId")
-                {
-                    <label class="col-md-2">Link: </label>
-                    <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
-                }
-                else if (prop.Type == "images")
-                {
-                    <input class="class-property" id="dynamic-images" data-name="@prop.Name" data-type="@prop.Type" hidden />
-                    <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'dynamic-images')">Images</button>
-                    <div id="dynamic-images-container"></div>
-                }
-                else if (prop.Type == "string-html")
-                {
-                    <label class="col-md-2">@prop.Name: </label>
-                    <div class="col-md-10" style="padding-left:0;">
-                        <textarea class="class-property" id="area-@prop.Name" data-name="@prop.Name" data-type="@prop.Type"></textarea>
-                    </div>
-                }
-                else if (prop.Type == "bool")
-                {
-                    <label class="col-md-2">@prop.Name: </label>
-                    <select class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type">
-                        <option value="0">False</option>
-                        <option value="1">True</option>
-                    </select>
-                }
-                else
-                {
-                    <label class="col-md-2">@prop.Name: </label>
-                    <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
-                }
-            </div>
+        <div class="form-group row">
+            @if (prop.Name == "LinkId")
+            {
+                <label class="col-md-2">Link: </label>
+                <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
+            }
+            else if (prop.Type == "images")
+            {
+                <input class="class-property" id="dynamic-images" data-name="@prop.Name" data-type="@prop.Type" hidden />
+                <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'dynamic-images')">Images</button>
+                <div id="dynamic-images-container"></div>
+            }
+            else if (prop.Type == "string-long")
+            {
+                <label class="col-md-2">@prop.Name: </label>
+                <div class="col-md-10" style="padding-left:0;">
+                    <textarea class="class-property form-control" rows="10" data-name="@prop.Name" data-type="@prop.Type"></textarea>
+                </div>
+            }
+            else if (prop.Type == "string-html")
+            {
+                <label class="col-md-2">@prop.Name: </label>
+                <div class="col-md-10" style="padding-left:0;">
+                    <textarea class="class-property" id="area-@prop.Name" data-name="@prop.Name" data-type="@prop.Type"></textarea>
+                </div>
+            }
+            else if (prop.Type == "bool")
+            {
+                <label class="col-md-2">@prop.Name: </label>
+                <select class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type">
+                    <option value="0">False</option>
+                    <option value="1">True</option>
+                </select>
+            }
+            else
+            {
+                <label class="col-md-2">@prop.Name: </label>
+                <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
+            }
+        </div>
         }
     </div>
 

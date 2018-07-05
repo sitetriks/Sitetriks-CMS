@@ -47,7 +47,7 @@
                 filter: true,
                 sort: true,
                 extraFields: ["url"],
-                size: 3,
+                size: 2,
                 headerTemplate: '<b>#item#</b>', // #item# is the placeholder for the content
                 contentTemplate: '<a href="/sitetriks/files/edit?url=#item0#">#item#</a>'
             },
@@ -60,17 +60,17 @@
                 size: 2,
                 contentTemplate: '<span class="text-danger">#item#</span>',
                 headerTemplate: '<b>#item#</b>'
-			},
-			{
-				name: "url",
-				title: "Copy",
-				type: 'string',
-				filter: false,
-				sort: false,
-				size: 1,
-				headerTemplate: '<b class="copy">#item#</b>',
-				contentTemplate: '<button title="Copy link to clipboard" class="btn btn-info copy" data-url="#item#"><i class="fa fa-clipboard" aria-hidden="true"></i></button>'
-			},
+            },
+            {
+                name: "url",
+                title: "Copy",
+                type: 'string',
+                filter: false,
+                sort: false,
+                size: 1,
+                headerTemplate: '<b class="copy">#item#</b>',
+                contentTemplate: '<button title="Copy link to clipboard" class="btn btn-info copy" data-url="#item#"><i class="fa fa-clipboard" aria-hidden="true"></i></button>'
+            },
             {
                 name: "url",
                 title: "Preview",
@@ -79,7 +79,16 @@
                 source: '/files/#item#',
                 headerTemplate: '<b>#item#</b>',
                 contentTemplate: '<img src="#item#" width="300" class="display-image" onerror="$(this).css(\'width\', \'100px\'); this.src = \'/Images/default-document-image.png\';" />'
-            }];
+            },
+            {
+                name: "isUsed",
+                title: "Used",
+                size: 1,
+                type: 'bool',
+                headerTemplate: '<b>#item#</b>',
+                falseTemplate: '<div class="isUsed-false"></div>',
+                trueTemplate: '<div class="isUsed-true"></div>'
+            },];
 
             let buttons = [{
                 title: 'Delete',

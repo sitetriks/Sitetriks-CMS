@@ -62,7 +62,7 @@
         $('.resolution').each(function (_, element) {
             element.classList.add('selected');
         });
-        ModuleBuilder.getInstance('#preview-layout').resolutions = ['xs', 'sm', 'md', 'lg'];
+        $('#preview-layout').data('layout-control').resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 
     $('.show-content').on('click', function (ev) {
@@ -96,7 +96,7 @@
         ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout' });
 
         $('#btn-save-layout').on('click', function (ev) {
-            let l = ModuleBuilder.getInstance('#preview-layout');
+            let l = $('#preview-layout').data('layout-control');
             layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
             //$('.show-content').trigger('click');
 
@@ -109,6 +109,48 @@
         });
     } else {
         console.error('Layout was not found!');
+    }
+
+    function removeWidgetForPlaceholder(placeholder) {
+        let widgets = pageContent.filter(c => c.placeholder === placeholder);
+
+        for (let i = 0; i < widgets.length; i += 1) {
+            let index = pageContent.findIndex(c => c.id === widgets[i].id);
+
+            if (index !== -1) {
+                pageContent.splice(index, 1);
+                if (widgets[i].type === 'layoutBuilder') {
+                    let layout = JSON.parse(widgets[i].element);
+                    for (let j = 0; j < layout.length; j += 1) {
+                        for (let k = 0; k < layout[j].columns.length; k += 1) {
+                            removeWidget(layout[j].columns[k].properties.placeholder);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    let $window = $(window);
+    let itemTop = 0;
+    $window.on('scroll resize', stickyWidgets);
+    $window.trigger('scroll');
+
+    function stickyWidgets() {
+        let scrollPosition = $window.scrollTop();
+        let $widgetsList = $('.widgets-list');
+
+        if (!itemTop) {
+            itemTop = $widgetsList.offset().top;
+        }
+
+        if ($widgetsList && $widgetsList.length === 1) {
+            if (scrollPosition > (itemTop - 100)) {
+                $widgetsList.addClass('scrolling');
+            } else {
+                $widgetsList.removeClass('scrolling');
+            }
+        }
     }
 
     $(document).on("updatePreview", {

@@ -7,7 +7,7 @@
             $element.next('span').text('');
             return true;
         } else {
-            $element.css('border', '1px solid #f00');
+            $element.css('border', '1px solid #ff6868');
             $element.next('span').text(errorMessage || 'Invalid value!');
             return false
         }

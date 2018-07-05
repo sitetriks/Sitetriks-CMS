@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using SiteTriks.Controllers;
 using SiteTriks.Data.Models;
 using SiteTriks.Infrastructure.Common;
@@ -68,6 +69,7 @@ namespace SiteTriksApp.Web.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["Type"] = "login";
             return View();
         }
 
@@ -246,6 +248,7 @@ namespace SiteTriksApp.Web.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["Type"] = "register";
             return View();
         }
 
@@ -574,8 +577,6 @@ namespace SiteTriksApp.Web.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(userInBase);
                 var callbackUrl = Url.SetPasswordCallbackLink(userInBase.Id, code, Request.Scheme);
 
-
-
                 await this._emailSender.SendEmailFromTemplateAsync(user.Email, "Account created", "CreateUserBackEndEmail", callbackUrl);
 
                 //await this._emailSender.SendEmailAsync(user.Email, "account created", message);
@@ -586,7 +587,9 @@ namespace SiteTriksApp.Web.Controllers
             {
                 // TODO: log result's errors
                 ModelState.AddModelError(string.Empty, "Something went wrong creating user!");
-                return this.View(userViewModel);
+                userViewModel.Errors = "Something went wrong creating user!";
+                TempData["ViewModel"] = JsonConvert.SerializeObject(userViewModel);
+                return this.RedirectToAction("Create", "Users", new { area = "Sitetriks" });
             }
         }
 

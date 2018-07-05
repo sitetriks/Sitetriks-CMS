@@ -5,23 +5,30 @@
 }
 
 <div id="mobile-view-top-menu" class="features-section top-menu">
-    <div class="row login-button">
-        Log in
+    <div class="row login-button login">
+        <a href="../../account/login">
+            Log in
+        </a>
+    </div>
+    <div class="row login-button logout">
+        <a href="../../account/logout">
+            Log out
+        </a>
     </div>
     @*<div class="row subscription-form-wrapper">
-        <div class="subscription-button">
-            <div>Subscribe now</div>
-        </div>
-        <div class="form-wrapper" style="display: none;">
-            <form id="subscriptionForm" action="">
-               <div> <input type="text" name="name" placeholder="Name"></div>
-               <div> <input type="text" name="email" placeholder="Email"></div>
-                <div class="subscription-radio-group"><span>I want to receive news from SiteTriks regarding new features and releases.</span> <br><label class="radio-inline"><input name="features-releases" type="radio">Yes</label> <label class="radio-inline"><input name="features-releases" type="radio">No</label></div>
-                <div class="subscription-radio-group"><span>I want to receive promotional materials regarding SiteTriks.</span> <br><label class="radio-inline"><input name="promotional-materials" type="radio">Yes</label> <label class="radio-inline"><input name="promotional-materials" type="radio">No</label></div>
-                <input type="button" onclick="myFunction()" value="Submit">
-            </form>
-        </div>
-    </div>*@
+            <div class="subscription-button">
+                <div>Subscribe now</div>
+            </div>
+            <div class="form-wrapper" style="display: none;">
+                <form id="subscriptionForm" action="">
+                   <div> <input type="text" name="name" placeholder="Name"></div>
+                   <div> <input type="text" name="email" placeholder="Email"></div>
+                    <div class="subscription-radio-group"><span>I want to receive news from SiteTriks regarding new features and releases.</span> <br><label class="radio-inline"><input name="features-releases" type="radio">Yes</label> <label class="radio-inline"><input name="features-releases" type="radio">No</label></div>
+                    <div class="subscription-radio-group"><span>I want to receive promotional materials regarding SiteTriks.</span> <br><label class="radio-inline"><input name="promotional-materials" type="radio">Yes</label> <label class="radio-inline"><input name="promotional-materials" type="radio">No</label></div>
+                    <input type="button" onclick="myFunction()" value="Submit">
+                </form>
+            </div>
+        </div>*@
     <div class="row">
         @for (int i = 0; i < 9 && i < Model.Entries.Count() - 1; i += 2)
         {

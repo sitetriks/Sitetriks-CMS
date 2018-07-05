@@ -32,7 +32,7 @@
             }
 
             <div data-placeholder="@placeholder" class="@((bool)ViewBag.IsPreview ? "drop drop-layout connected-widget-container placeholder" : "") @cssClasses">
-                @await Component.InvokeAsync("RenderPlaceholder", new { pageUrl = Model.PageUrl, preview = (bool)ViewBag.IsPreview ? "preview" : "", culture = (string)ViewBag.Language, placeholder = placeholder })
+                @await Component.InvokeAsync("RenderPlaceholder", new { pageUrl = Model.PageUrl, version = Model.Version, preview = (bool)ViewBag.IsPreview ? "preview" : "", culture = (string)ViewBag.Language, placeholder = placeholder })
             </div>
         }
         @Html.Raw(string.Format("</{0}>", item.Tag))

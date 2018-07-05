@@ -326,6 +326,26 @@ tbody {
     /*width: 90%;*/
 }
 
+.grid .isUsed-false {
+    margin-left: 10px;
+    display: block;
+    height: 20px;
+    width: auto;
+    background-repeat: no-repeat;
+    background-image: url('../images/static-homepage-pages/license-menu-page/Cross_header.svg');
+    background-size: auto;
+}
+
+.grid .isUsed-true {
+    margin-left: 10px;
+    display: block;
+    height: 20px;
+    width: auto;
+    background-repeat: no-repeat;
+    background-image: url('../images/static-homepage-pages/license-menu-page/tick green_header.svg');
+    background-size: auto;
+}
+
 .grid input[type="checkbox"] {
     /*width: 20px;*/
     /*height: 20px;*/

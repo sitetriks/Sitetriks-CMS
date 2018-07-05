@@ -13,7 +13,7 @@
             <div class="col-xs-6">
                 @Html.ActionLink("Edit", "ClassDetails", new { assemblyName = ViewData["assemblyName"], className = item.Name }, new { @class = "btn btn-backend" })
                 @Html.ActionLink("Configuration", "EditClass", new { assemblyName = ViewData["assemblyName"], className = item.Name }, new { @class = "btn btn-backend" })
-                @Html.ActionLink("Delete", "DeleteClass", new { assemblyName = ViewData["assemblyName"], className = item.Name }, new { @class = "btn btn-backend delete" })
+                <a class="btn btn-backend delete" data-assembly-name="@ViewData["assemblyName"]" data-class-name="@item.Name">Delete</a>
             </div>
         </div>
     }

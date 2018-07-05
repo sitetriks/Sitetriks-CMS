@@ -17,6 +17,10 @@
         padding-top: 2px;
     }
 
+    .toggle-menu {
+        width: auto;
+    }
+
 .toggle-menu .features-section > .row:first-child > div {
     padding: 0;
     margin: 0;
