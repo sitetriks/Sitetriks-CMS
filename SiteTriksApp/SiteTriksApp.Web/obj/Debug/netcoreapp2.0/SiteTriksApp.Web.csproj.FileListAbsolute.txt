@@ -1,47 +1,12 @@
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.deps.json
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.runtimeconfig.json
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.runtimeconfig.dev.json
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\LicenseBuilder.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.BlogModule.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Configuration.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Data.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.DatabaseApi.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Dynamic.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Extensions.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.ForumModule.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Infrastructure.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.MarketingEmailModule.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.RssFeedModule.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Services.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.SiteMapModule.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.SiteSync.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksLicenseManager.Models.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\LicenseBuilder.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.BlogModule.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.ForumModule.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.MarketingEmailModule.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.RssFeedModule.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.SiteMapModule.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.SiteSync.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksLicenseManager.Models.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Configuration.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Data.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.DatabaseApi.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Dynamic.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Extensions.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Infrastructure.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.Services.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.csprojAssemblyReference.cache
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.csproj.CoreCompileInputs.cache
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.AssemblyInfoInputs.cache
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.AssemblyInfo.cs
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.csproj.CopyComplete
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.pdb
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.DocumentationModule.dll
-E:\Kaloyan\Core\SiteTriksCurrent\SiteTriks\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriks.DocumentationModule.pdb
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.deps.json
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.runtimeconfig.json
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.runtimeconfig.dev.json
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.dll
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\bin\Debug\netcoreapp2.0\SiteTriksApp.Web.pdb
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.csprojAssemblyReference.cache
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.csproj.CoreCompileInputs.cache
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.AssemblyInfoInputs.cache
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.AssemblyInfo.cs
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.dll
+D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\Debug\netcoreapp2.0\SiteTriksApp.Web.pdb

@@ -15,7 +15,7 @@
                         </div>
                         <h3>@ViewData["Title"]</h3>
                         @*<h4>Please enter your email.</h4>*@
-                        <form asp-action="ResendConfirmationEmail" method="post">
+                        <form class="clearfix" asp-action="ResendConfirmationEmail" method="post">
                             <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="Email">Please enter your email:</label>
@@ -30,6 +30,8 @@
         </div>
     </content>
 </div>
+
+@await Html.PartialAsync("_AccountFooter")
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

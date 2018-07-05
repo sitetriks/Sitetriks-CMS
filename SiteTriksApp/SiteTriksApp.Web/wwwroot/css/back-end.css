@@ -531,9 +531,19 @@ a.profile-link {
     margin-right: 10px;
 }
 
+.used-in-files p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.used-in-files ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
 
 /*--------------------------------------------------------------------*/
-
 
 /* create edit news */
 
@@ -685,6 +695,11 @@ a.profile-link {
         height: 150px;
         overflow-y: auto;
     }
+
+
+        .dashboard-table .panel-body-landing .table tbody tr td:nth-of-type(1) {
+            text-align: left;
+        }
 
 .dashboard-items-table {
     width: 100%;
@@ -1388,11 +1403,10 @@ a.profile-link {
     }
 }
 
-#location{
+#location {
     width: 700px;
 }
 
-#custom-location-info{
+#custom-location-info {
     color: deepskyblue;
 }
-

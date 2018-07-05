@@ -5,8 +5,7 @@
 $(window).scroll(function () {
     // removeSideMenu();
     var scrollBottom = $(window).scrollTop() + $(window).height();
-    // console.log(scrollBottom);
-    // console.log($(window).height());
+
 
     if ($(this).scrollTop() >= 100) {
         $(".header-blue").css("height", "0px")
@@ -76,8 +75,6 @@ var circleIndex = 0;
 
 //    element.attr("data-order", circleIndex);
 
-//    // console.log(circleIndex);
-
 //    circleIndex++;
 
 //    //[{ x: 200, y: 200 }, { x: 100, y: 150 }, { x: left, y: top }]
@@ -128,7 +125,6 @@ function addElement(height, width, angle, ratioOfRadius, selector, text, lines, 
 
     element.attr("data-index", index);
 
-    // console.log(index);
 
     index++;
 
@@ -175,8 +171,7 @@ function GetLine(width, points, customClass) {
     for (var i = 0; i < points.length; i += 1) {
         let startPoint = points[i];
         let endPoint = points[i + 1];
-        //  console.log(startPoint);
-        //  console.log(endPoint);
+
 
         let lenght = Math.sqrt(Math.pow((endPoint.x - startPoint.x), 2) + Math.pow((endPoint.y - startPoint.y),
             2));
@@ -197,10 +192,8 @@ function GetLine(width, points, customClass) {
             shadow = "3px 0 5px #c8d0d4";
         } else if ((angle <= 90 || angle >= 270) && customClass === "line") {
             shadow = "-3px 0 5px #c8d0d4";
-            // console.log(angle);
         }
-        //  console.log("l:" + lenght);
-        //   console.log("a:" + angle);
+
 
         var line = $("<div>")
             .addClass(customClass)
@@ -407,6 +400,7 @@ var removeMobileMenu = function () {
         $('#mobile-view-top-menu').css('display', 'none');
         // $('.hidden-by-menu').css('display', 'block');
         closeMobileMenu();
+        clicked = false;
     }
 }
 
@@ -454,7 +448,6 @@ function expandMobileMenu() {
         $('.logo-mobile-image').attr('src', logoWhite);
         $('.logo-container-mobile').css('background-color', '#123e7a');
     }, 800);
-    console.log('close');
     if (windowWidth < 768) {
     $('.hidden-by-menu').css('display', 'none');
     }
@@ -580,7 +573,6 @@ $('#mobile-view-menu').on('click', '.menu-icon', function (event) {
     $('#static-section').remove();
     // check if it was already clicked
     if ($button.hasClass('active')) {
-        // console.log($button);
         $button.removeClass('active');
 
     } else if (!$button.hasClass('active')) {
@@ -590,8 +582,7 @@ $('#mobile-view-menu').on('click', '.menu-icon', function (event) {
         $button.parent().parent().next().html(selectedSection);
     }
 
-    // console.log(button);
-    console.log($button.attr('data-order'));
+
 
 });
 
@@ -668,7 +659,6 @@ $('body').on('submit', '.contact-us-form', function (ev) {
 
         })
         .catch(function (err) {
-            console.log(err);
             $notifier.addClass('alert alert-danger  fade in alert-dismissible');
             $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
         })
@@ -691,7 +681,6 @@ $('body').on('submit', '.contact-us-form-1', function (ev) {
         $notifier.addClass('alert alert-success  fade in alert-dismissible');
         $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> Your request was sent successfully!');
     }).catch(function (err) {
-        console.log(err);
         $notifier.addClass('alert alert-danger  fade in alert-dismissible');
         $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
     });
@@ -795,18 +784,16 @@ $(document).ready(function () {
 /********************************************************************************************/
 function toggleForm() {
     $('.subscription-button').on('click', function () {
-        console.log($(this));
         $(this).next().toggle();
     });
 };
 
-$(window).ready(toggleForm());
+// $(window).ready(toggleForm());
 
 /********************************** Try Button logic ****************************************/
 
 function loadSection(ev) {
     var $trigger = $(this);
-    // console.log($trigger);
 
     $('.menu-icon').each(function () {
         if ($(this).hasClass('clicked')) {
@@ -823,13 +810,11 @@ function loadSection(ev) {
     $trigger.children('.icon-image').toggle();
 
     var url = $trigger.attr('data-url') || '';
-    // console.log(url);
     var $section = $trigger.parents('.features-section').find('.feature-content');
     var $toggleMenu = $trigger.parents('.toggle-menu');
 
     $section.html('');
     Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
-        // console.log(res.url);
 
         if (res.success) {
             $section.html(res.view);

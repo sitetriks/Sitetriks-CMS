@@ -202,11 +202,11 @@
                     border-color: transparent transparent #555;
                 }
 
-                .inactive {
-                    position: relative;
-                }
+        .inactive {
+            position: relative;
+        }
 
-             .inactive:hover .tooltiptext {
+            .inactive:hover .tooltiptext {
                 visibility: visible;
                 opacity: 1;
                 pointer-events: none;
@@ -236,7 +236,7 @@
             <div class="extensions-installed">
                 @foreach (var item in Model)
                 {
-                    <label class="module-name clearfix">@item.DisplayName <input class="activate-module" type="checkbox" data-size="mini" data-onstyle="success" data-toggle="toggle" @if (item.IsActive) { <text> checked </text>   } data-name="@item.Name" /></label>
+                    <label class="module-name clearfix">@item.DisplayName <input class="activate-module" type="checkbox" data-size="mini" data-onstyle="success" data-toggle="toggle" @if (item.IsActive) { <text> checked </text> } data-name="@item.Name" /></label>
                 }
             </div>
         </div>
@@ -271,6 +271,7 @@
 
 @section scripts{
     <script type="text/javascript" src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="~/js/restart-app.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/extensions.js"></script>
     <script>
         $(document).ready(function (ev) {

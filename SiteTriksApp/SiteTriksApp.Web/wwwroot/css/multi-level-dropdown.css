@@ -34,7 +34,7 @@
         position: relative;
     }
 
-.logo-container {
+.navigation-widget-wrapper .logo-container {
     margin: 0;
     padding: 0;
     width: 220px;
@@ -46,17 +46,37 @@
     text-transform: uppercase;
     font-family: BlairMd;
     font-weight: bolder;
+    display: inline-block;
 }
 
     .logo-container img {
         width: 100%;
     }
 
+.navigation-widget-wrapper .desktop-account-icons {
+    width: 100px;
+    display: inline-block;
+    float: right;
+}
 
+    .navigation-widget-wrapper .desktop-account-icons .login-icon a {
+        display: block;
+        background-image: url("../../images/homepage/Sign_in.svg");
+        margin-top: 30px;
+        height: 40px;
+        width: auto;
+        background-repeat: no-repeat;
+    }
+
+    .navigation-widget-wrapper .desktop-account-icons .register-icon a {
+        display: block;
+        background-image: url("../../images/homepage/Register.svg");
+        margin-top: 30px;
+        height: 40px;
+        width: auto;
+        background-repeat: no-repeat;
+    }
 /*****************************************/
-
-
-
 .nav-container {
     position: relative;
     width: 100%;
@@ -70,6 +90,7 @@
 }
 
     .multi-level-navigation > ul {
+        display: none;
         list-style: none;
         padding: 0 2%;
         margin: 0;
@@ -200,4 +221,20 @@
 
     .multi-level-navigation ul:after {
         clear: both;
+    }
+
+
+    @media (max-width: 768px) {
+        .navigation-widget-wrapper .desktop-account-icons {
+            display: none;
+        }
+
+        .navigation-widget-wrapper .logo-container {
+           display: none;
+        }
+
+        .multi-level-navigation > ul {
+            display: block;
+        }
+
     }

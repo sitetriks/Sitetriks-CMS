@@ -2,8 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using SiteTriks.Data.Models.Enums;
+using SiteTriks.Data.Models.Helpers;
+using SiteTriks.Data.Models.NewModels.Pages.Enums;
+using SiteTriks.Data.Models.NewModels.Url.Enums;
+using SiteTriks.DocumentationModule.Data.Enums;
+using SiteTriks.Extensions.Expressions;
 using SiteTriksApp.Web.Data;
 using System;
+using System.ComponentModel;
 
 namespace SiteTriksApp.Web.Migrations
 {
@@ -463,6 +473,32 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_exceptionLogs");
                 });
 
+            modelBuilder.Entity("SiteTriks.Data.Models.FileUse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<Guid>("FileId");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<string>("RefferedInObject");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.Property<string>("UsedInPages");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId");
+
+                    b.ToTable("st_fileUse");
+                });
+
             modelBuilder.Entity("SiteTriks.Data.Models.Filter", b =>
                 {
                     b.Property<Guid>("Id")
@@ -593,6 +629,28 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasIndex("PrefixId");
 
                     b.ToTable("st_libraries");
+                });
+
+            modelBuilder.Entity("SiteTriks.Data.Models.MarketingEmailOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<int>("Index");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_marketingEmailOptions");
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.NewModels.News.NewsMeta", b =>
@@ -911,17 +969,23 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<bool>("IsUsed");
+
                     b.Property<string>("LastUserId");
 
                     b.Property<Guid>("LibraryId");
 
                     b.Property<Guid>("LinkId");
 
+                    b.Property<string>("RefferedInNews");
+
                     b.Property<Guid>("SiteProviderId");
 
                     b.Property<string>("Title");
 
                     b.Property<int>("Type");
+
+                    b.Property<string>("UsedInPages");
 
                     b.HasKey("Id");
 
@@ -1349,9 +1413,11 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<DateTime?>("DateModified");
 
-                    b.Property<string>("EMail");
+                    b.Property<string>("Email");
 
                     b.Property<string>("LastUserId");
+
+                    b.Property<string>("MarketingEmailGroups");
 
                     b.Property<string>("Name");
 
@@ -1561,6 +1627,14 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.NewModels.Pages.PageMeta", "PageMeta")
                         .WithMany()
                         .HasForeignKey("PageMetaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("SiteTriks.Data.Models.FileUse", b =>
+                {
+                    b.HasOne("SiteTriks.Data.Models.ProjectFile", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

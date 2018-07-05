@@ -11,15 +11,9 @@ function removeSideMenu(e) {
     let $scrollBottom = $(window).scrollTop() + $(window).height();
     let $toggleMenu = $('.toggle-menu');
 
-    //console.log($distance);
-    //console.log($scrollBottom);
-
-    if (distance && $scrollBottom >= distance) {
-        // $('.toggle-menu').css("display", "none");
+    if (distance && ($scrollBottom >= distance) && ($(window).width() > 767)) {
         $toggleMenu.addClass('visuallyhidden');
-
         $toggleMenu.one('transitionend', function (e) {
-            //$toggleMenu.addClass('hidden');
         });
     }
 

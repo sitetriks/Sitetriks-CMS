@@ -32,9 +32,30 @@
             @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
         </div>
 
+        <div class="form-group row" id="email-group-options">
+            <label class="control-label col-md-2"></label>
+            <div class="col-md-3" id="checkboxes">
+
+            @for (int i = 0; i < Model.Options.Count; i++)
+            {
+                <label class="checkbox-inline"><input type="checkbox" name="@Model.Options[i].Name" value="@Model.Options[i].Index">@Model.Options[i].Name</label>
+                <span class="validation-output"></span>
+            }
+            <label class="checkbox-inline" id="all-users-label">
+                <input type="checkbox" name="All" id="all-users" value="999">All
+            </label>
+            </div>
+            <span class="validation-output"></span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2"></label>
+            <div id="users" class="inline-block">
+            </div>
+        </div>
+
         <div class="form-group row description-row">
             @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="inline-block">
                 @Html.TextAreaFor(model => model.Content, new { @class = "form-control", id = "content-area" })
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
@@ -43,6 +64,7 @@
 </div>
 @section Scripts {
     <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+    <script src="~/js/data.js"></script>
     <script src="~/js/leaving-warning.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script src="~/js/text-editor.js"></script>

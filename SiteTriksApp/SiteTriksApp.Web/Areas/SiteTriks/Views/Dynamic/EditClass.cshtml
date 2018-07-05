@@ -5,12 +5,13 @@
 
     // TODO: move!
     var types = new SelectList(new List<SelectListItem>() {new SelectListItem(){Text = "Number", Value = "int"},
-    new SelectListItem(){Text = "String", Value = "string"},
-    new SelectListItem(){Text = "Html", Value = "string-html"},
-    new SelectListItem(){Text = "Decimal", Value = "decimal"},
-    new SelectListItem(){Text = "Bool", Value = "bool"},
-    new SelectListItem(){Text = "Guid", Value = "guild"},
-    new SelectListItem(){Text = "Images", Value = "images"}
+new SelectListItem(){Text = "String", Value = "string"},
+new SelectListItem(){Text = "String-long", Value = "string-long"},
+new SelectListItem(){Text = "Html", Value = "string-html"},
+new SelectListItem(){Text = "Decimal", Value = "decimal"},
+new SelectListItem(){Text = "Bool", Value = "bool"},
+new SelectListItem(){Text = "Guid", Value = "guild"},
+new SelectListItem(){Text = "Images", Value = "images"}
 }, "Value", "Text");
 }
 
@@ -77,6 +78,7 @@
 </div>
 
 @section scripts{
+    <script src="~/js/restart-app.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/dynamics.js"></script>
     <script type="text/javascript">

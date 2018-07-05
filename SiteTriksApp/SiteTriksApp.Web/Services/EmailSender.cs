@@ -46,7 +46,7 @@ namespace SiteTriksApp.Web.Services
             return this.SendEmailAsync(reciever, "support@sitetriks.com", subject, emailContent);
         }
 
-        public Task SendEmailAsync(string reciever, string sender, string subject, string message)
+        public virtual Task SendEmailAsync(string reciever, string sender, string subject, string message)
         {
             return Task.Run(() =>
             {
@@ -58,52 +58,7 @@ namespace SiteTriksApp.Web.Services
                 mailMessage.IsBodyHtml = true;
                 mailMessage.Subject = subject;
 
-                var config = this.siteTriksConfigurationService.GetAll().FirstOrDefault(c => c.Name == this.Path);
-                string json = string.Empty;
-                if(config == null)
-                {
-                    if (this.fileProvider.DoesFileExist(this.Path))
-                    {
-                        json = this.fileProvider.ReadFile(this.Path);
-                    }
-                    else
-                    {
-                        json = "{\"Port\", \"Host\", \"UseDefaultCredentials\", \"EnableSsl\"}";
-                        this.fileProvider.WriteJSONToFile(this.Path, json);
-                    }
-
-                    Config c = new Config()
-                    {
-                        Content = json,
-                        IsIdenticalToFile = true,
-                        Name = this.Path
-                    };
-
-                    this.siteTriksConfigurationService.Create(c);
-                }
-                else
-                {
-                    json = config.Content;
-                    string jsonFile = string.Empty;
-
-                    if (this.fileProvider.DoesFileExist(this.Path))
-                    {
-                        jsonFile = this.fileProvider.ReadFile(this.Path);
-                        if (jsonFile != json)
-                        {
-                            config.Content = jsonFile;
-                            config.DateModified = DateTime.Now;
-                            this.siteTriksConfigurationService.Update(config);
-                            json = jsonFile;
-                        }
-                    }
-                    else
-                    {
-                        this.fileProvider.WriteJSONToFile(this.Path, json);
-                    }
-                }
-
-                var smtpConfig = this.jsonProvider.Deserialize<SmtpConfigurationModel>(json);
+                var smtpConfig = this.GetSmtpConfig();
 
                 using (SmtpClient smtp = new SmtpClient())
                 {
@@ -112,10 +67,60 @@ namespace SiteTriksApp.Web.Services
                     smtp.Port = smtpConfig.Port;
                     smtp.Credentials = new NetworkCredential(smtpConfig.Username, smtpConfig.Password);
                     smtp.Host = smtpConfig.Host;
-                    smtp.EnableSsl = smtpConfig.EnableSsl;                    
+                    smtp.EnableSsl = smtpConfig.EnableSsl;
                     smtp.Send(mailMessage);
                 }
             });
+        }
+
+        protected SmtpConfigurationModel GetSmtpConfig()
+        {
+            var config = this.siteTriksConfigurationService.GetAll().FirstOrDefault(c => c.Name == this.Path);
+            string json = string.Empty;
+            if (config == null)
+            {
+                if (this.fileProvider.DoesFileExist(this.Path))
+                {
+                    json = this.fileProvider.ReadFile(this.Path);
+                }
+                else
+                {
+                    json = "{\"Port\", \"Host\", \"UseDefaultCredentials\", \"EnableSsl\"}";
+                    this.fileProvider.WriteJSONToFile(this.Path, json);
+                }
+
+                Config c = new Config()
+                {
+                    Content = json,
+                    IsIdenticalToFile = true,
+                    Name = this.Path
+                };
+
+                this.siteTriksConfigurationService.Create(c);
+            }
+            else
+            {
+                json = config.Content;
+                string jsonFile = string.Empty;
+
+                if (this.fileProvider.DoesFileExist(this.Path))
+                {
+                    jsonFile = this.fileProvider.ReadFile(this.Path);
+                    if (jsonFile != json)
+                    {
+                        config.Content = jsonFile;
+                        config.DateModified = DateTime.Now;
+                        this.siteTriksConfigurationService.Update(config);
+                        json = jsonFile;
+                    }
+                }
+                else
+                {
+                    this.fileProvider.WriteJSONToFile(this.Path, json);
+                }
+            }
+
+            return this.jsonProvider.Deserialize<SmtpConfigurationModel>(json);
         }
     }
 }

@@ -19,17 +19,14 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/restart-app.js"></script>
+    <script src="~/js/sitetriks/dynamics.js"></script>
     <script>
-        $(document).ready(function () {            
+        $(document).ready(function () {
             $('body').on('click', '.delete', function (e) {
                 Loader.show('#fff', "/images/LOGO.png");
 
-                setTimeout(function () {               
-                    var currLocation = window.location.toString();
-                    var lastIndexOfSlash = currLocation.lastIndexOf('/');
-                    var newLocation = currLocation.substring(0, lastIndexOfSlash);
-                    window.location.reload(true);
-                }, 2000);
+                deleteClass(this);                
             });
         });
     </script>

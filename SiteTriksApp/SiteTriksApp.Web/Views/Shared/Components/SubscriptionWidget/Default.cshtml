@@ -1,4 +1,4 @@
-﻿<div class="row subscription-form-wrapper .desctop">
+﻿<div class="row subscription-form-wrapper .desctop" id="subscription-form-container">
     <div class="subscription-button">
         <div>Subscribe now</div>
     </div>
@@ -6,23 +6,20 @@
         <div id="subscriptionForm" action="">
             <input type="text" name="name" placeholder="Name">
             <span class="validation-output"></span>
-             <input type="text" name="email" placeholder="Email">
+            <input type="text" name="email" placeholder="Email">
             <span class="validation-output"></span>
-            <label for=""></label>
 
+            <div>I want to receive news from SiteTriks regarding new features and releases.</div>
             <div id="features-releases-group" class="subscription-radio-group">
-                <span>I want to receive news from SiteTriks regarding new features and releases.</span>
-                <br />
-                <label class="radio-inline"><input type="radio" name="features-releases">Yes</label>
-                <label class="radio-inline"><input type="radio" name="features-releases">No</label>
+                <label class="radio-inline"><input type="radio" name="features-releases" value="1">Yes</label>
+                <label class="radio-inline"><input type="radio" name="features-releases" value="0">No</label>
                 <span class="validation-output"></span>
             </div>
 
+            <div>I want to receive promotional materials regarding SiteTriks.</div>
             <div id="promotional-materials-group" class="subscription-radio-group">
-                <span>I want to receive promotional materials regarding SiteTriks.</span>
-                <br />
-                <label class="radio-inline"><input type="radio" name="promotional-materials">Yes</label>
-                <label class="radio-inline"><input type="radio" name="promotional-materials">No</label>
+                <label class="radio-inline"><input type="radio" name="promotional-materials" value="1">Yes</label>
+                <label class="radio-inline"><input type="radio" name="promotional-materials" value="0">No</label>
                 <span class="validation-output"></span>
             </div>
 
@@ -30,6 +27,3 @@
         </div>
     </div>
 </div>
-
-
-

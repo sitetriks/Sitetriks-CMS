@@ -9,14 +9,6 @@
         <input type="radio" name="template" value="latest" id="latest-news" />
         <label for="latest-news">Latest news</label>
         <input type="number" min="1" id="latest-news-count" class="form-control input-number" />
-        <br />
-        <div class="row">
-            <label for="news-type" class="col-md-4">News open type</label>
-            <select id="news-type" class="form-control">
-                <option value="single">Open in single page</option>
-                <option value="multiple">Open with all news</option>
-            </select>
-        </div>
         <hr />
         @await Html.PartialAsync("WidgetsForms")
     </div>

@@ -16,7 +16,5 @@
 }
 else
 {
-    <div class="@Model.CssClass">
         @await Component.InvokeAsync("JavaScriptWidget", new { area = "", element = Model.Element, isPreview = Model.IsPreview })
-    </div>
 }

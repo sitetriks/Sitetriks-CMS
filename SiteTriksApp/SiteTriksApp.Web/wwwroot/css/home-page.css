@@ -668,9 +668,9 @@ body {
         }
 
 
-        .technology-list .row .technology-description .bullets.second-column {
+        /*.technology-list .row .technology-description .bullets.second-column {
             border-right: solid 3px #123e7a;
-        }
+        }*/
 
         .technology-list .row .technology-description .bullets ul {
             list-style-type: none;
@@ -699,6 +699,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        border-left: solid 3px #123e7a;
         /*padding-top: 70px;*/
     }
 
@@ -752,15 +753,22 @@ body {
 /*===================== Subscription form ===============*/
 /*========================================================================*/
 
-.subscription-radio-group  {
-    margin-top: 20px;
-    text-align: center;
-    margin-left: -12px;
+#subscription-form-container .alert {
+    margin-top: 10px;
+    width: 30%;
+    font-size: 14px;
 }
 
-#subscriptionForm div:nth-of-type(3) {
-    margin-top: 40px;
+.subscription-radio-group {
+    text-align: center;
+    margin-left: -12px;
+    /*margin-top: 10px;*/
 }
+
+#promotional-materials-group, #features-releases-group {
+    margin-bottom: 10px;
+}
+
 
 .subscription-radio-group span {
     font-size: 13px;
@@ -783,6 +791,7 @@ body {
     align-items: center;
     border-bottom: 6px solid #3d70ca;
     padding: 30px 0 !important;
+    text-align: center;
 }
 
     .row.subscription-form-wrapper .subscription-button {
@@ -813,30 +822,34 @@ body {
         padding: 0;
         color: lightgray;
         font-size: 1.5em;
-        width: 310px;
+        width: auto;
     }
 
     #subscriptionForm div {
         min-height: 30px;
     }
 
-    .row.subscription-form-wrapper .form-wrapper .validation-output {
-        color: red;
-        font-size:14px;
-        display: block;
-    }
+.row.subscription-form-wrapper .form-wrapper .validation-output {
+    color: #ff6868;
+    font-size: 14px;
+    display: block;
+}
+
 
 .row.subscription-form-wrapper .form-wrapper input[type=text] {
+    margin-top: 0;
+    margin-bottom: 30px;
+    width: 100%; 
+    max-width: inherit;
+    float: right;
     outline: none;
     color: black;
     border-radius: 20px;
-    margin-bottom: 10px;
-    float: right;
     background-color: lightgray;
-    width: 100%;
     font-size: 15px;
     margin-top: 10px;
     max-width: inherit;
+    text-align: center;
 }
 
         .row.subscription-form-wrapper .form-wrapper label {
@@ -864,7 +877,7 @@ body {
             }
 
 #features-releases-group {
-    margin-top: 100px;
+    /*margin-top: 100px;*/
 }
 /*Bottom menu / Features section*/
 .features-section {
@@ -998,14 +1011,20 @@ body {
 
 /*=====================================================================================================================*/
 
+/*Bootom toggle menu*/
+
+.toggle-bottom-menu.container {
+    display: block;
+    height: auto;
+    width: 100%;
+    background-color: #3876cf;
+}
+
 /*Toggle menu*/
-
 /*NB - Removing the scroll functionality of the top menu*/
-
 /*#floating-section {
     overflow-y: hidden;
 }*/
-
 .toggle-menu {
     display: inline-block;
     /*display: none;*/
@@ -1013,9 +1032,10 @@ body {
     padding: 0;
     left: 0;
     position: fixed;
-    margin-top: 5%;
+    margin-top: 100px;
     /*width: 90%;*/
     z-index: 1000;
+    top: 50px;
 }
 
     .toggle-menu .features-section {
@@ -1338,8 +1358,10 @@ body {
 
     .element {
         font-size: 8px;
-        line-height: normal;
+        line-height: 14px;
+        text-shadow: 0.2px 0.3px gray;
     }
+
 
     /*Diamond */
 
@@ -1358,13 +1380,19 @@ body {
     }
 
     .wrapper-technology-list {
-        margin: 0 25px;
+        margin: 0 10%;
     }
 
 
     .menu-icon .icon-name.icon-fag {
         font-size: 2.4em;
         /*margin-top: 45%;*/
+    }
+
+    /*Technology list*/
+
+    .technology-list .row.header {
+        font-size: 2em;
     }
 
     /*Footer*/
@@ -1431,7 +1459,8 @@ body {
 
     .element {
         font-size: 8px;
-        line-height: normal;
+        line-height: 14px;
+        text-shadow: 0.2px 0.3px gray;
     }
 
     /*Bottom toggle menu resize*/
@@ -1448,6 +1477,12 @@ body {
     /*Footer*/
     .homepage-footer .row .col-lg-1 .glyphicon {
         font-size: 20px;
+    }
+
+    /*Technology list*/
+
+    .technology-list .row.header {
+        font-size: 1.8em;
     }
 
     .homepage-footer .row .col-lg-1 a {
@@ -1512,7 +1547,7 @@ body {
     .logo-mobile {
         display: inline-block;
         width: 150px;
-        margin-left: 5%;
+        margin-left: 3%;
         /*position: absolute;
         top: 50%;
         left: 50%;
@@ -1523,6 +1558,11 @@ body {
     img.logo-mobile {
         height: 100%;
         width: 180px;
+    }
+
+    img.logo-mobile-image {
+        height: 100%;
+        width: 100%;
     }
 
     .header-white {
@@ -1536,6 +1576,7 @@ body {
     .main {
         margin-top: 56px;
     }
+
 
     .technology-list .row .technology-description .bullets ul > li::before {
         display: none;
@@ -1798,6 +1839,7 @@ body {
     .technology-list .row .technology-links {
         padding-top: 0;
         background-color: #3876cf;
+        border-left: none;
     }
 
     .bullets {
@@ -1819,6 +1861,12 @@ body {
     /*Subscription form*/
 
     .row.subscription-form-wrapper .desctop {
+        display: none;
+    }
+
+    /*Bottom menu wrapper*/
+
+    .toggle-bottom-menu.container {
         display: none;
     }
 
@@ -1971,10 +2019,11 @@ body {
         transform: translate(-50%, -50%)*/
     }
 
-    img.logo-mobile {
-        height: 100%;
-        width: 180px;
-    }
+
+        .logo-mobile .logo-mobile-image {
+            height: 100%;
+            width: 100%;
+        }
 
     .header-white {
         border-bottom: 2px solid #008cff;
@@ -2038,14 +2087,14 @@ body {
         }
 
         .toggle-menu {
-            margin-top: 30px;
+            margin-top: 90px;
         }
     }
 
     @media (max-height: 740px) {
 
         .toggle-menu {
-            margin-top: 0px;
+            margin-top: 70px;
         }
     }
 
@@ -2053,14 +2102,6 @@ body {
     @media (max-height: 700px) {
 
         .toggle-menu {
-            margin-top: -50px;
+            margin-top: 0px;
         }
     }
-
-    @media (max-height: 650px) {
-
-        .toggle-menu {
-            margin-top: -80px;
-        }
-    }
-

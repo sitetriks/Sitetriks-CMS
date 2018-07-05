@@ -11,7 +11,9 @@
                     return;
                 }
 
-                window.location.reload(true);
+                handleAppRestart({ url: '/sitetriks/extensions', timeout: 2000 });
+
+                //window.location.reload(true);
             } else {
                 Loader.hide();
                 Notifier.createAlert({ containerId: '#alerts', message: res.message, status: 'danger' });

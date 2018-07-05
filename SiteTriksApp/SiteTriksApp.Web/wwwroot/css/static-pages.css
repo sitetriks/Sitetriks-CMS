@@ -358,11 +358,18 @@
     border: none;
 }
 
+/*Bottom toggle menu*/
+
+.toggle-bottom-menu.container .support-and-requests-content .row .col {
+    /*margin-bottom: 20px !important;*/
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+
 /******************************/
 /*Responsive design*/
-
 @media (max-width: 1300px) and (min-width: 992px) {
-
     .support-and-requests-content .column-headers {
         font-size: 18px;
     }
@@ -535,6 +542,15 @@
     .community-and-partners-content .row .col .column-contents {
         border: none;
     }
+
+/*Bottom toggle menu*/
+
+.toggle-bottom-menu.container .community-and-partners-content .row .col {
+    /*margin-bottom: 20px !important;*/
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
 
 
 /******************************/

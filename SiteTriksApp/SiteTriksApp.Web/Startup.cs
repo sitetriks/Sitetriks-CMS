@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,11 +20,14 @@ using SiteTriksApp.Web.Data;
 using SiteTriksApp.Web.Services;
 using System;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 
 namespace SiteTriksApp.Web
 {
     public class Startup
-    {
+    {       
+
         public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
@@ -65,8 +69,8 @@ namespace SiteTriksApp.Web
 
             var providers = ApplicationStart.InjectModules(services);
 
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<ISiteTriksEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, MailKitEmailSender>();
+            services.AddTransient<ISiteTriksEmailSender, MailKitEmailSender>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<IPermissionChecker, PermissionChecker>();
 
@@ -149,6 +153,16 @@ namespace SiteTriksApp.Web
                 options.Cookie.Expiration = TimeSpan.FromHours(4);
             });
 
+            services.AddResponseCompression(options =>
+            {
+                ApplicationStart.SetResposnseCompressionOptions(options);
+            });
+
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
+
             services.AddDataProtection()
             .PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"))
             .SetApplicationName("SiteTriks")
@@ -188,13 +202,20 @@ namespace SiteTriksApp.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseResponseCompression();
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions() {                
+                OnPrepareResponse = (context) =>
+                {
+                    ApplicationStart.CacheStaticFiles(context, this.Configuration);                   
+                }
+            });
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+
 
             app.UseAuthentication();
 
