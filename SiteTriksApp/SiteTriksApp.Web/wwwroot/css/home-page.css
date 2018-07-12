@@ -132,7 +132,6 @@ body {
 .try-button {
     margin: 0;
     padding: 0;
-
     /* TODO - check real sizes later */
     padding: 0;
     height: 30px;
@@ -228,9 +227,9 @@ body {
     z-index: 1;
 }
 
-.element:hover {
-    color: #2579cc;
-}
+    .element:hover {
+        color: #2579cc;
+    }
 
 /*Logo styles*/
 
@@ -703,19 +702,20 @@ body {
         /*padding-top: 70px;*/
     }
 
-        .technology-list .row .technology-links div {
-            font-size: 1.4em;
+        .technology-list .row .technology-links div a {
+            font-size: 2em;
             font-family: Montserrat;
             font-weight: bold;
             color: #123f7b;
             text-transform: uppercase;
             padding-left: 30px;
             line-height: 30px;
+            text-decoration: none;
         }
 
 
 
-            .technology-list .row .technology-links div:hover {
+            .technology-list .row .technology-links div a:hover {
                 color: #5fb6fd;
             }
 
@@ -825,9 +825,9 @@ body {
         width: auto;
     }
 
-    #subscriptionForm div {
-        min-height: 30px;
-    }
+#subscriptionForm div {
+    min-height: 30px;
+}
 
 .row.subscription-form-wrapper .form-wrapper .validation-output {
     color: #ff6868;
@@ -839,7 +839,7 @@ body {
 .row.subscription-form-wrapper .form-wrapper input[type=text] {
     margin-top: 0;
     margin-bottom: 30px;
-    width: 100%; 
+    width: 100%;
     max-width: inherit;
     float: right;
     outline: none;
@@ -852,29 +852,29 @@ body {
     text-align: center;
 }
 
-        .row.subscription-form-wrapper .form-wrapper label {
-            margin-bottom: 25px;
-        }
+.row.subscription-form-wrapper .form-wrapper label {
+    margin-bottom: 25px;
+}
 
-        .row.subscription-form-wrapper .form-wrapper input[type=button] {
-            width: 150px;
-            height: 40px;
-            border-radius: 25px;
-            font-size: 14px;
-            text-transform: uppercase;
-            font-family: Montserrat;
-            color: #3876cf;
-            line-height: normal;
-            background-color: #3c3c3c;
-            border: 3px solid #3876cf;
-            display: block;
-            margin: 0 auto;
-        }
+.row.subscription-form-wrapper .form-wrapper input[type=button] {
+    width: 150px;
+    height: 40px;
+    border-radius: 25px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: Montserrat;
+    color: #3876cf;
+    line-height: normal;
+    background-color: #3c3c3c;
+    border: 3px solid #3876cf;
+    display: block;
+    margin: 0 auto;
+}
 
-            .row.subscription-form-wrapper .form-wrapper input[type=button]:hover {
-                background-color: #3876cf;
-                color: #3c3c3c;
-            }
+    .row.subscription-form-wrapper .form-wrapper input[type=button]:hover {
+        background-color: #3876cf;
+        color: #3c3c3c;
+    }
 
 #features-releases-group {
     /*margin-top: 100px;*/
@@ -939,7 +939,6 @@ body {
 
 .homepage-footer {
     background-color: #383838;
-    padding-top: 7px;
 }
 
     .homepage-footer .row {
@@ -963,9 +962,9 @@ body {
             align-items: center;
         }
 
-        .homepage-footer .row .col-lg-10 p {
-            margin: 0;
-        }
+            .homepage-footer .row .col-lg-10 p {
+                margin: 0;
+            }
 
 
         .homepage-footer .row .col-lg-1 {
@@ -2052,56 +2051,56 @@ body {
     .jumbotron-section {
         display: none;
     }
-
 }
 
-    @media (max-width: 540px) {
+@media (max-width: 540px) {
 
-        .item-header div {
-            max-width: 210px;
-        }
-
-        .item-header {
-            font-size: 14px;
-        }
+    .item-header div {
+        max-width: 210px;
     }
 
-
-    @media (max-width: 320px) {
-
-        #middle-box .main-arrows {
-            height: 30px;
-            width: 30px;
-        }
+    .item-header {
+        font-size: 14px;
     }
-
-    /*========================================================================*/
-    /*===================== Responsive design for height change===============*/
-    /*========================================================================*/
+}
 
 
-    @media (max-height: 790px) {
-        .toggle-menu .features-section {
-            /*height: 70vh;
+@media (max-width: 320px) {
+
+    #middle-box .main-arrows {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+/*========================================================================*/
+/*===================== Responsive design for height change===============*/
+/*========================================================================*/
+
+
+@media (max-height: 790px) {
+    .toggle-menu .features-section {
+        /*height: 70vh;
         overflow-y: auto;*/
-        }
-
-        .toggle-menu {
-            margin-top: 90px;
-        }
     }
 
-    @media (max-height: 740px) {
-
-        .toggle-menu {
-            margin-top: 70px;
-        }
+    .toggle-menu {
+        margin-top: 90px;
     }
+}
 
+@media (max-height: 740px) {
 
-    @media (max-height: 700px) {
-
-        .toggle-menu {
-            margin-top: 0px;
-        }
+    .toggle-menu {
+        margin-top: 70px;
     }
+}
+
+
+@media (max-height: 700px) {
+
+    .toggle-menu {
+        margin-top: 0px;
+    }
+}
+

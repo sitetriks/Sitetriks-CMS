@@ -57,7 +57,6 @@ function widgetsModule($widgetContainer, initFunctions) {
     }
 
     function LoadWidget(type) {
-        console.log("Load widget");
         $widgetContainer.html('<p>Loading...</p>');
 
         Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type }).then(function (res) {

@@ -10,26 +10,26 @@ namespace SiteTriksApp.Web.Services.Seeders
     {
         public static void Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
-            string defaultUsername = "admin@mail.com";
-            string defaultPassword = "12345qQ!";
+            //string defaultUsername = "admin@mail.com";
+            //string defaultPassword = "12345qQ!";
 
-            IConfigurationSection superUserSection = configuration.GetSection("SuperUser");
-            var username = superUserSection.GetSection("Username").Value;
-            var password = superUserSection.GetSection("Password").Value;                  
+            //IConfigurationSection superUserSection = configuration.GetSection("SuperUser");
+            //var username = superUserSection.GetSection("Username").Value;
+            //var password = superUserSection.GetSection("Password").Value;                  
 
-            if (username == null || password == null)
-            {
-                username = defaultUsername;
-                password = defaultPassword;
-            }
-            else
-            {
-                if (username.Contains("#") || string.IsNullOrEmpty(username))
-                {
-                    username = defaultUsername;
-                    password = defaultPassword;
-                }
-            }
+            //if (username == null || password == null)
+            //{
+            //    username = defaultUsername;
+            //    password = defaultPassword;
+            //}
+            //else
+            //{
+            //    if (username.Contains("#") || string.IsNullOrEmpty(username))
+            //    {
+            //        username = defaultUsername;
+            //        password = defaultPassword;
+            //    }
+            //}
 
             string[] roles = new string[]
             {
@@ -50,16 +50,16 @@ namespace SiteTriksApp.Web.Services.Seeders
                 }
             }
 
-            IdentityResult result = new IdentityResult();
-            if (userManager.FindByNameAsync(username).Result == null)
-            {
-                result = CreateUser(userManager, roles[0], username, password);
-            }
+            //IdentityResult result = new IdentityResult();
+            //if (userManager.FindByNameAsync(username).Result == null)
+            //{
+            //    result = CreateUser(userManager, roles[0], username, password);
+            //}
             
-            if(!result.Succeeded)
-            {
-                CreateUser(userManager, roles[0], defaultUsername, defaultPassword);
-            }
+            //if(!result.Succeeded)
+            //{
+            //    CreateUser(userManager, roles[0], defaultUsername, defaultPassword);
+            //}
         }
 
 

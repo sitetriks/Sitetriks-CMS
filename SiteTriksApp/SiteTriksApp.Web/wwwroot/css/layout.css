@@ -141,6 +141,11 @@
         left: -10px;
     }
 
+#add-widget-container .separator > span {
+    vertical-align: -moz-middle-with-baseline;
+    vertical-align: -webkit-baseline-middle;
+}
+
         .separator > span.empty {
             top: 50px;
             background-color: red;

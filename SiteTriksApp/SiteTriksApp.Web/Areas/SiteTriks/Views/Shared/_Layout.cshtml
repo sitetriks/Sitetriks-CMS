@@ -274,5 +274,41 @@
         /* Hamburger menu */
         hamburgerMenu();
     </script>
+
+    @*<script>
+        /**********************Hide grid buttons *********************************/
+
+            console.log('in backend')
+
+
+                function checkIfBodyIsEmpty(tableBody) {
+                    var isEmpty = false;
+
+                    if (tableBody.children().length === 0) {
+                        isEmpty = true;
+                    }
+
+                    return isEmpty;
+                }
+
+                function hideTableButtons(tableHeader, tableBody) {
+                    var checkIfEmpty = checkIfBodyIsEmpty($(tableBody));
+                    console.log(tableBody);
+
+                    if (checkIfEmpty == true) {
+                        tableHeader.children().css('visibility', 'hidden');
+                        console.log(tableHeader);
+                    }
+                    else {
+                        tableHeader.children().css('visibility', 'visible');
+                    }
+                }
+
+
+                $(window).load(function () {
+                hideTableButtons($('.buttons-row'), $('.tableBody'));
+        })
+            
+    </script>*@
 </body>
 </html>

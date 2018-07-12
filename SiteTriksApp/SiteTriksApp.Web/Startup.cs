@@ -225,7 +225,7 @@ namespace SiteTriksApp.Web
 
             app.UseMvc(routes =>
             {
-                ApplicationStart.BuildSiteTriksRoutes(routes);
+                ApplicationStart.BuildRoutes(routes);
             });
         }
     }
