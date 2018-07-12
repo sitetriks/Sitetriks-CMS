@@ -1,0 +1,57 @@
+﻿@*@model SiteTriks.Models.Setup.LicenseUploadViewModel*@
+@{
+    ViewData["Title"] = "Upload your license file.";
+}
+
+
+
+<div>
+    <content>
+        <div class="sitetriks-login container main-content content-placeholder">
+            <div class="row">
+                <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+                    <div id="alerts"></div>
+                    <div id="registerForm">
+                        <div class="register-form-container">
+                            <img src="~/images/Sitetriks_logo.svg" />
+                        </div>
+                        <form asp-action="UploadLicense" method="post" class="clearfix" enctype="multipart/form-data">
+                            <h3>@ViewData["Title"]</h3>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            <input id="license-file" type="file" name="file" />
+                            <button type="submit" class="btn btn-default ">Upload File</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </content>
+</div>
+
+@section Scripts {
+    <script src="~/js/loader.js"></script>
+    <script src="~/js/data.js"></script>
+    <script src="~/js/restart-app.js"></script>
+    <script>
+        $('button[type=submit]').on('click', (e) => {
+            Loader.show('#fff', "/images/LOGO.png");
+            e.preventDefault();
+            let formData = new FormData();
+            let licenseFile = $('#license-file')[0].files[0];
+            formData.append('file', licenseFile);
+
+            let url = '@Url.Action("UploadLicense", "Setup")';
+
+            Data.postForm({ url: url, formData: formData }).then((res) => {
+                if (res.success) {
+                    handleAppRestart({ url: '/Account/Login?ReturnUrl=%2Fsitetriks' });
+                }
+                else {
+                    Notifier.createAlert({ containerId: '#alerts', message: res.message, status: 'danger' });
+                    Loader.hide();
+                }
+            }, (res) => { console.log(res); });
+        });
+    </script>
+}

@@ -1,5 +1,6 @@
 {
   "MaxMegaEventYearAheadFromThisYear": 5,
+  "Initialized": false,
   "WidgetConfigurations": {
     "html": [
       "Admin",

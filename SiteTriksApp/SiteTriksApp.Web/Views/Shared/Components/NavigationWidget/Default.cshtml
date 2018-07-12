@@ -13,34 +13,39 @@
             <div><a href="/sitetriks"><img class="logo-desktop" src="~/images/LOGO.svg" alt="Sitetriks logo" /></a></div>
         </div>
         <div class="desktop-account-icons">
-            @if (SignInManager.IsSignedIn(User))
+            @if (ViewData.ContainsKey("Preview") && (ViewData["Preview"].ToString() == "preview" || ViewData["Preview"].ToString() == "partial"))
             {
-                <div class="">
-                    @using (Html.BeginForm("LogOut", "Account", new { returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
-                {
-                        @Html.AntiForgeryToken()
-                        <input type="submit" value="Logout" />
-                    }
-                </div>
-                <div class="">
-                    @Html.ActionLink("Hello " + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
-                </div>
-            }
-            else
+            } else 
             {
-                if (ViewData["Type"] == "login")
+                @if (SignInManager.IsSignedIn(User))
                 {
-                    <div class="register-icon">
-                        @Html.ActionLink("", "Register", "Account", new { area = "" }, new { title = "Register" })
+                    <div class="logout-icon">
+                        @using (Html.BeginForm("LogOut", "Account", new { returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="" />
+                        }
                     </div>
-
+                    @*<div class="">
+                        @Html.ActionLink("Hello " + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+                    </div>*@
                 }
-                else if (ViewData["Type"] == "register")
+                else
                 {
-                    <div class="login-icon">
-                        @Html.ActionLink("", "Login", "Account", new { area = "" }, new { title = "Login" })
-                        
-                    </div>
+                    if (ViewData["Type"] == "login")
+                    {
+                        <div class="register-icon">
+                            @Html.ActionLink("", "Register", "Account", new { area = "" }, new { title = "Register" })
+                        </div>
+
+                    }
+                    else if (ViewData["Type"] == "register")
+                    {
+                        <div class="login-icon">
+                            @Html.ActionLink("", "Login", "Account", new { area = "" }, new { title = "Login" })
+
+                        </div>
+                    }
                 }
             }
         </div>
@@ -54,47 +59,47 @@
     <div class="nav-container header-wrapper header-blue">
         <nav class="multi-level-navigation">
             <ul class="main-navigation">
-                    @for (int i = 0; i < Model.Root.ChildrenCount; i++)
+                @for (int i = 0; i < Model.Root.ChildrenCount; i++)
                 {
-                        <li>
-                            @{
-                                var child = Model.Root.GetChild(i);
+                    <li>
+                        @{
+                            var child = Model.Root.GetChild(i);
+                        }
+                        @Html.DisplayFor(m => child, "TreeNavigationItem", new { Lang = ViewData["Lang"] })
+                    </li>
                             }
-                            @Html.DisplayFor(m => child, "TreeNavigationItem", new { Lang = ViewData["Lang"] })
-                        </li>
-                                }
 
 
-                    @if (ViewData.ContainsKey("Preview") && (ViewData["Preview"].ToString() == "preview" || ViewData["Preview"].ToString() == "partial"))
+                @if (ViewData.ContainsKey("Preview") && (ViewData["Preview"].ToString() == "preview" || ViewData["Preview"].ToString() == "partial"))
                 {
-                        <li class="nav-right">User Navigation</li>
+                    <li class="nav-right">User Navigation</li>
+                }
+                else
+                {
+                    if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="logout-icon">
+                            @using (Html.BeginForm("LogOut", "Account", new { returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" value="" />
+                            }
+                        </li>
+                            @*<li class="nav-right">
+                                @Html.ActionLink("Hello " + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+                            </li>*@
                     }
                     else
                     {
-                        if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-right">
-                                @using (Html.BeginForm("LogOut", "Account", new { returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <input type="submit" value="Logout" />
-                                }
-                            </li>
-                            <li class="nav-right">
-                                @Html.ActionLink("Hello " + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-right">
-                                @Html.ActionLink("Register", "Register", "Account", new { area = "" }, new { title = "Register" })
-                            </li>
+                        <li class="nav-right">
+                            @Html.ActionLink("Register", "Register", "Account", new { area = "" }, new { title = "Register" })
+                        </li>
                             <li class="nav-right">
                                 @Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { title = "Login" })
                             </li>
-                        }
                     }
-                </ul>
+                }
+            </ul>
         </nav>
     </div>
 </div>

@@ -25,14 +25,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
-    <PackageReference Include="SiteTriks" Version="1.0.0.9" />
-    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.0.5" />
-    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.0.5" />
-    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.0.5" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.0.5" />
-    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.0.5" />
-    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.0.5" />
-    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.0.5" />
+    <PackageReference Include="SiteTriks" Version="1.0.1" />
+    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.0.6" />
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.0.6" />
+    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.0.6" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.0.6" />
+    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.0.6" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.0.6" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.0.6" />
   </ItemGroup>
 
   <ItemGroup>

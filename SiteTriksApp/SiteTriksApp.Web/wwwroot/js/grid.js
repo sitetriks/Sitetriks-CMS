@@ -101,8 +101,24 @@ var Grid = function () {
             }
         }
 
-        return Data.postJson({ url: this.config.data.link, data: body })
-            .then(function (res) {
+
+        let gridIsEmpty;
+        return Data.postJson({ url: this.config.data.link, data: body }).then(
+            function (res) {
+                if (res.success && res.items) {
+                    let itemsCount = res.items.length;
+
+                    let $grid = $('.grid');
+                    if (itemsCount === 0) {
+                        $grid.addClass('empty');
+                    } else {
+                        $grid.removeClass('empty');
+                    }
+                } else {
+                    console.warn('No items found in grid.');
+                }
+                return res;
+            }) .then(function (res) {
                 // console.log(res)
                 Loader.hide();
                 return res;
@@ -112,8 +128,10 @@ var Grid = function () {
     function updateData(isForced) {
         let data = this;
         let config = this.config;
+
+        let gridIsEmpty;
         if (!!config.data.serverSide === true) {
-            return this.getData().then(function (res) {
+            gridIsEmpty = this.getData().then(function (res) {
                 if (res.success) {
                     data.items = res.items;
                     data.filterItems = data.items;
@@ -136,7 +154,7 @@ var Grid = function () {
                 return res;
             });
         } else if (isForced) {
-            return this.getData().then(function (res) {
+            gridIsEmpty = this.getData().then(function (res) {
                 let items = res.items;
 
                 let filteredItems = clientSideFilter(items, data.filters);
@@ -168,7 +186,7 @@ var Grid = function () {
                 return { success: true, items: pagedData };
             });
         } else {
-            return new Promise(function (resolve, reject) {
+            gridIsEmpty = new Promise(function (resolve, reject) {
                 var items = data.items;
 
                 var filteredItems = clientSideFilter(items, data.filters);
@@ -194,10 +212,26 @@ var Grid = function () {
                 } else {
                     data.pagesCount = 1;
                 }
-
-                resolve({ success: true, items: data.filteredItems });
+                resolve({ success: true, items: JSON.parse(JSON.stringify(pagedData)) });
             });
         }
+
+        return gridIsEmpty.then(
+            function (res) {
+                if (res.success && res.items) {
+                    let itemsCount = res.items.length;
+                    let $grid = $(data.selector);
+                    console.log($grid);
+                    if (itemsCount === 0) {
+                        $grid.addClass('empty');
+                    } else {
+                        $grid.removeClass('empty');
+                    }
+                } else {
+                    console.warn('No items found in grid.');
+                }
+                return res;
+            });
     }
 
     function clientSidePaging(items, page, pageSize) {
@@ -377,6 +411,7 @@ var Grid = function () {
 
         let page = 1;
         let tableData = {
+            selector: selector,
             config: config,
             filters: [],
             sortedColumn: {},
@@ -796,6 +831,7 @@ var Grid = function () {
 
         return this.buildBody($tBody);
     }
+
 
     function updateBody() {
         // get tbody
@@ -1234,15 +1270,18 @@ var Grid = function () {
         });
     });
 
+
     var defaultPager = {
         pageSizes: [5, 10, 20, 50, 100, 'all'],
         pageReadOnly: true,
         default: 20
     }
 
+
+
     return {
         init: init,
         build: buildGridConfig,
-        defaultPager: defaultPager
+        defaultPager: defaultPager,
     };
 }

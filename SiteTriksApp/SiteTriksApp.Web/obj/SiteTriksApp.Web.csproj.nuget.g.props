@@ -3,9 +3,9 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
-    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">D:\Projects\New folder\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\project.assets.json</ProjectAssetsFile>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">E:\Kaloyan\Core\Deploy\master\SiteTriks-CMS\SiteTriksApp\SiteTriksApp.Web\obj\project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\pavtov\.nuget\packages\;C:\Program Files\dotnet\sdk\NuGetFallbackFolder</NuGetPackageFolders>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\kirkov\.nuget\packages\;C:\Program Files\dotnet\sdk\NuGetFallbackFolder</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
     <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">4.7.0</NuGetToolVersion>
   </PropertyGroup>
@@ -13,308 +13,308 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowSiteSyncTargetsInfoWidget\Default.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowSiteSyncTargetsInfoWidget\Default.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowSiteSyncTargetsInfoWidget\Default.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowSiteSyncTargetsInfoWidget\Default.cshtml')">
       <NuGetPackageId>SiteTriks.SiteSync</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Shared\Components\ShowSiteSyncTargetsInfoWidget\Default.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSync\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSync\Index.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSync\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSync\Index.cshtml')">
       <NuGetPackageId>SiteTriks.SiteSync</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\SiteSync\Index.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Create.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Create.cshtml')">
       <NuGetPackageId>SiteTriks.SiteSync</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\SiteSyncTargets\Create.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Edit.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Edit.cshtml')">
       <NuGetPackageId>SiteTriks.SiteSync</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\SiteSyncTargets\Edit.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Index.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\Index.cshtml')">
       <NuGetPackageId>SiteTriks.SiteSync</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\SiteSyncTargets\Index.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\ShowTargetsInfo.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\ShowTargetsInfo.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\ShowTargetsInfo.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitesync\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteSyncTargets\ShowTargetsInfo.cshtml')">
       <NuGetPackageId>SiteTriks.SiteSync</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\SiteSyncTargets\ShowTargetsInfo.cshtml</Link>
     </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowLastSiteMapUpdatesWidget\Default.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowLastSiteMapUpdatesWidget\Default.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowLastSiteMapUpdatesWidget\Default.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Shared\Components\ShowLastSiteMapUpdatesWidget\Default.cshtml')">
       <NuGetPackageId>SiteTriks.SiteMapModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Shared\Components\ShowLastSiteMapUpdatesWidget\Default.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\Index.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\Index.cshtml')">
       <NuGetPackageId>SiteTriks.SiteMapModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\SiteMap\Index.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\ShowLastSiteMapUpdates.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\ShowLastSiteMapUpdates.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\ShowLastSiteMapUpdates.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.sitemapmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\SiteMap\ShowLastSiteMapUpdates.cshtml')">
       <NuGetPackageId>SiteTriks.SiteMapModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\SiteMap\ShowLastSiteMapUpdates.cshtml</Link>
     </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\BuilderFields.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\BuilderFields.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\BuilderFields.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\BuilderFields.cshtml')">
       <NuGetPackageId>SiteTriks.RssFeedModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\RssFeed\BuilderFields.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Create.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Create.cshtml')">
       <NuGetPackageId>SiteTriks.RssFeedModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\RssFeed\Create.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Details.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Details.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Details.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Details.cshtml')">
       <NuGetPackageId>SiteTriks.RssFeedModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\RssFeed\Details.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Edit.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Edit.cshtml')">
       <NuGetPackageId>SiteTriks.RssFeedModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\RssFeed\Edit.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Index.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Index.cshtml')">
       <NuGetPackageId>SiteTriks.RssFeedModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\RssFeed\Index.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Mappings.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Mappings.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Mappings.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.rssfeedmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\RssFeed\Mappings.cshtml')">
       <NuGetPackageId>SiteTriks.RssFeedModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\RssFeed\Mappings.cshtml</Link>
     </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\EditSubscribeInfo.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\EditSubscribeInfo.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\EditSubscribeInfo.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\EditSubscribeInfo.cshtml')">
       <NuGetPackageId>SiteTriks.MarketingEmailModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\MarketingEmails\EditSubscribeInfo.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\SendEmails.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\SendEmails.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\SendEmails.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\SendEmails.cshtml')">
       <NuGetPackageId>SiteTriks.MarketingEmailModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\MarketingEmails\SendEmails.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\Unsubscribe.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\Unsubscribe.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\Unsubscribe.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.marketingemailmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\MarketingEmails\Unsubscribe.cshtml')">
       <NuGetPackageId>SiteTriks.MarketingEmailModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\MarketingEmails\Unsubscribe.cshtml</Link>
     </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Create.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Create.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Discussions\Create.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Discussion.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Discussion.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Discussion.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Discussion.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Discussions\Discussion.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Edit.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Edit.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Discussions\Edit.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Index.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Discussions\Index.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Discussions\Index.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\DisplayTemplates\PostViewModel.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\DisplayTemplates\PostViewModel.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\DisplayTemplates\PostViewModel.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\DisplayTemplates\PostViewModel.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Shared\DisplayTemplates\PostViewModel.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\_ForumLayout.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\_ForumLayout.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\_ForumLayout.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Shared\_ForumLayout.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Shared\_ForumLayout.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Create.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Create.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Threads\Create.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Edit.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Edit.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Threads\Edit.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Thread.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Thread.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Thread.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\Threads\Thread.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\Threads\Thread.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewImports.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewImports.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewImports.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewImports.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\_ViewImports.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewStart.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewStart.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewStart.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.forummodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\Forum\Views\_ViewStart.cshtml')">
       <NuGetPackageId>SiteTriks.ForumModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\Forum\Views\_ViewStart.cshtml</Link>
     </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Create.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Create.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Documentation\Create.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\CreateContent.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\CreateContent.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\CreateContent.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\CreateContent.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Documentation\CreateContent.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Edit.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Edit.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Documentation\Edit.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\EditContent.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\EditContent.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\EditContent.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\EditContent.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Documentation\EditContent.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\GetContent.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\GetContent.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\GetContent.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\GetContent.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Documentation\GetContent.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Index.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\Index.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Documentation\Index.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\TopicContents.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\TopicContents.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\TopicContents.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Documentation\TopicContents.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Documentation\TopicContents.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Views\Shared\Components\DocumentationWidget\Default.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Views\Shared\Components\DocumentationWidget\Default.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Views\Shared\Components\DocumentationWidget\Default.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Views\Shared\Components\DocumentationWidget\Default.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Views\Shared\Components\DocumentationWidget\Default.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Views\Shared\DisplayTemplates\TreeTopicNavItem.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Views\Shared\DisplayTemplates\TreeTopicNavItem.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Views\Shared\DisplayTemplates\TreeTopicNavItem.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.documentationmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Views\Shared\DisplayTemplates\TreeTopicNavItem.cshtml')">
       <NuGetPackageId>SiteTriks.DocumentationModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Views\Shared\DisplayTemplates\TreeTopicNavItem.cshtml</Link>
     </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Create.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Create.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Create.cshtml')">
       <NuGetPackageId>SiteTriks.BlogModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Blog\Create.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Details.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Details.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Details.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Details.cshtml')">
       <NuGetPackageId>SiteTriks.BlogModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Blog\Details.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Edit.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Edit.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Edit.cshtml')">
       <NuGetPackageId>SiteTriks.BlogModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Blog\Edit.cshtml</Link>
     </Content>
-    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.5\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Index.cshtml')">
+    <Content Include="$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Index.cshtml" Condition="Exists('$(NuGetPackageRoot)sitetriks.blogmodule\1.0.0.6\contentFiles\any\netcoreapp2.0\Areas\SiteTriks\Views\Blog\Index.cshtml')">
       <NuGetPackageId>SiteTriks.BlogModule</NuGetPackageId>
-      <NuGetPackageVersion>1.0.0.5</NuGetPackageVersion>
+      <NuGetPackageVersion>1.0.0.6</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Areas\SiteTriks\Views\Blog\Index.cshtml</Link>

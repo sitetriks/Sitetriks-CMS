@@ -11,11 +11,10 @@
                 mode: "textareas",
                 force_br_newlines: false,
                 force_p_newlines: false,
-                forced_root_block: '',
                 width: width,
                 height: height,
                 plugins: ['advlist autolink codesample link image lists charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor'],
+                    'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor', 'directionality'],
                 external_plugins: {
                     'codeHighl': '/js/code-highlight-tinymce-plugin.js',
                     'htmlBlocks': '/js/html-components-tinymce-plugin.js'
@@ -68,7 +67,7 @@
 
                     input.click();
                 },
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | codeHighl | fontsizeselect | fontselect | custombutton',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | codeHighl | fontsizeselect | fontselect | custombutton | ltr rtl',
                 fontsize_formats: '8px 10px 12px 14px 18px 20px 22px 24px 36px 48px',
                 setup: function (editor) {
                     editor.addButton('custombutton', {
@@ -102,10 +101,9 @@
                 mode: "textareas",
                 force_br_newlines: false,
                 force_p_newlines: false,
-                forced_root_block: '',
                 width: width,
                 height: height,
-                plugins: ['advlist autolink link image lists charmap print preview hr anchor pagebreak', 'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor'],
+                plugins: ['advlist autolink link image lists charmap print preview hr anchor pagebreak', 'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor', 'directionality'],
                 image_caption: true,
                 image_advtab: true,
                 file_picker_types: 'file image media',
@@ -143,7 +141,7 @@
 
                     input.click();
                 },
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | fontsizeselect | fontselect | custombutton',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | fontsizeselect | fontselect | custombutton | ltr rtl',
                 fontsize_formats: '8px 10px 12px 14px 18px 20px 22px 24px 36px 48px',
                 setup: function (editor) {
                     editor.addButton('custombutton', {
