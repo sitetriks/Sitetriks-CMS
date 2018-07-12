@@ -11,7 +11,7 @@ var textEditor = function () {
                 selector: selector,
                 verify_html: false,
                 extended_valid_elements: 'span'
-            }, _defineProperty(_tinymce$init, "extended_valid_elements", "div[class|id|style|span],span[class|id|style]"), _defineProperty(_tinymce$init, "extended_valid_elements", "div[*],span[*]"), _defineProperty(_tinymce$init, "theme", 'modern'), _defineProperty(_tinymce$init, "mode", "textareas"), _defineProperty(_tinymce$init, "force_br_newlines", false), _defineProperty(_tinymce$init, "force_p_newlines", false), _defineProperty(_tinymce$init, "forced_root_block", ''), _defineProperty(_tinymce$init, "width", width), _defineProperty(_tinymce$init, "height", height), _defineProperty(_tinymce$init, "plugins", ['advlist autolink codesample link image lists charmap print preview hr anchor pagebreak', 'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor']), _defineProperty(_tinymce$init, "external_plugins", {
+            }, _defineProperty(_tinymce$init, "extended_valid_elements", "div[class|id|style|span],span[class|id|style]"), _defineProperty(_tinymce$init, "extended_valid_elements", "div[*],span[*]"), _defineProperty(_tinymce$init, "theme", 'modern'), _defineProperty(_tinymce$init, "mode", "textareas"), _defineProperty(_tinymce$init, "force_br_newlines", false), _defineProperty(_tinymce$init, "force_p_newlines", false), _defineProperty(_tinymce$init, "width", width), _defineProperty(_tinymce$init, "height", height), _defineProperty(_tinymce$init, "plugins", ['advlist autolink codesample link image lists charmap print preview hr anchor pagebreak', 'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor', 'directionality']), _defineProperty(_tinymce$init, "external_plugins", {
                 'codeHighl': '/js/code-highlight-tinymce-plugin.js',
                 'htmlBlocks': '/js/html-components-tinymce-plugin.js'
             }), _defineProperty(_tinymce$init, "image_list", function image_list(success) {
@@ -57,7 +57,7 @@ var textEditor = function () {
                 };
 
                 input.click();
-            }), _defineProperty(_tinymce$init, "toolbar", 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | codeHighl | fontsizeselect | fontselect | custombutton'), _defineProperty(_tinymce$init, "fontsize_formats", '8px 10px 12px 14px 18px 20px 22px 24px 36px 48px'), _defineProperty(_tinymce$init, "setup", function setup(editor) {
+            }), _defineProperty(_tinymce$init, "toolbar", 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | codeHighl | fontsizeselect | fontselect | custombutton | ltr rtl'), _defineProperty(_tinymce$init, "fontsize_formats", '8px 10px 12px 14px 18px 20px 22px 24px 36px 48px'), _defineProperty(_tinymce$init, "setup", function setup(editor) {
                 editor.addButton('custombutton', {
                     type: 'menubutton',
                     text: 'Custom',
@@ -84,7 +84,7 @@ var textEditor = function () {
                 verify_html: false,
                 selector: selector,
                 extended_valid_elements: 'span'
-            }, _defineProperty(_tinymce$init2, "extended_valid_elements", "div[class|id|style|span],span[class|id|style]"), _defineProperty(_tinymce$init2, "extended_valid_elements", "div[*],span[*]"), _defineProperty(_tinymce$init2, "theme", 'modern'), _defineProperty(_tinymce$init2, "mode", "textareas"), _defineProperty(_tinymce$init2, "force_br_newlines", false), _defineProperty(_tinymce$init2, "force_p_newlines", false), _defineProperty(_tinymce$init2, "forced_root_block", ''), _defineProperty(_tinymce$init2, "width", width), _defineProperty(_tinymce$init2, "height", height), _defineProperty(_tinymce$init2, "plugins", ['advlist autolink link image lists charmap print preview hr anchor pagebreak', 'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor']), _defineProperty(_tinymce$init2, "image_caption", true), _defineProperty(_tinymce$init2, "image_advtab", true), _defineProperty(_tinymce$init2, "file_picker_types", 'file image media'), _defineProperty(_tinymce$init2, "file_picker_callback", function file_picker_callback(cb, value, meta) {
+            }, _defineProperty(_tinymce$init2, "extended_valid_elements", "div[class|id|style|span],span[class|id|style]"), _defineProperty(_tinymce$init2, "extended_valid_elements", "div[*],span[*]"), _defineProperty(_tinymce$init2, "theme", 'modern'), _defineProperty(_tinymce$init2, "mode", "textareas"), _defineProperty(_tinymce$init2, "force_br_newlines", false), _defineProperty(_tinymce$init2, "force_p_newlines", false), _defineProperty(_tinymce$init2, "width", width), _defineProperty(_tinymce$init2, "height", height), _defineProperty(_tinymce$init2, "plugins", ['advlist autolink link image lists charmap print preview hr anchor pagebreak', 'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor', 'directionality']), _defineProperty(_tinymce$init2, "image_caption", true), _defineProperty(_tinymce$init2, "image_advtab", true), _defineProperty(_tinymce$init2, "file_picker_types", 'file image media'), _defineProperty(_tinymce$init2, "file_picker_callback", function file_picker_callback(cb, value, meta) {
                 var input = document.createElement('input');
                 input.setAttribute('type', 'file');
                 input.setAttribute('accept', 'image/*');
@@ -117,7 +117,7 @@ var textEditor = function () {
                 };
 
                 input.click();
-            }), _defineProperty(_tinymce$init2, "toolbar", 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | fontsizeselect | fontselect | custombutton'), _defineProperty(_tinymce$init2, "fontsize_formats", '8px 10px 12px 14px 18px 20px 22px 24px 36px 48px'), _defineProperty(_tinymce$init2, "setup", function setup(editor) {
+            }), _defineProperty(_tinymce$init2, "toolbar", 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | fontsizeselect | fontselect | custombutton | ltr rtl'), _defineProperty(_tinymce$init2, "fontsize_formats", '8px 10px 12px 14px 18px 20px 22px 24px 36px 48px'), _defineProperty(_tinymce$init2, "setup", function setup(editor) {
                 editor.addButton('custombutton', {
                     type: 'menubutton',
                     text: 'Custom',

@@ -101,7 +101,22 @@ var Grid = function Grid() {
             };
         }
 
+        var gridIsEmpty = void 0;
         return Data.postJson({ url: this.config.data.link, data: body }).then(function (res) {
+            if (res.success && res.items) {
+                var itemsCount = res.items.length;
+
+                var $grid = $('.grid');
+                if (itemsCount === 0) {
+                    $grid.addClass('empty');
+                } else {
+                    $grid.removeClass('empty');
+                }
+            } else {
+                console.warn('No items found in grid.');
+            }
+            return res;
+        }).then(function (res) {
             // console.log(res)
             Loader.hide();
             return res;
@@ -111,8 +126,10 @@ var Grid = function Grid() {
     function updateData(isForced) {
         var data = this;
         var config = this.config;
+
+        var gridIsEmpty = void 0;
         if (!!config.data.serverSide === true) {
-            return this.getData().then(function (res) {
+            gridIsEmpty = this.getData().then(function (res) {
                 if (res.success) {
                     data.items = res.items;
                     data.filterItems = data.items;
@@ -135,7 +152,7 @@ var Grid = function Grid() {
                 return res;
             });
         } else if (isForced) {
-            return this.getData().then(function (res) {
+            gridIsEmpty = this.getData().then(function (res) {
                 var items = res.items;
 
                 var filteredItems = clientSideFilter(items, data.filters);
@@ -167,7 +184,7 @@ var Grid = function Grid() {
                 return { success: true, items: pagedData };
             });
         } else {
-            return new Promise(function (resolve, reject) {
+            gridIsEmpty = new Promise(function (resolve, reject) {
                 var items = data.items;
 
                 var filteredItems = clientSideFilter(items, data.filters);
@@ -193,10 +210,25 @@ var Grid = function Grid() {
                 } else {
                     data.pagesCount = 1;
                 }
-
-                resolve({ success: true, items: data.filteredItems });
+                resolve({ success: true, items: JSON.parse(JSON.stringify(pagedData)) });
             });
         }
+
+        return gridIsEmpty.then(function (res) {
+            if (res.success && res.items) {
+                var itemsCount = res.items.length;
+                var $grid = $(data.selector);
+                console.log($grid);
+                if (itemsCount === 0) {
+                    $grid.addClass('empty');
+                } else {
+                    $grid.removeClass('empty');
+                }
+            } else {
+                console.warn('No items found in grid.');
+            }
+            return res;
+        });
     }
 
     function clientSidePaging(items, page, pageSize) {
@@ -375,6 +407,7 @@ var Grid = function Grid() {
 
         var page = 1;
         var tableData = {
+            selector: selector,
             config: config,
             filters: [],
             sortedColumn: {},
