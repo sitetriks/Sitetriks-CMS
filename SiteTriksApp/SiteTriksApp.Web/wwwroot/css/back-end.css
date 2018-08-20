@@ -28,7 +28,7 @@
 
 
 body, html {
-    /*min-width: 790px !important;*/
+    min-width: 900px !important;
     background-color: white;
 }
 
@@ -1045,14 +1045,6 @@ a.profile-link {
 .alert-warning {
     background-color: #ffd9a1;
 }
-
-.unselectable {
-    user-select: none; /* CSS3 (little to no support) */
-    -ms-user-select: none; /* IE 10+ */
-    -moz-user-select: none; /* Gecko (Firefox) */
-    -webkit-user-select: none; /* Webkit (Safari, Chrome) */
-}
-
 
 /*--------------------------------------------------------------------*/
 

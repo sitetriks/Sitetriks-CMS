@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "7e19dbe71d0b417154601c39b9bc29814cb0f33b"
+    "signature": "0c24a1ae6ce33e7264abb6c51f77b5fe552d63dc"
   },
   "compilationOptions": {
     "defines": [
@@ -35,14 +35,14 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.2",
           "Microsoft.Win32.Registry": "4.4.0",
           "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
-          "SiteTriks": "1.0.1",
-          "SiteTriks.BlogModule": "1.0.0.6",
-          "SiteTriks.DocumentationModule": "1.0.0.6",
-          "SiteTriks.ForumModule": "1.0.0.6",
-          "SiteTriks.MarketingEmailModule": "1.0.0.6",
-          "SiteTriks.RssFeedModule": "1.0.0.6",
-          "SiteTriks.SiteMapModule": "1.0.0.6",
-          "SiteTriks.SiteSync": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.BlogModule": "1.0.0.7",
+          "SiteTriks.DocumentationModule": "1.0.0.7",
+          "SiteTriks.ForumModule": "1.0.0.7",
+          "SiteTriks.MarketingEmailModule": "1.0.0.7",
+          "SiteTriks.RssFeedModule": "1.0.0.7",
+          "SiteTriks.SiteMapModule": "1.0.0.7",
+          "SiteTriks.SiteSync": "1.0.0.7"
         },
         "runtime": {
           "SiteTriksApp.Web.dll": {}
@@ -3546,7 +3546,7 @@
           }
         }
       },
-      "SiteTriks/1.0.1": {
+      "SiteTriks/1.0.1.1": {
         "dependencies": {
           "AutoMapper": "6.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
@@ -3563,219 +3563,219 @@
           "PayPalCore": "1.0.0",
           "PayPalCoreSDK": "1.7.1",
           "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
-          "SiteTriks.Configuration": "1.0.0.6",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.DatabaseApi": "1.0.0.6",
-          "SiteTriks.Dynamic": "1.0.0.6",
-          "SiteTriks.Extensions": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6",
-          "SiteTriks.Services": "1.0.0.6"
+          "SiteTriks.Configuration": "1.0.0.7",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.DatabaseApi": "1.0.0.7",
+          "SiteTriks.Dynamic": "1.0.0.7",
+          "SiteTriks.Extensions": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7",
+          "SiteTriks.Services": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.1.1",
+            "fileVersion": "1.0.1.1"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.dll": {}
         }
       },
-      "SiteTriks.BlogModule/1.0.0.6": {
+      "SiteTriks.BlogModule/1.0.0.7": {
         "dependencies": {
           "AutoMapper": "6.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
           "Microsoft.AspNetCore.All": "2.0.5",
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "Microsoft.EntityFrameworkCore.Tools": "2.0.1",
-          "SiteTriks": "1.0.1",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6",
-          "SiteTriks.RssFeedModule": "1.0.0.6",
-          "SiteTriks.Services": "1.0.0.6",
-          "SiteTriks.SiteSync": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7",
+          "SiteTriks.RssFeedModule": "1.0.0.7",
+          "SiteTriks.Services": "1.0.0.7",
+          "SiteTriks.SiteSync": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.BlogModule.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.BlogModule.dll": {}
         }
       },
-      "SiteTriks.Configuration/1.0.0.6": {
+      "SiteTriks.Configuration/1.0.0.7": {
         "dependencies": {
           "LicenseBuilder": "1.0.0.2",
           "Microsoft.AspNetCore": "2.0.1",
           "Newtonsoft.Json": "10.0.3",
-          "SiteTriks.Infrastructure": "1.0.0.6"
+          "SiteTriks.Infrastructure": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.Configuration.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.Configuration.dll": {}
         }
       },
-      "SiteTriks.Data/1.0.0.6": {
+      "SiteTriks.Data/1.0.0.7": {
         "dependencies": {
           "Microsoft.AspNetCore.All": "2.0.5",
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "Microsoft.EntityFrameworkCore.Tools": "2.0.1",
           "Newtonsoft.Json": "10.0.3",
-          "SiteTriks.Configuration": "1.0.0.6",
-          "SiteTriks.Extensions": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6"
+          "SiteTriks.Configuration": "1.0.0.7",
+          "SiteTriks.Extensions": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.Data.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.Data.dll": {}
         }
       },
-      "SiteTriks.DatabaseApi/1.0.0.6": {
+      "SiteTriks.DatabaseApi/1.0.0.7": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "MySqlConnector": "0.42.2",
           "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
-          "SiteTriks.Dynamic": "1.0.0.6"
+          "SiteTriks.Dynamic": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.DatabaseApi.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.DatabaseApi.dll": {}
         }
       },
-      "SiteTriks.DocumentationModule/1.0.0.6": {
+      "SiteTriks.DocumentationModule/1.0.0.7": {
         "dependencies": {
           "AutoMapper": "6.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
           "Microsoft.AspNetCore.All": "2.0.5",
-          "SiteTriks": "1.0.1",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.Extensions": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6",
-          "SiteTriks.Services": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.Extensions": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7",
+          "SiteTriks.Services": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.DocumentationModule.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.DocumentationModule.dll": {}
         }
       },
-      "SiteTriks.Dynamic/1.0.0.6": {
+      "SiteTriks.Dynamic/1.0.0.7": {
         "dependencies": {
           "Microsoft.Extensions.Options": "2.0.0",
-          "SiteTriks.Configuration": "1.0.0.6",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6",
+          "SiteTriks.Configuration": "1.0.0.7",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7",
           "System.Reflection.Emit": "4.3.0"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.Dynamic.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.Dynamic.dll": {}
         }
       },
-      "SiteTriks.Extensions/1.0.0.6": {
+      "SiteTriks.Extensions/1.0.0.7": {
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.Extensions.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.Extensions.dll": {}
         }
       },
-      "SiteTriks.ForumModule/1.0.0.6": {
+      "SiteTriks.ForumModule/1.0.0.7": {
         "dependencies": {
-          "SiteTriks": "1.0.1",
-          "SiteTriks.Infrastructure": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.Infrastructure": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.ForumModule.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.ForumModule.dll": {}
         }
       },
-      "SiteTriks.Infrastructure/1.0.0.6": {
+      "SiteTriks.Infrastructure/1.0.0.7": {
         "dependencies": {
           "AutoMapper": "6.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.Infrastructure.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.Infrastructure.dll": {}
         }
       },
-      "SiteTriks.MarketingEmailModule/1.0.0.6": {
+      "SiteTriks.MarketingEmailModule/1.0.0.7": {
         "dependencies": {
-          "SiteTriks": "1.0.1",
-          "SiteTriks.Infrastructure": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.Infrastructure": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.MarketingEmailModule.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.MarketingEmailModule.dll": {}
         }
       },
-      "SiteTriks.RssFeedModule/1.0.0.6": {
+      "SiteTriks.RssFeedModule/1.0.0.7": {
         "dependencies": {
           "AutoMapper": "6.1.1",
           "Microsoft.EntityFrameworkCore": "2.0.1",
-          "SiteTriks": "1.0.1",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.DatabaseApi": "1.0.0.6",
-          "SiteTriks.Extensions": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6",
-          "SiteTriks.Services": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.DatabaseApi": "1.0.0.7",
+          "SiteTriks.Extensions": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7",
+          "SiteTriks.Services": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.RssFeedModule.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.RssFeedModule.dll": {}
         }
       },
-      "SiteTriks.Services/1.0.0.6": {
+      "SiteTriks.Services/1.0.0.7": {
         "dependencies": {
           "AutoMapper": "6.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
@@ -3783,58 +3783,58 @@
           "Microsoft.AspNetCore.All": "2.0.5",
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "Newtonsoft.Json": "10.0.3",
-          "SiteTriks.Configuration": "1.0.0.6",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.Dynamic": "1.0.0.6",
-          "SiteTriks.Extensions": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6"
+          "SiteTriks.Configuration": "1.0.0.7",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.Dynamic": "1.0.0.7",
+          "SiteTriks.Extensions": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.Services.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.Services.dll": {}
         }
       },
-      "SiteTriks.SiteMapModule/1.0.0.6": {
+      "SiteTriks.SiteMapModule/1.0.0.7": {
         "dependencies": {
           "Hangfire.AspNetCore": "1.6.17",
           "Microsoft.AspNetCore.All": "2.0.5",
-          "SiteTriks": "1.0.1",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6",
-          "SiteTriks.Services": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7",
+          "SiteTriks.Services": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.SiteMapModule.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
           "lib/netcoreapp2.0/SiteTriks.SiteMapModule.dll": {}
         }
       },
-      "SiteTriks.SiteSync/1.0.0.6": {
+      "SiteTriks.SiteSync/1.0.0.7": {
         "dependencies": {
           "AutoMapper": "6.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
           "Microsoft.AspNetCore.All": "2.0.5",
-          "SiteTriks": "1.0.1",
-          "SiteTriks.Configuration": "1.0.0.6",
-          "SiteTriks.Data": "1.0.0.6",
-          "SiteTriks.DatabaseApi": "1.0.0.6",
-          "SiteTriks.Dynamic": "1.0.0.6",
-          "SiteTriks.Infrastructure": "1.0.0.6",
-          "SiteTriks.Services": "1.0.0.6"
+          "SiteTriks": "1.0.1.1",
+          "SiteTriks.Configuration": "1.0.0.7",
+          "SiteTriks.Data": "1.0.0.7",
+          "SiteTriks.DatabaseApi": "1.0.0.7",
+          "SiteTriks.Dynamic": "1.0.0.7",
+          "SiteTriks.Infrastructure": "1.0.0.7",
+          "SiteTriks.Services": "1.0.0.7"
         },
         "runtime": {
           "lib/netcoreapp2.0/SiteTriks.SiteSync.dll": {
-            "assemblyVersion": "1.0.0.6",
-            "fileVersion": "1.0.0.6"
+            "assemblyVersion": "1.0.0.7",
+            "fileVersion": "1.0.0.7"
           }
         },
         "compile": {
@@ -5691,7 +5691,7 @@
     "LicenseBuilder/1.0.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-AhNPTidh/pyavjCw+76Q9Cf5ydyyHJwPwF7mCalO2SfB0xnO6QYEZValWOSh+LZadI5VPNl2p1KlqgaUrEbi1g==",
+      "sha512": "sha512-JvO2NrSJpSp/tddfKNNwnXbvtH6arjwqHgDdlbEURdZ4oKpkCYtKc7QPOWlw9I4VkUR16+RhLmsyH6eajXTZsA==",
       "path": "licensebuilder/1.0.0.2",
       "hashPath": "licensebuilder.1.0.0.2.nupkg.sha512"
     },
@@ -7151,115 +7151,115 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
-    "SiteTriks/1.0.1": {
+    "SiteTriks/1.0.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-CFBCkKUjX1qmA13+VGCGX2gopPOCDiZdqSWsE/FCk9oywph3Hfo1QUGn/+lgo1XPOJ54zK5x8BWi4XZY62PhTw==",
-      "path": "sitetriks/1.0.1",
-      "hashPath": "sitetriks.1.0.1.nupkg.sha512"
+      "sha512": "sha512-U6vUaHaLor5gLsgeGK0rW3r5hTO1eiBNCyfwdu6WHusNrp6lEvAJpDpE6k8exjJebQJeTp65vzF9GEwHB3Ucow==",
+      "path": "sitetriks/1.0.1.1",
+      "hashPath": "sitetriks.1.0.1.1.nupkg.sha512"
     },
-    "SiteTriks.BlogModule/1.0.0.6": {
+    "SiteTriks.BlogModule/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rj420zWKec94L5H1h3JTGIlpOOjLOJ2LBjRtk2lXfqeql93ckUv8GvQfxu9jiC8yN/lxNV+xX32k7QKM/Hjk5Q==",
-      "path": "sitetriks.blogmodule/1.0.0.6",
-      "hashPath": "sitetriks.blogmodule.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-JsKH25UhVsGZSSa77KVYwkrqHuxIWbplh11Qz2hbrXd34jsRp8YIpokb99p6pP4JlBaKxZNTyElSscBY+IjlaQ==",
+      "path": "sitetriks.blogmodule/1.0.0.7",
+      "hashPath": "sitetriks.blogmodule.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.Configuration/1.0.0.6": {
+    "SiteTriks.Configuration/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-FlugwbQ28Eknk9HgzoCdRPjh5oIUx7d/ixXXkov4ICerqW8AVNNr2DSbQc71tMIbaPMCOmyqxANwtnX5sQs0wQ==",
-      "path": "sitetriks.configuration/1.0.0.6",
-      "hashPath": "sitetriks.configuration.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-Mou9KffctGE1Nvw5DOJ407/jWJOczilV1DDuHEMHz/8PV+66mk36GM+GhcxyBNzkK3EIOnmOSQTaoXrJZjp9vA==",
+      "path": "sitetriks.configuration/1.0.0.7",
+      "hashPath": "sitetriks.configuration.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.Data/1.0.0.6": {
+    "SiteTriks.Data/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-D/a70rW5TDpJbO8noPY9xbhuatNsX1Sq2SqPcgW1ue7JGeK/B5SmI02XOvg5A4OLSz7YQYZIPIDF7kXC1U0g8A==",
-      "path": "sitetriks.data/1.0.0.6",
-      "hashPath": "sitetriks.data.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-b3cvRlMWzQF8c8+GaMj1tphg4hVO4yAXn99UPogA/N9O5w+DpuUEMuKm4vVQ2GvfWDkoOBKBS8EdeM3S6BteLw==",
+      "path": "sitetriks.data/1.0.0.7",
+      "hashPath": "sitetriks.data.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.DatabaseApi/1.0.0.6": {
+    "SiteTriks.DatabaseApi/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bmBjHla+K3lLOBmxzBdZxb5IpCZ9B4teXzwsvV6sPnMEcWnS/z5XoXYmehTp8u+Q0q23Mfp9H2NkN4k6XZqkjQ==",
-      "path": "sitetriks.databaseapi/1.0.0.6",
-      "hashPath": "sitetriks.databaseapi.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-CDUnlj2xWe1SJ0TzKVVC/uC9WqxNM6tVlCGveDLBLF7HHshAZ9RdcmBkpwVqYmpZ1Mlhfbsqg0vpdWK3vyTtXQ==",
+      "path": "sitetriks.databaseapi/1.0.0.7",
+      "hashPath": "sitetriks.databaseapi.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.DocumentationModule/1.0.0.6": {
+    "SiteTriks.DocumentationModule/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-l6VwJIYqhoYRdAOOVHna/vSUpPB0V8WBN1P3eGrW0B5FywqoVask7TYL3faCmxLRxA571hdOjrC/MIb05Eyydg==",
-      "path": "sitetriks.documentationmodule/1.0.0.6",
-      "hashPath": "sitetriks.documentationmodule.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-FGoCQfznYeDXjrk69mbZ+PJslJE9ib3BpB+4HaCSMr2YKcdikRm3oOFOatokEmeEXKapSJUTmDVTgaSqxCrJjA==",
+      "path": "sitetriks.documentationmodule/1.0.0.7",
+      "hashPath": "sitetriks.documentationmodule.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.Dynamic/1.0.0.6": {
+    "SiteTriks.Dynamic/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-N0+VtLmkZS8vGo+0mYgNj08kcjbWRiu7QgGcuzUyabpFN2Yw8QyVkvG+MB4QLh0QAwG/7WhFdLsJntrZVWdotg==",
-      "path": "sitetriks.dynamic/1.0.0.6",
-      "hashPath": "sitetriks.dynamic.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-zJw9ffc4DIiAu36T5F5pgJPdDNS6FKjCWyfDBRIZaH6M32YHTqNTaqg+N2LRj4biaBWsmHcXDjzmMWUv3OlSPA==",
+      "path": "sitetriks.dynamic/1.0.0.7",
+      "hashPath": "sitetriks.dynamic.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.Extensions/1.0.0.6": {
+    "SiteTriks.Extensions/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ZfcirOh2FQwzBNUjfHP2LlrsFKUM3cMdbafy3FrNpwwZYsAlahHKpiSTIwlBohSiWekgbsd/n/ndoin5QSGZmA==",
-      "path": "sitetriks.extensions/1.0.0.6",
-      "hashPath": "sitetriks.extensions.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-7MvaCIlavJ4SQllWv3uk9Ew3I/B2ZTti/3657N0m7TxNWaf6WMjpbfUvz8X4YiUMhb4Yn2TVTGF6lnJlNSibaw==",
+      "path": "sitetriks.extensions/1.0.0.7",
+      "hashPath": "sitetriks.extensions.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.ForumModule/1.0.0.6": {
+    "SiteTriks.ForumModule/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-z/Guo101iu/grp5cmCft5uvPjE30o2s48h9hDMwUM1wjP/WAORoforUCVXuUonjPlpWJN+EJ1xLnWVXYSNxvrw==",
-      "path": "sitetriks.forummodule/1.0.0.6",
-      "hashPath": "sitetriks.forummodule.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-1N9crkhPE/rlrHK3itxOY837DqWRzOUnVOW9kfpyqaur9MndT7kyXCGmUR70F0KeHje1KLFzGmuwiO989Xqa2A==",
+      "path": "sitetriks.forummodule/1.0.0.7",
+      "hashPath": "sitetriks.forummodule.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.Infrastructure/1.0.0.6": {
+    "SiteTriks.Infrastructure/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-jcq9WZz6dvKJdIqszpNWjANHulvHimmkUqbah2tZqTPDfjJp8EvDcQRKsGXQJ1BG5zn2zgDMhq0lrExwAbxOMA==",
-      "path": "sitetriks.infrastructure/1.0.0.6",
-      "hashPath": "sitetriks.infrastructure.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-fpvOGI9qr9tcEXdBYuNiv6d2xqfznAbAiS/4UVoSxayvJCOXBkmysVTjic9PrBwPY/COTbkzRk9fFA2x875J2g==",
+      "path": "sitetriks.infrastructure/1.0.0.7",
+      "hashPath": "sitetriks.infrastructure.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.MarketingEmailModule/1.0.0.6": {
+    "SiteTriks.MarketingEmailModule/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Zzejeup1iR/Kr9vEScO/3gOvlz7/jO7brWRY6D64LiSu0FWLrv5+24NkM32GkJJTIZFA5ACfCuiW1MydOD+cEg==",
-      "path": "sitetriks.marketingemailmodule/1.0.0.6",
-      "hashPath": "sitetriks.marketingemailmodule.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-V3mADOHD+7OXkxZqSU42K5DrwaIzrPcCqMOJoe45yJthP/ecy6OWrGjzAcPteqs0JSJKwhJBEs2NXrGZc75nRg==",
+      "path": "sitetriks.marketingemailmodule/1.0.0.7",
+      "hashPath": "sitetriks.marketingemailmodule.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.RssFeedModule/1.0.0.6": {
+    "SiteTriks.RssFeedModule/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-I1iEuDQFt+c/boWqqXV1eZP0T0QJSdUQte9AP8C1DioNtsIHczND38FR3CEAWWKtycRNTt3cdkz9eKOalr1c2w==",
-      "path": "sitetriks.rssfeedmodule/1.0.0.6",
-      "hashPath": "sitetriks.rssfeedmodule.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-5ffnvmj8lXpsIRJ50XjigCay2W9n+r9M8sqkjOrgsQIv1dpoyuq9WcRlT1jKFNF0xOC3Lm43N33v1AL8QNFG4w==",
+      "path": "sitetriks.rssfeedmodule/1.0.0.7",
+      "hashPath": "sitetriks.rssfeedmodule.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.Services/1.0.0.6": {
+    "SiteTriks.Services/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-G2dlDPgptNfd/p9PQqbeR5nLSiESESu8EZj1vx2VYkMQPlkmkLKNmhae2aH2m+y/egOkjRlRLSvaWtJCkDxnqA==",
-      "path": "sitetriks.services/1.0.0.6",
-      "hashPath": "sitetriks.services.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-N0iSEtdQjTaTrJEZXR3OFMfg5DqDh5zrQzZPzfLjfzS8CFnSoHOG1iEZvN+uPa796by0XEyogT8MV429pxpAKg==",
+      "path": "sitetriks.services/1.0.0.7",
+      "hashPath": "sitetriks.services.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.SiteMapModule/1.0.0.6": {
+    "SiteTriks.SiteMapModule/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-6Ldptn5vsU1ZDHmSfR4S1BaJ98l2+Qk0vl8wKhcmJ82MORELUR5TTEMmbTCqpDB6S8z6ZZtIo2NRuqJmEB0twg==",
-      "path": "sitetriks.sitemapmodule/1.0.0.6",
-      "hashPath": "sitetriks.sitemapmodule.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-r5rNWJTWkOxau3PDNmviq6dGAHZwI2q6vXINM9Z6/dE50P/tiO5/66O6RXnJas2GbPPZxb0yOihhoetNN3Jdgg==",
+      "path": "sitetriks.sitemapmodule/1.0.0.7",
+      "hashPath": "sitetriks.sitemapmodule.1.0.0.7.nupkg.sha512"
     },
-    "SiteTriks.SiteSync/1.0.0.6": {
+    "SiteTriks.SiteSync/1.0.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bNflsWbhGZqy1+zuxGontgok6flc/jNeiO9sYvpqtY/v9wT3Wr3vEk7oJH8mlHNv9VenH5QYEYUjyM1Q49L6lQ==",
-      "path": "sitetriks.sitesync/1.0.0.6",
-      "hashPath": "sitetriks.sitesync.1.0.0.6.nupkg.sha512"
+      "sha512": "sha512-an1tmiFFOIrtAbPuBbvItfwTdUWYXBBqU6qGDjE7BJ/sn1ojzBPaSis8vqldjKe029Zpjza54ESfpQa5eyO7Lw==",
+      "path": "sitetriks.sitesync/1.0.0.7",
+      "hashPath": "sitetriks.sitesync.1.0.0.7.nupkg.sha512"
     },
     "SiteTriksLicenseManager.Models/1.0.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bQKxMel7tdA8vSdN4GDyPrvjM8rWG+iI+CXL6ufzwv/8ycqQDqSyOyHq6o3BfXT+c2508CUxHdd6zC9nX3HZ0w==",
+      "sha512": "sha512-QjKB5FIEVTLc6rmZeqJfiCClzCo+f+MLXcz9uglz6Nqtz0zAsivVSye/0qOf7hxly1qtv+5gD5k1wKPuloColA==",
       "path": "sitetrikslicensemanager.models/1.0.0.2",
       "hashPath": "sitetrikslicensemanager.models.1.0.0.2.nupkg.sha512"
     },

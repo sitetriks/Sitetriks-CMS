@@ -182,7 +182,7 @@ var ModuleBuilder = (function () {
                         $("#css-url").val(model.Url);
                     }
                 }
-                catch(ex){
+                catch (ex) {
                     $cssWidgetOptions.val("Switch to code");
                     $selectedValue.val("url-btn");
                     $cssWidgetOptions.click();
@@ -261,16 +261,16 @@ var ModuleBuilder = (function () {
                         $("#javascript-url").val(model.Url);
                     }
                 }
-                catch(ex){
+                catch (ex) {
                     $jsWidgetOptions.val("Switch to code");
                     $selectedValue.val("url-btn");
                     $jsWidgetOptions.click();
-                    
+
                     if (editor) {
                         editor.setValue(element);
                     }
                 }
-                
+
             },
             save: function () {
                 let $resourceUrl = $("#javascript-url");
@@ -294,7 +294,36 @@ var ModuleBuilder = (function () {
                     }
                 }
             }
-        }        
+        }
+
+        initFunctions['embeddedscript'] = {
+            init: function () {
+                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
+                    lineNumbers: true,
+                    mode: 'javascript'
+                });
+            },
+            show: function (element) {
+                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
+                    lineNumbers: true,
+                    mode: 'javascript'
+                });
+                let model = JSON.parse(element);
+
+                if (editor) {
+                    editor.setValue(model.RawCode);
+                }
+            },
+            save: function () {
+                if (editor) {
+                    let model = {
+                        RawCode: editor.getValue()
+                    };
+                    return JSON.stringify(model);
+                }
+                return "";
+            }
+        }
 
         initFunctions['image'] = {
             init: function () {
@@ -302,7 +331,7 @@ var ModuleBuilder = (function () {
             },
             show: function (element) {
                 let parsedElement = JSON.parse(element)
-                let id = parsedElement.id;  
+                let id = parsedElement.id;
                 loadUploadTemplate(false, 'main-image', 'image');
 
                 if (parsedElement.width != '') {
@@ -315,7 +344,7 @@ var ModuleBuilder = (function () {
                 $('#image').val(id);
 
                 if (id != "") {
-                    createImageView('image', id);                    
+                    createImageView('image', id);
                 }
             },
             save: function () {

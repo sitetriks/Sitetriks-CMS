@@ -1,0 +1,16 @@
+﻿@model SiteTriks.Extentions.WidgetModels.EmbeddedScriptWidgetModel
+
+@{
+    Layout = null;
+}
+
+@if (Model.IsPreview)
+{
+    <div class="preview-placeholder" data-identifier="@Model.Id">
+        @Html.Partial("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+    </div>
+}
+else
+{
+    @await Component.InvokeAsync("EmbeddedScriptWidget", new { area = "", element = Model.Element, isPreview = Model.IsPreview })
+}

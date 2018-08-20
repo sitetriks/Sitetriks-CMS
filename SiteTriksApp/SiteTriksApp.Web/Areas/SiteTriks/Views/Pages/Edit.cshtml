@@ -12,17 +12,18 @@
     @using (Html.BeginForm("Edit", "Pages", null, FormMethod.Post, true, new { id = "edit-page-form" }))
     {
         @Html.AntiForgeryToken()
-        <div class="fixed-top-2">
-            @await Html.PartialAsync("SecondNavHeader")
+    <div class="fixed-top-2">
+        @*@await Html.PartialAsync("SecondNavHeader")*@
 
-            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <a href="@Url.Action("EditContent", new { url = Model.PageViewModel.Url })" class="btn-nav-2">Content</a>
-            <input type="submit" id="submit" value="Save" class="btn-nav-2" />
+        <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+        <a href="@Url.Action("EditContent", new { url = Model.PageViewModel.Url })" class="btn-nav-2">Content</a>
+        <input type="submit" id="submit" value="Save" class="btn-nav-2" />
 
-            <select id="languages" class="form-control inline-block">
-                <option value="">BackEnd/Default</option>
-            </select>
-        </div>
+        <select id="languages" class="form-control inline-block">
+            <option value="">BackEnd/Default</option>
+        </select>
+        <div class="page-title"><span>@ViewBag.Title</span></div>
+    </div>
 
         @*<div id="alerts"></div>*@
         <strong><span class="text-danger" id="notifier"></span></strong>

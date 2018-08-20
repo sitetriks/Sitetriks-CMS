@@ -1,0 +1,28 @@
+﻿@model IDictionary<string, ICollection<SiteTriks.Models.ExceptionLogs.BaseExceptionLog>>
+
+@foreach (var key in Model.Keys)
+{
+    <p>@key</p>
+    <table class="table table-responsive">
+
+        @foreach (var ex in Model[key])
+        {
+            <tr>
+                <td>@ex.DateCreated</td>
+                <td>
+                    @ex.Message
+
+                    @if (ex.InnerExceptionMessage != null)
+                    {
+                        <p><strong>Inner exception Message:</strong> @ex.InnerExceptionMessage</p>
+
+                    }
+                    <div >
+                        <p class="hidden" id="@ex.Id">@ex.StackTrace</p>
+                        <button class="copy-stacktrace" data-id="@ex.Id">Copy Stacktrace</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+}

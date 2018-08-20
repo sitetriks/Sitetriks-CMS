@@ -1,22 +1,28 @@
-﻿@model SiteTriks.Helpers.Tree<SiteTriks.DocumentationModule.Models.TopicNavViewModel>
+﻿@model SiteTriks.DocumentationModule.Models.DocumentationWidgetViewModel
 
 <div class="row documentation-wrapper">
     <div class="col-md-3 col-xs-3">
+        <select class="documentation-versions">
+            @foreach (var item in Model.Versions)
+            {
+                <option>@item</option>
+            }
+        </select>
         <ul class="docs-menu">
-            @for (int i = 0; i < Model.Root.ChildrenCount; i++)
+            @for (int i = 0; i < Model.Tree.Root.ChildrenCount; i++)
             {
                 <li class="docs-menu-item">
                     @{
-                        var child = Model.Root.GetChild(i);
+                        var child = Model.Tree.Root.GetChild(i);
                     }
                     @Html.DisplayFor(m => child, "TreeTopicNavItem", new { indent = 0 })
                 </li>
             }
         </ul>
     </div>
-    <div class="col-md-9 col-xs-9">
+    <div class="col-md-9 col-xs-9 clearfix">
         <div class="topic-details"></div>
-        <a id="prev-doc">Previous</a>
-        <a id="next-doc">Next</a>
+        <a class="prev-doc unselectable">Previous</a>
+        <a class="next-doc unselectable">Next</a>
     </div>
 </div>

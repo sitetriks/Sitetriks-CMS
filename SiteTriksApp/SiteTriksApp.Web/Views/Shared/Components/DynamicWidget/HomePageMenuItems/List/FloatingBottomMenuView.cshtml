@@ -3,8 +3,32 @@
 @{
     var entries = Model.Entries.OrderBy(e => e.Position).ToList();
 }
-<div class="toggle-bottom-menu container">
+<div id="desktop-view-menu" class="features-section bottom-menu">
+    <div class="row">
+        <div class="col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            @for (int i = 0; i < 10 && i < Model.Entries.Count(); i += 2)
+            {
 
+                <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "PrimaryImage")">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "SecondaryImage")" style="display:none">
+                </div>
+            }
+        </div>
+        <div class="col col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            <div class="selected-feature" id="static-section"><div class="feature-content"></div></div>
+        </div>
+        <div class="col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            @for (int i = 1; i < 10 && i < Model.Entries.Count(); i += 2)
+            {
+
+                <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "PrimaryImage")">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "SecondaryImage")" style="display:none">
+                </div>
+            }
+        </div>
+    </div>
 </div>
 <div class="toggle-menu" data-open-state="closed">
     <div class="features-section">
@@ -12,17 +36,6 @@
             <div class="side-section col col-lg-1 col-md-1 col-sm-1 col-xs-1">
                 @for (int i = 0; i < 10 && i < Model.Entries.Count(); i += 2)
                 {
-                    @*<div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")" title="@Model.ClassHelper.GetPropertyValue(entries[i], "HoverText")">
-                            @Model.ClassHelper.GetPropertyValue(entries[i], "DisplayText")
-                            @{
-                                string images = Model.ClassHelper.GetPropertyValue(entries[i], "Images");
-                                if (!string.IsNullOrWhiteSpace(images))
-                                {
-                                    string value = images.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-                                    <img src="/files/id/@value" width="50" />
-                                }
-                            }
-                        </div>*@
 
                     <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")">
                         <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "PrimaryImage")">
@@ -36,17 +49,6 @@
             <div class="side-section col col-lg-1 col-md-1 col-sm-1 col-xs-1">
                 @for (int i = 1; i < 10 && i < Model.Entries.Count(); i += 2)
                 {
-                    @*<div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")" title="@Model.ClassHelper.GetPropertyValue(entries[i], "HoverText")">
-                            @Model.ClassHelper.GetPropertyValue(entries[i], "DisplayText")
-                            @{
-                                string images = Model.ClassHelper.GetPropertyValue(entries[i], "Images");
-                                if (!string.IsNullOrWhiteSpace(images))
-                                {
-                                    string value = images.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-                                    <img src="/files/id/@value" width="50" />
-                                }
-                            }
-                        </div>*@
                     <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")">
                         <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "PrimaryImage")">
                         <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "SecondaryImage")" style="display:none">
@@ -76,18 +78,3 @@
         </div>
     </div>
 </div>
-
-@*<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
-    <script>
-        $('.toggle-menu').on('click', '.menu-icon',  function () {
-            let pageUrl = ($(this).data("url"));
-            let pageInternalNavigation = 'Page Floating Interal Navigation';
-            console.log(pageUrl);
-            console.log(pageInternalNavigation);
-            if ("ga" in window) {
-                tracker = ga.getAll()[0];
-                if (tracker)
-                    tracker.send("event", pageInternalNavigation, pageUrl);
-            }
-        });
-    </script>*@
