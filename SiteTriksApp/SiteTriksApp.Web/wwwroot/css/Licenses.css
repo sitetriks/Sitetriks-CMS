@@ -14,6 +14,55 @@
         display: block;
     }
 
+.licenses-table-content .action-menu {
+    display: flex;
+    height: 70px;
+}
+
+    .licenses-table-content .action-menu div.description-buttons {
+        height: 50px;
+        width: 180px;
+        /*border: 2px solid white;*/
+        margin: auto auto;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+        .licenses-table-content .action-menu .description-buttons div {
+            width: 50%;
+            height: auto;
+            /*border: 1px solid black;*/
+        }
+
+            /*.licenses-table-content .action-menu .description-buttons div img{
+             height: 100%;
+             width: 100%;
+            }*/
+
+        .licenses-table-content .action-menu .description-buttons .symbols-button {
+            background-image: url('/images/licenses-action-buttons/Symbols-deselected.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .licenses-table-content .action-menu .description-buttons .symbols-button.selected {
+            background-image: url('/images/licenses-action-buttons/Symbols-Selected.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+            .licenses-table-content .action-menu .description-buttons .details-button {
+                background-image: url('/images/licenses-action-buttons/Details-Deselected.svg');
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+        .licenses-table-content .action-menu .description-buttons .details-button.selected {
+            background-image: url('/images/licenses-action-buttons/Details-selected.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
 
     .licenses-table-content .row.mobile {
         display: none;
@@ -142,8 +191,8 @@
 }
 
 
-.licenses-table-content .management-tool {
-    background-color: #bad1f5;
+.licenses-table-content #table-content .managpxent-tool {
+    background-color: #b0c7ed;
     color: #5d6072;
     height: 50px !important;
     padding-left: 10px;
@@ -178,6 +227,9 @@
 
 /*Details page*/
 
+.licenses-table-content .details {
+    display: block;
+}
 
 .licenses-table-content .details .row {
     display: table;
@@ -216,9 +268,14 @@
 }
 
 .licenses-table-content .row .col-lg-12 {
-    padding: 20px;
-    border: 1px solid white;
+    /*padding: 20px;
+    border: 1px solid white;*/
     border-collapse: collapse;
+    padding: 10px 5px;
+}
+
+.licenses-table-content .row .col-lg-12.details {
+    padding: 10px 10px;
 }
 
 .licenses-table-content .row .col-lg-10 {

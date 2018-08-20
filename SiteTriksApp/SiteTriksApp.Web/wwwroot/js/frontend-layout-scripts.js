@@ -170,39 +170,6 @@ function loadVideoSource() {
     });
 };
 
-// GA - google analytics
-function googleAnalytics() {
-        $('body').on('click', '.bottom-menu .menu-icon', function () {
-            let pageUrl = ($(this).data("url"));
-            let pageInternalNavigation = 'Page Static Interal Navigation';
-            if ("ga" in window) {
-                tracker = ga.getAll()[0];
-                if (tracker)
-                    tracker.send("event", pageInternalNavigation, pageUrl);
-            }
-        });
-
-        $('body').on('click', '.toggle-menu .menu-icon', function () {
-            let pageUrl = ($(this).data("url"));
-            let pageInternalNavigation = 'Page Floating Interal Navigation';
-            if ("ga" in window) {
-                tracker = ga.getAll()[0];
-                if (tracker)
-                    tracker.send("event", pageInternalNavigation, pageUrl);
-            }
-        });
-
-        $('body').on('click', '.top-menu .menu-icon', function () {
-            let pageUrl = ($(this).data("url"));
-            let pageInternalNavigation = 'Page Mobile Interal Navigation';
-            if ("ga" in window) {
-                tracker = ga.getAll()[0];
-                if (tracker)
-                    tracker.send("event", pageInternalNavigation, pageUrl);
-            }
-        });
-}
-
 // Init functions
 $(document).ready(function () {
     $(document).trigger("initCarousel");
@@ -212,10 +179,8 @@ $(document).ready(function () {
     loadMultiplePlaylistsContent();
     loadVideoById();
     loadVideoSource();
-    googleAnalytics();
 });
 $(window).load(prettyPrintInit());
-
 
 // Video Multiple playlists logic
 $(document).ready(function () {

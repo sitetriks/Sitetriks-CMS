@@ -1,28 +1,13 @@
-﻿@using SiteTriks.DocumentationModule.Data.Enums;
-@model SiteTriks.Helpers.TreeNode<SiteTriks.DocumentationModule.Models.TopicNavViewModel>
+﻿@model SiteTriks.Helpers.TreeNode<SiteTriks.DocumentationModule.Models.TopicNavViewModel>
 
 @{
     string padding = (int)ViewData["indent"] * 20 + 25 + "px";
-    string type = string.Empty;
-    switch (Model.Value.TopicType)
-    {
-        case TopicType.developer:
-            type = "";
-            break;
-        case TopicType.endUser:
-            type = "";
-            break;
-
-        default:
-            break;
-    }
 }
 
 @if (Model.ChildrenCount > 0)
 {
     <div style="padding-left: @padding">
         <span class="glyphicon glyphicon-menu-right"></span>
-        <span class="@type"></span>
         <a class="" data-id="@Model.Value.Id" data-next="@Model.Value.Next" data-prev="@Model.Value.Prev">
             @Html.DisplayFor(m => Model.Value.Name)
         </a>
@@ -42,7 +27,7 @@
 else
 {
     <div style="padding-left: @padding">
-        <span class="@type childless"></span>
+        <span class="childless"></span>
         <a class="" data-id="@Model.Value.Id" data-next="@Model.Value.Next" data-prev="@Model.Value.Prev">
             @Html.DisplayFor(m => Model.Value.Name)
         </a>

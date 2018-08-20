@@ -124,6 +124,7 @@ namespace SiteTriksApp.Web
             WidgetRegistry.RegisterWidget<PresentationWidgetModel>("presentation", "Presentation");
             WidgetRegistry.RegisterWidget<CssWidgetModel>("css", "CSS");
             WidgetRegistry.RegisterWidget<JavaScriptWidgetModel>("javascript", "JavaScript");
+            WidgetRegistry.RegisterWidget<EmbeddedScriptWidgetModel>("embeddedscript", "Embedded Script");
             WidgetRegistry.RegisterWidget<LayoutBuilderWidgetModel>("layoutBuilder", "Layout Builder");
             WidgetRegistry.RegisterWidget<SearchWidgetModel>("search", "Google Search");
             WidgetRegistry.RegisterWidget<ImageWidgetModel>("image", "Image");
@@ -163,10 +164,10 @@ namespace SiteTriksApp.Web
                 options.Level = CompressionLevel.Optimal;
             });
 
-            services.AddDataProtection()
-            .PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"))
-            .SetApplicationName("SiteTriks")
-            .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
+            //services.AddDataProtection()
+            //.PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"))
+            //.SetApplicationName("SiteTriks")
+            //.SetDefaultKeyLifetime(TimeSpan.FromDays(90));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

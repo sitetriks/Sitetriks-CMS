@@ -1,7 +1,5 @@
 ﻿@model SiteTriks.DocumentationModule.Models.TopicDetailsViewModel
 
 <h3>@Model.Name</h3>
-@*<div>@Model.Title</div>*@
-<div>@Model.ContentName</div>
 <div>@Html.Raw(Model.TopicContent)</div>
-<div>@Model.Version</div>
+<div class="topic-version">@Model.Version.ToString("0.00")</div>

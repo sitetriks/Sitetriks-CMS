@@ -25,14 +25,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
-    <PackageReference Include="SiteTriks" Version="1.0.1" />
-    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.0.6" />
-    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.0.6" />
-    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.0.6" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.0.6" />
-    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.0.6" />
-    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.0.6" />
-    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.0.6" />
+    <PackageReference Include="SiteTriks" Version="1.0.1.1" />
+    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.0.7" />
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.0.7" />
+    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.0.7" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.0.7" />
+    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.0.7" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.0.7" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.0.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,10 +45,14 @@
     <Folder Include="Areas\Forum\Controllers\" />
     <Folder Include="Areas\Forum\Data\" />
     <Folder Include="Areas\Forum\Models\" />
+    <Folder Include="Areas\Setup\Controllers\" />
+    <Folder Include="Areas\Setup\Data\" />
+    <Folder Include="Areas\Setup\Models\" />
     <Folder Include="Areas\SiteTriks\Controllers\DashboardWidgets\ViewComponents\" />
     <Folder Include="Areas\SiteTriks\Controllers\ViewComponents\" />
     <Folder Include="Areas\SiteTriks\Data\" />
     <Folder Include="Areas\SiteTriks\Helpers\" />
+    <Folder Include="Data\Migrations\" />
     <Folder Include="Extensions\WidgetModels\" />
     <Folder Include="Views\Shared\Components\DocumentationWidget\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
@@ -157,12 +161,6 @@
     <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1Development_1json__JSONSchema="http://json.schemastore.org/config" /></VisualStudio></ProjectExtensions>
 
- <!-- <Target Name="IncludePrecompiledViewsInPublishOutput" DependsOnTargets="_MvcRazorPrecompileOnBuild" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
-    <ItemGroup>
-      <_PrecompiledViewsOutput Include="$(MvcRazorOutputPath)$(MSBuildProjectName).PrecompiledViews.DLL" />
-      <_PrecompiledViewsOutput Include="$(MvcRazorOutputPath)$(MSBuildProjectName).PrecompiledViews.pdb" />
-      <ContentWithTargetPath Include="@(_PrecompiledViewsOutput->'%(FullPath)')" RelativePath="%(_PrecompiledViewsOutput.Identity)" TargetPath="%(_PrecompiledViewsOutput.Filename)%(_PrecompiledViewsOutput.Extension)" CopyToPublishDirectory="PreserveNewest" />
-    </ItemGroup>
-  </Target>  -->
 </Project>
