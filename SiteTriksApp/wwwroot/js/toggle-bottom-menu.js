@@ -1,6 +1,7 @@
-﻿'use strict';
+'use strict';
 
 // activate the scroll event
+
 function removeSideMenu(e) {
 
     var offSet = $('.bottom-menu').offset();
@@ -10,7 +11,7 @@ function removeSideMenu(e) {
 
     if (distance && $scrollBottom >= distance && $(window).width() > 767) {
         $toggleMenu.addClass('visuallyhidden');
-        $toggleMenu.one('transitionend', function (e) { });
+        $toggleMenu.one('transitionend', function (e) {});
     }
 
     if (distance && $scrollBottom <= distance) {
@@ -23,7 +24,7 @@ function removeSideMenu(e) {
 }
 
 // toggle the side menu
-var toggleSideMenu = (function () {
+var toggleSideMenu = function () {
 
     var animateWidth;
     var $selectedFeature = $(".toggle-menu .selected-feature");
@@ -33,7 +34,7 @@ var toggleSideMenu = (function () {
     var menuState = $(".toggle-menu").attr("data-open-state");
     var screenWidth = $(window).width();
 
-    var setShrinkIcon = function () {
+    var setShrinkIcon = function setShrinkIcon() {
         $('body').on('resize ready', '.toggle-menu', function () {
             if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 $(".shrink-menu").children('img').attr('src', '/Content/Images/menu-buttons/Decrease_window.png');
@@ -41,11 +42,11 @@ var toggleSideMenu = (function () {
             //if ($(".toggle-menu").attr("data-open-state") === "closed" || $(".toggle-menu").attr("data-open-state") === "opened") {
             //}
         });
-    }
+    };
 
     var setFeatureWidth = "240px";
 
-    var expandMenu = function (ev) {
+    var expandMenu = function expandMenu(ev) {
         $(".shrink-menu").on("click", function () {
             animateWidth = $('.middle-section.col-lg-10').css('width') == "0px" ? "76%" : "0px";
             var featuresFullWidth = $('.toggle-menu .features-section').css('width') == setFeatureWidth ? "90%" : setFeatureWidth;
@@ -71,9 +72,9 @@ var toggleSideMenu = (function () {
                 $selectedFeature.toggle("slow");
             });
 
-            $featuresSection.animate({ width: featuresFullWidth }, anumationDuration, function () { });
+            $featuresSection.animate({ width: featuresFullWidth }, anumationDuration, function () {});
 
-            $('.side-section').animate({ width: sideColsWidth }, 0, function () { });
+            $('.side-section').animate({ width: sideColsWidth }, 0, function () {});
 
             $selectedFeature.animate({ display: selectedFeatureVisibility }, anumationDuration, function () {
                 if ($selectedFeature.css('display') === "none") {
@@ -96,7 +97,6 @@ var toggleSideMenu = (function () {
             if ($(".toggle-menu").attr("data-open-state") === "opened") {
                 $(".toggle-menu").attr("data-open-state", "expanded");
                 $('.toggle-menu').css("width", "90%");
-
             } else {
                 $(".toggle-menu").attr("data-open-state", "opened");
 
@@ -104,9 +104,9 @@ var toggleSideMenu = (function () {
                 $('.toggle-menu').css("width", "auto");
             }
         });
-    }
+    };
 
-    var closeMenu = function () {
+    var closeMenu = function closeMenu() {
         $('.close-menu').on('click', function () {
             // check state
             if ($(".toggle-menu").attr("data-open-state") === "expanded") {
@@ -134,20 +134,19 @@ var toggleSideMenu = (function () {
             if ($(".toggle-menu").attr("data-open-state") === "closed") {
                 $(".toggle-menu").attr("data-open-state", "opened");
                 $('.toggle-menu').css("width", "auto");
-
             } else {
                 $(".toggle-menu").attr("data-open-state", "closed");
                 $('.toggle-menu').css("width", "auto");
             }
         });
-    }
+    };
 
     return {
         setShrinkIcon: setShrinkIcon,
         expandMenu: expandMenu,
-        closeMenu: closeMenu,
-    }
-})();
+        closeMenu: closeMenu
+    };
+}();
 
 // Features Section content loading.
 
@@ -169,7 +168,10 @@ function loadSection(ev) {
 
     var url = $trigger.attr('data-url') || '';
     var $section = $trigger.parents('.features-section').find('.feature-content');
-    var $bottomSection = $('.toggle-bottom-menu.container');
+    //   var $bottomSection = $('.toggle-bottom-menu.container');
+    var $bottomSection = $('.bottom-menu').find('.feature-content');
+    var $toggleSection = $(".toggle-menu");
+
     var $toggleMenu = $trigger.parents('.toggle-menu');
 
     $section.html('');
@@ -180,19 +182,20 @@ function loadSection(ev) {
                 $bottomSection.html(res.view);
                 scrollToElement($bottomSection);
                 $('.close-menu').click();
-            }
-            else if ($(".toggle-menu").attr("data-open-state") === "expanded") {
+            } else if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 $section.html(res.view);
-            } else if ($(window).width() <= 767) {
+            } else if ($(window).width() <= 767 || $(window).height() <= 620) {
                 $section.html(res.view);
+            } else if ($toggleSection.hasClass('visuallyhidden')) {
+                $bottomSection.html(res.view);
             }
 
             DocumentationWidget();
 
             if ($section.find('.multiple-playlists')) {
                 // get all thumbnails ids
-                let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
-                let source;
+                var $container = $('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail');
+                var source = void 0;
                 $container.each(function (_, element) {
                     source = $(this).data("videoid");
                     var url = getYoutubeData(source).then(function (res) {
@@ -205,21 +208,12 @@ function loadSection(ev) {
             } else {
                 console.warn("Error in toggle menu");
             }
-
-        }                                         
+        }
     });
 }
 
 $(document).ready(function (ev) {
     $('.features-section').on('click', '.menu-icon', loadSection);
-});
-
-$(document).ready(function () {
-    $('.letter-2').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
-        $('.leaf-button-text').css('display', 'none');
-        $('.leaf-button-1').css('display', 'inline-block');
-        $('.close-menu').css('display', 'inline-block');
-    });
 });
 
 function getYoutubeData(playlistId) {
@@ -233,6 +227,7 @@ function scrollToElement(targetElement) {
 }
 
 $(window).scroll(removeSideMenu);
+
 $(document).ready(function () {
     toggleSideMenu.setShrinkIcon();
     toggleSideMenu.expandMenu();

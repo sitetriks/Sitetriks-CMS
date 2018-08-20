@@ -9,6 +9,7 @@
 
 function loadUploadTemplate(isMultiple, type, fieldId, libraryField) {
     $('#btn-show-upload').hide();
+    $('#btn-show-choice').show();
     var $modal = $('#upload-modal');
     var $container = $('#upload-container');
     $('#files-container').html('');

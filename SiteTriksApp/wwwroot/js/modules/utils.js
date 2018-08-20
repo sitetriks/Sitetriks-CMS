@@ -1,13 +1,12 @@
-﻿var Utils = (function () {
+'use strict';
+
+var Utils = function () {
     function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
+        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }
 
     function guid() {
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
     function isGuid(stringToTest) {
@@ -36,9 +35,9 @@
     }
 
     return {
-        s4,
-        guid,
-        isGuid,
-        addEditor
-    }
-}());
+        s4: s4,
+        guid: guid,
+        isGuid: isGuid,
+        addEditor: addEditor
+    };
+}();

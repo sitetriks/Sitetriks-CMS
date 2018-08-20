@@ -1,28 +1,28 @@
-﻿
+'use strict';
+
 function initSomeForm() {
 
     $('body').on('click', '.mail-contact', function () {
         $('.expanded-contacts.mail').css('display', 'block');
         $('.contact-us-widget.main-container').css('display', 'none');
         $('.expanded-contacts.phone').css('display', 'none');
-    })
+    });
 
     $('body').on('click', '.go-back-button', function () {
         $('.expanded-contacts.mail').css('display', 'none');
         $('.expanded-contacts.phone').css('display', 'none');
         $('.contact-us-widget.main-container').css('display', 'block');
-    })
-
+    });
 };
 
 function submitContactForm(ev) {
     ev.preventDefault();
-    let $targer = $(this);
+    var $targer = $(this);
 
-    let $name = $targer.find('.inputName').val();
-    let $email = $targer.find('.inputEmail').val();
-    let $number = $targer.find('.inputNumber').val();
-    let $message = $targer.find('.textareaMessage').val();
+    var $name = $targer.find('.inputName').val();
+    var $email = $targer.find('.inputEmail').val();
+    var $number = $targer.find('.inputNumber').val();
+    var $message = $targer.find('.textareaMessage').val();
     var $notifier = $targer.find('.file-handler-notifier');
     if ($name) {
         if ($name.length === 0 && $name || $email.length === 0 || $number.length === 0 || $message.length === 0) {
@@ -37,8 +37,7 @@ function submitContactForm(ev) {
 
             return false;
         }
-    }
-    else {
+    } else {
 
         if ($message.length === 0) {
             // alert("One or more fields were not filled in successfully. Please fill them in and try again.");
@@ -54,41 +53,36 @@ function submitContactForm(ev) {
         }
     }
 
-    let formData = new FormData(this);
+    var formData = new FormData(this);
     // var $notifier = $('#test-form #file-handler-notfier');
-    Data.postForm({ url: this.action, formData: formData })
-        .then(function (res) {
+    Data.postForm({ url: this.action, formData: formData }).then(function (res) {
 
-            $("input").val("");
-            $("textarea").val("");
+        $("input").val("");
+        $("textarea").val("");
 
-            $notifier.addClass('alert alert-success  fade in');
-            $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> Your request was sent successfully!');
+        $notifier.addClass('alert alert-success  fade in');
+        $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> Your request was sent successfully!');
 
-            setTimeout(function () {
-                $notifier.removeClass('in');
-                $notifier.html('');
-            }, 5000);
+        setTimeout(function () {
+            $notifier.removeClass('in');
+            $notifier.html('');
+        }, 5000);
+    }).catch(function (err) {
+        $notifier.addClass('alert alert-danger  fade in');
+        $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
 
-
-        })
-        .catch(function (err) {
-            $notifier.addClass('alert alert-danger  fade in');
-            $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
-
-            setTimeout(function () {
-                $notifier.removeClass('in');
-                $notifier.html('');
-            }, 5000);
-
-        })
+        setTimeout(function () {
+            $notifier.removeClass('in');
+            $notifier.html('');
+        }, 5000);
+    });
     ev.preventDefault();
     return false;
 };
 
-function submitContactFormOne (ev) {
+function submitContactFormOne(ev) {
     ev.preventDefault();
-    let $targer = $(this);
+    var $targer = $(this);
     var $notifier = $targer.find('.file-handler-notifier');
     var formData = new FormData(this);
     // var $notifier = $('#test-form #file-handler-notfier');
@@ -104,7 +98,6 @@ function submitContactFormOne (ev) {
             $notifier.removeClass('in');
             $notifier.html('');
         }, 5000);
-
     }).catch(function (err) {
         $notifier.addClass('alert alert-danger  fade in');
         $notifier.html('<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> One or more fields were not filled in successfully. Please fill them in and try again.');
@@ -113,13 +106,12 @@ function submitContactFormOne (ev) {
             $notifier.removeClass('in');
             $notifier.html('');
         }, 5000);
-
     });
     ev.preventDefault();
     return false;
 };
- 
- function filterListOfRegions () {
+
+function filterListOfRegions() {
     $('.list-of-regions li').each(function () {
         if ($(this).hasClass('selected-region')) {
             $(this).removeClass('selected-region');

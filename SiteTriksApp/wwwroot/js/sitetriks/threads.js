@@ -1,4 +1,6 @@
-﻿function createThread() {
+'use strict';
+
+function createThread() {
     $('#create-thread').on('submit', function (evt) {
         evt.preventDefault();
 
@@ -13,15 +15,15 @@
         $('#content').val(tinymce.activeEditor.getContent());
 
         var form = $(this)[0];
-        var formData = new FormData(form);                
+        var formData = new FormData(form);
 
         Data.postForm({ formData: formData }).then(function (res) {
             if (res.success) {
                 window.location.replace('/forum/threads/thread/' + res.threadId);
             } else {
-                showError(res.message);                
+                showError(res.message);
             }
-        });       
+        });
 
         return false;
     });
@@ -50,7 +52,7 @@ function editThread() {
             } else {
                 showError(res.message);
             }
-        });      
+        });
 
         return false;
     });
@@ -58,7 +60,7 @@ function editThread() {
 
 function initThread(modelId) {
     $('#comments-container').on('click', '.btn-edit-post', function (event) {
-        let $contentOld = $('.edit-post-container').prev('.panel-body');
+        var $contentOld = $('.edit-post-container').prev('.panel-body');
         if ($contentOld) {
             textEditor.remove('edit-post-content');
             $contentOld.prev('.panel-heading').find('.btn-edit-post').show();
@@ -66,64 +68,50 @@ function initThread(modelId) {
             $('.edit-post-container').remove();
         }
 
+        var $trigger = $(this);
+        var $content = $trigger.parents('.panel-heading').next('.panel-body');
 
-        let $trigger = $(this);
-        let $content = $trigger.parents('.panel-heading').next('.panel-body');
+        var $editContainer = $(document.createElement('div')).addClass('edit-post-container').appendTo($content.parent());
 
-        let $editContainer = $(document.createElement('div'))
-            .addClass('edit-post-container')
-            .appendTo($content.parent());
+        $(document.createElement('textarea')).attr('id', 'edit-post-content').text($content.html()).appendTo($editContainer);
 
-        $(document.createElement('textarea'))
-            .attr('id', 'edit-post-content')
-            .text($content.html())
-            .appendTo($editContainer);
+        var $btncontainer = $(document.createElement('div')).addClass('buttons-edit-container').appendTo($editContainer);
 
-        let $btncontainer = $(document.createElement('div'))
-            .addClass('buttons-edit-container')
-            .appendTo($editContainer);
+        $(document.createElement('a')).addClass('btn-save-edited-post btn btn-backend').text('Save').appendTo($btncontainer);
 
-        $(document.createElement('a'))
-            .addClass('btn-save-edited-post btn btn-backend')
-            .text('Save')
-            .appendTo($btncontainer);
-
-        $(document.createElement('a'))
-            .addClass('btn-cancel-edited-post btn btn-backend')
-            .text('Cancel')
-            .appendTo($btncontainer);
+        $(document.createElement('a')).addClass('btn-cancel-edited-post btn btn-backend').text('Cancel').appendTo($btncontainer);
 
         $content.hide();
         $trigger.hide();
 
         textEditor.initWithoutImages('#edit-post-content', '', 300);
-    })
+    });
 
     $('#comments-container').on('click', '.btn-cancel-edited-post', function (event) {
-        let $trigger = $(this);
+        var $trigger = $(this);
         textEditor.remove('edit-post-content');
-        let $content = $trigger.parents('.edit-post-container').prev('.panel-body');
+        var $content = $trigger.parents('.edit-post-container').prev('.panel-body');
         $content.prev('.panel-heading').find('.btn-edit-post').show();
         $content.show();
         $('.edit-post-container').remove();
     });
 
     $('#comments-container').on('click', '.btn-save-edited-post', function (event) {
-        let $trigger = $(this);
-        let id = $trigger.parents('.cf_commentWrapper').attr('data-id');
+        var $trigger = $(this);
+        var id = $trigger.parents('.cf_commentWrapper').attr('data-id');
 
-        let content = textEditor.getContent('edit-post-content');
+        var content = textEditor.getContent('edit-post-content');
 
-        let body = {
+        var body = {
             id: id,
             content: content
-        }
+        };
 
         Data.postJson({ url: '/forum/posts/edit', data: body }).then(function (res) {
             console.log(res);
             if (res.success) {
                 textEditor.remove('edit-post-content');
-                let $content = $trigger.parents('.edit-post-container').prev('.panel-body');
+                var $content = $trigger.parents('.edit-post-container').prev('.panel-body');
                 $content.prev('.panel-heading').find('.btn-edit-post').show();
                 $content.show();
                 $content.html(content);

@@ -1,24 +1,24 @@
-﻿function createClass(assemblyName) {
+'use strict';
+
+function createClass(assemblyName) {
     Data.getJson({ url: '/sitetriks/dynamic/AddClassPropertyTemplate' }).then(function (res) {
         Loader.hide();
 
-        $('#btn-add-field').on('click', (e) => {
+        $('#btn-add-field').on('click', function (e) {
             if ($('.field-item').length > 4) {
                 console.log('can not have more than 4 fields');
                 return;
             }
 
-            $(document.createElement('div')).html(res)
-                .addClass('field-item')
-                .appendTo('#fields-container');
+            $(document.createElement('div')).html(res).addClass('field-item').appendTo('#fields-container');
 
             if ($('.field-item').length > 4) {
                 $('#btn-add-field').hide();
             }
         });
 
-        $('#fields-container').on('click', '.btn-delete-field', (e) => {
-            let $trigger = $(e.target);
+        $('#fields-container').on('click', '.btn-delete-field', function (e) {
+            var $trigger = $(e.target);
             $trigger.parents('.field-item').remove();
 
             if ($('.field-item').length <= 4) {
@@ -26,11 +26,11 @@
             }
         });
 
-        $('#form-create-class').on('submit', (e) => {
+        $('#form-create-class').on('submit', function (e) {
             Loader.show('#fff', "/images/LOGO.png");
 
-            let flag = false;
-            $('input.validate-field-name').each((_, element) => {
+            var flag = false;
+            $('input.validate-field-name').each(function (_, element) {
                 if (!Validator.validate($(element), 'Field Name must be atleast 3 symbols and alphanumeric and can not start with number! Whitespace is not alphanumeric! Field name must be different from Title!', function (val) {
                     return Validator.hasMinimumLength(val, 3) && Validator.isAlphaNumeric(val) && Validator.isStartingWithLetter(val) && val != "Title";
                 })) {
@@ -38,13 +38,17 @@
                 }
             });
 
-            $('select.validate-type-dropdown').each((_, element) => {
-                if (!Validator.validate($(element), 'Field Type must be selected!', function (val) { return !!val; })) {
+            $('select.validate-type-dropdown').each(function (_, element) {
+                if (!Validator.validate($(element), 'Field Type must be selected!', function (val) {
+                    return !!val;
+                })) {
                     flag = true;
                 }
             });
 
-            if (!Validator.validate($('#input-class-title'), 'Title must be atleast 3 symbols', function (val) { return Validator.hasMinimumLength(val, 3); })) {
+            if (!Validator.validate($('#input-class-title'), 'Title must be atleast 3 symbols', function (val) {
+                return Validator.hasMinimumLength(val, 3);
+            })) {
                 flag = true;
             }
 
@@ -55,16 +59,16 @@
                 return false;
             }
 
-            let formData = new FormData();
-            let name = $('#input-class-name').val();
-            let properties = [];
-            $('.field-item').each((_, element) => {
-                let name = $(element).find('input:text').val();
-                let type = $(element).find('select').val();
-                properties.push({ name, type });
-            })
-            
-            if ((formData.set && {}.toString.call(formData.set) === '[object Function]')) {
+            var formData = new FormData();
+            var name = $('#input-class-name').val();
+            var properties = [];
+            $('.field-item').each(function (_, element) {
+                var name = $(element).find('input:text').val();
+                var type = $(element).find('select').val();
+                properties.push({ name: name, type: type });
+            });
+
+            if (formData.set && {}.toString.call(formData.set) === '[object Function]') {
                 formData.set('name', name);
                 formData.set('title', $('#input-class-title').val());
                 formData.set('assemblyName', assemblyName);
@@ -73,20 +77,20 @@
                 formData.append('name', name);
                 formData.append('title', $('#input-class-title').val());
                 formData.append('assemblyName', assemblyName);
-                formData.append("properties", JSON.stringify(properties));                
+                formData.append("properties", JSON.stringify(properties));
             }
-            
-            Data.postForm({ formData }).then((res) => {
+
+            Data.postForm({ formData: formData }).then(function (res) {
                 if (res.success) {
-                    handleAppRestart({});                    
-                }
-                else {
+                    handleAppRestart({});
+                } else {
                     Notifier.createAlert({ containerId: '#alerts', message: 'Dynamic class with this name already exist.', status: 'danger' });
                     Loader.hide();
                 }
-            }, (res) => { console.log(res); })
-            
-            
+            }, function (res) {
+                console.log(res);
+            });
+
             e.preventDefault();
             return false;
         });
@@ -96,46 +100,46 @@
 function deleteClass(element) {
     var assemblyName = $(element).data('assemblyName');
     var className = $(element).data('className');
-    
+
     $.ajax({
         method: 'GET',
         url: '/sitetriks/dynamic/deleteClass?assemblyName=' + assemblyName + '&className=' + className,
         contentType: 'application/json',
         success: function success(res) {
             console.log(res);
-            handleAppRestart({url: '/sitetriks/dynamic'})
+            handleAppRestart({ url: '/sitetriks/dynamic' });
         }
     });
 }
 
 function createItem(modelName, assemblyName) {
     $('#btn-create-item').on('click', function (e) {
-        let $notifier = $('#create-class-notifier');
+        var $notifier = $('#create-class-notifier');
         $notifier.text('');
-        let flag;
-        let body = {
+        var flag = void 0;
+        var body = {
             className: modelName,
             assemblyName: assemblyName,
             properties: []
-        }
+        };
 
         $('.class-property').each(function (_, element) {
-            let $item = $(element);
-            let name = $item.attr('data-name');
-            let type = $item.attr('data-type');
-            let value = $item.val();
+            var $item = $(element);
+            var name = $item.attr('data-name');
+            var type = $item.attr('data-type');
+            var value = $item.val();
 
             switch (type) {
                 case 'int':
                     if (parseInt(value) != value) {
-                        $notifier.text(name + ' must be integer number!')
+                        $notifier.text(name + ' must be integer number!');
                         flag = true;
                     }
                     break;
 
                 case 'decimal':
                     if (parseFloat(value) != value) {
-                        $notifier.text(name + ' must be decimal floating point number!')
+                        $notifier.text(name + ' must be decimal floating point number!');
                         flag = true;
                     }
                     break;
@@ -146,7 +150,7 @@ function createItem(modelName, assemblyName) {
 
                 case 'string-long':
                     if (value && value.length > 3999) {
-                        $notifier.text(name + ' must be shorter than 4000 symbols!')
+                        $notifier.text(name + ' must be shorter than 4000 symbols!');
                         flag = true;
                     }
                     break;
@@ -159,7 +163,7 @@ function createItem(modelName, assemblyName) {
                 type: type,
                 value: value
             }));
-        })
+        });
 
         if (flag) {
             return;
@@ -169,12 +173,12 @@ function createItem(modelName, assemblyName) {
             method: 'POST',
             url: '/sitetriks/dynamic/createitem',
             data: body,
-            success: function (res) {
+            success: function success(res) {
                 if (res.success) {
-                    window.location.replace(`/sitetriks/dynamic/classdetails?assemblyName=${body.assemblyName}&className=${body.className}`);
+                    window.location.replace('/sitetriks/dynamic/classdetails?assemblyName=' + body.assemblyName + '&className=' + body.className);
                 }
             },
-            error: function (res) {
+            error: function error(res) {
                 console.log(res);
             }
         });
@@ -191,23 +195,21 @@ function editClass(modelName, assemblyName) {
     Data.getJson({ url: '/sitetriks/dynamic/AddClassPropertyTemplate' }).then(function (res) {
         Loader.hide();
 
-        $('#btn-add-field').on('click', (e) => {
+        $('#btn-add-field').on('click', function (e) {
             if ($('.field-item').length > 4) {
                 console.log('can not have more than 4 fields');
                 return;
             }
 
-            $(document.createElement('div')).html(res)
-                .addClass('field-item')
-                .appendTo('#fields-container');
+            $(document.createElement('div')).html(res).addClass('field-item').appendTo('#fields-container');
 
             if ($('.field-item').length > 4) {
                 $('#btn-add-field').hide();
             }
         });
 
-        $('#fields-container').on('click', '.btn-delete-field', (e) => {
-            let $trigger = $(e.target);
+        $('#fields-container').on('click', '.btn-delete-field', function (e) {
+            var $trigger = $(e.target);
             $trigger.parents('.field-item').remove();
 
             if ($('.field-item').length <= 4) {
@@ -215,11 +217,11 @@ function editClass(modelName, assemblyName) {
             }
         });
 
-        $('#form-edit-class').on('submit', (e) => {
+        $('#form-edit-class').on('submit', function (e) {
             Loader.show('#fff');
 
-            let flag = false;
-            $('input.validate-field-name').each((_, element) => {
+            var flag = false;
+            $('input.validate-field-name').each(function (_, element) {
                 if (!Validator.validate($(element), 'Field Name must be atleast 3 symbols and alphanumeric and can not start with number! Whitespace is not alphanumeric! Field name must be different from Title!', function (val) {
                     return Validator.hasMinimumLength(val, 3) && Validator.isAlphaNumeric(val) && Validator.isStartingWithLetter(val) && val != "Title";
                 })) {
@@ -227,13 +229,17 @@ function editClass(modelName, assemblyName) {
                 }
             });
 
-            $('select.validate-type-dropdown').each((_, element) => {
-                if (!Validator.validate($(element), 'Field Type must be selected!', function (val) { return !!val; })) {
+            $('select.validate-type-dropdown').each(function (_, element) {
+                if (!Validator.validate($(element), 'Field Type must be selected!', function (val) {
+                    return !!val;
+                })) {
                     flag = true;
                 }
             });
 
-            if (!Validator.validate($('#input-class-title'), 'Title must be atleast 3 symbols', function (val) { return Validator.hasMinimumLength(val, 3); })) {
+            if (!Validator.validate($('#input-class-title'), 'Title must be atleast 3 symbols', function (val) {
+                return Validator.hasMinimumLength(val, 3);
+            })) {
                 flag = true;
             }
 
@@ -244,18 +250,18 @@ function editClass(modelName, assemblyName) {
                 return false;
             }
 
-            let formData = new FormData();
-            let newName = $('#input-class-name').val();
-            let oldName = modelName;
-            let properties = [];
+            var formData = new FormData();
+            var newName = $('#input-class-name').val();
+            var oldName = modelName;
+            var properties = [];
 
-            $('.field-item').each((_, element) => {
-                let name = $(element).find('input:text').val();
-                let type = $(element).find('select').val();
-                properties.push({ name, type });
+            $('.field-item').each(function (_, element) {
+                var name = $(element).find('input:text').val();
+                var type = $(element).find('select').val();
+                properties.push({ name: name, type: type });
             });
             // let assemblyName = '@ViewBag.AssemblyName';
-            if ((formData.set && {}.toString.call(formData.set) === '[object Function]')) {
+            if (formData.set && {}.toString.call(formData.set) === '[object Function]') {
                 formData.set('oldName', oldName);
                 formData.set('newName', newName);
                 formData.set('title', $('#input-class-title').val());
@@ -269,12 +275,13 @@ function editClass(modelName, assemblyName) {
                 formData.append('properties', JSON.stringify(properties));
             }
 
-            Data.postForm({ formData }).then((res) => {
+            Data.postForm({ formData: formData }).then(function (res) {
                 if (res.success) {
                     handleAppRestart({});
                 }
-            }, (res) => { console.log(res); })
-
+            }, function (res) {
+                console.log(res);
+            });
 
             e.preventDefault();
             return false;
@@ -286,23 +293,23 @@ function editItem(id, className, assemblyName) {
     $('#btn-edit-item').on('click', function (e) {
         Loader.show('#fff');
 
-        let $notifier = $('#edit-class-notifier');
+        var $notifier = $('#edit-class-notifier');
         $notifier.text('');
-        let flag;
-        let body = {
+        var flag = void 0;
+        var body = {
             id: id,
             className: className,
             assemblyName: assemblyName,
             properties: []
-        }
+        };
 
         $('.class-property').each(function (_, element) {
-            let $item = $(element);
-            let name = $item.attr('data-name');
-            let type = $item.attr('data-type');
-            let value = $item.val();
+            var $item = $(element);
+            var name = $item.attr('data-name');
+            var type = $item.attr('data-type');
+            var value = $item.val();
 
-            let link = $item.attr('data-link');
+            var link = $item.attr('data-link');
             if (link && link.length > 0) {
                 body.link = link;
             }
@@ -310,14 +317,14 @@ function editItem(id, className, assemblyName) {
             switch (type) {
                 case 'int':
                     if (parseInt(value) != value) {
-                        $notifier.text(name + ' must be integer number!')
+                        $notifier.text(name + ' must be integer number!');
                         flag = true;
                     }
                     break;
 
                 case 'decimal':
                     if (parseFloat(value) != value) {
-                        $notifier.text(name + ' must be decimal floating point number!')
+                        $notifier.text(name + ' must be decimal floating point number!');
                         flag = true;
                     }
                     break;
@@ -327,7 +334,7 @@ function editItem(id, className, assemblyName) {
 
                 case 'string-long':
                     if (value && value.length > 3999) {
-                        $notifier.text(name + ' must be shorter than 4000 symbols!')
+                        $notifier.text(name + ' must be shorter than 4000 symbols!');
                         flag = true;
                     }
                     break;
@@ -348,7 +355,7 @@ function editItem(id, className, assemblyName) {
 
         Data.postJson({ url: '/sitetriks/dynamic/edititem', data: body }).then(function (res) {
             if (res.success) {
-                window.location.replace(`/sitetriks/dynamic/classdetails?assemblyName=${body.assemblyName}&className=${body.className}`);
+                window.location.replace('/sitetriks/dynamic/classdetails?assemblyName=' + body.assemblyName + '&className=' + body.className);
             }
         }, function (res) {
             Loader.hide();

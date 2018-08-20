@@ -1,4 +1,6 @@
-﻿function initFilesEdit(expirationDate, libraryAllowed) {
+'use strict';
+
+function initFilesEdit(expirationDate, libraryAllowed) {
     var $notifier = '#file-edit-notfier';
 
     $('#date-picker').datetimepicker({
@@ -7,7 +9,7 @@
 
     $('.date-picker-group span').on('click', function () {
         $('#date-picker').focus();
-    })
+    });
 
     var libraryAllowed = replaceAll(replaceAll(libraryAllowed, '*', ''), ',', '|');
 
@@ -43,7 +45,9 @@
         Loader.show('#fff');
         var flag = false;
 
-        if (!Validator.validate($('#title'), 'Name must be atleast 3 characters!', function (val) { return Validator.hasMinimumLength(val.trim(), 3); })) {
+        if (!Validator.validate($('#title'), 'Name must be atleast 3 characters!', function (val) {
+            return Validator.hasMinimumLength(val.trim(), 3);
+        })) {
             flag = true;
         }
 
@@ -60,9 +64,8 @@
                         status: 'danger'
                     });
                 }
-            })
-        }
-        else {
+            });
+        } else {
             Loader.hide();
         }
 

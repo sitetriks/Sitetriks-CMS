@@ -1,4 +1,6 @@
-﻿function builderFields(mappingsUrl, builderName) {
+"use strict";
+
+function builderFields(mappingsUrl, builderName) {
     $(document).ready(function () {
         var mappingDropdownValue = $("#mapping_options").val();
 
@@ -17,16 +19,11 @@
             type: "GET",
             url: mappingsUrl + "?modelName=" + name + "&builderName=" + builderName,
             contentType: 'application/json',
-            success: function () {
-            },
-            error: function () {
-            }
-        })
-            .done(function (partialViewResult) {
-                $("#mappings").html(partialViewResult)
-            });
-
-
+            success: function success() {},
+            error: function error() {}
+        }).done(function (partialViewResult) {
+            $("#mappings").html(partialViewResult);
+        });
     }
 }
 
@@ -80,16 +77,15 @@ function createRssFeed(validateRssFeedUrl, builderFieldUrl) {
             type: "GET",
             url: builderFieldUrl + name,
             contentType: 'application/json',
-            success: function () {
-                console.log("ss")
+            success: function success() {
+                console.log("ss");
             },
-            error: function () {
-                console.log("error")
+            error: function error() {
+                console.log("error");
             }
-        })
-            .done(function (partialViewResult) {
-                $("#fieldItems").html(partialViewResult)
-            });
+        }).done(function (partialViewResult) {
+            $("#fieldItems").html(partialViewResult);
+        });
     }
 }
 
@@ -124,7 +120,6 @@ function editRssFeed(validateRssFeedUrl, builderFieldsUrl) {
         }
     }
 
-
     $("#builder_options").change(function () {
         var value = this.value;
         loadFieldsForBuilder(value);
@@ -140,15 +135,14 @@ function editRssFeed(validateRssFeedUrl, builderFieldsUrl) {
             type: "GET",
             url: builderFieldsUrl + "?builderName=" + name,
             contentType: 'application/json',
-            success: function () {
-                console.log("ss")
+            success: function success() {
+                console.log("ss");
             },
-            error: function () {
-                console.log("error")
+            error: function error() {
+                console.log("error");
             }
-        })
-            .done(function (partialViewResult) {
-                $("#fieldItems").html(partialViewResult)
-            });
+        }).done(function (partialViewResult) {
+            $("#fieldItems").html(partialViewResult);
+        });
     }
 }

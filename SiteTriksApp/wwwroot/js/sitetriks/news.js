@@ -1,120 +1,122 @@
-﻿function createNews(validateNewsLinkUrl) {
+'use strict';
+
+function createNews(validateNewsLinkUrl) {
     $(document).ready(function () {
-            populateUrl('#title', '#url', validateUrlOnChange);
+        populateUrl('#title', '#url', validateUrlOnChange);
 
-            $('#date-picker').datetimepicker({
-                minDate: new Date()
-            }).val('');
+        $('#date-picker').datetimepicker({
+            minDate: new Date()
+        }).val('');
 
-            textEditor.init('#news-en-content', '70%', 500);
-            countSEOWords.apply($('#seo-words'));
-        });
+        textEditor.init('#news-en-content', '70%', 500);
+        countSEOWords.apply($('#seo-words'));
+    });
 
-        $('.date-picker-group span').on('click', function () {
-            $('#date-picker').focus();
-        })
+    $('.date-picker-group span').on('click', function () {
+        $('#date-picker').focus();
+    });
 
-        $('#seo-words').on('input change', countSEOWords);
+    $('#seo-words').on('input change', countSEOWords);
 
-        function countSEOWords(ev) {
-            let $trigger = $(this);
-            let words = $trigger.val().split(',');
-            if (words.length === 1 && words[0].trim().length === 0) {
-                $('#seo-words-counter').text('');
-            } else {
-                $('#seo-words-counter').text('Words: ' + words.length);
-            }
+    function countSEOWords(ev) {
+        var $trigger = $(this);
+        var words = $trigger.val().split(',');
+        if (words.length === 1 && words[0].trim().length === 0) {
+            $('#seo-words-counter').text('');
+        } else {
+            $('#seo-words-counter').text('Words: ' + words.length);
         }
+    }
 
-        var $urlFlied = $('#url');
-        var $urlValidation = $('#url-validation');
-        var $btnSubmit = $('#create-news');
+    var $urlFlied = $('#url');
+    var $urlValidation = $('#url-validation');
+    var $btnSubmit = $('#create-news');
 
-        var timer = 0;
-        $urlFlied.on('input', function (e) {
-            return validateUrlOnChange(e);
-        });
+    var timer = 0;
+    $urlFlied.on('input', function (e) {
+        return validateUrlOnChange(e);
+    });
 
-        function validateUrlOnChange(e) {
-            if (timer) {
-                clearTimeout(timer);
-            }
-            var url = $urlFlied.val();
-
-            if (url.length >= 3) {
-                timer = setTimeout(function () {
-                    return validateUrl(validateNewsLinkUrl + '?url=' + url, $urlFlied, $urlValidation, $btnSubmit);
-                }, 500);
-                $urlValidation.text('');
-            } else {
-                $urlFlied.css("border", "1px solid red");
-                $urlValidation.text('Url must be atleast 3 symbols!');
-            }
+    function validateUrlOnChange(e) {
+        if (timer) {
+            clearTimeout(timer);
         }
+        var url = $urlFlied.val();
 
-        $('.title-field').on('input', function (e) {
-            var $target = $(e.target);
-            if ($target.val().length >= 3) {
-                $target.css("border", "1px solid green");
-                $target.siblings("strong").children("span").text('');
-            } else {
-                $target.css("border", "1px solid red");
-                $target.siblings("strong").children("span").text('Tittle must be atleast 3 symbols!');
-            }
-        });
+        if (url.length >= 3) {
+            timer = setTimeout(function () {
+                return validateUrl(validateNewsLinkUrl + '?url=' + url, $urlFlied, $urlValidation, $btnSubmit);
+            }, 500);
+            $urlValidation.text('');
+        } else {
+            $urlFlied.css("border", "1px solid red");
+            $urlValidation.text('Url must be atleast 3 symbols!');
+        }
+    }
 
-        var $notfier = $('#notifier');
-        $('#create-news-form').on('submit', function (evt) {
-            let form = this;
-            var url = $urlFlied.val();
-            $notfier.text('');
+    $('.title-field').on('input', function (e) {
+        var $target = $(e.target);
+        if ($target.val().length >= 3) {
+            $target.css("border", "1px solid green");
+            $target.siblings("strong").children("span").text('');
+        } else {
+            $target.css("border", "1px solid red");
+            $target.siblings("strong").children("span").text('Tittle must be atleast 3 symbols!');
+        }
+    });
 
-            if (url.length < 3) {
-                evt.preventDefault();
-                $notfier.text('Please provide valid information in the required fields!');
-                return false;
-            }
-            Loader.show(true);
+    var $notfier = $('#notifier');
+    $('#create-news-form').on('submit', function (evt) {
+        var form = this;
+        var url = $urlFlied.val();
+        $notfier.text('');
 
-            $btnSubmit.attr("disabled", true);
-            $.ajax({
-                method: 'GET',
-                url: validateNewsLinkUrl + '?url=' + url,
-                contentType: 'application/json',
-                success: function success(res) {
-                    if (res.success) {
-                        $btnSubmit.attr("disabled", false);
-                        return res;
-                    } else {
-                        $urlFlied.css("border", "1px solid red");
-                        $urlValidation.text('Url is invalid or already in use!');
-                        Loader.hide();
-                    }
-                }
-            }).done(function (res) {
-                if (res.success) {
-                    $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $(form).serialize(),
-                        success: function (res) {
-                            if (res.success) {
-                                window.location.replace('/sitetriks/news');
-                            } else {
-                                $notfier.text(res.message);
-                                Loader.hide();
-                            }
-                        }
-                    });
-                } else {
-                    $notfier.text(res.message);
-                }
-                $btnSubmit.attr("disabled", false);
-            });
-
+        if (url.length < 3) {
             evt.preventDefault();
+            $notfier.text('Please provide valid information in the required fields!');
             return false;
+        }
+        Loader.show(true);
+
+        $btnSubmit.attr("disabled", true);
+        $.ajax({
+            method: 'GET',
+            url: validateNewsLinkUrl + '?url=' + url,
+            contentType: 'application/json',
+            success: function success(res) {
+                if (res.success) {
+                    $btnSubmit.attr("disabled", false);
+                    return res;
+                } else {
+                    $urlFlied.css("border", "1px solid red");
+                    $urlValidation.text('Url is invalid or already in use!');
+                    Loader.hide();
+                }
+            }
+        }).done(function (res) {
+            if (res.success) {
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function success(res) {
+                        if (res.success) {
+                            window.location.replace('/sitetriks/news');
+                        } else {
+                            $notfier.text(res.message);
+                            Loader.hide();
+                        }
+                    }
+                });
+            } else {
+                $notfier.text(res.message);
+            }
+            $btnSubmit.attr("disabled", false);
         });
+
+        evt.preventDefault();
+        return false;
+    });
 }
 
 function editNews(mlf, validateNewsLinkUrl, modelId, newsMlfUrl) {
@@ -130,7 +132,7 @@ function editNews(mlf, validateNewsLinkUrl, modelId, newsMlfUrl) {
         }
 
         $('#languages').on('change', function (ev) {
-            let lang = $(this).val();
+            var lang = $(this).val();
 
             if (!lang) {
                 $('#mlf-info').html('');
@@ -138,27 +140,14 @@ function editNews(mlf, validateNewsLinkUrl, modelId, newsMlfUrl) {
             } else {
                 $('#backend-info').hide();
 
-                let current = mlf[lang];
+                var current = mlf[lang];
 
-                $('#mlf-info').html(`<div class="ta-center"><h3>Multilingual Fields</h3></div>
-                    <br/>
-                    <div class="form-group row">
-                        <label class="control-label col-md-2">Title(Multilingual)</label>
-                        <div class="col-md-10">
-                            <input class="form-control" data-lang="${lang}" data-name="Title" value="${current.Title}"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-md-2">Content(Multilingual)</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" data-lang="${lang}" data-name="Content" id="content-area">${current.Content}</textarea>
-                        </div>
-                    </div>`);
+                $('#mlf-info').html('<div class="ta-center"><h3>Multilingual Fields</h3></div>\n                    <br/>\n                    <div class="form-group row">\n                        <label class="control-label col-md-2">Title(Multilingual)</label>\n                        <div class="col-md-10">\n                            <input class="form-control" data-lang="' + lang + '" data-name="Title" value="' + current.Title + '"/>\n                        </div>\n                    </div>\n                    <div class="form-group row">\n                        <label class="control-label col-md-2">Content(Multilingual)</label>\n                        <div class="col-md-10">\n                            <textarea class="form-control" data-lang="' + lang + '" data-name="Content" id="content-area">' + current.Content + '</textarea>\n                        </div>\n                    </div>');
 
                 textEditor.remove('content-area');
                 textEditor.init('#content-area', '80%', 500);
             }
-        })
+        });
 
         textEditor.init('#news-en-content', '80%', 500);
 
@@ -168,14 +157,14 @@ function editNews(mlf, validateNewsLinkUrl, modelId, newsMlfUrl) {
 
         $('.date-picker-group span').on('click', function () {
             $('#date-picker').focus();
-        })
+        });
 
         countSEOWords.apply($('#seo-words'));
         $('#seo-words').on('input change', countSEOWords);
 
         function countSEOWords(ev) {
-            let $trigger = $(this);
-            let words = $trigger.val().split(',');
+            var $trigger = $(this);
+            var words = $trigger.val().split(',');
             if (words.length === 1 && words[0].trim().length === 0) {
                 $('#seo-words-counter').text('');
             } else {
@@ -222,17 +211,17 @@ function editNews(mlf, validateNewsLinkUrl, modelId, newsMlfUrl) {
 
         var $notfier = $('#notifier');
         $('#edit-news-form').on('submit', function (evt) {
-            let form = this;
+            var form = this;
 
             //--------------------------------------------------------
             // multi lingual fields logic
-            let lang = $('#languages').val();
+            var lang = $('#languages').val();
             if (lang) {
                 Loader.show('#fff');
-                let $fields = $(`[data-lang="${lang}"]`);
-                let body = { lang: lang, parentId: modelId };
+                var $fields = $('[data-lang="' + lang + '"]');
+                var body = { lang: lang, parentId: modelId };
                 $fields.each(function (index, element) {
-                    let name = $(element).attr('data-name');
+                    var name = $(element).attr('data-name');
                     if (name === 'Content') {
                         body[name] = textEditor.getContent($(element).attr('id'));
                     } else {
@@ -243,9 +232,9 @@ function editNews(mlf, validateNewsLinkUrl, modelId, newsMlfUrl) {
                 Data.postJson({ url: newsMlfUrl, data: body }).then(function (res) {
                     if (res.success) {
                         mlf = res.mlf;
-                        Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'News updated!', status: 'success' })
+                        Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'News updated!', status: 'success' });
                     } else {
-                        Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: (res.message || 'News was not updated!'), status: 'danger' })
+                        Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message || 'News was not updated!', status: 'danger' });
                     }
 
                     Loader.hide();
@@ -290,11 +279,11 @@ function editNews(mlf, validateNewsLinkUrl, modelId, newsMlfUrl) {
                         url: form.action,
                         type: form.method,
                         data: $(form).serialize(),
-                        success: function (res) {
+                        success: function success(res) {
                             if (res.success) {
-                                Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'News updated!', status: 'success' })
+                                Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'News updated!', status: 'success' });
                             } else {
-                                Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' })
+                                Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' });
                                 window.onbeforeunload = onUnload;
                             }
 

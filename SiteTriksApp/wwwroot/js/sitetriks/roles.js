@@ -1,6 +1,8 @@
-﻿function createRole() {
+'use strict';
+
+function createRole() {
     $('#create-roles-form').on('submit', function (e) {
-        let flag = true;
+        var flag = true;
 
         if (!Validator.validate($('#name'), 'Name must be atleast 3 symbols', function (val) {
             return Validator.hasMinimumLength(val, 3);
@@ -17,7 +19,7 @@
 
 function editRole() {
     $('#edit-roles-form').on('submit', function (e) {
-        let flag = true;
+        var flag = true;
 
         if (!Validator.validate($('#name'), 'Name must be atleast 3 symbols', function (val) {
             return Validator.hasMinimumLength(val, 3);

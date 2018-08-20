@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 /*===============================================================================================
  * --- Layout.js ---
@@ -33,15 +33,19 @@
 //initLayout($wrapper2, l, $resolutions);
 //---------------------------------------------------------------------------------
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     if (!resolutionValidation || {}.toString.call(resolutionValidation) !== '[object Function]') {
         console.error('no resolutuion validation function was specified');
-        resolutionValidation = function () { return true };
+        resolutionValidation = function resolutionValidation() {
+            return true;
+        };
     }
 
-    const defaultResolution = 'xs';
-    let templates = {};
-    let _resolutions = ['xs', 'sm', 'md', 'lg'];
+    var defaultResolution = 'xs';
+    var templates = {};
+    var _resolutions = ['xs', 'sm', 'md', 'lg'];
 
     l.resolutions = ['xs', 'sm', 'md', 'lg'];
     l.deletedPlaceholders = [];
@@ -52,20 +56,25 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         }
 
         buildLayout($wrapper, l);
-    })
-
+    });
 
     function loadTemplates(templates) {
-        let templateNames = ['layout-row-options', 'layout-column-options', 'layout-row-control', 'layout-column-control', 'layout-separator', 'layout-column', 'layout-row'];
-        let promises = [];
+        var templateNames = ['layout-row-options', 'layout-column-options', 'layout-row-control', 'layout-column-control', 'layout-separator', 'layout-column', 'layout-row'];
+        var promises = [];
 
-        for (let i = 0; i < templateNames.length; i += 1) {
-            promises.push(Data.getJson({ url: `/templates/layout/${templateNames[i]}.html` }).then(function (res) {
-                let template = Handlebars.compile(res);
+        var _loop = function _loop(i) {
+            promises.push(Data.getJson({ url: '/templates/layout/' + templateNames[i] + '.html' }).then(function (res) {
+                var template = Handlebars.compile(res);
                 templates[templateNames[i]] = template;
 
                 return true;
-            }, function (res) { return false }));
+            }, function (res) {
+                return false;
+            }));
+        };
+
+        for (var i = 0; i < templateNames.length; i += 1) {
+            _loop(i);
         }
 
         return Promise.all(promises);
@@ -75,19 +84,19 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     // DOM events registrations
 
     $wrapper.on('click', '.add-row', function (ev) {
-        let $row = appendRow($wrapper.find('.rows-holder'), l.length);
+        var $row = appendRow($wrapper.find('.rows-holder'), l.length);
 
         l.push({ row: $row, columns: [] });
         buildRow($row, []);
     });
 
     $wrapper.on('click', '.add-column', function (ev) {
-        let $target = $(this);
-        let rowIndex = $target.attr('data-position');
-        let col = { resolutions: {}, properties: {} };
+        var $target = $(this);
+        var rowIndex = $target.attr('data-position');
+        var col = { resolutions: {}, properties: {} };
         col.properties.placeholder = Utils.guid();
 
-        for (let i = 0; i < _resolutions.length; i += 1) {
+        for (var i = 0; i < _resolutions.length; i += 1) {
             col.resolutions[_resolutions[i]] = { size: 1 };
         }
 
@@ -96,10 +105,10 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     });
 
     $wrapper.on('click', '.remove-column', function (ev) {
-        let $target = $(this);
-        let rowIndex = $target.attr('data-position');
+        var $target = $(this);
+        var rowIndex = $target.attr('data-position');
 
-        let removed = l[rowIndex].columns.pop();
+        var removed = l[rowIndex].columns.pop();
         l.deletedPlaceholders.push(removed.properties.placeholder);
         buildRow(l[rowIndex].row, l[rowIndex].columns);
     });
@@ -107,8 +116,8 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     $resolutions.on('click', function () {
         if (resolutionValidation()) {
             this.classList.toggle('selected');
-            let type = $(this).attr('data-type');
-            let index = l.resolutions.indexOf(type);
+            var type = $(this).attr('data-type');
+            var index = l.resolutions.indexOf(type);
 
             if (index === -1) {
                 l.resolutions.push(type);
@@ -121,11 +130,11 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     });
 
     $wrapper.on('click', '.middle-col, .start-col, .end-col, .single-col', function (ev) {
-        let $trigger = $(this);
-        let $row = $trigger.parents('.row-layout')
+        var $trigger = $(this);
+        var $row = $trigger.parents('.row-layout');
 
-        let rowIndex = +$row.attr('data-position');
-        let colIndex = +$trigger.attr('data-index');
+        var rowIndex = +$row.attr('data-position');
+        var colIndex = +$trigger.attr('data-index');
 
         if (ev.shiftKey) {
             if (l.selected.length === 0 || l.selected[l.selected.length - 1].row !== rowIndex) {
@@ -134,32 +143,33 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
                 selectColumn($trigger, 'both');
                 l.lastSelected = { row: rowIndex, col: colIndex };
             } else {
-                let last = l.lastSelected;
+                var last = l.lastSelected;
                 clearSelected();
-                for (let i = Math.min(last.col, colIndex); i <= Math.max(last.col, colIndex); i += 1) {
+                for (var i = Math.min(last.col, colIndex); i <= Math.max(last.col, colIndex); i += 1) {
                     l.selected.push({ row: rowIndex, col: i });
                     selectColumn($row.find('.col-layout[data-index="' + i + '"]'), 'both');
                 }
             }
-        } else
-            if (ev.ctrlKey) {
-                let index = l.selected.findIndex(s => s.row === rowIndex && s.col === colIndex);
+        } else if (ev.ctrlKey) {
+            var index = l.selected.findIndex(function (s) {
+                return s.row === rowIndex && s.col === colIndex;
+            });
 
-                if (index > -1) {
-                    l.selected.splice(index, 1);
-                    selectColumn($trigger, 'both', true);
-                } else {
-                    l.selected.push({ row: rowIndex, col: colIndex });
-                    selectColumn($trigger, 'both');
-                }
-
-                l.lastSelected = { row: rowIndex, col: colIndex };
+            if (index > -1) {
+                l.selected.splice(index, 1);
+                selectColumn($trigger, 'both', true);
             } else {
-                clearSelected();
-                l.selected = [{ row: rowIndex, col: colIndex }];
+                l.selected.push({ row: rowIndex, col: colIndex });
                 selectColumn($trigger, 'both');
-                l.lastSelected = { row: rowIndex, col: colIndex };
             }
+
+            l.lastSelected = { row: rowIndex, col: colIndex };
+        } else {
+            clearSelected();
+            l.selected = [{ row: rowIndex, col: colIndex }];
+            selectColumn($trigger, 'both');
+            l.lastSelected = { row: rowIndex, col: colIndex };
+        }
 
         selectElements();
     });
@@ -173,7 +183,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     function selectColumn($element, direction, unselect) {
-        if (($element.hasClass('selected') && !unselect) || (!$element.hasClass('selected') && unselect)) {
+        if ($element.hasClass('selected') && !unselect || !$element.hasClass('selected') && unselect) {
             return;
         }
 
@@ -210,21 +220,21 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
     function selectElements() {
         $options.html('');
-        const multiple = 'multiple';
+        var multiple = 'multiple';
 
         if (!l.selected || !l.selected.length) {
-            console.warn('there are no selected elements')
+            console.warn('there are no selected elements');
             return;
         }
 
-        let selectedColumn = l[l.selected[0].row].columns[l.selected[0].col];
-        let size = selectedColumn.resolutions[l.resolutions[0]].size;
-        let offset = selectedColumn.resolutions[l.resolutions[0]].offset || 0;
-        let cssClass = selectedColumn.properties ? selectedColumn.properties.cssClass : '';
+        var selectedColumn = l[l.selected[0].row].columns[l.selected[0].col];
+        var size = selectedColumn.resolutions[l.resolutions[0]].size;
+        var offset = selectedColumn.resolutions[l.resolutions[0]].offset || 0;
+        var cssClass = selectedColumn.properties ? selectedColumn.properties.cssClass : '';
 
-        for (let i = 1; i < l.resolutions.length; i += 1) {
-            let currentSize = selectedColumn.resolutions[l.resolutions[i]].size;
-            let currentOffset = selectedColumn.resolutions[l.resolutions[i]].offset || 0;
+        for (var i = 1; i < l.resolutions.length; i += 1) {
+            var currentSize = selectedColumn.resolutions[l.resolutions[i]].size;
+            var currentOffset = selectedColumn.resolutions[l.resolutions[i]].offset || 0;
 
             if (size !== multiple && size !== currentSize) {
                 size = multiple;
@@ -236,31 +246,31 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         }
 
         if (l.selected.length > 0) {
-            for (let i = 1; i < l.selected.length; i += 1) {
-                let selectedColumn = l[l.selected[i].row].columns[l.selected[i].col];
+            for (var _i = 1; _i < l.selected.length; _i += 1) {
+                var _selectedColumn = l[l.selected[_i].row].columns[l.selected[_i].col];
 
-                for (let i = 0; i < l.resolutions.length; i += 1) {
-                    let currentSize = selectedColumn.resolutions[l.resolutions[i]].size;
-                    let currentOffset = selectedColumn.resolutions[l.resolutions[i]].offset || 0;
+                for (var _i2 = 0; _i2 < l.resolutions.length; _i2 += 1) {
+                    var _currentSize = _selectedColumn.resolutions[l.resolutions[_i2]].size;
+                    var _currentOffset = _selectedColumn.resolutions[l.resolutions[_i2]].offset || 0;
 
-                    if (size !== multiple && size !== currentSize) {
+                    if (size !== multiple && size !== _currentSize) {
                         size = multiple;
                     }
 
-                    if (offset !== multiple && offset !== currentOffset) {
+                    if (offset !== multiple && offset !== _currentOffset) {
                         offset = multiple;
                     }
                 }
 
-                let currentClass = selectedColumn.properties ? selectedColumn.properties.cssClass : '';
+                var currentClass = _selectedColumn.properties ? _selectedColumn.properties.cssClass : '';
                 if (cssClass !== multiple && cssClass !== currentClass) {
                     cssClass = multiple;
                 }
             }
         }
 
-        let template = templates['layout-column-options'];
-        let html = template({
+        var template = templates['layout-column-options'];
+        var html = template({
             selected: JSON.stringify(l.selected),
             resolution: JSON.stringify(l.resolutions),
             size: size,
@@ -272,13 +282,13 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     $options.on('click', '.update-column', function (ev) {
-        const multiple = 'multiple';
-        let $target = $(this);
-        let $notifier = $options.find('.validation-message');
+        var multiple = 'multiple';
+        var $target = $(this);
+        var $notifier = $options.find('.validation-message');
 
-        let size = $options.find('.input-size').val();
-        let offset = $options.find('.input-offset').val();
-        let cssClass = $options.find('.input-cssClass').val();
+        var size = $options.find('.input-size').val();
+        var offset = $options.find('.input-offset').val();
+        var cssClass = $options.find('.input-cssClass').val();
 
         if (size !== multiple && (size > 12 || size < 1)) {
             $notifier.text('size must be between 1 and 12!');
@@ -297,24 +307,24 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             }
         }
 
-        for (let i = 0; i < l.selected.length; i += 1) {
-            let rowIndex = l.selected[i].row;
-            let colIndex = l.selected[i].col;
+        for (var i = 0; i < l.selected.length; i += 1) {
+            var rowIndex = l.selected[i].row;
+            var colIndex = l.selected[i].col;
 
-            for (let i = 0; i < l.resolutions.length; i += 1) {
+            for (var _i3 = 0; _i3 < l.resolutions.length; _i3 += 1) {
 
-                let updateSize = size === multiple ? l[rowIndex].columns[colIndex].resolutions[l.resolutions[i]].size : size;
-                let updateOffset = offset === multiple ? l[rowIndex].columns[colIndex].resolutions[l.resolutions[i]].offset : offset;
+                var updateSize = size === multiple ? l[rowIndex].columns[colIndex].resolutions[l.resolutions[_i3]].size : size;
+                var updateOffset = offset === multiple ? l[rowIndex].columns[colIndex].resolutions[l.resolutions[_i3]].offset : offset;
 
-                if (!l[rowIndex].columns[colIndex][l.resolutions[i]]) {
-                    l[rowIndex].columns[colIndex].resolutions[l.resolutions[i]] = { size: +updateSize, offset: +updateOffset };
+                if (!l[rowIndex].columns[colIndex][l.resolutions[_i3]]) {
+                    l[rowIndex].columns[colIndex].resolutions[l.resolutions[_i3]] = { size: +updateSize, offset: +updateOffset };
                 } else {
-                    l[rowIndex].columns[colIndex].resolutions[l.resolutions[i]].size = +updateSize;
-                    l[rowIndex].columns[colIndex].resolutions[l.resolutions[i]].offset = +updateOffset;
+                    l[rowIndex].columns[colIndex].resolutions[l.resolutions[_i3]].size = +updateSize;
+                    l[rowIndex].columns[colIndex].resolutions[l.resolutions[_i3]].offset = +updateOffset;
                 }
             }
 
-            let updateCssClass = cssClass === multiple ? (l[rowIndex].columns[colIndex].properties ? l[rowIndex].columns[colIndex].properties.cssClass : '') : cssClass;
+            var updateCssClass = cssClass === multiple ? l[rowIndex].columns[colIndex].properties ? l[rowIndex].columns[colIndex].properties.cssClass : '' : cssClass;
             if (cssClass) {
                 if (l[rowIndex].columns[colIndex].properties) {
                     l[rowIndex].columns[colIndex].properties.cssClass = updateCssClass;
@@ -330,43 +340,72 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     // state 0 for rows, 1 for colums
     function checkForContent(state, rowIndex) {
         if (state == 1) {
-            for (let i = 0; i < l.selected.length; i += 1) {
-                let removed = l[l.selected[i].row].columns[l.selected[i].col];
+            var _loop2 = function _loop2(i) {
+                var removed = l[l.selected[i].row].columns[l.selected[i].col];
 
-                if (pageContent.find(e => e.placeholder == removed.properties.placeholder)) {
-                    let $modal = $('#layout-delete-confirmation');
+                if (pageContent.find(function (e) {
+                    return e.placeholder == removed.properties.placeholder;
+                })) {
+                    var $modal = $('#layout-delete-confirmation');
                     $modal.modal('show');
                     $modal.addClass("columns-deletion");
-                    return true;
+                    return {
+                        v: true
+                    };
                 }
+            };
+
+            for (var i = 0; i < l.selected.length; i += 1) {
+                var _ret2 = _loop2(i);
+
+                if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
             }
 
             return false;
-        }
-        else {
-            let removed = l[rowIndex];
+        } else {
+            var _ret3 = function () {
+                var removed = l[rowIndex];
 
-            for (let i = 0; i < removed.columns.length; i += 1) {
-                if (pageContent.find(e => e.placeholder == removed.columns[i].properties.placeholder)) {
-                    let $modal = $('#layout-delete-confirmation');
-                    $modal.modal('show');
-                    $modal.addClass("rows-deletion");
-                    $modal.attr("data-rowindex", rowIndex);
-                    return true;
+                var _loop3 = function _loop3(i) {
+                    if (pageContent.find(function (e) {
+                        return e.placeholder == removed.columns[i].properties.placeholder;
+                    })) {
+                        var $modal = $('#layout-delete-confirmation');
+                        $modal.modal('show');
+                        $modal.addClass("rows-deletion");
+                        $modal.attr("data-rowindex", rowIndex);
+                        return {
+                            v: {
+                                v: true
+                            }
+                        };
+                    }
+                };
+
+                for (var i = 0; i < removed.columns.length; i += 1) {
+                    var _ret4 = _loop3(i);
+
+                    if ((typeof _ret4 === 'undefined' ? 'undefined' : _typeof(_ret4)) === "object") return _ret4.v;
                 }
-            }
 
-            return false;
+                return {
+                    v: false
+                };
+            }();
+
+            if ((typeof _ret3 === 'undefined' ? 'undefined' : _typeof(_ret3)) === "object") return _ret3.v;
         }
     }
 
     function deleteColums() {
-        l.selected.sort((a, b) => { return (a.col > b.col) ? -1 : ((b.col > a.col) ? 1 : 0); });
+        l.selected.sort(function (a, b) {
+            return a.col > b.col ? -1 : b.col > a.col ? 1 : 0;
+        });
 
-        for (let i = 0; i < l.selected.length; i += 1) {
-            let removed = l[l.selected[i].row].columns.splice(l.selected[i].col, 1)[0];
+        for (var i = 0; i < l.selected.length; i += 1) {
+            var _removed = l[l.selected[i].row].columns.splice(l.selected[i].col, 1)[0];
 
-            l.deletedPlaceholders.push(removed.properties.placeholder);
+            l.deletedPlaceholders.push(_removed.properties.placeholder);
         }
 
         buildLayout($wrapper, l);
@@ -374,8 +413,8 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
     function deleteRows(rowIndex) {
 
-        let removed = l.splice(rowIndex, 1)[0];
-        for (let i = 0; i < removed.columns.length; i += 1) {
+        var removed = l.splice(rowIndex, 1)[0];
+        for (var i = 0; i < removed.columns.length; i += 1) {
             l.deletedPlaceholders.push(removed.columns[i].properties.placeholder);
         }
 
@@ -383,19 +422,18 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     $("#delete-layout-content").on("click", function () {
-        let $modal = $('#layout-delete-confirmation');
+        var $modal = $('#layout-delete-confirmation');
         if ($modal.hasClass("columns-deletion")) {
             deleteColums();
-        }
-        else if ($modal.hasClass("rows-deletion")) {
-            let rowIndex = $modal.attr("data-rowindex");
+        } else if ($modal.hasClass("rows-deletion")) {
+            var rowIndex = $modal.attr("data-rowindex");
             deleteRows(rowIndex);
         }
     });
 
     $options.on('click', '.remove-column', function (ev) {
-        let $target = $(this);
-        let hasContent = checkForContent(1);
+        var $target = $(this);
+        var hasContent = checkForContent(1);
 
         if (!hasContent) {
             deleteColums();
@@ -403,9 +441,9 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     });
 
     $options.on('click', '.remove-row', function (ev) {
-        let $target = $(this);
-        let rowIndex = $target.attr('data-rowIndex');
-        let hasContent = checkForContent(0, rowIndex);
+        var $target = $(this);
+        var rowIndex = $target.attr('data-rowIndex');
+        var hasContent = checkForContent(0, rowIndex);
 
         if (!hasContent) {
             deleteRows(rowIndex);
@@ -413,7 +451,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     });
 
     $wrapper.on('click', '.select-row', function (ev) {
-        let $target = $(this);
+        var $target = $(this);
 
         if ($target.hasClass('glyphicon-check')) {
             return;
@@ -425,16 +463,18 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
         $target.parents('.row-holder').addClass('selected');
 
-        let rowIndex = $target.parents('.row-control').attr('data-position');
+        var rowIndex = $target.parents('.row-control').attr('data-position');
         $options.html('');
 
-        let selectedRow = l[rowIndex];
-        let resolution = l.resolutions[0]
-        let cols = selectedRow.columns.map(c => c.resolutions[resolution]);
+        var selectedRow = l[rowIndex];
+        var resolution = l.resolutions[0];
+        var cols = selectedRow.columns.map(function (c) {
+            return c.resolutions[resolution];
+        });
 
-        let template = templates['layout-row-options'];
-        let html = template({
-            rowIndex,
+        var template = templates['layout-row-options'];
+        var html = template({
+            rowIndex: rowIndex,
             resolution: JSON.stringify(l.resolutions),
             tag: selectedRow.tag,
             cssClass: selectedRow.cssClass,
@@ -445,12 +485,12 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     });
 
     $options.on('click', '.update-row', function (ev) {
-        let $target = $(this);
+        var $target = $(this);
 
-        let rowIndex = $target.attr('data-rowIndex');
+        var rowIndex = $target.attr('data-rowIndex');
 
-        let tag = $options.find('.select-tag').val();
-        let cssClass = $options.find('.input-cssClass').val();
+        var tag = $options.find('.select-tag').val();
+        var cssClass = $options.find('.input-cssClass').val();
 
         l[rowIndex].tag = tag;
         l[rowIndex].cssClass = cssClass;
@@ -460,24 +500,24 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
     // TODO: optimize with select column
     $options.on('click', '.select-column', function (ev) {
-        let $trigger = $(this);
+        var $trigger = $(this);
 
         clearSelected();
 
-        let rowIndex = $trigger.attr('data-rowIndex');
-        let colIndex = $trigger.attr('data-colIndex');
-        let resolution = l.resolutions[0];
+        var rowIndex = $trigger.attr('data-rowIndex');
+        var colIndex = $trigger.attr('data-colIndex');
+        var resolution = l.resolutions[0];
 
-        let $element = $wrapper.find('.row-layout[data-position="' + rowIndex + '"] .col-layout[data-index="' + colIndex + '"]');
+        var $element = $wrapper.find('.row-layout[data-position="' + rowIndex + '"] .col-layout[data-index="' + colIndex + '"]');
         selectColumn($element, 'both');
 
-        let selectedColumn = l[rowIndex].columns[colIndex];
-        l.selected = [{ row: rowIndex, col: colIndex }]
+        var selectedColumn = l[rowIndex].columns[colIndex];
+        l.selected = [{ row: rowIndex, col: colIndex }];
 
         $options.html('');
 
-        let template = templates['layout-column-options'];
-        let html = template({
+        var template = templates['layout-column-options'];
+        var html = template({
             selected: JSON.stringify(l.selected),
             resolution: JSON.stringify(l.resolutions),
             size: selectedColumn.resolutions[resolution].size,
@@ -494,20 +534,20 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         l.deletedPlaceholders = [];
 
         buildLayout($wrapper, l);
-    })
+    });
 
     //-----------------------------------------------------------------------------
     // Methods
     function buildLayout($wrapper, l) {
-        let $holder = $wrapper.find('.rows-holder');
+        var $holder = $wrapper.find('.rows-holder');
         $holder.html('');
 
         if (!l.resolutions || l.resolutions.length === 0) {
             return;
         }
 
-        for (let i = 0; i < l.length; i += 1) {
-            let $row = appendRow($holder, i, l[i].columns.length);
+        for (var i = 0; i < l.length; i += 1) {
+            var $row = appendRow($holder, i, l[i].columns.length);
             l[i].row = $row;
 
             buildRow($row, l[i].columns);
@@ -515,19 +555,18 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     function appendRow($holder, position, colCount) {
-        let $rowWrapper = $('<div></div>', {
+        var $rowWrapper = $('<div></div>', {
             class: 'row-holder'
         });
 
         // row control
-        $rowWrapper.append(templates['layout-row-control']({ position }));
+        $rowWrapper.append(templates['layout-row-control']({ position: position }));
 
         // row view
-        let $row = $(templates['layout-row']({ position }))
-            .appendTo($rowWrapper);
+        var $row = $(templates['layout-row']({ position: position })).appendTo($rowWrapper);
 
         // columns control
-        $rowWrapper.append(templates['layout-column-control']({ position, colCount }));
+        $rowWrapper.append(templates['layout-column-control']({ position: position, colCount: colCount }));
 
         $rowWrapper.appendTo($holder);
         $holder.append('<br/>');
@@ -541,7 +580,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         clearSelected();
 
         // check if col length > 9 -1.1
-        let result = "";
+        var result = "";
 
         if (columns.length <= 9) {
             result = "0" + columns.length;
@@ -554,22 +593,22 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         //starting separator for 0 size column
         $row.append(templates['layout-separator']({ position: -1, active: false, index: -1 }));
 
-        let count = 0;
-        for (let i = 0; i < columns.length; i += 1) {
-            let colsLeft = 12 - count % 12;
-            let currentSize = columns[i].resolutions[l.resolutions[0]].size;
-            let offset = (columns[i].resolutions[l.resolutions[0]].offset) || 0;
+        var count = 0;
+        for (var i = 0; i < columns.length; i += 1) {
+            var colsLeft = 12 - count % 12;
+            var currentSize = columns[i].resolutions[l.resolutions[0]].size;
+            var offset = columns[i].resolutions[l.resolutions[0]].offset || 0;
 
             // if there is no space left for the column
             if (currentSize + offset > colsLeft) {
-                for (let j = 12 - colsLeft; j < 12; j += 1) {
+                for (var j = 12 - colsLeft; j < 12; j += 1) {
                     buildColumn(count, $row, false, 'empty');
 
                     count++;
                 }
             }
 
-            for (let j = 12 - colsLeft; j < 12 - colsLeft + offset; j += 1) {
+            for (var _j = 12 - colsLeft; _j < 12 - colsLeft + offset; _j += 1) {
                 buildColumn(count, $row, false, 'empty', 'offset');
                 count++;
             }
@@ -577,10 +616,10 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             colsLeft += offset;
 
             // render column
-            for (let j = 12 - colsLeft; j < 12 - colsLeft + currentSize; j += 1) {
-                let type = 'middle';
-                let isLastCol = j === 12 - colsLeft + currentSize - 1;
-                if (j === 12 - colsLeft) {
+            for (var _j2 = 12 - colsLeft; _j2 < 12 - colsLeft + currentSize; _j2 += 1) {
+                var type = 'middle';
+                var isLastCol = _j2 === 12 - colsLeft + currentSize - 1;
+                if (_j2 === 12 - colsLeft) {
                     type = 'start';
                 }
 
@@ -588,7 +627,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
                     type = 'end';
                 }
 
-                if (isLastCol && j === 12 - colsLeft) {
+                if (isLastCol && _j2 === 12 - colsLeft) {
                     type = 'single';
                 }
 
@@ -605,7 +644,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
         // fill remaining space until the end of the row with empty columns
         if (count % 12 || columns.length === 0 || count === 0) {
-            for (let i = count % 12; i < 12; i++) {
+            for (var _i4 = count % 12; _i4 < 12; _i4++) {
                 buildColumn(count, $row, false, count, 'empty');
                 count++;
             }
@@ -625,7 +664,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     function buildColumn(position, $row, active, colIndex, colType) {
-        let colClass = colType ? colType + '-col' : '';
+        var colClass = colType ? colType + '-col' : '';
 
         $row.append(templates['layout-column']({
             cssClass: colClass,
@@ -656,21 +695,21 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     //----------------------------------------------------------------------------------
     // Drag & Drop event handlers
     function dropLayoutSeparator(ev, ui) {
-        let $draggable = $(ui.draggable);
-        let data = {
+        var $draggable = $(ui.draggable);
+        var data = {
             rowIndex: $draggable.parents('.row-layout').attr('data-position'),
             colIndex: $draggable.attr('data-index'),
             position: $draggable.attr('data-position')
         };
 
-        let $target = $(ev.target);
+        var $target = $(ev.target);
         if ($target.hasClass('col-layout')) {
             $target = $target.next('.separator');
         }
 
-        let $row = $target.parents('.row-layout');
+        var $row = $target.parents('.row-layout');
         if ($row.length === 0) {
-            let $separators = $row.find('.separator');
+            var $separators = $row.find('.separator');
             if ($target.hasClass('row-holder')) {
                 $row = $target.find('.row-layout');
                 $target = $separators.first();
@@ -682,17 +721,17 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             }
         }
 
-        let rowIndex = $row.attr('data-position');
+        var rowIndex = $row.attr('data-position');
 
         if (rowIndex !== data.rowIndex) {
             console.warn('Can not drag to different rows!');
             return;
         }
 
-        let position = $target.attr('data-position');
-        let move = position - data.position;
+        var position = $target.attr('data-position');
+        var move = position - data.position;
 
-        let col = l[data.rowIndex].columns[data.colIndex].resolutions[l.resolutions[0]];
+        var col = l[data.rowIndex].columns[data.colIndex].resolutions[l.resolutions[0]];
 
         col.size += move;
 
@@ -708,7 +747,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             col.size = 1;
         }
 
-        for (let i = 1; i < l.resolutions.length; i += 1) {
+        for (var i = 1; i < l.resolutions.length; i += 1) {
             l[data.rowIndex].columns[data.colIndex].resolutions[l.resolutions[i]].size = col.size;
         }
 

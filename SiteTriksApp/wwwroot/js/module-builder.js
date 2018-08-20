@@ -282,6 +282,35 @@ var ModuleBuilder = function () {
             }
         };
 
+        initFunctions['embeddedscript'] = {
+            init: function init() {
+                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
+                    lineNumbers: true,
+                    mode: 'javascript'
+                });
+            },
+            show: function show(element) {
+                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
+                    lineNumbers: true,
+                    mode: 'javascript'
+                });
+                var model = JSON.parse(element);
+
+                if (editor) {
+                    editor.setValue(model.RawCode);
+                }
+            },
+            save: function save() {
+                if (editor) {
+                    var model = {
+                        RawCode: editor.getValue()
+                    };
+                    return JSON.stringify(model);
+                }
+                return "";
+            }
+        };
+
         initFunctions['image'] = {
             init: function init() {
                 loadUploadTemplate(false, 'main-image', 'image');

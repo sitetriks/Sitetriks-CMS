@@ -1,4 +1,6 @@
-﻿function initUserCreate() {
+"use strict";
+
+function initUserCreate() {
     Multiselect.Setup("multiselect-roles", function (option, checked, select) {
         var opselected = $(option).text();
         if (checked == true) {
@@ -51,7 +53,7 @@
     });
 
     $('input[type=submit]').on('click', function (e) {
-        let flag = true;
+        var flag = true;
 
         if (!Validator.validate($('#email'), 'Invalid email', function (val) {
             return Validator.validateEmail(val);
@@ -62,7 +64,6 @@
         if (!flag) {
             e.preventDefault();
         }
-
     });
 }
 
@@ -119,7 +120,7 @@ function initUserEdit() {
     });
 
     $('input[type=submit]').on('click', function (e) {
-        let flag = true;
+        var flag = true;
         console.log("lakdjaskldja");
         if (!Validator.validate($('#email'), 'Invalid email', function (val) {
             return Validator.validateEmail(val);

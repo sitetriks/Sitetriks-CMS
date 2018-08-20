@@ -1,4 +1,6 @@
-﻿function createDocumentation() {
+"use strict";
+
+function createDocumentation() {
     function newsTitlesInputKeyUp(ev, selectId) {
         var val = $(ev.target).val();
 
@@ -9,14 +11,14 @@
         Data.getJson({ url: '/sitetriks/documentation/gettopicnames?pattern=' + val }).then(function (response) {
             $("#" + selectId).autocomplete({
                 source: response.suggestions,
-                select: function (event, ui) {
+                select: function select(event, ui) {
                     $("#" + selectId).val(ui.item.label);
                     $("#" + selectId).attr("data-id", ui.item.id);
 
                     return false;
                 }
-            })
-        })
+            });
+        });
     }
 
     $('#parent').keyup(function (ev) {
@@ -25,16 +27,16 @@
 
     $('#create-topic-form').on('submit', function (ev) {
         Loader.show('#fff');
-        let flag = true;
+        var flag = true;
 
-        let parentId = $('#parent').attr('data-id');
-        let parentName = $('#parent').val();
+        var parentId = $('#parent').attr('data-id');
+        var parentName = $('#parent').val();
 
         if (!parentName) {
             parentId = '';
         }
 
-        let formData = new FormData(this);
+        var formData = new FormData(this);
         if (formData.set && {}.toString.call(formData.set) === '[object Function]') {
             formData.set('ParentId', parentId);
         } else {
@@ -63,19 +65,18 @@
 
         ev.preventDefault();
         return false;
-    })
+    });
 }
 
 function createContent() {
     $('input[type=submit]').on('click', function (e) {
-        let flag = true;
+        var flag = true;
 
         if (!Validator.validate($('#name'), 'Name must be atleast 3 symbols', function (val) {
             return Validator.hasMinimumLength(val, 3);
         })) {
             flag = false;
         }
-
 
         if (!flag) {
             e.preventDefault();
@@ -85,7 +86,7 @@ function createContent() {
 
 function editDocumentation(ev) {
     var grid = Grid();
-    var data = { link: "/sitetriks/documentation/GridTopicContents", serverSide: false }
+    var data = { link: "/sitetriks/documentation/GridTopicContents", serverSide: false };
     var columns = [{
         name: "name",
         title: "Name",
@@ -106,28 +107,27 @@ function editDocumentation(ev) {
 
     var config = grid.build(columns, [], grid.defaultPager, data);
 
-    let obj = grid.init('.grid', config);
-
+    var obj = grid.init('.grid', config);
 
     //---------------------------------------------------
     // consts
-    const contentNameField = '#contentName';
-    const contentField = '#Content';
-    const titleInput = '#Title';
-    const contentIdInput = '#contentId';
-    const versionDropDown = '#Version';
-    const versionDropDownSelected = versionDropDown + ' :selected';
-    const topicName = '#Name';
+    var contentNameField = '#contentName';
+    var contentField = '#Content';
+    var titleInput = '#Title';
+    var contentIdInput = '#contentId';
+    var versionDropDown = '#Version';
+    var versionDropDownSelected = versionDropDown + ' :selected';
+    var topicName = '#Name';
 
     //---------------------------------------------------
     // select content functionality
     $('.grid').on('click', '.btn-select', function (ev) {
-        let $trigger = $(this);
-        let topicContentId = $trigger.attr('data-id');
+        var $trigger = $(this);
+        var topicContentId = $trigger.attr('data-id');
 
         $(contentIdInput).val(topicContentId);
         versionContent(topicContentId);
-    })
+    });
 
     function versionContent(contentId) {
         Loader.show('#fff');
@@ -141,13 +141,13 @@ function editDocumentation(ev) {
             }
 
             Loader.hide();
-        })
+        });
     }
 
     function loadVersion(versionId) {
         if (!versionId) {
-            let versionNumber = $(versionDropDownSelected).text();
-            let contentName = '';
+            var versionNumber = $(versionDropDownSelected).text();
+            var contentName = '';
             if (versionNumber) {
                 contentName = $(topicName).text() + ' - ' + versionNumber;
             }
@@ -170,7 +170,7 @@ function editDocumentation(ev) {
             }
 
             Loader.hide();
-        })
+        });
     }
 
     loadVersion($(versionDropDownSelected).val());
@@ -178,52 +178,49 @@ function editDocumentation(ev) {
     //---------------------------------------------------
     // version controll
     $('#btn-add-version').on('click', function (ev) {
-        let $parent = Blur.add({});
-        let $modal = $('<div></div>', {
+        var $parent = Blur.add({});
+        var $modal = $('<div></div>', {
             class: 'blur-content',
             width: 400,
             height: 400
         }).css('background-color', '#fff').append($('<input/>', {
             id: 'input-version'
-        }))
-            .append($('<span></span>', {
-                class: 'text text-danger',
-                //text: 'Input version must be a valid number (0.01)'
-            }))
-            .append($('<a></a>', {
-                class: 'btn btn-success',
-                text: 'Add Version'
-            }).on('click', function () {
-                let version = $('#input-version').val();
+        })).append($('<span></span>', {
+            class: 'text text-danger'
+            //text: 'Input version must be a valid number (0.01)'
+        })).append($('<a></a>', {
+            class: 'btn btn-success',
+            text: 'Add Version'
+        }).on('click', function () {
+            var version = $('#input-version').val();
 
-                let flag = true;
+            var flag = true;
 
-                if (!Validator.validate($('#input-version'), 'Input version must be a valid number (0.01)', function (val) {
-                    return Validator.isDecimalNumber(val);
-                })) {
-                    flag = false;
-                }
+            if (!Validator.validate($('#input-version'), 'Input version must be a valid number (0.01)', function (val) {
+                return Validator.isDecimalNumber(val);
+            })) {
+                flag = false;
+            }
 
-                if (flag) {
-                    $('<option></option>', {
-                        text: version,
-                        val: '',
-                        selected: 'selected'
-                    }).prependTo(versionDropDown);
-                    loadVersion();
-                    Blur.remove();
-                }
-            })).append($('<a></a>', {
-                class: 'btn btn-danger',
-                text: 'Close'
-            }).on('click', function () {
+            if (flag) {
+                $('<option></option>', {
+                    text: version,
+                    val: '',
+                    selected: 'selected'
+                }).prependTo(versionDropDown);
+                loadVersion();
                 Blur.remove();
-            }))
-            .appendTo($parent);
-    })
+            }
+        })).append($('<a></a>', {
+            class: 'btn btn-danger',
+            text: 'Close'
+        }).on('click', function () {
+            Blur.remove();
+        })).appendTo($parent);
+    });
 
     $('#btn-delete-version').on('click', function (ev) {
-        let versionId = $(versionDropDownSelected).val();
+        var versionId = $(versionDropDownSelected).val();
         if (versionId) {
             Loader.show('#fff');
 
@@ -235,24 +232,24 @@ function editDocumentation(ev) {
                 }
 
                 Loader.hide();
-            })
+            });
         } else {
             $(versionDropDownSelected).remove();
             loadVersion($(versionDropDownSelected).val());
         }
-    })
+    });
 
     $(versionDropDown).on('change', function (ev) {
         loadVersion($(versionDropDownSelected).val());
-    })
+    });
 
     //-------------------------------------------------------------
     // Edit logic
 
     $('#btn-edit-content').on('click', function (ev) {
-        let $parent = Blur.add({});
+        var $parent = Blur.add({});
         textEditor.remove('area-edit');
-        let $modal = $('<div></div>', {
+        var $modal = $('<div></div>', {
             class: 'blur-content',
             width: 800,
             height: '90%'
@@ -263,7 +260,7 @@ function editDocumentation(ev) {
             class: 'btn btn-success',
             text: 'Save'
         }).on('click', function () {
-            let summary = textEditor.getContent('area-edit');
+            var summary = textEditor.getContent('area-edit');
             $(contentField).html(summary);
             $(contentIdInput).val('');
 
@@ -277,15 +274,15 @@ function editDocumentation(ev) {
         })).appendTo($parent);
 
         textEditor.init('#area-edit', 700, 300);
-    })
+    });
 
     //----------------------------------------------------
     // form submit
 
     $('#form-edit-versions').on('submit', function (ev) {
-        let flag = true;
+        var flag = true;
         if (!$(versionDropDownSelected).text() || !$('#Title').val()) {
-            Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'Version data is missing!', status: 'danger' })
+            Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'Version data is missing!', status: 'danger' });
 
             ev.preventDefault();
             return false;
@@ -293,7 +290,7 @@ function editDocumentation(ev) {
 
         Loader.show('#fff');
 
-        let formData = new FormData(this);
+        var formData = new FormData(this);
         if (formData.set && {}.toString.call(formData.set) === '[object Function]') {
             formData.set('Version', $(versionDropDownSelected).text());
             formData.set('VersionId', $(versionDropDown).val());
@@ -307,26 +304,24 @@ function editDocumentation(ev) {
             formData.append('Content', $(contentField).html());
         }
 
-
-        Data.postForm({ formData }).then(function (res) {
+        Data.postForm({ formData: formData }).then(function (res) {
             location.replace('/sitetriks/documentation');
-        })
+        });
 
         ev.preventDefault();
         return false;
-    })
+    });
 }
 
 function editContent() {
     $('input[type=submit]').on('click', function (e) {
-        let flag = true;
+        var flag = true;
 
         if (!Validator.validate($('#name'), 'Name must be atleast 3 symbols', function (val) {
             return Validator.hasMinimumLength(val, 3);
         })) {
             flag = false;
         }
-
 
         if (!flag) {
             e.preventDefault();

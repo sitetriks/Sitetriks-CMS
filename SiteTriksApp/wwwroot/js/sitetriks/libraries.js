@@ -1,4 +1,6 @@
-﻿function initLibraries(grid, config) {
+'use strict';
+
+function initLibraries(grid, config) {
     if ($('#libs').val()) {
         config.defaultFilters = [{
             propertyName: 'LibraryId',
@@ -7,11 +9,11 @@
         }];
     }
 
-    let gridObj = grid.init('.grid', config);
+    var gridObj = grid.init('.grid', config);
     selectLibrary.apply($('#libs'));
 
     $('.grid').on("click", ".copy", function () {
-        let url = location.origin + "/files/" + $(this).attr("data-url");
+        var url = location.origin + "/files/" + $(this).attr("data-url");
 
         $('.copy.btn-success').each(function () {
             $(this).addClass('btn-info');
@@ -27,7 +29,7 @@
     $('#libs').on('change', selectLibrary);
 
     function selectLibrary(ev) {
-        let value = $(this).val();
+        var value = $(this).val();
 
         if (value) {
             gridObj.changeDefaultFilter({
@@ -36,12 +38,12 @@
                 value: value
             });
 
-            $('#btn-edit-lib').show()
+            $('#btn-edit-lib').show();
             $('#btn-delete-lib').show();
         } else {
             gridObj.changeDefaultFilter();
 
-            $('#btn-edit-lib').hide()
+            $('#btn-edit-lib').hide();
             $('#btn-delete-lib').hide();
         }
     }
@@ -50,28 +52,26 @@
     // edit/delete library
 
     $('#btn-edit-lib').on('click', function (ev) {
-        let prefix = $('#libs :selected').attr('data-url');
+        var prefix = $('#libs :selected').attr('data-url');
 
         if (prefix && prefix.length > 0) {
             window.location.href = '/sitetriks/libraries/edit?url=' + prefix;
         }
-    })
-
+    });
 
     $('#btn-delete-lib').on('click', function (ev) {
-        let id = $('#libs').val();
+        var id = $('#libs').val();
 
         Loader.show('#fff');
-        Data.deleteJson({ url: '/sitetriks/libraries/delete/', data: { id } }).then(function (res) {
+        Data.deleteJson({ url: '/sitetriks/libraries/delete/', data: { id: id } }).then(function (res) {
             if (res.success) {
                 location.reload(true);
             } else {
                 Loader.hide();
                 console.log(res);
             }
-        })
-
-    })
+        });
+    });
 
     function copyToClipboard(element) {
         var $temp = $("<input>");
@@ -94,7 +94,7 @@ function editLibraries(isNameAvailableLink) {
                     $target.css("border", "1px solid red");
                     $("#validation-name").text('Name is already taken!');
                 }
-            })
+            });
         } else {
             $target.css("border", "1px solid red");
             $("#validation-name").text('Tittle must be atleast 3 symbols!');
@@ -128,7 +128,7 @@ function editLibraries(isNameAvailableLink) {
                 Notifier.createAlert({ containerId: '#alerts', type: 'danger', message: 'Name  is aready in use!' });
                 Loader.hide();
             }
-        })
+        });
     });
 }
 
@@ -142,9 +142,9 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
     $urlField.on('input change', function (e) {
         validateUrlOnChange(e);
     });
-    
+
     $('#library-type').on('change', function (ev) {
-        let $allowedTypes = $('#allowed-types');
+        var $allowedTypes = $('#allowed-types');
         $allowedTypes.html('');
 
         Loader.show('#fff');
@@ -188,7 +188,7 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
                     $target.css("border", "1px solid red");
                     $("#validation-name").text('Name is already taken!');
                 }
-            })
+            });
         } else {
             $target.css("border", "1px solid red");
             $("#validation-name").text('Tittle must be atleast 3 symbols!');
@@ -196,8 +196,8 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
     });
 
     $('#create-library-form').on('submit', function (ev) {
-        let flag = false;
-        let _this = this;
+        var flag = false;
+        var _this = this;
 
         if ($('#input-name').val().length < 3) {
             $('#validation-name').text('Prefix must be atleast 3 characters long!');
@@ -228,8 +228,7 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
             console.log(isNameAvailableLink);
             if (res.success) {
                 return Data.postJson({
-                    url: isNameAvailableLink, data: { name: $('#input-name').val() } })
-
+                    url: isNameAvailableLink, data: { name: $('#input-name').val() } });
             } else {
                 $urlField.css("border", "1px solid red");
                 $urlValidation.text('Prefix is invalid or already in use!');
@@ -251,7 +250,7 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
                 Notifier.createAlert({ containerId: '#alerts', type: 'danger', message: 'Name or prefix is aready in use!' });
                 Loader.hide();
             }
-        })
+        });
 
         ev.preventDefault();
         return false;

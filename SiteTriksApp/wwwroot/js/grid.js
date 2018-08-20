@@ -989,10 +989,19 @@ var Grid = function Grid() {
         for (var j = 0; j < columnConfiguration.length; j++) {
 
             var content = void 0;
+            var item = data[columnConfiguration[j].name];
+            if (item === undefined || item === null) {
+                var strEnd = columnConfiguration[j].name.slice(1);
+
+                item = data[columnConfiguration[j].name.charAt(0).toUpperCase() + strEnd];
+                if (item === undefined || item === null) {
+                    item = data[columnConfiguration[j].name.charAt(0).toLowerCase() + strEnd];
+                }
+            }
 
             switch (columnConfiguration[j].type) {
                 case 'checkbox':
-                    content = "<input type=\"checkbox\" class=\"st-grid-checkbox\" data-id=\"" + data[columnConfiguration[j].name] + "\"";
+                    content = "<input type=\"checkbox\" class=\"st-grid-checkbox\" data-id=\"" + item + "\"";
                     if (columnConfiguration[j].extraFields) {
                         for (var i = 0; i < columnConfiguration[j].extraFields.length; i++) {
                             content += " data-" + columnConfiguration[j].extraFields[i] + "=\"" + data[columnConfiguration[j].extraFields[i]] + "\"";
@@ -1004,7 +1013,7 @@ var Grid = function Grid() {
                     break;
 
                 case 'date':
-                    var str = data[columnConfiguration[j].name];
+                    var str = item;
                     if (!str) {
                         break;
                     }
@@ -1030,10 +1039,10 @@ var Grid = function Grid() {
                     var src = void 0;
                     if (columnConfiguration[j].source) {
                         // build source from source template
-                        src = columnConfiguration[j].source.replace('#item#', data[columnConfiguration[j].name]);
+                        src = columnConfiguration[j].source.replace('#item#', item);
                     } else {
                         // get source from data object
-                        src = data[columnConfiguration[j].name];
+                        src = item;
                     }
 
                     if (columnConfiguration[j].contentTemplate) {
@@ -1047,7 +1056,7 @@ var Grid = function Grid() {
                     break;
 
                 case 'bool':
-                    if (data[columnConfiguration[j].name]) {
+                    if (item) {
                         content = columnConfiguration[j].trueTemplate;
                     } else {
                         content = columnConfiguration[j].falseTemplate;
@@ -1056,7 +1065,7 @@ var Grid = function Grid() {
                     break;
 
                 case 'list':
-                    var list = data[columnConfiguration[j].name];
+                    var list = item;
                     if (list instanceof Array) {
                         content = list.join('; ');
                     } else {
@@ -1072,10 +1081,10 @@ var Grid = function Grid() {
                 default:
                     if (columnConfiguration[j].contentTemplate) {
                         // build cell from template
-                        content = replaceAll(columnConfiguration[j].contentTemplate, '#item#', data[columnConfiguration[j].name]);
+                        content = replaceAll(columnConfiguration[j].contentTemplate, '#item#', item);
                     } else {
                         // use content directly
-                        content = data[columnConfiguration[j].name];
+                        content = item;
                     }
                     break;
             }

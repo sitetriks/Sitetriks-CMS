@@ -1,4 +1,6 @@
-﻿function createUserGroup(url) {
+'use strict';
+
+function createUserGroup(url) {
     $('.move-to-right').on('click', function () {
         $('.users-to-role-select').removeClass('hidden');
         $('.all-users-select option:selected').each(function () {
@@ -18,7 +20,6 @@
                 text: $(this).val()
             }));
         });
-
     });
 
     function getAllUsersToAddRole() {
@@ -31,7 +32,7 @@
     }
 
     $('#submit').on('click', function (e) {
-        let flag = true;
+        var flag = true;
         if ($('#title').val().length < 3) {
             Notifier.createAlert({ containerId: '#alert', message: 'Title must has more than 3 characters', success: 'danger' });
             flag = false;
@@ -54,16 +55,12 @@
                 contentType: 'application/json',
                 dataType: 'json',
                 data: userGroup,
-                success: function (data, status) {
+                success: function success(data, status) {
                     window.location = '/sitetriks/userGroups';
                 },
-                error: function (err) {
-                }
+                error: function error(err) {}
             });
-
         }
-
-
     });
 }
 
@@ -88,7 +85,6 @@ function editUserGroup(url) {
                 text: $(this).val()
             }));
         });
-
     });
 
     function getAllUsersToAddRole() {
@@ -113,10 +109,10 @@ function editUserGroup(url) {
             contentType: 'application/json',
             dataType: 'json',
             data: userGroup,
-            success: function (data, status) {
+            success: function success(data, status) {
                 Notifier.createAlert({ containerId: '#alerts', title: 'Success!', message: 'User Group was edited successfully', status: 'success' });
             },
-            error: function (error) {
+            error: function error(_error) {
                 Notifier.createAlert('alerts', 'Something went wrong');
             }
         });
@@ -134,12 +130,10 @@ function editUserGroup(url) {
             url: url,
             contentType: 'application/json',
             data: userGroup,
-            success: function () {
+            success: function success() {
                 window.location.replace('/sitetriks/userGroups');
             },
-            error: function () {
-            }
-        })
-
-    })
+            error: function error() {}
+        });
+    });
 }

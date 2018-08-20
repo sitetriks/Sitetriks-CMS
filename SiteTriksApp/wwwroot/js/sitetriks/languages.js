@@ -1,11 +1,13 @@
-﻿function createEditLanguage(id) {
+'use strict';
+
+function createEditLanguage(id) {
     $('#form-create-edit').on('submit', function (ev) {
         var _this = this;
         ev.preventDefault();
 
-        let $culture = $('#input-culture');
-        let $prefix = $('#input-prefix');
-        let flag = true;
+        var $culture = $('#input-culture');
+        var $prefix = $('#input-prefix');
+        var flag = true;
 
         if ($culture.val().length < 3) {
             $culture.next().text('Culture must be atleast 3 charecters');
@@ -36,13 +38,13 @@
                         }
 
                         return res;
-                    })
+                    });
                 }
 
                 return res;
             }).then(function (res) {
                 if (res.success) {
-                    return Data.postForm({ url: '/sitetriks/languages/createedit', formData: new FormData(_this) })
+                    return Data.postForm({ url: '/sitetriks/languages/createedit', formData: new FormData(_this) });
                 }
 
                 return res;
@@ -52,16 +54,15 @@
                 } else {
                     Loader.hide();
                 }
-            })
+            });
         }
 
-
         return false;
-    })
+    });
 
     $('#input-culture').on('change keydown paste input', function (ev) {
-        let $culture = $(this);
-        let pattern = $culture.val();
+        var $culture = $(this);
+        var pattern = $culture.val();
 
         if ($culture.val().length < 3) {
             $culture.next().text('Culture must be atleast 3 charecters');
@@ -73,15 +74,15 @@
 
         if (pattern.length >= 3) {
             $('#input-culture').autocomplete({
-                source: function (request, response) {
+                source: function source(request, response) {
                     $.ajax({
                         method: "GET",
                         url: '/sitetriks/languages/getcultures?pattern=' + pattern,
                         contentType: "application/json",
                         data: { cultures: request.cultures }
                     }).done(function (data) {
-                        response(data.cultures)
-                    })
+                        response(data.cultures);
+                    });
                 },
                 minLength: 3
             });
@@ -89,8 +90,8 @@
     });
 
     $('#input-prefix').on('change keydown paste input', function (ev) {
-        let $prefix = $(this);
-        let pattern = $prefix.val();
+        var $prefix = $(this);
+        var pattern = $prefix.val();
 
         if ($prefix.val().length !== 2) {
             $prefix.next().text('Culture must be exactly 2 charecters');
