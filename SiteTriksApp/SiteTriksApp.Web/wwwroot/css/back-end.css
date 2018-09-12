@@ -28,7 +28,7 @@
 
 
 body, html {
-    min-width: 900px !important;
+    /*min-width: 790px !important;*/
     background-color: white;
 }
 
@@ -602,14 +602,50 @@ a.profile-link {
     }
 
 
+/*--------------------------------------------------------------------*/
+
+/*create edit thumbnails*/
+
+.thumbnail-wrapper {
+    position: relative;
+    display: inline-block;
+    margin: 15px;
+}
+
+    .thumbnail-wrapper .thumbnail-image-delete {
+        position: absolute;
+        cursor: pointer;
+        background-color: #008CFF;
+        width: 17px;
+        height: 17px;
+        top: 5px;
+        right: 0px;
+        z-index: 10;
+        line-height: 20px;
+        padding-left: 2px;
+        color: rgb(255, 0, 0);
+    }
+
+    .thumbnail-wrapper .image-container {
+        width: 200px;
+    }
+
+        .thumbnail-wrapper .image-container img {
+            transform: translate(-50%, -50%);
+            top: 50%;
+            position: absolute;
+            left: 50%;
+            max-width: 200px;
+        }
+
+    /*styles for error messages*/
+    .input-error {
+        border: 1px solid red;
+    }
+
 /*---------------------------------------------------------------------*/
-
-
 /* Dashboard widget table*/
-
-
 /* Dashboard view containers*/
-
 .dashboard-wrapper .dashboard-conten-column {
     padding: 0 25px;
 }

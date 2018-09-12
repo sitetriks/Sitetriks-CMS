@@ -1,30 +1,49 @@
-﻿function initLibraries(grid, config) {
-    if ($('#libs').val()) {
+﻿function initLibraries(grid, config, mediator, logger) {
+    let $libs = $('#libs');
+    let $btnEditLibrary = $('#btn-edit-lib');
+    let $btnDeleteLibrary = $('#btn-delete-lib');
+
+    if ($libs.val()) {
         config.defaultFilters = [{
             propertyName: 'LibraryId',
             comparison: 1,
-            value: $('#libs').val()
+            value: $libs.val()
         }];
+    } else {
+        $btnEditLibrary.hide()
+        $btnDeleteLibrary.hide();
     }
 
     let gridObj = grid.init('.grid', config);
-    selectLibrary.apply($('#libs'));
+    let $grid = $('.grid');
 
-    $('.grid').on("click", ".copy", function () {
-        let url = location.origin + "/files/" + $(this).attr("data-url");
+    let $modal = $('#file-upload-modal');
+    let $container = $modal.find('.file-handler-wrapper');
+    let fileHandler = FileHandler($container, ['Upload'], $libs.val(), mediator, logger, true);
 
-        $('.copy.btn-success').each(function () {
-            $(this).addClass('btn-info');
-            $(this).removeClass('btn-success');
-        });
+    bindEvents();
 
-        $(this).removeClass('btn-info');
-        $(this).addClass('btn-success');
+    // --------------------------------------------------------
+    // event handlers   
+    function fileUploadedHandler(data) {
+        if (data) {
+            let id = data.libraryId.toLowerCase()
+            if ($libs.val() !== id) {
+                $libs.val(id).trigger('change');
+            } else {
+                $(document).trigger('refreshGrid');
+            }
+
+            $modal.modal('hide');
+        }
+    }
+
+    function copyUrl(ev) {
+        let $target = $(ev.target)
+        let url = location.origin + "/files/" + $target.attr("data-url");
 
         copyToClipboard(url);
-    });
-
-    $('#libs').on('change', selectLibrary);
+    }
 
     function selectLibrary(ev) {
         let value = $(this).val();
@@ -36,29 +55,27 @@
                 value: value
             });
 
-            $('#btn-edit-lib').show()
-            $('#btn-delete-lib').show();
+            $btnEditLibrary.show()
+            $btnDeleteLibrary.show();
         } else {
             gridObj.changeDefaultFilter();
 
-            $('#btn-edit-lib').hide()
-            $('#btn-delete-lib').hide();
+            $btnEditLibrary.hide()
+            $btnDeleteLibrary.hide();
         }
+
+        mediator.dispatch('fileLibraryChange', value);
     }
 
-    // --------------------------------------------------------
-    // edit/delete library
-
-    $('#btn-edit-lib').on('click', function (ev) {
+    function editLibrary(ev) {
         let prefix = $('#libs :selected').attr('data-url');
 
         if (prefix && prefix.length > 0) {
             window.location.href = '/sitetriks/libraries/edit?url=' + prefix;
         }
-    })
+    }
 
-
-    $('#btn-delete-lib').on('click', function (ev) {
+    function deleteLibrary(ev) {
         let id = $('#libs').val();
 
         Loader.show('#fff');
@@ -69,9 +86,8 @@
                 Loader.hide();
                 console.log(res);
             }
-        })
-
-    })
+        }, Data.defaultError);
+    }
 
     function copyToClipboard(element) {
         var $temp = $("<input>");
@@ -80,141 +96,162 @@
         document.execCommand("copy");
         $temp.remove();
     }
+
+    // --------------------------------------------------------
+    function bindEvents() {
+        $grid.on('click', '.copy', copyUrl);
+        $libs.on('change', selectLibrary);
+        $btnDeleteLibrary.on('click', deleteLibrary);
+        $btnEditLibrary.on('click', editLibrary);
+        mediator.on('filesUploaded', fileUploadedHandler, 'filesUploaded', 'General');
+        mediator.on('alert', Notifier.createAlert, 'createAlert', 'Notifier');
+    }
+
+    function dispose() {
+        $grid.off('click', '.copy', copyUrl);
+        $libs.off('change', selectLibrary);
+        $btnDeleteLibrary.off('click', deleteLibrary);
+        $btnEditLibrary.off('click', editLibrary);
+        mediator.off('filesUploaded', 'filesUploaded', 'General');
+        mediator.off('alert', 'createAlert', 'Notifier');
+    }
+
+    return {
+        dispose
+    };
 }
 
-function editLibraries(isNameAvailableLink) {
-    $('#input-name').on('input', function (e) {
-        var $target = $(e.target);
-        if ($target.val().length >= 3) {
-            $target.css("border", "1px solid green");
-            $("#validation-name").text('');
+function editLibraries(isNameAvailableLink, libraryId) {
+    let $inputName = $('#input-name');
+    let $editForm = $('#create-library-form');
 
-            Data.postJson({ url: isNameAvailableLink, data: { name: $target.val(), id: '@Model.Id' } }).then(function (res) {
-                if (!res.success) {
-                    $target.css("border", "1px solid red");
-                    $("#validation-name").text('Name is already taken!');
+    bindEvents();
+
+    function validateName(e) {
+        let $target = $(e.target);
+        let flag = false;
+
+        if (!Validator.validate($target, 'Title must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
+            flag = true;
+        }
+
+        if (!flag) {
+            Data.postJson({ url: isNameAvailableLink, data: { name: $target.val(), id: libraryId } }).then(function (res) {
+                Validator.validate($target, res.message || 'Name is already taken!', function (val) { return res.success; });
+            }, Data.defaultError);
+        }
+    }
+
+    function submitEditForm(ev) {
+        let flag = false;
+        let _this = this;
+
+        if (!Validator.validate($inputName, 'Title must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
+            flag = true;
+        }
+
+        if (!flag) {
+            Loader.show('#fff');
+            Data.postJson({ url: isNameAvailableLink, data: { name: $inputName.val(), id: libraryId } }).then(function (res) {
+                if (res.success) {
+                    return Data.postForm({ formData: new FormData(_this) });
+                } else {
+                    Validator.validate($inputName, res.message || 'Name is already taken!', function (val) { return res.success; });
+                    Loader.hide();
                 }
-            })
-        } else {
-            $target.css("border", "1px solid red");
-            $("#validation-name").text('Tittle must be atleast 3 symbols!');
+            }, Data.defaultError).then(function (res) {
+                if (res.success) {
+                    window.location.replace('/sitetriks/libraries/');
+                } else {
+                    Notifier.createAlert({ containerId: '#alerts', type: 'danger', message: 'Name  is aready in use!' });
+                    Loader.hide();
+                }
+            }, Data.defaultError);
         }
-    });
+    }
 
-    $('#create-library-form').on('submit', function (ev) {
-        if ($('#input-name').val().length < 3) {
-            $('#validation-name').text('Prefix must be atleast 3 characters long!');
-            $('#input-name').css("border", "1px solid red");
-            ev.preventDefault();
-            return false;
-        } else {
-            $('#validation-name').text('');
-            $('#input-name').css("border", "1px solid green");
-        }
+    function bindEvents() {
+        $editForm.on('submit', submitEditForm);
+        $inputName.on('input', validateName);
+    }
 
-        Loader.show('#fff');
-        Data.postJson({ url: isNameAvailableLink, data: { name: $('#input-name').val(), id: '@Model.Id' } }).then(function (res) {
-            if (res.success) {
-                return Data.postForm({ formData: new FormData(_this) });
-            } else {
-                $('#input-name').css("border", "1px solid red");
-                $("#validation-name").text('Name is already taken!');
-                Loader.hide();
-            }
-        }).then(function (res) {
-            if (res.success) {
-                window.location.replace('/sitetriks/libraries/');
-            } else {
-                Notifier.createAlert({ containerId: '#alerts', type: 'danger', message: 'Name  is aready in use!' });
-                Loader.hide();
-            }
-        })
-    });
+    function dispose() {
+        $editForm.on('submit', submitEditForm);
+        $inputName.on('input', validateName);
+    }
 }
 
 function createLibrary(validateUrlLink, isNameAvailableLink) {
-    var $urlField = $('#input-prefix');
-    var $urlValidation = $('#validation-prefix');
     var $btnSubmit = $('input[type="submit"]');
-    populateUrl('#input-name', '#input-prefix', validateUrlOnChange);
+    let $inputName = $('#input-name');
+    let $inputPrefix = $('#input-prefix');
+    let $prefixValidation = $inputPrefix.next('span.text-danger');
+    let $libraryType = $('#library-type');
+    let $allowedTypes = $('#allowed-types');
+    let $createForm = $('#create-library-form');
 
+    populateUrl($inputName, $inputPrefix, validateUrlOnChange);
+    displayAllowedTypes.apply($libraryType[0]);
     var timer = 0;
-    $urlField.on('input change', function (e) {
-        validateUrlOnChange(e);
-    });
-    
-    $('#library-type').on('change', function (ev) {
-        let $allowedTypes = $('#allowed-types');
+    bindEvents();
+
+    function displayAllowedTypes(ev) {
         $allowedTypes.html('');
 
         Loader.show('#fff');
         Data.getJson({ url: '/sitetriks/libraries/GetAllowedForType?type=' + this.value }).then(function (res) {
             if (res.success) {
-                $allowedTypes.html('Allowed files: ' + res.ext);
+                $allowedTypes.html('Allowed files: ' + (res.type.displayName || res.type.extensions));
             }
 
             Loader.hide();
         });
-    });
-
-    $('#library-type').trigger('change');
+    }
 
     function validateUrlOnChange(e) {
         if (timer) {
             clearTimeout(timer);
         }
 
-        var url = $urlField.val();
+        let flag = false;
+        if (!Validator.validate($inputPrefix, 'Prefix must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
+            flag = true;
+        }
 
-        if (url.length >= 3) {
+        if (!flag) {
+            var url = $inputPrefix.val();
             timer = setTimeout(function () {
-                validateUrl(validateUrlLink + '?url=' + url, $urlField, $urlValidation, $btnSubmit);
+                validateUrl(validateUrlLink + '?url=' + url, $inputPrefix, $prefixValidation, $btnSubmit);
             }, 500);
-            $urlValidation.text('');
-        } else {
-            $urlField.css("border", "1px solid red");
-            $urlValidation.text('Url must be atleast 3 symbols!');
+            $prefixValidation.text('');
         }
     }
 
-    $('#input-name').on('input', function (e) {
-        var $target = $(e.target);
-        if ($target.val().length >= 3) {
-            $target.css("border", "1px solid green");
-            $("#validation-name").text('');
+    function validateName(e) {
+        let $target = $(e.target);
+        let flag = false;
 
-            Data.postJson({ url: isNameAvailableLink, data: { name: $target.val() } }).then(function (res) {
-                if (!res.success) {
-                    $target.css("border", "1px solid red");
-                    $("#validation-name").text('Name is already taken!');
-                }
-            })
-        } else {
-            $target.css("border", "1px solid red");
-            $("#validation-name").text('Tittle must be atleast 3 symbols!');
+        if (!Validator.validate($target, 'Title must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
+            flag = true;
         }
-    });
 
-    $('#create-library-form').on('submit', function (ev) {
+        if (!flag) {
+            Data.postJson({ url: isNameAvailableLink, data: { name: $target.val() } }).then(function (res) {
+                Validator.validate($target, res.message || 'Name is already taken!', function (val) { return res.success; });
+            }, Data.defaultError);
+        }
+    }
+
+    function submitCreateForm(ev) {
         let flag = false;
         let _this = this;
 
-        if ($('#input-name').val().length < 3) {
-            $('#validation-name').text('Prefix must be atleast 3 characters long!');
-            $('#input-name').css("border", "1px solid red");
+        if (!Validator.validate($inputName, 'Title must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
             flag = true;
-        } else {
-            $('#validation-name').text('');
-            $('#input-name').css("border", "1px solid green");
         }
 
-        if ($('#input-prefix').val().length < 3) {
-            $('#validation-prefix').text('Prefix must be atleast 3 characters long!');
-            $('#input-prefix').css("border", "1px solid red");
+        if (!Validator.validate($inputPrefix, 'Prefix must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
             flag = true;
-        } else {
-            $('#validation-prefix').text('');
-            $('#input-prefix').css("border", "1px solid green");
         }
 
         if (flag) {
@@ -223,28 +260,23 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
         }
 
         Loader.show('#fff');
-        Data.getJson({ url: validateUrlLink + '?url=' + $('#input-prefix').val() }).then(function (res) {
-            console.log(res.success);
-            console.log(isNameAvailableLink);
+        Data.getJson({ url: validateUrlLink + '?url=' + $inputPrefix.val() }).then(function (res) {
             if (res.success) {
                 return Data.postJson({
-                    url: isNameAvailableLink, data: { name: $('#input-name').val() } })
-
+                    url: isNameAvailableLink, data: { name: $inputName.val() }
+                });
             } else {
-                $urlField.css("border", "1px solid red");
-                $urlValidation.text('Prefix is invalid or already in use!');
+                Validator.validate($inputPrefix, res.message || 'Prefix is invalid or already in use!', function (val) { return false; });
                 Loader.hide();
             }
-        }).then(function (res) {
-            console.log(res);
+        }, Data.defaultError).then(function (res) {
             if (res.success) {
                 return Data.postForm({ formData: new FormData(_this) });
             } else {
-                $('#input-name').css("border", "1px solid red");
-                $("#validation-name").text('Name is already taken!');
+                Validator.validate($inputName, res.message || 'Name is already taken!', function (val) { return false; });
                 Loader.hide();
             }
-        }).then(function (res) {
+        }, Data.defaultError).then(function (res) {
             if (res.success) {
                 window.location.replace('/sitetriks/libraries/');
             } else {
@@ -255,5 +287,19 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
 
         ev.preventDefault();
         return false;
-    });
+    }
+
+    function bindEvents() {
+        $createForm.on('submit', submitCreateForm);
+        $inputPrefix.on('input change', validateUrlOnChange);
+        $libraryType.on('change', displayAllowedTypes);
+        $inputName.on('input', validateName);
+    }
+
+    function dispose() {
+        $createForm.on('submit', submitCreateForm);
+        $inputPrefix.on('input change', validateUrlOnChange);
+        $libraryType.on('change', displayAllowedTypes);
+        $inputName.on('input', validateName);
+    }
 }

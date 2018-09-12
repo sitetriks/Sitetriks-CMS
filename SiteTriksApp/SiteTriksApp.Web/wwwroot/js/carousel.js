@@ -3,8 +3,11 @@
         if ($('.carousel').length < 1) {
             return;
         }
-
-
+        
+        if ($('.slick-initialized').length) {
+            $('.carousel').slick('unslick');
+        }
+        
         $('.carousel').slick({
             infinite: false,
             slidesToShow: 3,

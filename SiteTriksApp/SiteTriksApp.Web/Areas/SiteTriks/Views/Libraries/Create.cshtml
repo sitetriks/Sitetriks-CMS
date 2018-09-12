@@ -20,8 +20,6 @@
         </div>
         @Html.AntiForgeryToken()
 
-        @*<div id="alerts"></div>*@
-
         <div class="page-properties">
             <hr />
             <span>@ViewBag.Message</span>
@@ -30,12 +28,17 @@
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-name" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                <strong><span id="validation-name" class="text-danger"></span></strong>
             </div>
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.Prefix, "Url Prefix", htmlAttributes: new { @class = "control-label col-md-2" })
                 @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-prefix" } })
+                @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.StorageProviderName, "Storage Provider Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownListFor(model => model.StorageProviderName, Model.StorageProviders.Select(sp => new SelectListItem() { Text = sp, Value = sp }), new { @class = "form-control inline-block" })
                 @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
                 <strong><span id="validation-prefix" class="text-danger"></span></strong>
             </div>
@@ -53,6 +56,22 @@
             </div>
 
             <div class="form-group row">
+                @Html.LabelFor(model => model.SelectedThumbailSizes, new { @class = "control-label col-xs-2" })
+                <div class="clearme"></div>
+                @{ 
+                    var dropdownList = new List<SelectListItem>();
+                    foreach (var item in Model.ThumbnailsSizes)
+                    {
+                        dropdownList.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString() });
+                    }
+                }
+                @Html.ListBoxFor(model => Model.SelectedThumbailSizes, dropdownList,
+                              new { @class = "form-control", id = "multiselect-roles" })
+                @Html.ValidationMessageFor(model => model.SelectedThumbailSizes,
+                              "", new { @class = "text-warning" })
+            </div>
+
+            <div class="form-group row">
                 @Html.LabelFor(model => Model.Tags, htmlAttributes: new { @class = "control-label col-xs-2" })
                 @Html.EditorFor(model => Model.Tags, new { htmlAttributes = new { @class = "form-control inline-block", id = "tags" } })
             </div>
@@ -63,6 +82,7 @@
 @section scripts{
     <script src="~/js/tags.js"></script>
     <script src="~/js/sitetriks/libraries.js"></script>
+    <script src="~/js/validator.js"></script>
     <script>
         $(document).ready(function () {
             Tags.init();

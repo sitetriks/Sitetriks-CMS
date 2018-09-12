@@ -587,7 +587,7 @@ body {
 /*Sub menus*/
 .expanded-contacts {
     background-color: #3876cf;
-    height: auto;
+    height: 480px;
 }
 
 .go-back-to-menu {
@@ -769,8 +769,6 @@ body {
         width: 90%;
         height: 32px;
         margin-bottom: 20px;
-        font-size: 14px;
-        padding-left: 10px;
     }
 
     .expanded-contacts .contacts-content-form .col-md-6 select {
@@ -832,12 +830,6 @@ body {
         padding-top: unset;
     }
 
-    .contact-options .phone-contact,
-    .contact-options .mail-contact {
-        height: 100px;
-        width: 50%;
-    }
-
         .contact-us-widget .slogan p {
             font-size: 30px;
         }
@@ -881,6 +873,7 @@ body {
 }
 
 @media (max-width: 767px), (max-height: 620px) {
+
 
 /*Navigation widget custom css*/
 

@@ -1,5 +1,11 @@
 ﻿function createDocumentation() {
-    function newsTitlesInputKeyUp(ev, selectId) {
+    let $parentInput = $('#parent');
+    let $form = $('#create-topic-form');
+    let validateFormFunc = Validator.createFieldsValidation();
+
+    bindEvents();
+
+    function autocompleteDocumentationParent(ev) {
         var val = $(ev.target).val();
 
         if (val.length < 3) {
@@ -7,63 +13,41 @@
         }
 
         Data.getJson({ url: '/sitetriks/documentation/gettopicnames?pattern=' + val }).then(function (response) {
-            $("#" + selectId).autocomplete({
-                source: response.suggestions,
-                select: function (event, ui) {
-                    $("#" + selectId).val(ui.item.label);
-                    $("#" + selectId).attr("data-id", ui.item.id);
-
-                    return false;
-                }
-            })
-        })
+            $parentInput.autocomplete({
+                source: response.suggestions
+            });
+        });
     }
 
-    $('#parent').keyup(function (ev) {
-        newsTitlesInputKeyUp(ev, 'parent');
-    });
+    function submitForm(ev) {
+        if (!validateFormFunc.apply(this)) {
+            ev.preventDefault();
+            return false;
+        }
 
-    $('#create-topic-form').on('submit', function (ev) {
         Loader.show('#fff');
-        let flag = true;
-
-        let parentId = $('#parent').attr('data-id');
-        let parentName = $('#parent').val();
-
-        if (!parentName) {
-            parentId = '';
-        }
-
         let formData = new FormData(this);
-        if (formData.set && {}.toString.call(formData.set) === '[object Function]') {
-            formData.set('ParentId', parentId);
-        } else {
-            formData.append('ParentId', parentId);
-        }
-
-        if (!Validator.validate($('#name'), 'Name must be atleast 3 symbols', function (val) {
-            return Validator.hasMinimumLength(val, 3);
-        })) {
-            flag = false;
-        }
-
-        if (!flag) {
-            Loader.hide();
-        }
-
-        if (flag) {
-            Data.postForm({ formData: formData }).then(function (res) {
-                if (res.success) {
-                    location.replace('/sitetriks/documentation');
-                } else {
-                    Loader.hide();
-                }
-            });
-        }
+        Data.postForm({ formData: formData }).then(function (res) {
+            if (res.success) {
+                location.replace('/sitetriks/documentation');
+            } else {
+                Loader.hide();
+            }
+        });
 
         ev.preventDefault();
         return false;
-    })
+    }
+
+    function bindEvents() {
+        $parentInput.on('input', autocompleteDocumentationParent);
+        $form.on('submit', submitForm);
+    }
+
+    function dispose() {
+        $parentInput.off('input', autocompleteDocumentationParent);
+        $form.off('submit', submitForm);
+    }
 }
 
 function createContent() {
@@ -85,10 +69,10 @@ function createContent() {
 
 function editDocumentation(ev) {
     var grid = Grid();
-    var data = { link: "/sitetriks/documentation/GridTopicContents", serverSide: false }
+    var data = { link: '/sitetriks/documentation/GridTopicContents', serverSide: false };
     var columns = [{
-        name: "name",
-        title: "Name",
+        name: 'name',
+        title: 'Name',
         type: 'string',
         filter: true,
         sort: true,

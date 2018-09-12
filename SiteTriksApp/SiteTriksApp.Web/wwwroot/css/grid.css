@@ -166,15 +166,6 @@ tbody {
     outline: none;
 }
 
-.grid.empty .buttons-row a {
-    visibility: hidden;
-}
-
-.grid.empty .buttons-row a:nth-of-type(1) {
-    visibility: visible;
-}
-
-
 .buttons-row {
     color: #ffffff;
     background-color: #c9c9c9;

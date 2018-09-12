@@ -1,0 +1,12 @@
+﻿@model string
+
+<div id="storeGrid-widget-container" class="widget-container">
+    <div>
+        <div class="field-name">@Model</div>
+        <label>Template: <textarea class="input-template form-control inline-block"  style="max-width:inherit; width: 500px; height: 200px;"/></label>
+    </div>
+
+    <div class="col-md-5">
+        @await Html.PartialAsync("WidgetsForms")
+    </div>
+</div>

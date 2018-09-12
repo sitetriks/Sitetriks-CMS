@@ -9,8 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using SiteTriks.Data;
 using SiteTriks.Data.Models;
 using SiteTriks.Data.Seeders;
-using SiteTriks.DatabaseApi;
 using SiteTriks.DatabaseApi.Contracts;
+using SiteTriks.DatabaseApi.Enums;
 using SiteTriks.Dynamic.Contracts;
 using SiteTriks.Infrastructure.Common;
 using SiteTriksApp.Web.Services.Seeders;
@@ -35,9 +35,10 @@ namespace SiteTriksApp.Web
                 .Build();
 
 
-        public static IWebHost BuildMainWebHost(string[] args) => 
+        public static IWebHost BuildMainWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(services => {
+                .ConfigureServices(services =>
+                {
                     services.AddTransient<IStartupFilter, HangfireStartupFilter>();
                 })
                 .UseStartup<Startup>()
@@ -70,9 +71,8 @@ namespace SiteTriksApp.Web
                 // Init dynamic types
                 var dynamicService = services.GetRequiredService<IDynamicAssemblyService>();
                 var queryHelper = services.GetRequiredService<IQueryHelper>();
-                dynamicService.LoadAssemblies();
 
-                var assemblies = dynamicService.GetAssemblies();
+                var assemblies = dynamicService.GetAssembliesFromFile();
                 string linkConstraint = queryHelper.CreateConstraint(ConstraintType.ForeignKey, "LinkId", "st_links");
 
                 foreach (var a in assemblies)
@@ -85,7 +85,8 @@ namespace SiteTriksApp.Web
                             constraints.Add(linkConstraint);
                         }
 
-                        queryHelper.CreateTable(DatabasePrefix.Dynamic + item.Name, item.Properties, constraints);
+                        var props = new Dictionary<string, string>(item.Properties.Select(p => new KeyValuePair<string, string>(p.Name, p.Type)));
+                        queryHelper.CreateTable(DatabasePrefix.Dynamic + item.Name, props, constraints);
                     }
                 }
             }

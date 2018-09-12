@@ -18,20 +18,9 @@
  * -v0.9: multiselect columns, shift and ctrl keys modifiers
  * -v0.10: multiselect for resolutions
  * -v0.10.1: deleted placeholders
+ * -v0.11: delete confirmation is handled with events
  * 
  *===============================================================================================*/
-
-// Example initialization
-//let l = [
-//    { columns: [{ resolutions: { default: { size: 1 }, 767: { size: 3 }, 991: { size: 2 }, 1440: { size: 1 } }, properties: { placeholder: '' } }, { resolutions: { default: { size: 3 } } }, { resolutions: { default: { size: 5 } } }] },
-//    { columns: [{ resolutions: { default: { size: 4 } } }] },
-//    { columns: [{ resolutions: { default: { size: 1 } } }, { resolutions: { default: { size: 1 } } }, { resolutions: { default: { size: 1 } } }] }
-//];
-
-//let $wrapper2 = $('#w2');
-//let $resolutions = $('#resolutions');
-//initLayout($wrapper2, l, $resolutions);
-//---------------------------------------------------------------------------------
 
 function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     if (!resolutionValidation || {}.toString.call(resolutionValidation) !== '[object Function]') {
@@ -327,39 +316,6 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         buildLayout($wrapper, l);
     });
 
-    // state 0 for rows, 1 for colums
-    function checkForContent(state, rowIndex) {
-        if (state == 1) {
-            for (let i = 0; i < l.selected.length; i += 1) {
-                let removed = l[l.selected[i].row].columns[l.selected[i].col];
-
-                if (pageContent.find(e => e.placeholder == removed.properties.placeholder)) {
-                    let $modal = $('#layout-delete-confirmation');
-                    $modal.modal('show');
-                    $modal.addClass("columns-deletion");
-                    return true;
-                }
-            }
-
-            return false;
-        }
-        else {
-            let removed = l[rowIndex];
-
-            for (let i = 0; i < removed.columns.length; i += 1) {
-                if (pageContent.find(e => e.placeholder == removed.columns[i].properties.placeholder)) {
-                    let $modal = $('#layout-delete-confirmation');
-                    $modal.modal('show');
-                    $modal.addClass("rows-deletion");
-                    $modal.attr("data-rowindex", rowIndex);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }
-
     function deleteColums() {
         l.selected.sort((a, b) => { return (a.col > b.col) ? -1 : ((b.col > a.col) ? 1 : 0); });
 
@@ -382,35 +338,41 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         buildLayout($wrapper, l);
     }
 
-    $("#delete-layout-content").on("click", function () {
-        let $modal = $('#layout-delete-confirmation');
-        if ($modal.hasClass("columns-deletion")) {
-            deleteColums();
-        }
-        else if ($modal.hasClass("rows-deletion")) {
-            let rowIndex = $modal.attr("data-rowindex");
-            deleteRows(rowIndex);
-        }
-    });
-
+    // Trigger events to check if content should be deleted
     $options.on('click', '.remove-column', function (ev) {
-        let $target = $(this);
-        let hasContent = checkForContent(1);
-
-        if (!hasContent) {
-            deleteColums();
+        let placeholders = [];
+        for (let i = 0; i < l.selected.length; i += 1) {
+            placeholders.push(l[l.selected[i].row].columns[l.selected[i].col].properties.placeholder);
         }
+
+        $wrapper[0].dispatchEvent(new CustomEvent('checkForContent', { bubbles: true, detail: { type: 'col', placeholders } }));
     });
 
     $options.on('click', '.remove-row', function (ev) {
         let $target = $(this);
         let rowIndex = $target.attr('data-rowIndex');
-        let hasContent = checkForContent(0, rowIndex);
+        let placeholders = [];
 
-        if (!hasContent) {
-            deleteRows(rowIndex);
+        for (let i = 0; i < l[rowIndex].columns.length; i += 1) {
+            placeholders.push(l[rowIndex].columns[i].properties.placeholder);
         }
+
+        $wrapper[0].dispatchEvent(new CustomEvent('checkForContent', { bubbles: true, detail: { type: 'row', placeholders, rowIndex } }));
     });
+
+    // handle when content is allowed for deletion
+    $wrapper[0].addEventListener('allowedForDeletion', function (ev) {
+        switch (ev.detail.type) {
+            case 'row':
+                deleteRows(ev.detail.rowIndex);
+                break;
+            case 'col':
+                deleteColums();
+                break;
+            default:
+                break;
+        }
+    })
 
     $wrapper.on('click', '.select-row', function (ev) {
         let $target = $(this);

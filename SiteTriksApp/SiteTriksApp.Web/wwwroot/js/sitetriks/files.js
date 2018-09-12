@@ -1,17 +1,21 @@
 ﻿function initFilesEdit(expirationDate, libraryAllowed) {
-    var $notifier = '#file-edit-notfier';
+    let $inputFile = $('#input-update-file');
+    let $dateTimePicker = $('#date-picker');
+    let $title = $('#title');
+    let $altText = $('#alt');
+    let $notifier = $('#alerts');
 
-    $('#date-picker').datetimepicker({
+    $dateTimePicker.datetimepicker({
         minDate: new Date()
     }).val(expirationDate);
 
-    $('.date-picker-group span').on('click', function () {
-        $('#date-picker').focus();
-    })
-
     var libraryAllowed = replaceAll(replaceAll(libraryAllowed, '*', ''), ',', '|');
 
-    $('#input-update-file').on('change', editFileDisplayImage);
+    if ($inputFile[0].files.length === 1) {
+        editFileDisplayImage.apply($inputFile);
+    }
+
+    bindEvents();
 
     function editFileDisplayImage(ev) {
         var file = $(this)[0].files[0];
@@ -29,21 +33,17 @@
             return;
         } else {
             var fileName = file.name.substring(0, file.name.lastIndexOf('.'));
-            $('#title').val(fileName);
-            $('#alt').val(fileName);
+            $title.val(fileName);
+            $altText.val(fileName);
             $('.display-image').attr('src', window.URL.createObjectURL(file));
         }
     }
 
-    if ($('#input-update-file')[0].files.length === 1) {
-        editFileDisplayImage.apply($('#input-update-file'));
-    }
-
-    $('#submit-form').on('submit', function (evt) {
+    function submitFileForm(ev) {
         Loader.show('#fff');
         var flag = false;
 
-        if (!Validator.validate($('#title'), 'Name must be atleast 3 characters!', function (val) { return Validator.hasMinimumLength(val.trim(), 3); })) {
+        if (!Validator.validate($title, 'Name must be atleast 3 characters!', function (val) { return Validator.hasMinimumLength(val.trim(), 3); })) {
             flag = true;
         }
 
@@ -55,7 +55,7 @@
                     Loader.hide();
 
                     Notifier.createAlert({
-                        containerId: $notifier,
+                        containerId: '#alerts',
                         message: res.message,
                         status: 'danger'
                     });
@@ -66,7 +66,70 @@
             Loader.hide();
         }
 
-        evt.preventDefault();
+        ev.preventDefault();
         return false;
-    });
+    };
+
+
+    $('.thumbnail-image-delete').on('click', function () {
+        var id = $(this).attr("data-id");
+        var $wrapper = $(this).parents('.thumbnail-wrapper');
+
+        Data.getJson({ url: '/sitetriks/files/DeleteSingleFile?id=' + id, formData: new FormData() }).then(function (res) {
+            if (res.success) {
+                $wrapper.remove();
+                Notifier.createAlert({
+                    containerId: $notifier,
+                    message: "Successfully deleting a thumbnail",
+                    status: 'success'
+                });
+            } else {
+                Notifier.createAlert({
+                    containerId: $notifier,
+                    message: "We were unable to delete this thumbnail",
+                    status: 'danger'
+                });
+            }
+        })
+    })
+
+    $('#generate-thumbnails').on('click', function () {
+        var id = $(this).attr("data-fileId");
+
+        Data.postJson({ url: '/sitetriks/files/GenerateThumbnailsForFile', data: id }).then(function (res) {
+            if (res.success) {
+                Notifier.createAlert({
+                    containerId: $notifier,
+                    message: "Successfully regenerated thumbnails",
+                    status: 'success'
+                });
+                location.reload();
+            } else {
+                Notifier.createAlert({
+                    containerId: $notifier,
+                    message: "We were unable to generate thumbnails for the image.",
+                    status: 'danger'
+                });
+            }
+        })
+
+    })
+
+
+
+    function openDatePicker() {
+        $dateTimePicker.focus();
+    }
+
+    function bindEvents() {
+        $inputFile.on('change', editFileDisplayImage);
+        $('#submit-form').on('submit', submitFileForm);
+        $dateTimePicker.next('span.input-group-addon').on('click', openDatePicker);
+    }
+
+    function dispose() {
+        $inputFile.off('change', editFileDisplayImage);
+        $('#submit-form').off('submit', submitFileForm);
+        $dateTimePicker.next('span.input-group-addon').off('click', openDatePicker);
+    }
 }

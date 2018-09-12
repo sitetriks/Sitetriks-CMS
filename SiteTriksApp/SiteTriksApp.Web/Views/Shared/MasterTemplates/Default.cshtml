@@ -3,7 +3,8 @@
 @{
     string lang = ViewData["Lang"].ToString();
     bool isPreview = ViewData["Preview"].ToString() == "preview";
-    if (isPreview || ViewData["Preview"].ToString() == "partial")
+    bool isPartial = ViewData["Preview"].ToString() == "partial";
+    if (isPreview || isPartial)
     {
         Layout = null;
     }
@@ -28,7 +29,7 @@
 
 <div class="template-content">
     <input name="SEOKeyword" value="@Model.SEOKeyword" type="hidden" />
-    @if (isPreview || ViewData["Preview"].ToString() == "partial")
+    @if (isPreview || isPartial)
     {
 
         foreach (var item in css)
@@ -50,7 +51,7 @@
         </div>
     </div>
 
-    @if (isPreview || ViewData["Preview"].ToString() == "partial")
+    @if (isPreview || isPartial)
     {
         var javascript = Model.Contents.Where(c => c.Placeholder == "javascript").OrderBy(c => c.Order).ToArray();
         foreach (var item in javascript)
@@ -62,7 +63,7 @@
 </div>
 
 @section scripts {
-    @if (!isPreview || ViewData["Preview"].ToString() == "partial")
+    @if (!isPreview || isPartial)
     {
         var javascript = Model.Contents.Where(c => c.Placeholder == "javascript").OrderBy(c => c.Order).ToArray();
         foreach (var item in javascript)

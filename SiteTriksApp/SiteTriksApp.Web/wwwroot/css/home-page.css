@@ -132,6 +132,7 @@ body {
 .try-button {
     margin: 0;
     padding: 0;
+
     /* TODO - check real sizes later */
     padding: 0;
     height: 30px;
@@ -227,9 +228,9 @@ body {
     z-index: 1;
 }
 
-    .element:hover {
-        color: #2579cc;
-    }
+.element:hover {
+    color: #2579cc;
+}
 
 /*Logo styles*/
 
@@ -702,20 +703,19 @@ body {
         /*padding-top: 70px;*/
     }
 
-        .technology-list .row .technology-links div a {
-            font-size: 2em;
+        .technology-list .row .technology-links div {
+            font-size: 1.4em;
             font-family: Montserrat;
             font-weight: bold;
             color: #123f7b;
             text-transform: uppercase;
             padding-left: 30px;
             line-height: 30px;
-            text-decoration: none;
         }
 
 
 
-            .technology-list .row .technology-links div a:hover {
+            .technology-list .row .technology-links div:hover {
                 color: #5fb6fd;
             }
 
@@ -825,9 +825,9 @@ body {
         width: auto;
     }
 
-#subscriptionForm div {
-    min-height: 30px;
-}
+    #subscriptionForm div {
+        min-height: 30px;
+    }
 
 .row.subscription-form-wrapper .form-wrapper .validation-output {
     color: #ff6868;
@@ -839,7 +839,7 @@ body {
 .row.subscription-form-wrapper .form-wrapper input[type=text] {
     margin-top: 0;
     margin-bottom: 30px;
-    width: 100%;
+    width: 100%; 
     max-width: inherit;
     float: right;
     outline: none;
@@ -852,29 +852,29 @@ body {
     text-align: center;
 }
 
-.row.subscription-form-wrapper .form-wrapper label {
-    margin-bottom: 25px;
-}
+        .row.subscription-form-wrapper .form-wrapper label {
+            margin-bottom: 25px;
+        }
 
-.row.subscription-form-wrapper .form-wrapper input[type=button] {
-    width: 150px;
-    height: 40px;
-    border-radius: 25px;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-family: Montserrat;
-    color: #3876cf;
-    line-height: normal;
-    background-color: #3c3c3c;
-    border: 3px solid #3876cf;
-    display: block;
-    margin: 0 auto;
-}
+        .row.subscription-form-wrapper .form-wrapper input[type=button] {
+            width: 150px;
+            height: 40px;
+            border-radius: 25px;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-family: Montserrat;
+            color: #3876cf;
+            line-height: normal;
+            background-color: #3c3c3c;
+            border: 3px solid #3876cf;
+            display: block;
+            margin: 0 auto;
+        }
 
-    .row.subscription-form-wrapper .form-wrapper input[type=button]:hover {
-        background-color: #3876cf;
-        color: #3c3c3c;
-    }
+            .row.subscription-form-wrapper .form-wrapper input[type=button]:hover {
+                background-color: #3876cf;
+                color: #3c3c3c;
+            }
 
 #features-releases-group {
     /*margin-top: 100px;*/
@@ -904,8 +904,8 @@ body {
         }
 
         .features-section .row:last-child > div {
-            /*padding: 0;
-            margin: 0;*/
+            padding: 0;
+            margin: 0;
             /* border: 2px solid black; */
             /*height: 610px;*/
         }
@@ -936,14 +936,10 @@ body {
     display: block;
 }
 
-.bottom-menu .selected-feature {
-    min-height: 610px;
-    height: auto;
-}
-
 
 .homepage-footer {
     background-color: #383838;
+    padding-top: 7px;
 }
 
     .homepage-footer .row {
@@ -967,9 +963,9 @@ body {
             align-items: center;
         }
 
-            .homepage-footer .row .col-lg-10 p {
-                margin: 0;
-            }
+        .homepage-footer .row .col-lg-10 p {
+            margin: 0;
+        }
 
 
         .homepage-footer .row .col-lg-1 {
@@ -1036,7 +1032,7 @@ body {
     padding: 0;
     left: 0;
     position: fixed;
-    margin-top: 100px;
+    margin-top: 5%;
     /*width: 90%;*/
     z-index: 1000;
     top: 50px;
@@ -1049,7 +1045,7 @@ body {
         display: none;
         float: left;
         width: 90%;
-        height: 620px;
+        height: 615px;
         box-shadow: 0 0 15px black;
     }
 
@@ -1590,10 +1586,6 @@ body {
         border-right: none;
     }
 
-    .technology-list .row .technology-links div a {
-        padding-left: 0;
-    }
-
     /*Toggle side menu*/
 
     .toggle-menu {
@@ -1624,9 +1616,9 @@ body {
     }
 
         #middle-box .main-arrows {
-            height: 27px;
-            width: 27px;
-            margin-top: 25px;
+            height: 30px;
+            width: 30px;
+            margin-top: 20px;
         }
 
     .after-middle-box {
@@ -1673,8 +1665,8 @@ body {
         .item-header .arrow-down, .item-header .side-arrow {
             /*float: left;*/
             /*margin-left: 15px;*/
-            height: 22px;
-            width: 22px;
+            height: 25px;
+            width: 25px;
             position: absolute;
             left: 10px;
         }
@@ -1778,8 +1770,8 @@ body {
             background-color: #3876cf;
             /*border-width: 0px 2px 2px 2px;
                 border-style: solid;
-                border-color: #3d80c2;
-            color: #123f7b;*/
+                border-color: #3d80c2;*/
+            color: #123f7b;
             padding-bottom: 5%;
             margin-bottom: 0;
             text-align: justify;
@@ -1792,7 +1784,7 @@ body {
         .technology-list .row .technology-description .bullets {
             background-color: #3876cf;
             padding-right: 0;
-            /*color: #123f7b;*/
+            color: #123f7b;
         }
 
             .technology-list .row .technology-description .bullets ul {
@@ -1805,8 +1797,7 @@ body {
                 }
 
             .technology-list .row .technology-description .bullets.first-column {
-                margin-top: -20px;
-                padding-top: 20px;
+                margin-top: 40px;
             }
 
     /*.technology-list .row .technology-description .bullets ul:nth-of-type(1) {
@@ -1820,11 +1811,11 @@ body {
     .advantages-block {
         display: inline-block;
         border: 2px solid #5fb6fd;
-        margin-bottom: 20px;
+        /*outline: 20px solid #123e7a;*/
     }
 
         .advantages-block img, .technology-block img {
-            margin-top: 0;
+            margin-top: -3px;
             float: right;
             padding-right: 20px;
             margin-left: -30px;
@@ -1834,14 +1825,15 @@ body {
         .technology-block .arrow-down,
         .advantages-block .side-arrow,
         .technology-block .side-arrow {
-            height: 25px;
-            width: 45px;
+            height: 30px;
+            width: 50px;
         }
 
     .technology-block {
         margin-top: 20px;
-        display: table;
+        display: inline-block;
         border: 2px solid #5fb6fd;
+        /*outline: 20px solid #123e7a;*/
     }
 
     .technology-list .row .technology-links {
@@ -2060,56 +2052,64 @@ body {
     .jumbotron-section {
         display: none;
     }
+
 }
 
-@media (max-width: 540px) {
+    @media (max-width: 540px) {
 
-    .item-header div {
-        max-width: 210px;
+        .item-header div {
+            max-width: 210px;
+        }
+
+        .item-header {
+            font-size: 14px;
+        }
     }
 
-    .item-header {
-        font-size: 14px;
+
+    @media (max-width: 320px) {
+
+        #middle-box .main-arrows {
+            height: 30px;
+            width: 30px;
+        }
     }
-}
+
+    /*========================================================================*/
+    /*===================== Responsive design for height change===============*/
+    /*========================================================================*/
 
 
-@media (max-width: 320px) {
-
-    #middle-box .main-arrows {
-        height: 25px;
-        width: 25px;
-    }
-}
-
-/*========================================================================*/
-/*===================== Responsive design for height change===============*/
-/*========================================================================*/
-
-
-@media (max-height: 790px) {
-    .toggle-menu .features-section {
-        /*height: 70vh;
+    @media (max-height: 790px) {
+        .toggle-menu .features-section {
+            /*height: 70vh;
         overflow-y: auto;*/
+        }
+
+        .toggle-menu {
+            margin-top: 30px;
+        }
     }
 
-    .toggle-menu {
-        margin-top: 90px;
+    @media (max-height: 740px) {
+
+        .toggle-menu {
+            margin-top: 0px;
+        }
     }
-}
 
-@media (max-height: 740px) {
 
-    .toggle-menu {
-        margin-top: 70px;
+    @media (max-height: 700px) {
+
+        .toggle-menu {
+            margin-top: -50px;
+        }
     }
-}
 
+    @media (max-height: 650px) {
 
-@media (max-height: 700px) {
-
-    .toggle-menu {
-        margin-top: 0px;
+        .toggle-menu {
+            margin-top: -80px;
+        }
     }
-}
 

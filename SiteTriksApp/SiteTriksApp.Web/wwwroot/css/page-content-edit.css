@@ -71,10 +71,6 @@
     padding-left: 40px;
 }
 
-    #add-widget-container .col-md-11 .row,
-    #edit-widget-container .col-md-11 .row,
-    #add-widget-container .col-md-9 .row,
-    #edit-widget-container .col-md-9 .row,
     #add-widget-container .col-md-5 .row,
     #edit-widget-container .col-md-5 .row,
     #add-widget-container .col-md-6 .row,
@@ -85,12 +81,6 @@
         margin-top: 15px;
     }
 
-    /*HTML widget only*/
-
-    #html-options-list {
-        margin-bottom: 10px;
-    }
-
 
 .widget-container {
     font-family: OpenSans, Helvetica, Arial, sans-serif;
@@ -98,7 +88,6 @@
 
     .widget-container label {
         margin-right: 10px;
-        padding-right: 0;
     }
 
     .widget-container .form-control {
@@ -294,7 +283,7 @@ div.ui-dialog .ui-dialog-content {
         color: #048CFF;
         font-weight: bold;
         padding-top: 0;
-        margin-top:0;
+        margin-top: 0;
     }
 
         .revision-history-wrapper .btn-revision > span {
@@ -728,13 +717,8 @@ div.ui-dialog .ui-dialog-content {
         Gallery widget edit page
     ---------------------------------------------------------------*/
 .type-of-gallery-select select.form-control {
-    /*width: 100%;
-    height: 35px;
-    margin: 0;
-    font-size: 18px;
-    border-radius: 5px;
-    border-color: #f4f4f4;*/
     width: 100%;
+    max-width: 50%;
 }
 
 select#gallery-source,
@@ -803,6 +787,10 @@ select#gallery-libs {
     padding: 10px;
 }
 
+.image-widget .multiselect.dropdown-toggle.btn.btn-default {
+    max-width: 100%;
+}
+
 .files-handler-pager #previous-page,
 .files-handler-pager #page,
 .files-handler-pager #next-page {
@@ -844,7 +832,7 @@ select#gallery-libs {
     }
 
     .show-content, .show-layout {
-        font-size: 10px;
+        font-size: 12px;
     }
 }
 
@@ -925,7 +913,7 @@ select#gallery-libs {
     }
 
     .select-page-language {
-       top: 0;
+        top: 0;
     }
 
     .triangles {

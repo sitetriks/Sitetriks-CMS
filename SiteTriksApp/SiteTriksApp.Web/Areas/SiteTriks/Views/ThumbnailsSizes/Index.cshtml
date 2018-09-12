@@ -1,0 +1,56 @@
+﻿
+@model IEnumerable<SiteTriks.Models.ThumbnailsSizesModels.ThumbnailsSizesViewModel>
+
+@{
+    ViewBag.Title = "ThumbnailSizes";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+
+    <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Thumbnail Size</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var grid = Grid();
+        var data = { link: "/sitetriks/thumbnailssizes/grid", serverSide: false }
+        var columns = [
+            {
+                name: 'id',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: "name",
+                title: "Name",
+                type: 'string',
+                filter: true,
+                sort: true,
+                extraFields: ["id"],
+                size: 2,
+                headerTemplate: '<strong>#item#</strong>', // #item# is the placeholder for the content
+                //contentTemplate: '<a href="#item0#">#item#</a>'
+                contentTemplate: '<a href="@Url.Action("Edit")/#item0#">#item#</a>'
+            },        
+        ];
+
+        let buttons = [
+            {
+                title: 'Delete',
+                postUrl: '/sitetriks/thumbnailssizes/delete',
+                type: 'danger'
+            },
+        ];
+
+        var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+        let obj = grid.init('.grid', config);
+    </script>
+}

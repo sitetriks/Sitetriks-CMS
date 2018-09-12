@@ -11,63 +11,58 @@ ul.st-table {
         font-size: 0px;
     }
 
-        ul.st-table, ul.st-table ul .btn-warning {
-            font-size: 14px;
-            line-height: 1.9;
+        ul.st-table ul > li {
+            display: inline-block;
+            box-sizing: border-box;
+            border-collapse: collapse;
+            font-size: 15px;
+			vertical-align: middle;
         }
-
-            ul.st-table ul > li {
-                display: inline-block;
-                box-sizing: border-box;
-                border-collapse: collapse;
-                font-size: 15px;
-                vertical-align: middle;
-            }
 
 @supports (-ms-ime-align:auto) {
-    ul.st-table ul > li {
-        word-wrap: break-word;
-    }
+	ul.st-table ul > li {
+		word-wrap: break-word;
+	}
 }
-/* Bordered */
-ul.st-table.bordered {
-    border: 1px solid black;
-}
+	/* Bordered */
+	ul.st-table.bordered {
+		border: 1px solid black;
+	}
 
-    ul.st-table.bordered > li > ul {
-        border-bottom: 1px solid black;
-    }
+		ul.st-table.bordered > li > ul {
+			border-bottom: 1px solid black;
+		}
 
-    ul.st-table.bordered > li:last-child > ul {
-        border-bottom: 0;
-    }
+		ul.st-table.bordered > li:last-child > ul {
+			border-bottom: 0;
+		}
 
-    ul.st-table.bordered ul > li {
-        border-left: 0;
-    }
+		ul.st-table.bordered ul > li {
+			border-left: 0;
+		}
 
-        ul.st-table.bordered ul > li ~ li {
-            border-left: 1px solid black;
-        }
+			ul.st-table.bordered ul > li ~ li {
+				border-left: 1px solid black;
+			}
 
-        ul.st-table.bordered ul > li[class*=' col-offset'], ul.st-table.bordered ul > li[class^='col-offset'] {
-            border-left: 1px solid black;
-        }
-/* Scrollable */
-ul.st-table.scrollable {
-    overflow-x: auto;
-}
+			ul.st-table.bordered ul > li[class*=' col-offset'], ul.st-table.bordered ul > li[class^='col-offset'] {
+				border-left: 1px solid black;
+			}
+	/* Scrollable */
+	ul.st-table.scrollable {
+		overflow-x: auto;
+	}
 
-    ul.st-table.scrollable.bordered {
-        border-right: 0;
-    }
+		ul.st-table.scrollable.bordered {
+			border-right: 0;
+		}
 
-        ul.st-table.scrollable.bordered > li > ul > li:last-child {
-            border-right: 1px solid black;
-        }
-/* ---------------------------------------------------- */
-/* Columns width */
-/* ul.st-table ul> li.col-1{
+			ul.st-table.scrollable.bordered > li > ul > li:last-child {
+				border-right: 1px solid black;
+			}
+	/* ---------------------------------------------------- */
+	/* Columns width */
+	/* ul.st-table ul> li.col-1{
     width: 9.999%
 }
 
@@ -86,91 +81,91 @@ ul.st-table ul> li.col-4{
 ul.st-table ul> li.col-5{
     width: 49.995%
 } */
-ul.st-table ul > li.col-1 {
-    width: 10%
-}
+	ul.st-table ul > li.col-1 {
+		width: 10%
+	}
 
-ul.st-table ul > li.col-2 {
-    width: 20%
-}
+	ul.st-table ul > li.col-2 {
+		width: 20%
+	}
 
-ul.st-table ul > li.col-3 {
-    width: 30%
-}
+	ul.st-table ul > li.col-3 {
+		width: 30%
+	}
 
-ul.st-table ul > li.col-4 {
-    width: 40%
-}
+	ul.st-table ul > li.col-4 {
+		width: 40%
+	}
 
-ul.st-table ul > li.col-5 {
-    width: 50%
-}
+	ul.st-table ul > li.col-5 {
+		width: 50%
+	}
 
-ul.st-table ul > li.col-6 {
-    width: 60%
-}
+	ul.st-table ul > li.col-6 {
+		width: 60%
+	}
 
-ul.st-table ul > li.col-7 {
-    width: 70%
-}
+	ul.st-table ul > li.col-7 {
+		width: 70%
+	}
 
-ul.st-table ul > li.col-8 {
-    width: 80%
-}
+	ul.st-table ul > li.col-8 {
+		width: 80%
+	}
 
-ul.st-table ul > li.col-9 {
-    width: 90%
-}
+	ul.st-table ul > li.col-9 {
+		width: 90%
+	}
 
-ul.st-table ul > li.col-10 {
-    width: 100%
-}
-/* ---------------------------------------------------- */
-/* Columns offset */
-ul.st-table ul > li.col-offset-1 {
-    margin-left: 10%
-}
+	ul.st-table ul > li.col-10 {
+		width: 100%
+	}
+	/* ---------------------------------------------------- */
+	/* Columns offset */
+	ul.st-table ul > li.col-offset-1 {
+		margin-left: 10%
+	}
 
-ul.st-table ul > li.col-offset-2 {
-    margin-left: 20%
-}
+	ul.st-table ul > li.col-offset-2 {
+		margin-left: 20%
+	}
 
-ul.st-table ul > li.col-offset-3 {
-    margin-left: 30%
-}
+	ul.st-table ul > li.col-offset-3 {
+		margin-left: 30%
+	}
 
-ul.st-table ul > li.col-offset-4 {
-    margin-left: 40%
-}
+	ul.st-table ul > li.col-offset-4 {
+		margin-left: 40%
+	}
 
-ul.st-table ul > li.col-offset-5 {
-    margin-left: 50%
-}
+	ul.st-table ul > li.col-offset-5 {
+		margin-left: 50%
+	}
 
-ul.st-table ul > li.col-offset-6 {
-    margin-left: 60%
-}
+	ul.st-table ul > li.col-offset-6 {
+		margin-left: 60%
+	}
 
-ul.st-table ul > li.col-offset-7 {
-    margin-left: 70%
-}
+	ul.st-table ul > li.col-offset-7 {
+		margin-left: 70%
+	}
 
-ul.st-table ul > li.col-offset-8 {
-    margin-left: 80%
-}
+	ul.st-table ul > li.col-offset-8 {
+		margin-left: 80%
+	}
 
-ul.st-table ul > li.col-offset-9 {
-    margin-left: 90%
-}
-/* ---------------------------------------------------- */
-.child {
-    border-bottom: none;
-    /*margin-left: 3%;
+	ul.st-table ul > li.col-offset-9 {
+		margin-left: 90%
+	}
+	/* ---------------------------------------------------- */
+	.child {
+		border-bottom: none;
+		/*margin-left: 3%;
 		padding-top: 1%;
 		margin-bottom: 1%;
 		margin-top: 1%;
 		border-top: 2px dashed #eae3e3;*/
-}
+	}
 
 .bodyRow.child li:nth-of-type(1),
 .bodyRow.child li:nth-of-type(2) {
@@ -186,7 +181,7 @@ ul.st-table ul > li.col-offset-9 {
     display: none;
 }
 
-.child .child {
-    border: none;
-    /*border-top: 2px solid #eae3e3;*/
-}
+		.child .child {
+			border: none;
+			/*border-top: 2px solid #eae3e3;*/
+		}

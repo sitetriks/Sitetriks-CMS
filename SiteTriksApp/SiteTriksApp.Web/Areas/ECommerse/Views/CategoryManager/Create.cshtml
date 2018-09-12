@@ -1,0 +1,54 @@
+﻿@model SiteTriks.ECommerseModule.Models.Categories.CreateCategoryViewModel
+
+@{
+    ViewBag.Title = "Create Category";
+}
+
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Create", "CategoryManager", FormMethod.Post, new { id = "create-category-form" }))
+    {
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/SecondNavHeader.cshtml")
+            <a href="@Url.Action("Details", "StoreManager", new { id = Model.StoreId })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <button type="submit" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Category</button>
+        </div>
+
+        <div class="page-properties">
+            <hr />
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => Model.StoreId)
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.Name, new { htmlAttributes = new { @class = "form-control title-field inline-block" } })
+                    @Html.ValidationMessageFor(m => Model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="extra-fields-wrapper">
+                @foreach (var item in Model.ExtraFields)
+                {
+                    <div>
+                        <label>
+                            <input type="checkbox" data-id="@item.Id" />
+                            <span>@item.Name (@item.Type)</span>
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/categorymanager.js"></script>
+    <script type="text/javascript">
+        (function () {
+            let storeId = '@Model.StoreId';
+
+            createCategory(storeId);
+        })();
+    </script>
+}

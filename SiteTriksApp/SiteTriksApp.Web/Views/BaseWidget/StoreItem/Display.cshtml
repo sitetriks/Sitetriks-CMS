@@ -1,0 +1,25 @@
+﻿@model SiteTriksApp.Web.Areas.ECommerse.Extentions.WidgetModels.StoreItemWidgetModel
+
+@inject SiteTriks.Configuration.JSON.Contracts.IGenericJsonProvider jsonProvider;
+
+@{
+    Layout = null;
+}
+
+@if (Model.IsPreview)
+{
+    <div class="preview-placeholder" data-identifier="@Model.Id">
+        @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+        <div class="@Model.CssClass">
+            store item preview
+            @Model.Element
+        </div>
+    </div>
+}
+else
+{
+    string element = jsonProvider.Deserialize<IDictionary<string, string>>(Model.Element)["template"];
+    <div class="@Model.CssClass">
+        @Html.Raw(element)
+    </div>
+}

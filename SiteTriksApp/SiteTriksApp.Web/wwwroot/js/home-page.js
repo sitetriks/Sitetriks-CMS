@@ -25,7 +25,6 @@ var homepageDesktopFuncTionality = (function () {
                 $('.leaf-button-text').css('display', 'none');
                 $('.leaf-button-1').css('display', 'inline-block');
                 $('.close-menu').css('display', 'inline-block');
-                $('.close-menu').click();
             });
 
         $('.leaf-button-2').on('click', function () {
@@ -252,7 +251,8 @@ var homepageDesktopFuncTionality = (function () {
                 radialToXY(0.25 * halfwidth, 90, halfwidth, halfwidth),
                 radialToXY(0.47 * halfwidth, 113, halfwidth, halfwidth)
             ];
-       
+
+
             var one = [
                 radialToXY(0 * halfwidth, 0, halfwidth, halfwidth),
                 radialToXY(0.25 * halfwidth, 90, halfwidth, halfwidth),
@@ -321,6 +321,7 @@ var homepageDesktopFuncTionality = (function () {
     var moveToMiddleMenuIcon = function () {
 
         var $dandelionMenu = $('.dandelion-menu');
+        console.log($dandelionMenu);
         $dandelionMenu.on('click', '.element', moveToIcon);
 
         function scrollcb(target) {
@@ -471,6 +472,7 @@ var mobileMenuFunctionality = (function () {
     var mobileIconSelect = function () {
         $('#mobile-view-top-menu').on('click', '.menu-icon', function (event) {
             let $button = $(event.target);
+            console.log($button);
 
             if (!$button.hasClass('menu-icon')) {
                 $button = $button.parents('.menu-icon');
@@ -516,7 +518,6 @@ var mobileMenuFunctionality = (function () {
 var bottomMenuFunctionality = (function () {
     let menusChanged = false;
     let url = 'downloads';
-    var $bottomSection = $('.bottom-menu').find('.feature-content');
 
     var changeMenu = function () {
         let windowWidth = $(window).width();
@@ -541,6 +542,7 @@ var bottomMenuFunctionality = (function () {
     }
 
     var loadDefaultBottomMenu = function (url) {
+        var $bottomSection = $('.toggle-bottom-menu.container');
 
         Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
             if (res.success) {

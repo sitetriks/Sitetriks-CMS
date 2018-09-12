@@ -1,7 +1,7 @@
-﻿@{
+﻿@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv
+@{
     ViewData["Title"] = "Welcome to SiteTriks";
 }
-
 
 <div>
     <content>
@@ -14,9 +14,40 @@
                         </div>
                         <h3>Welcome to SiteTriks CMS Initialization</h3>
                         <a class="btn" style="margin-left: 30%; float: none;" asp-action="RegisterUser">Create your site</a>
+
+                        @if (hostingEnv.EnvironmentName == "Development")
+                        {
+                            <a class="btn" style="margin-left: 30%; float: none;" id="dev-button" asp-action="DefaultDeveloperSetup">Create default site</a>
+                            <p class="centered">Email: admin@mail.com</p>
+                            <p class="centered">Password: 12345qQ!</p>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </content>
 </div>
+@section Scripts {
+    <script src="~/js/loader.js"></script>
+    <script src="~/js/data.js"></script>
+    <script src="~/js/restart-app.js"></script>
+    <script>
+        $('#dev-button').on('click', (e) => {
+            Loader.show('#fff', "/images/LOGO.png");
+            e.preventDefault();
+            let formData = new FormData();
+
+            let url = '@Url.Action("DefaultDeveloperSetup", "Setup")';
+
+            Data.postForm({ url: url, formData: formData }).then((res) => {
+                if (res.success) {
+                    handleAppRestart({ url: '/Account/Login?ReturnUrl=%2Fsitetriks' });
+                }
+                else {
+                    Notifier.createAlert({ containerId: '#alerts', message: res.message, status: 'danger' });
+                    Loader.hide();
+                }
+            }, (res) => { console.log(res); });
+        });
+    </script>
+}

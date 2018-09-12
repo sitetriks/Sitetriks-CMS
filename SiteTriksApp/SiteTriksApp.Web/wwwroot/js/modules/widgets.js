@@ -4,16 +4,16 @@
 //         for widgets AllowedRoles, AllowedGroups 
 //===================================================================================================
 
-function widgetsModule($widgetContainer, initFunctions) {
+function widgetsModule($widgetContainer, initFunctions, pageContent) {
     function getRoles(selectedRoles) {
         if (!selectedRoles) {
             var selectedRolesNames = [];
         } else {
             var selectedRolesNames = selectedRoles.split(';');
-        } 
+        }
 
 
-        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function(data) {
+        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function (data) {
             $.each(data.names, function (index, item) {
                 if (selectedRolesNames.indexOf(item) >= 0) {
                     var option = $('<option></option>');
@@ -37,9 +37,9 @@ function widgetsModule($widgetContainer, initFunctions) {
             var selectedUserGroupsNames = [];
         } else {
             var selectedUserGroupsNames = selectedUserGroups.split(';');
-        } 
+        }
 
-        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function(data) {
+        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function (data) {
             $.each(data.names, function (index, item) {
                 if (selectedUserGroupsNames.indexOf(item) >= 0) {
                     var option = $('<option></option>');
@@ -56,10 +56,10 @@ function widgetsModule($widgetContainer, initFunctions) {
         });
     }
 
-    function LoadWidget(type) {
+    function LoadWidget(type, extra) {
         $widgetContainer.html('<p>Loading...</p>');
 
-        Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type }).then(function (res) {
+        Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type + '&extra=' + extra }).then(function (res) {
             $widgetContainer.html(res);
 
             if (initFunctions[type] && {}.toString.call(initFunctions[type].init) === '[object Function]') {
@@ -72,7 +72,7 @@ function widgetsModule($widgetContainer, initFunctions) {
             $('.add-widget-dialog .btn-add-widget').prop('disabled', false);
             $('.add-widget-dialog .btn-add-widget').attr('data-type', type);
 
-            var $templatesSelector = $("#template-selector");
+            var $templatesSelector = $('#template-selector');
 
             if ($templatesSelector.length) {
                 Data.getJson({ url: '/WidgetTemplatesController/GetTemplateNames/' + type }).then(function (data) {
@@ -80,7 +80,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                     $templatesSelector.empty();
 
                     for (let i = 0; i < templateNames.length; i++) {
-                        let $option = $("<option></option>");
+                        let $option = $('<option></option>');
                         $option.text(templateNames[i]);
                         $option.val(templateNames[i]);
 
@@ -90,7 +90,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                     $('#add-widget-container').find('input:first').focus();
                 });
             }
-        });      
+        });
     }
 
     function createAlert(action, data, status, dialogId, modalId, isLocal) {
@@ -132,10 +132,11 @@ function widgetsModule($widgetContainer, initFunctions) {
 
                     var placeholder = $(event.target).attr('data-placeholder');
                     var type = ui.draggable.first().data("type");
+                    let extra = ui.draggable.first().attr('data-extra');
 
                     OpenDialog(placeholder).text(ui.draggable.first().text());
 
-                    LoadWidget(type);
+                    LoadWidget(type, extra);
                     return;
                 }
                 else {
@@ -222,7 +223,7 @@ function widgetsModule($widgetContainer, initFunctions) {
         var templateName = $("#template-selector").val();
         var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
         var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
-        
+
         var element;
 
         if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
@@ -250,10 +251,10 @@ function widgetsModule($widgetContainer, initFunctions) {
         addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups);
     });
 
-    function addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups) {
+    function addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups, noAlert) {
         let order = Math.max.apply(Math, pageContent.map(function (c) { return c.order; })) + 1;
 
-        if (order == -Infinity) {
+        if (order === -Infinity) {
             order = 0;
         }
         var id = Utils.guid();
@@ -270,7 +271,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                 order: order || 0
             },
             preview: 'preview'
-        }
+        };
 
         Loader.show(true);
 
@@ -292,14 +293,18 @@ function widgetsModule($widgetContainer, initFunctions) {
             $('.placeholder[data-placeholder="' + placeholder + '"]').append(data);
 
             if (type === 'layoutBuilder') {
-                console.log('init layout')
+                console.log('init layout');
                 //makeDrop($(".drop-layout"));
                 //$(".drop-layout").sortable();
-                WidgetsDraggable.init(w.makeDrop);
+                WidgetsDraggable.init(w);
             }
 
-            createAlert('Added', { type }, 'success', '#Dialog-Box', null, true);
-        })
+            if (!noAlert) {
+                createAlert('Added', { type }, 'success', '#Dialog-Box', null, true);
+            } else {
+                Loader.hide();
+            }
+        });
     }
 
     //=================================================================================================================================================
@@ -319,6 +324,8 @@ function widgetsModule($widgetContainer, initFunctions) {
             .dialog('option', 'height', 700)
             .dialog('option', 'dialogClass', 'edit-widget-dialog')
             .dialog('open');
+
+        $widgetContainer.html('');
 
         $('#Dialog-Box-Edit').dialog('option', 'position', ["20%", "10%"]);
         $('#Dialog-Box-Edit').parent().css({ position: "fixed" })
@@ -442,7 +449,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                 console.log('init layout')
                 //makeDrop($(".drop-layout"));
                 //$(".drop-layout").sortable();
-                WidgetsDraggable.init(w.makeDrop);
+                WidgetsDraggable.init(w);
             }
 
             createAlert('Edited', { type: type }, 'warning', '#Dialog-Box-Edit', null, true);
@@ -545,8 +552,10 @@ function widgetsModule($widgetContainer, initFunctions) {
     return {
         addWidgetLocal,
         saveEditWidgetLocal,
-        makeDrop
-    }
+        makeDrop,
+        getPageContent: () => pageContent,
+        setPageContent: (content) => pageContent = content
+    };
 }
 
 function createErrorAlert(msg, type) {

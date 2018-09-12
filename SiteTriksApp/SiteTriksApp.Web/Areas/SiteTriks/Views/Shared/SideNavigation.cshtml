@@ -48,6 +48,7 @@
                         <li class="nav-section-separator"><span>E-commerse</span></li>
                         <li>@Html.ActionLink("E-commerce", "Index", "ECommerce", new { Area = "SiteTriks" }, new { })</li>
                         <li>@Html.ActionLink("E-commerce Orders", "Index", "ECommerceOrders", new { Area = "SiteTriks" }, new { })</li>
+                        @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "ECommerse" })
                     </ul>
                 </li>
             }

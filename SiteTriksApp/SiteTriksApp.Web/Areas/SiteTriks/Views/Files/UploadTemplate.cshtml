@@ -1,6 +1,22 @@
 ﻿@model IEnumerable<SelectListItem>
 
-@Html.DropDownList("library", Model, "-- Select Library --", new { @class = "form-control inline-block" })
+<div>
+    @Html.DropDownList("library", Model, " Select Library", new { @class = "form-control inline-block file-upload-library" })
 
-<div><span id="accepted-formats"></span></div>
-<input type="file" name="Files" id="input-files" onchange="displayImages()" disabled @if (ViewBag.IsMultiple) { <text> multiple="multiple" </text> } />
+    <span class="library-arrow-down"></span>
+    <div><span class="accepted-formats"></span></div>
+    <input type="file" name="Files" class="input-files" disabled @if (ViewBag.IsMultiple) { <text> multiple="multiple" </text> } />
+</div>
+
+<div>
+    <div class="file-handler-notifier"></div>
+    <div>
+        <div class="upload-container">
+        </div>
+        <div class="files-container">
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-success btn-submit-images">Upload</a>
+        </div>
+    </div>
+</div>

@@ -28,6 +28,12 @@
       "Dependencies": []
     },
     {
+      "Name": "SiteTriks.ErrorPagesModule",
+      "IsActive": false,
+      "DisplayName": "ErrorPages",
+      "Dependencies": []
+    },
+    {
       "Name": "SiteTriks.RssFeedModule",
       "IsActive": false,
       "DisplayName": "Rss Feed",
@@ -44,6 +50,12 @@
       "IsActive": false,
       "DisplayName": "Site Map",
       "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ECommerseModule",
+      "IsActive": true,
+      "DisplayName": "ECommerse",
+      "Dependencies": []
     }
   ],
   "Installed": [
@@ -55,6 +67,12 @@
         "SiteTriks.SiteSync",
         "SiteTriks.RssFeedModule"
       ]
+    },
+    {
+      "Name": "SiteTriks.ErrorPagesModule",
+      "IsActive": true,
+      "DisplayName": "ErrorPages",
+      "Dependencies": []
     },
     {
       "Name": "SiteTriks.SiteSync",
@@ -90,6 +108,12 @@
       "Name": "SiteTriks.DocumentationModule",
       "IsActive": true,
       "DisplayName": "Documentation",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ECommerseModule",
+      "IsActive": true,
+      "DisplayName": "ECommerse",
       "Dependencies": []
     }
   ]

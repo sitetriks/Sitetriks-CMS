@@ -1,6 +1,5 @@
 ﻿'use strict';
 
-// activate the scroll event
 function removeSideMenu(e) {
 
     var offSet = $('.bottom-menu').offset();
@@ -18,11 +17,9 @@ function removeSideMenu(e) {
         setTimeout(function () {
             $toggleMenu.removeClass('visuallyhidden');
         }, 30);
-        //$toggleMenu.removeClass('hidden');
     }
 }
 
-// toggle the side menu
 var toggleSideMenu = (function () {
 
     var animateWidth;
@@ -38,8 +35,6 @@ var toggleSideMenu = (function () {
             if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 $(".shrink-menu").children('img').attr('src', '/Content/Images/menu-buttons/Decrease_window.png');
             }
-            //if ($(".toggle-menu").attr("data-open-state") === "closed" || $(".toggle-menu").attr("data-open-state") === "opened") {
-            //}
         });
     }
 
@@ -56,18 +51,15 @@ var toggleSideMenu = (function () {
                 return;
             }
 
-            // change image
             $(".leaf-button-2").toggle();
             $(".leaf-button-3").toggle();
 
-            // Hide th arrow images when the menu is expanded - 1.1
             $('.close-menu').toggle();
 
             var anumationDuration = 500;
             var color = '#fff';
 
             $('.middle-section.col-lg-10').animate({ width: animateWidth }, anumationDuration, function () {
-                // $(".toggle-menu .selected-feature").animate(".hidden-selected");
                 $selectedFeature.toggle("slow");
             });
 
@@ -92,7 +84,6 @@ var toggleSideMenu = (function () {
                 }
             });
 
-            // set state
             if ($(".toggle-menu").attr("data-open-state") === "opened") {
                 $(".toggle-menu").attr("data-open-state", "expanded");
                 $('.toggle-menu').css("width", "90%");
@@ -108,29 +99,23 @@ var toggleSideMenu = (function () {
 
     var closeMenu = function () {
         $('.close-menu').on('click', function () {
-            // check state
             if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 return;
             }
-
-            // change images on buttons
             $(".arrows-1").toggle();
             $(".arrows-2").toggle();
 
             $(".leaf-button-2").toggle();
             $(".leaf-button-1").toggle();
 
-            // fix features section width
             $featuresSection.css("width", setFeatureWidth);
             $sideCol.css("width", "117px");
             $middleSection.css("width", "0px");
             $selectedFeature.css("display", "none");
 
             var featureVisibility = $featuresSection.css('display') == "none" ? "inline-block" : "none";
-            // console.log(featureVisibility);
             $featuresSection.toggle("slow");
 
-            // set state 
             if ($(".toggle-menu").attr("data-open-state") === "closed") {
                 $(".toggle-menu").attr("data-open-state", "opened");
                 $('.toggle-menu').css("width", "auto");
@@ -149,8 +134,6 @@ var toggleSideMenu = (function () {
     }
 })();
 
-// Features Section content loading.
-
 function loadSection(ev) {
     var $trigger = $(this);
 
@@ -158,7 +141,6 @@ function loadSection(ev) {
         if ($(this).hasClass('clicked')) {
             $(this).children('.icon-image').toggle();
             $(this).css('background-color', '#123e7a');
-            //$(this).css('border-color', '#3875cf');
             $(this).removeClass('clicked');
         }
     });
@@ -169,10 +151,7 @@ function loadSection(ev) {
 
     var url = $trigger.attr('data-url') || '';
     var $section = $trigger.parents('.features-section').find('.feature-content');
- //   var $bottomSection = $('.toggle-bottom-menu.container');
-    var $bottomSection = $('.bottom-menu').find('.feature-content');
-    var $toggleSection = $(".toggle-menu");
-
+    var $bottomSection = $('.toggle-bottom-menu.container');
     var $toggleMenu = $trigger.parents('.toggle-menu');
 
     $section.html('');
@@ -186,16 +165,13 @@ function loadSection(ev) {
             }
             else if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 $section.html(res.view);
-            } else if ($(window).width() <= 767 || $(window).height() <= 620) {
+            } else if ($(window).width() <= 767) {
                 $section.html(res.view);
-            } else if ($toggleSection.hasClass('visuallyhidden')) {
-                $bottomSection.html(res.view);
             }
 
             DocumentationWidget();
 
             if ($section.find('.multiple-playlists')) {
-                // get all thumbnails ids
                 let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
                 let source;
                 $container.each(function (_, element) {
@@ -211,12 +187,20 @@ function loadSection(ev) {
                 console.warn("Error in toggle menu");
             }
 
-        }                                         
+        }
     });
 }
 
 $(document).ready(function (ev) {
     $('.features-section').on('click', '.menu-icon', loadSection);
+});
+
+$(document).ready(function () {
+    $('.letter-2').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+        $('.leaf-button-text').css('display', 'none');
+        $('.leaf-button-1').css('display', 'inline-block');
+        $('.close-menu').css('display', 'inline-block');
+    });
 });
 
 function getYoutubeData(playlistId) {

@@ -1,0 +1,259 @@
+﻿.image-widget .widget-form,
+.gallery-widget .gallery-container {
+    background-color: #ececec;
+    border: 1px solid #c5c5c5;
+    border-radius: 7px;
+    padding: 8% 8%;
+    text-align: center;
+}
+
+.image-widget .widget-form label,
+.gallery-widget .gallery-container label {
+    text-align: left;
+}
+
+
+.image-widget .widget-form hr,
+.gallery-widget .widget-form hr{
+    margin-top: 5px;
+    float: left;
+    width: 92%;
+    height: 1.5px;
+    background: #979797;
+}
+
+    .image-widget .widget-form .multiselect,
+    .gallery-widget .widget-form .multiselect {
+        background-color: #909090;
+        color: white;
+    }
+
+        .image-widget .widget-form .multiselect .btn-group {
+            width: 50%;
+        }
+
+.image-widget select#library,
+.gallery-widget select#library {
+    width: 16%;
+    height: 50px;
+    left: 42%;
+    position: absolute;
+    top: 0;
+    background-color: #535353;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.image-widget .library-arrow-down,
+.gallery-widget .library-arrow-down {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 9px solid #ffffff;
+    position: absolute;
+    top: 22px;
+    left: 56%;
+}
+
+    .image-widget select#library option,
+    .gallery-widget select#library option {
+        padding-left: 10px;
+        font-weight: bold;
+        background-color: #f3f3f3;
+        color: #333333;
+        
+    }
+
+.image-widget .file-upload-library,
+.image-widget .file-select-library,
+.gallery-widget .file-upload-library,
+.gallery-widget .file-select-library {
+    -webkit-appearance: none; /* Chrome, Safari, Opera */
+    -moz-appearance: none; /* Firefox */
+    -ms-appearance: none; /* not currently supported */
+}
+
+.image-widget .btn-group,
+.gallery-widget  .btn-group{
+    width: 50%;
+}
+
+.image-widget .btn-select,
+.gallery-widget .btn-select {
+    display: none;
+}
+
+.image-widget .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #ececec;
+    border-bottom: 1px solid #ddd;
+
+}
+
+/*.image-widget .multiselect.dropdown-toggle.btn.btn-default.image-widget .btn-group,
+.gallery-widget .multiselect.dropdown-toggle.btn.btn-default.image-widget .btn-group {
+    width: 100%;
+}*/
+
+.gallery-widget .multiselect.dropdown-toggle.btn.btn-default {
+    width: 100%;
+    margin-left: -35px;
+}
+
+.image-widget .widget-form input.form-control,
+.gallery-widget .widget-form input.form-control {
+    width: 100%;
+    max-width: 50%;
+}
+
+.file-handler-wrapper,
+.gallery-widget #upload-modal {
+    position: unset;
+}
+
+.file-handler-nav {
+    margin-bottom: 10px;
+}
+
+    .file-handler-nav li {
+        cursor: pointer;
+    }
+
+        .file-handler-nav li:only-child {
+            display: none;
+        }
+
+.file-handler-container {
+    display: none;
+}
+
+    .file-handler-container.active {
+        display: inherit
+    }
+
+
+.image-container2 {
+    position: relative;
+    width: 30%;
+    padding: 0;
+    margin: 1%;
+    height: 180px;
+    float: left;
+    overflow: hidden;
+    border: 1px solid #979797;
+    border-radius: 3px;
+}
+
+    .image-container2 .image-checkbox {
+        opacity: 0;
+        width: 17px;
+        height: 15px;
+        position: absolute;
+        top: -5px;
+    }
+
+    .image-container2 .image-checkbox-wrapper {
+        width: 17px;
+        height: 15px;
+        box-shadow: inset 0 0 3px #000000;
+        position: absolute;
+        top: 7px;
+        left: 5px;
+        border-radius: 2px;
+        background: transparent;
+        border: 1px solid #ffffff;
+    }
+
+.image-checkbox-wrapper .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    background-color: #eee;
+}
+
+.image-checkbox-wrapper:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.image-checkbox-wrapper input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.image-checkbox-wrapper input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.image-checkbox-wrapper .checkmark:after {
+    left: 5px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+    .image-container2 input[type="radio"] {
+        -webkit-appearance: checkbox; /* Chrome, Safari, Opera */
+        -moz-appearance: checkbox; /* Firefox */
+        -ms-appearance: checkbox; /* not currently supported */
+    }
+
+    .image-container2 img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 85%;
+    }
+
+    .image-container2 .thumbnailSelect {
+        padding: 5px;
+        -moz-appearance: none; /* Firefox */
+        -webkit-appearance: none; /* Safari and Chrome */
+        appearance: none;
+        width: 100%;
+        border: none;
+        text-align: center;
+    }
+
+    .image-container2 > span {
+        max-width: 90%;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .image-container2 input[name=images-list]:checked {
+        background-color: #4a90e2;
+    }
+
+.thumbnailSelector .arrow-down {
+    margin-left: -25px;
+    margin-top: 10px;
+    position: absolute;
+    display: none;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid #ffffff;
+    float: right;
+    margin-right: 30px;
+}

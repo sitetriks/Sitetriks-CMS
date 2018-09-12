@@ -101,14 +101,14 @@ var Grid = function () {
             }
         }
 
-
+        let _this = this;
         let gridIsEmpty;
         return Data.postJson({ url: this.config.data.link, data: body }).then(
             function (res) {
                 if (res.success && res.items) {
                     let itemsCount = res.items.length;
 
-                    let $grid = $('.grid');
+                    let $grid = $(_this.selector);
                     if (itemsCount === 0) {
                         $grid.addClass('empty');
                     } else {
@@ -118,7 +118,7 @@ var Grid = function () {
                     console.warn('No items found in grid.');
                 }
                 return res;
-            }) .then(function (res) {
+            }).then(function (res) {
                 // console.log(res)
                 Loader.hide();
                 return res;
@@ -549,6 +549,11 @@ var Grid = function () {
                 tableData.createButtons($table).appendTo($parent);
 
                 $table.appendTo($parent);
+
+
+                $(tableData.selector).on('click', '.child-expand', expandChildren);
+                $(tableData.selector).on('click', '.st-select-all-checkbox', selecteAll);
+                $(tableData.selector).on('click', '.st-grid-checkbox', selectSingle);
             }
         });
 
@@ -619,7 +624,7 @@ var Grid = function () {
                 }
                 let collectionName = element.collectionName || 'ids';
                 let ids = [];
-                $('#' + tableId)
+                $(data.selector)
                     .find('input.st-grid-checkbox[type=checkbox]:checked')
                     .each(function (ind, el) {
                         ids.push($(el).attr('data-id'));
@@ -910,11 +915,6 @@ var Grid = function () {
         return $bodyRow;
     }
 
-    // TODO: events should be registrated on wrapper instead on hardcoded '.grid'
-    $('.grid').on('click', '.child-expand', expandChildren);
-    $('.grid').on('click', '.st-select-all-checkbox', selecteAll);
-    $('.grid').on('click', '.st-grid-checkbox', selectSingle);
-
     function expandChildren() {
         if ($(this).children().first().hasClass('glyphicon-plus')) {
             $(this).children().first().removeClass('glyphicon-plus');
@@ -1129,7 +1129,7 @@ var Grid = function () {
 
             if (columnConfiguration[j].extraFields && columnConfiguration[j].extraFields.length > 0) {
                 for (let i = 0; i < columnConfiguration[j].extraFields.length; i++) {
-                    content = replaceAll(content, `#item${i}#`, data[columnConfiguration[j].extraFields[i]]);
+                    content = replaceAll(content || '', `#item${i}#`, data[columnConfiguration[j].extraFields[i]]);
                 }
             }
 
@@ -1272,25 +1272,27 @@ var Grid = function () {
         });
     }
 
-    $(document).on('refreshGrid', {}, function () {
-
-        $('.st-table').each(function () {
-            $(this).data('sitetriksGrid').update(true);
-        });
-    });
-
-
     var defaultPager = {
         pageSizes: [5, 10, 20, 50, 100, 'all'],
         pageReadOnly: true,
         default: 20
-    }
-
-
-
+    };
     return {
         init: init,
         build: buildGridConfig,
         defaultPager: defaultPager,
     };
-}
+};
+
+$(document).on('refreshGrid', {}, function (ev) {
+    let $tables;
+    if (ev && ev.detail && ev.detail.selector) {
+        $tables = $(ev.detail.selector).find('.st-table');
+    } else {
+        $tables = $('.st-table');
+    }
+
+    $tables.each(function (_, element) {
+        $(element).data('sitetriksGrid').update(element);
+    });
+});

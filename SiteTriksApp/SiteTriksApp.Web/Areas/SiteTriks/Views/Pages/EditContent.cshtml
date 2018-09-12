@@ -10,6 +10,7 @@
     <link href="~/css/page-content-edit.css" rel="stylesheet">
     <link href="~/css/navbar-remove.css" rel="stylesheet" />
     <link href="~/css/layout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/file-handler.css" />
 }
 
 <div class="fixed-top-2">
@@ -89,37 +90,35 @@
             @await Component.InvokeAsync("ShowWidgets")
             <div id="layout-properties" hidden>
                 <hr />
-                <a id="btn-save-layout" class="btn btn-backend hidden" >Save Layout</a>
                 <div id="main-layout-options"></div>
-
-                <!-- Delete confirmation modal -->
-                <div id="layout-delete-confirmation" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Delete confirmation modal</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>With deletion of rows/cols you will delete and inner content! Are you sure you want to continue?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="delete-layout-content" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
+        </div>
+    </div>
+
+    <!-- Delete confirmation modal -->
+    <div id="layout-delete-confirmation" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete confirmation modal</h4>
+                </div>
+                <div class="modal-body">
+                    <p>With deletion of rows/cols you will delete and inner content! Are you sure you want to continue?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="delete-layout-content" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
-@Html.Partial("AddWidget")
-@Html.Partial("EditWidget")
+@await Html.PartialAsync("AddWidget")
+@await Html.PartialAsync("EditWidget")
 
 <div id="delete-confirm" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -148,9 +147,11 @@
     <script src="~/js/modules/widgets.js"></script>
     <script src="~/js/modules/layout-control.js"></script>
     <script src="~/js/modules/module-builder.js"></script>
+    <script src="~/js/modules/file-handler.js"></script>
+    <script src="~/js/modules/logger.js"></script>
+    <script src="~/js/modules/mediator.js"></script>
     <script src="~/js/widgets-draggable.js"></script>
     <script src="~/js/text-editor.js"></script>
-    <script src="~/js/files-handler-2.2.js"></script>
     <script src="~/js/shared-blocks.js"></script>
     <script src="~/js/multiselect-setup.js"></script>
     <script src="~/js/validator.js"></script>
@@ -163,14 +164,16 @@
     }
 
     <script type="text/javascript">
-        var pageContent = @Html.Raw(Json.Serialize(Model.Contents));
-        var originalPageContent = JSON.stringify(@Html.Raw(Json.Serialize(Model.Contents)));
         var url = '@Model.Url'.replace("/", "%2F");
 
         //===================================================================================================
         // Widgets 2.0
 
-        var w = ModuleBuilder.createWidgets('#add-widget-container', customWidgets);
+        var logger = new Logger('debug');
+        var mediator = new Mediator(logger);
+
+        ModuleBuilder.init(mediator, logger);
+        var w = ModuleBuilder.createWidgets('#add-widget-container', customWidgets, @Html.Raw(Json.Serialize(Model.Contents)));
 
         //===================================================================================================
 

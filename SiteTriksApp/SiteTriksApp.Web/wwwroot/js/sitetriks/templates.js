@@ -1,30 +1,5 @@
 ﻿function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
-    function loadjscssfile(filename, filetype) {
-        if (filetype == "js") { //if filename is a external JavaScript file
-            var fileref = document.createElement('script')
-            fileref.setAttribute("type", "text/javascript")
-            fileref.setAttribute("src", filename)
-        }
-        else if (filetype == "css") { //if filename is an external CSS file
-            var fileref = document.createElement("link")
-            fileref.setAttribute("rel", "stylesheet")
-            fileref.setAttribute("type", "text/css")
-            fileref.setAttribute("href", filename)
-        }
-        if (typeof fileref != "undefined")
-            document.getElementsByTagName("head")[0].appendChild(fileref)
-    }
-
-    function removejscssfile(filename, filetype) {
-        var targetelement = (filetype == "js") ? "script" : (filetype == "css") ? "link" : "none" //determine element type to create nodelist from
-        var targetattr = (filetype == "js") ? "src" : (filetype == "css") ? "href" : "none" //determine corresponding attribute to test for
-        var allsuspects = document.getElementsByTagName(targetelement)
-        for (var i = allsuspects.length; i >= 0; i--) { //search backwards within nodelist for matching elements to remove
-            if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) != null && allsuspects[i].getAttribute(targetattr).indexOf(filename) != -1)
-                allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
-        }
-    }
-
+    // Layout handling
     $('.resolution').on('click', function (ev) {
         let active = $('.selected-option').attr('data-type');
         let $target = $(this);
@@ -39,12 +14,12 @@
                 $el.removeClass('selected');
                 let type = $el.attr('data-type');
 
-                removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
+                Utils.removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
             });
 
             $target.addClass('selected');
             let type = $target.attr('data-type');
-            loadjscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css');
+            Utils.loadjscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css');
         }
     });
 
@@ -62,7 +37,7 @@
         $('.resolution').each(function (_, element) {
             element.classList.add('selected');
         });
-        $('#preview-layout').data('layout-control').resolutions = ['xs', 'sm', 'md', 'lg'];
+        ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT).resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 
     $('.show-content').on('click', function (ev) {
@@ -75,50 +50,56 @@
         $(this).parent().addClass('selected-option');
         $('.show-layout').parent().removeClass('selected-option');
 
-        //save layout on switching back to content
-        $('#btn-save-layout').trigger('click');
-
         $('.resolution.selected').each(function (_, element) {
             let $el = $(element);
             $el.removeClass('selected');
             let type = $el.attr('data-type');
 
-            removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
+            Utils.removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
         });
 
         $('.resolution[data-type="lg"]').trigger('click');
     });
 
-    let layoutWidget = pageContent.find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
+    let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
     if (layoutWidget) {
         let layout = JSON.parse(layoutWidget.element);
 
         ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout' });
 
-        $('#btn-save-layout').on('click', function (ev) {
-            let l = $('#preview-layout').data('layout-control');
-            layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
-            //$('.show-content').trigger('click');
-
-            console.log(l.deletedPlaceholders);
-            for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
-                removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
-            }
-
-            saveEditWidgetServer(layoutWidget.type, JSON.stringify(layout), layoutWidget.id, layoutWidget.placeholder, layoutWidget.cssClass, layoutWidget.templateName, layoutWidget.allowedRoles, layoutWidget.allowedGroups);
-        });
+        $('.show-content').on('click', saveLayout.bind($('.show-content'), true));
     } else {
         console.error('Layout was not found!');
     }
 
+    function saveLayout(sendToServer) {
+        let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
+        let layout = JSON.parse(layoutWidget.element);
+        let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
+        layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
+
+        for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
+            removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
+        }
+
+        layoutWidget.element = JSON.stringify(layout);
+        if (layoutWidget.IsInherited) {
+            layoutWidget.IsModifiedOnChild = true;
+        }
+
+        if (sendToServer) {
+            saveEditWidgetServer(layoutWidget);
+        }
+    }
+
     function removeWidgetForPlaceholder(placeholder) {
-        let widgets = pageContent.filter(c => c.placeholder === placeholder);
+        let widgets = w.getPageContent().filter(c => c.placeholder === placeholder);
 
         for (let i = 0; i < widgets.length; i += 1) {
-            let index = pageContent.findIndex(c => c.id === widgets[i].id);
+            let index = w.getPageContent().findIndex(c => c.id === widgets[i].id);
 
             if (index !== -1) {
-                pageContent.splice(index, 1);
+                w.getPageContent().splice(index, 1);
                 if (widgets[i].type === 'layoutBuilder') {
                     let layout = JSON.parse(widgets[i].element);
                     for (let j = 0; j < layout.length; j += 1) {
@@ -130,6 +111,37 @@
             }
         }
     }
+
+    document.addEventListener('checkForContent', function (e) {
+        let placeholders = e.detail.placeholders;
+        console.log('checking for updateds');
+
+        for (let i = 0; i < placeholders.length; i += 1) {
+            if (typeof w.getPageContent() !== 'undefined' && w.getPageContent().find(e => e.placeholder == placeholders[i])) {
+                let $modal = $('#layout-delete-confirmation');
+                $modal.modal('show');
+                $modal.attr('data-caller-id', e.target.id)
+                $modal.attr('data-type', e.detail.type);
+                $modal.attr("data-rowindex", e.detail.rowIndex);
+                return false;
+            }
+        }
+
+        e.target.dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: e.detail.type, rowIndex: e.detail.rowIndex } }));
+    });
+
+    $("#delete-layout-content").on("click", function () {
+        let $modal = $('#layout-delete-confirmation');
+
+        let callerId = $modal.attr('data-caller-id')
+        let type = $modal.attr('data-type');
+        let rowIndex = $modal.attr("data-rowindex");
+
+        document.getElementById(callerId).dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: type, rowIndex: rowIndex } }));
+    });
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Sticky widgets
 
     let $window = $(window);
     let itemTop = 0;
@@ -152,6 +164,8 @@
             }
         }
     }
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
     $(document).on("updatePreview", {
     }, function () {
@@ -218,7 +232,7 @@
             $('#preview-container').html(res.view);
 
             $(document).trigger("initCarousel");
-            pageContent = res.content;
+            w.setPageContent(res.content);
             $('#alerts').html('');
 
             if (res.message) {
@@ -229,12 +243,8 @@
 
             $('#displayed-version').text(res.version);
 
-            WidgetsDraggable.init(w.makeDrop);
-        }, function (data, textStatus, XMLHttpRequest) {
-            console.log(data);
-            console.log(textStatus);
-            console.log(XMLHttpRequest);
-        });
+            WidgetsDraggable.init(w);
+        }, Data.defaultError);
     }
 
     $('#preview-container').on('click', '.lock-widget', function (ev) {
@@ -242,7 +252,7 @@
         var status = $caller.prop('checked');
         var id = $caller.attr('data-id');
 
-        let item = pageContent.find(c => c.id === id);
+        let item = w.getPageContent().find(c => c.id === id);
         item.isLocked = !!status;
     });
 
@@ -312,11 +322,12 @@
     });
 
     function publishTemplate() {
+        saveLayout();
         let body = {
             url: url,
-            content: pageContent,
+            content: w.getPageContent(),
             lang: currentLanguage
-        }
+        };
 
         Data.postJson({ url: '/sitetriks/Templates/PublishPageWithContent', data: body }).then(function (res) {
             if (res.success) {
@@ -333,35 +344,37 @@
         });
     });
 
-    function saveDraft(callback) {
+    function saveDraft() {
         let body = {
             url: url,
-            content: pageContent,
+            content: w.getPageContent(),
             lang: currentLanguage
-        }
+        };
 
-        Data.postJson({ url: '/sitetriks/Templates/SaveDraft', data: body }).then(function (res) {
-            callback(res);
-        }, Data.defaultError);
+        return Data.postJson({ url: '/sitetriks/Templates/SaveDraft', data: body });
     }
 
     $('#btn-preview-page').on('click', function (evt) {
-        Loader.show('#fff')
-        saveDraft(function (res) {
+        Loader.show('#fff');
+        saveLayout();
+        saveDraft().then(function (res) {
             if (res.success) {
                 let body = {
-                    content: pageContent,
+                    content: w.getPageContent(),
                     template: currentTemplate,
                     language: currentLanguage
-                }
+                };
 
-                Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
-                    createPreveiwWindow(res);
-
-                    Loader.hide();
-                }, Data.defaultError);
+                return Data.postJson({ url: '/sitetriks/Display/Preview', data: body });
             }
-        });
+
+            Loader.hide();
+            return Promise.reject();
+        }).then(function (res) {
+            createPreveiwWindow(res);
+
+            Loader.hide();
+        }, Data.defaultError);
     });
 
     $('#btn-preview-version').on('click', function (evt) {
@@ -387,7 +400,7 @@
     });
 
     $('#btn-reset').on('click', function (evt) {
-        $(document).trigger("updatePreview");
+        $(document).trigger('updatePreview');
     });
 
     $('.btn-revision').on('click', function (ev) {
@@ -402,72 +415,51 @@
             $('#version-control').css('display', 'none');
         }
     });
+    
+    function saveEditWidgetServer(widget) {
 
-    function saveEditWidgetServer(type, element, id, placeholder, cssClass, templateName, allowedRoles, allowedGroups) {
-        var item = pageContent.find(function (e) {
-            return e.id === id && e.type === type;
-        });
-        item.element = element;
-        item.cssClass = cssClass;
-        item.allowedRoles = allowedRoles;
-        item.allowedGroups = allowedGroups;
-        item.templateName = templateName;
-
-        let order = item.order;
-
-        if (item.IsInherited) {
-            item.IsModifiedOnChild = true;
-        }
-
-        var $old = $('.preview-placeholder[data-identifier="' + id + '"]');
+        var $old = $('.preview-placeholder[data-identifier="' + widget.id + '"]');
 
         var body = {
-            content: {
-                type: type,
-                id: id,
-                element: element,
-                placeholder: placeholder,
-                cssClass: cssClass,
-                templateName: templateName,
-                allowedRoles: allowedRoles,
-                allowedGroups: allowedGroups,
-                order: order,
-                isLocked: item.isLocked,
-                isStatic: item.isStatic
-            },
-            preview: 'preview'
+            content: widget,
+            preview: 'preview',
+            lang: currentLanguage
         };
 
         Loader.show(true);
 
-        saveDraft(function (res) {
+        return saveDraft().then(function (res) {
             if (res.success) {
-                Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body }).then(function (data) {
-
-                    $(document).trigger('removeCarousel');
-
-                    $old.after(data);
-                    $old.remove();
-
-                    if (type === 'layoutBuilder') {
-                        console.log('init layout')
-                        WidgetsDraggable.init(w.makeDrop);
-                    }
-
-                    Loader.hide();
-
-                    loadVersions(currentLanguage).then(function (res) {
-                        $('#versions').find('option[selected="selected"]').removeAttr('selected');
-                        $('#versions').find('option').first().attr('selected', 'selected');
-                    });
-                });
+                return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body });
             }
-        });
+
+            return Promise.reject();
+        }).then(function (data) {
+
+            $(document).trigger('removeCarousel');
+
+            $old.after(data);
+            $old.remove();
+
+            if (type === 'layoutBuilder') {
+                console.log('init layout');
+                WidgetsDraggable.init(w);
+            }
+
+            Loader.hide();
+
+            return loadVersions(currentLanguage);
+        }).then(function (res) {
+            $('#versions').find('option[selected="selected"]').removeAttr('selected');
+            $('#versions').find('option').first().attr('selected', 'selected');
+
+            return { success: true };
+        }, Data.defaultError);
     }
 
     function createPreveiwWindow(html) {
-        let newWindow = window.open("", "Preview");
-        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        let newWindow = window.open('', 'Preview');
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
             //POPUP BLOCKED
             Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
         } else {

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<SelectListItem>
+
+<div>
+    @Html.DropDownList("library", Model, "All files", new { @class = "form-control inline-block file-select-library" })
+    <span class="library-arrow-down"></span>
+</div>
+
+<div>
+    <div class="file-select-notifier"></div>
+    <div>
+        <div class="files-container clearfix">
+        </div>
+
+        <div class="files-handler-pager">
+            <a class="btn btn-default previous-page"><span class="previous-page-arrow"></span></a>
+            <span class="page-number">0</span>
+            <a class="btn btn-default next-page"><span class="next-page-arrow"></span></a>
+            <a class="btn btn-success btn-select">Save</a>
+        </div>
+    </div>
+</div>

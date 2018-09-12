@@ -24,8 +24,13 @@
         $("#" + id).multiselect("refresh");
     }
 
+    function destroy(id) {
+        $('#' + id).multiselect('destroy');
+    }
+
     return {
         Setup: setup,
-        Refresh: refresh
+        Refresh: refresh,
+        Destroy: destroy
     };
 }();

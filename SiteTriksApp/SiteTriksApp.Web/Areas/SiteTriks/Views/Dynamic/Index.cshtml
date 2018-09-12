@@ -22,12 +22,8 @@
     <script src="~/js/restart-app.js"></script>
     <script src="~/js/sitetriks/dynamics.js"></script>
     <script>
-        $(document).ready(function () {
-            $('body').on('click', '.delete', function (e) {
-                Loader.show('#fff', "/images/LOGO.png");
-
-                deleteClass(this);                
-            });
-        });
+        (function () {
+            dynamicClassesList();
+        })();
     </script>
 }

@@ -76,17 +76,6 @@
         width: auto;
         background-repeat: no-repeat;
     }
-
-    .navigation-widget-wrapper .desktop-account-icons .logout-icon input {
-        display: block;
-        background-image: url("../../images/homepage/Log_out.svg");
-        margin-top: 30px;
-        height: 40px;
-        width: 45px;
-        background-repeat: no-repeat;
-        border: none;
-        background-color: transparent;
-    }
 /*****************************************/
 .nav-container {
     position: relative;

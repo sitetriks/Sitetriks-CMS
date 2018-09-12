@@ -10,7 +10,7 @@
         @Html.AntiForgeryToken()
 
         <div class="fixed-top-2">
-            @await Html.PartialAsync("SecondNavHeader")
+            @*@await Html.PartialAsync("SecondNavHeader")*@
 
             @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
             <input type="submit" value="Create" class="btn btn-success" />

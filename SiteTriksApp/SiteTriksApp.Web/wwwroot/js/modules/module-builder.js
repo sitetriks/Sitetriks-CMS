@@ -1,7 +1,13 @@
 ﻿
-
 var ModuleBuilder = (function () {
-    let mCache = {};
+    let instancesCache = {};
+    let _mediator;
+    let _logger;
+
+    function init(mediator, logger) {
+        _mediator = mediator;
+        _logger = logger;
+    }
 
     /**
      * Create scroll control.
@@ -15,12 +21,12 @@ var ModuleBuilder = (function () {
         let scroll = scrollControl($element, scrollViewClass, innerContentClass, config);
 
         $element.data('scroll-bar', scroll);
-        mCache[wrapperId] = scroll;
+        instancesCache[wrapperId] = { 'scroll-bar': scroll };
 
         return scroll;
     }
 
-    function createWidgets(addWidgetContainerId, customWidgets) {
+    function createWidgets(addWidgetContainerId, customWidgets, pageContent) {
         let initFunctions = getSiteTriksWidgets();
 
         if (!customWidgets) {
@@ -35,8 +41,8 @@ var ModuleBuilder = (function () {
             }
         }
 
-        let widgets = widgetsModule($(addWidgetContainerId), initFunctions);
-        mCache[addWidgetContainerId] = widgets;
+        let widgets = widgetsModule($(addWidgetContainerId), initFunctions, pageContent);
+        instancesCache[addWidgetContainerId] = { 'widgets': widgets };
 
         return widgets;
     }
@@ -46,7 +52,7 @@ var ModuleBuilder = (function () {
 
         initLayout($wrapper, layout, $(resolutionsSelector), $(optionsSelector), resolutionValidation);
 
-        mCache[wrapperSelector] = layout;
+        instancesCache[wrapperSelector] = { 'layout-control': layout };
         $wrapper.data('layout-control', layout);
 
         return layout;
@@ -296,43 +302,23 @@ var ModuleBuilder = (function () {
             }
         }
 
-        initFunctions['embeddedscript'] = {
-            init: function () {
-                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
-                    lineNumbers: true,
-                    mode: 'javascript'
-                });
-            },
-            show: function (element) {
-                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
-                    lineNumbers: true,
-                    mode: 'javascript'
-                });
-                let model = JSON.parse(element);
+        initFunctions['image'] = (function () {
+            let fileHandler;
 
-                if (editor) {
-                    editor.setValue(model.RawCode);
-                }
-            },
-            save: function () {
-                if (editor) {
-                    let model = {
-                        RawCode: editor.getValue()
-                    };
-                    return JSON.stringify(model);
-                }
-                return "";
+            function init() {
+                // TODO: move to event once widgets communicate with mediator
+                if (fileHandler && fileHandler.dispose) {
+                    fileHandler.dispose();
+                };
+
+                fileHandler = FileHandler($('.file-handler-wrapper'), ['Upload', 'Select', 'Selected'], '', _mediator, _logger, false);
+
             }
-        }
 
-        initFunctions['image'] = {
-            init: function () {
-                loadUploadTemplate(false, 'main-image', 'image');
-            },
-            show: function (element) {
-                let parsedElement = JSON.parse(element)
+            function show(element) {
+                let parsedElement = JSON.parse(element);
                 let id = parsedElement.id;
-                loadUploadTemplate(false, 'main-image', 'image');
+                init();
 
                 if (parsedElement.width != '') {
                     $('#input-width').val(parsedElement.width);
@@ -346,42 +332,103 @@ var ModuleBuilder = (function () {
                 if (id != "") {
                     createImageView('image', id);
                 }
-            },
-            save: function () {
+
+                if (parsedElement.imagesFullInfo != '') {
+                    $('#selectedImages').attr('data-selectedImages', parsedElement.imagesFullInfo);
+                }
+
+                setTimeout(function () {
+                    _mediator.dispatch('populatedSelected', JSON.parse(JSON.parse(parsedElement.imagesFullInfo)));
+                }, 1000)
+            }
+
+            function save() {
+
                 let id = $('#image').val();
+                let imagesFullInfo = $('#selectedImages').attr('data-selectedImages');
                 if (id) {
-                    return JSON.stringify({
+                    let result = JSON.stringify({
                         id: id,
+                        imagesFullInfo: imagesFullInfo,
                         width: $('#input-width').val(),
                         height: $('#input-height').val()
                     });
+                    return result;
                 }
 
                 return null;
             }
-        }
 
-        initFunctions['gallery'] = {
-            init: function () {
-                loadUploadTemplate(true, 'images', 'image').then(function (res) {
-                    $('#gallery-source a#images').trigger('click');
+            // TODO: move to utils or another helper module
+            $(document).on('click', '.news-listed-image-delete', function () {
+                let $trigger = $(this);
+                let imgId = $trigger.attr('data-id');
+                let fieldId = $trigger.attr('data-field');
+
+                if (fieldId && fieldId !== '') {
+                    let currentImages = $('#' + fieldId).val();
+                    if (currentImages) {
+                        $('#' + fieldId).val(currentImages.replace(imgId, ''));
+                    }
+                }
+
+                $trigger.parent().remove();
+            });
+
+            function createImageView(fieldId, imgLinkId) {
+                let $selectedImageContainer = $('.file-handler-Selected');
+                let $container = $('<div class="news-listed-images-container"></div>');
+                let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="glyphicon glyphicon-remove"></span></div>');
+                let $img = $('<img src="/files/id/' + imgLinkId + '" class="display-image" />');
+
+                $selectedImageContainer.html('');
+
+                $container.append($deleteBtn)
+                    .append($img)
+                    // .appendTo('.image-widget #' + fieldId + '-container');
+                    .appendTo($selectedImageContainer);
+            }
+
+            _mediator.on('filesUploaded', selectFiles, 'displayUploadedImage', 'ImageWidget');
+            _mediator.on('filesSelected', selectFiles, 'displaySelectedImage', 'ImageWidget')
+
+            function selectFiles(data) {
+
+                $('.image-widget #image-container').html('');
+                $('.image-widget #image').val(data.fileIds[0]);
+                createImageView('image', data.fileIds[0]);
+            }
+
+            return {
+                init,
+                show,
+                save
+            }
+        })();
+
+        initFunctions['gallery'] = (function () {
+            let fileHandler;
 
 
-                    $('#btn-select-library').on('click', function (e) {
-                        $('#image').val($('#gallery-libs').val());
-                        Notifier.createAlert({
-                            containerId: '#file-handler-notfier',
-                            message: 'Library was selected!',
-                            status: 'success'
-                        });
-                    })
-                });
-            },
-            show: function (element) {
+            function init() {
+                // TODO: move to event once widgets communicate with mediator
+                if (fileHandler && fileHandler.dispose) {
+                    fileHandler.dispose();
+                }
+
+                fileHandler = FileHandler($('#Dialog-Box .gallery-images'), ['Select'], '', _mediator, _logger, true);
+                $('#gallery-source a#images').trigger('click');
+            }
+
+            function show(element) {
                 let galleryConfig = JSON.parse(element);
                 let fieldId = 'image';
                 let $field = $('#' + fieldId);
                 $field.val(galleryConfig.ids);
+
+                if (galleryConfig.imagesFullInfo != '') {
+                    $('#selectedImages').attr('data-selectedImages', galleryConfig.imagesFullInfo);
+                }
 
                 $('#input-width').val(galleryConfig.width);
                 $('#input-height').val(galleryConfig.height);
@@ -398,15 +445,28 @@ var ModuleBuilder = (function () {
                     }
                 }
 
-                this.init();
-            },
-            save: function () {
+                // TODO: move to event once widgets communicate with mediator
+                if (fileHandler && fileHandler.dispose) {
+                    fileHandler.dispose();
+                }
+
+                fileHandler = FileHandler($('#Dialog-Box-Edit .gallery-images'), ['Select'], '', _mediator, _logger, true);
+                $('#gallery-source a#images').trigger('click');
+
+                // TODO: Redo with promise after file handler initialization.
+                setTimeout(function () {
+                    _mediator.dispatch('populatedSelected', JSON.parse(JSON.parse(galleryConfig.imagesFullInfo)));
+                }, 1000)
+            }
+
+            function save() {
                 let currentType = $('#gallery-source').data('source-type');
                 let showType = $('#gallery-show-type option:selected').val();
                 let ids = $('#image').val();
+                let imagesFullInfo = $('#selectedImages').attr('data-selectedImages');
 
                 if (currentType == 'images' && ids.indexOf(';') !== 0) {
-                    ids = ids.substring(ids.indexOf(';'), ids.length);
+                    //ids = ids.substring(ids.indexOf(';'), ids.length); // what is the purpose of this line?
                 }
 
                 if (ids.indexOf(';') == -1 && currentType == 'images') {
@@ -422,15 +482,119 @@ var ModuleBuilder = (function () {
                     return null;
                 }
 
+                if (ids == '') {
+                    return null;
+                }
+
                 return JSON.stringify({
                     ids: ids,
                     width: $('#input-width').val(),
                     height: $('#input-height').val(),
                     type: currentType,
-                    showType: showType
+                    showType: showType,
+                    imagesFullInfo: imagesFullInfo
                 });
             }
-        }
+
+            $('body').on('click', '#btn-select-library', function (e) {
+                $('#image').val($('#gallery-libs').val());
+                Notifier.createAlert({
+                    containerId: '#file-handler-notfier',
+                    message: 'Library was selected!',
+                    status: 'success'
+                });
+            });
+
+            $('body').on('click', '#gallery-source>a', function (e) {
+                let source = $(this).attr('id')
+                $('#gallery-source').data('source-type', source);
+                $('#' + source).hide();
+                switch (source) {
+                    case 'images':
+                        //showChoice();
+                        $('.gallery-library').hide();
+                        $('.gallery-images').show();
+                        $('#library').show();
+                        break;
+                    case 'library':
+                        $('#images').show();
+                        //files = [];
+                        //uploadedFiles = [];
+                        $('#files-container').html('');
+                        $('#files-list').html('');
+                        $('#choice-file').hide();
+                        $('#upload-file').hide();
+                        //cleanUp();
+
+                        //$('.gallery-images').hide();
+                        $('.gallery-images').hide();
+                        $('.gallery-library').show();
+
+                        $('#gallery-libs').html('');
+
+                        let selected = $('#' + $('#upload-modal').attr('data-id')).val();
+
+                        Data.getJson({ url: '/sitetriks/libraries/GetAllImageLibraries' }).then(function (res) {
+                            if (res.success) {
+                                for (let i = 0; i < res.libraries.length; i++) {
+                                    let $option = $('<option></option>', {
+                                        value: res.libraries[i].id,
+                                        text: res.libraries[i].name
+                                    });
+
+                                    if ((selected && selected === res.libraries[i].id)) {
+                                        $option.attr('selected', true);
+                                    }
+
+                                    $option.appendTo('#gallery-libs')
+                                }
+                            }
+                        }, Data.defaultError);
+                        break;
+                    default:
+                }
+            });
+
+            _mediator.on('filesUploaded', selectFiles, 'displayUploadedImage', 'GalleryWidget');
+            _mediator.on('filesSelected', selectFiles, 'displaySelectedImage', 'GalleryWidget')
+
+            function selectFiles(data) {
+                let $images = $('.gallery-widget #image');
+                let currentImages = $images.val();
+                let $mainContainer = $('.gallery-main-image-container');
+                if (currentImages) {
+                    if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
+                        currentImages += ';';
+                    }
+
+                    $images.val(currentImages + data.fileIds.join(';'));
+                } else {
+                    $images.val(data.fileIds.join(';'));
+                }
+
+                $mainContainer.html('');
+
+                for (let i = 0; i < data.fileIds.length; i += 1) {
+                    createImageView('image', data.fileIds[i], $mainContainer);
+                }
+            }
+
+            function createImageView(fieldId, imgLinkId, $mainContainer) {
+                let $container = $('<div class="news-listed-images-container"></div>');
+                let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="glyphicon glyphicon-remove"></span></div>');
+                let $img = $('<img src="/files/id/' + imgLinkId + '" class="display-image" />');
+
+                $container.append($deleteBtn)
+                    .append($img)
+                    .appendTo($mainContainer);
+            }
+
+            return {
+                init,
+                show,
+                save
+            }
+        })();
 
         initFunctions['layoutBuilder'] = {
             init: function () {
@@ -446,7 +610,7 @@ var ModuleBuilder = (function () {
 
                 let pageUrl = url;
 
-                let layout = ModuleBuilder.getInstance('#layout-widget-wrapper').map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
+                let layout = ModuleBuilder.getInstance('#layout-widget-wrapper', 'layout-control').map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
 
                 let model = {
                     PageUrl: pageUrl,
@@ -623,7 +787,6 @@ var ModuleBuilder = (function () {
         initFunctions['video'] = {
             init: function () { },
             show: function (element) {
-                console.log(element);
                 let elements = element.split('/');
                 $('#video-source').val(elements[0]);
                 $('#default-video').val(elements[2]);
@@ -829,14 +992,36 @@ var ModuleBuilder = (function () {
     }
 
     // get cached instance
-    function getInstance(id) {
-        return mCache[id];
+    function getInstance(selector, type) {
+        if (instancesCache[selector]) {
+            return instancesCache[selector][type];
+        }
+
+        return undefined;
+    }
+
+    function setInstance(selector, type, data) {
+
+        if (!instancesCache[selector]) {
+            instancesCache[selector] = {};
+        }
+
+        instancesCache[selector][type] = data;
+
+        if (type !== 'widgets') {
+            $(selector).data(type, data);
+        }
     }
 
     return {
+        init,
         createScroll,
         createWidgets,
+        initializeLayout,
         getInstance,
-        initializeLayout
+        setInstance,
+        SCROLL: 'scroll-bar',
+        WIDGETS: 'widgets',
+        LAYOUT: 'layout-control'
     }
 }())

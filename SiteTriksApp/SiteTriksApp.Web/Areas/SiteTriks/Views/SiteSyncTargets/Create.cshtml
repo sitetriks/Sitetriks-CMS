@@ -24,6 +24,12 @@
             <h4>Create SiteSync target</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.isForced, "Forced create?", htmlAttributes: new { @class = "control-label col-xs-2" })
+                @Html.EditorFor(model => Model.isForced, new { htmlAttributes = new { @class = "custom-checkbox" } })
+            </div>
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -37,6 +43,25 @@
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control", placeholder = "https://example.com", required = "required" } })
                     @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <h5>Admin credentials for target site</h5>
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "required", type = "password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -1,9 +1,6 @@
-﻿@*@model SiteTriks.Models.Setup.LicenseUploadViewModel*@
-@{
+﻿@{
     ViewData["Title"] = "Upload your license file.";
 }
-
-
 
 <div>
     <content>
@@ -30,12 +27,12 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/loader.js"></script>
-    <script src="~/js/data.js"></script>
-    <script src="~/js/restart-app.js"></script>
-    <script>
+<script src="~/js/loader.js"></script>
+<script src="~/js/data.js"></script>
+<script src="~/js/restart-app.js"></script>
+<script>
         $('button[type=submit]').on('click', (e) => {
-            Loader.show('#fff', "/images/LOGO.png");
+            Loader.show('#fff');
             e.preventDefault();
             let formData = new FormData();
             let licenseFile = $('#license-file')[0].files[0];
@@ -53,5 +50,5 @@
                 }
             }, (res) => { console.log(res); });
         });
-    </script>
+</script>
 }

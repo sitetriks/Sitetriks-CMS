@@ -1,9 +1,4 @@
 ﻿<div id="html-widget-container" class="widget-container">
-    <div class="row">
-        <div class="col-md-9">
-            @await Html.PartialAsync("WidgetsForms")
-        </div>
-    </div>
     <select id="html-options-list">
         <option selected value="new">NEW</option>
         <option value="shared">SHARED</option>
@@ -11,5 +6,7 @@
     <div id="html-widget-holder">
 
     </div>
-    <br />
+    <div class="col-md-5">
+        @await Html.PartialAsync("WidgetsForms")
+    </div>
 </div>

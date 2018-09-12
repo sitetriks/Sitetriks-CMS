@@ -1,9 +1,9 @@
 ﻿var WidgetsDraggable = function () {
     return {
-        init: function (makeDrop) {
+        init: function (w) {
             $(document).ready(function () {
-                if (typeof makeDrop === "function") {
-                    makeDrop($(".drop"));
+                if (typeof w.makeDrop === "function") {
+                    w.makeDrop($(".drop"));
                 }
 
                 $(".drop").sortable();
@@ -22,7 +22,7 @@
                     receive: function (event, ui) {
                         var id = ui.item.data("identifier");
 
-                        var widget = pageContent.find(e => e.id === id);
+                        var widget = w.getPageContent().find(e => e.id === id);
 
                         widget.Placeholder = $(event.target).attr("data-placeholder");
                     },
@@ -40,7 +40,7 @@
                                     return;
                                 }
 
-                                var widget = pageContent.find(e => e.id == id);
+                                var widget = w.getPageContent().find(e => e.id == id);
                                 widget.order = order;
                                 order++;
                             });

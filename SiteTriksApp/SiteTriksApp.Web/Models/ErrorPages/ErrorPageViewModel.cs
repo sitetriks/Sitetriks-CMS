@@ -1,4 +1,4 @@
-﻿using SiteTriks.Data.Models;
+﻿using SiteTriks.ErrorPagesModule.Data.Models;
 using SiteTriks.Infrastructure;
 using System;
 

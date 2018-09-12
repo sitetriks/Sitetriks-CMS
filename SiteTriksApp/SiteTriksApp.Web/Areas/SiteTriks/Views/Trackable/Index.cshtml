@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SelectListItem>
+@{
+	ViewBag.Title = "Trackable";
+}
+
+<div class="fixed-top-2">
+	@await Html.PartialAsync("SecondNavHeader")
+</div>
+<div class="backend-wrapper">
+	@using (Html.BeginForm("AddTrackable", "Trackable", FormMethod.Post, new { }))
+	{
+		<div>
+			@Html.DropDownList("name", Model, new { @class = "form-control inline-block" })
+
+			<input type="submit" id="submit" value="Add tracking" class="btn btn-success" style="margin-left: 20px;" />
+		</div>
+	}
+	<div class="trackables-grid"></div>
+</div>
+
+@section Scripts{
+	<script type="text/javascript">
+
+		var grid = Grid();
+		var data = { link: "/sitetriks/trackable/trackablesList", serverSide: false }
+		var trackablesColumns = [
+			{
+				name: 'typeName',
+				title: 'Type',
+				type: 'string',
+				filter: true,
+				sort: true,
+				size: 5,
+				headerTemplate: '<strong>#item#</strong>'
+			},
+			{
+				name: 'typeName',
+				title: "Action",
+				type: 'string',
+				filter: false,
+				sort: false,
+				size: 2,
+				headerTemplate: '<strong>#item#</strong>',
+				contentTemplate: '<a class="btn" href="/sitetriks/trackable/remove/#item#">Remove</a>'
+			}
+		]
+
+		let buttons = [];
+
+		var config = grid.build(trackablesColumns, buttons, grid.defaultPager, data);
+
+		let obj = grid.init('.trackables-grid', config);
+	</script>
+}

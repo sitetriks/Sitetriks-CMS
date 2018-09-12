@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "Edit News";
 }
+
 @section Styles {
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/file-handler.css" />
     <link href="~/css/navbar-remove.css" rel="stylesheet" />
 }
 
@@ -18,14 +19,10 @@
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
             <input type="submit" value="Save" id="submit-form" class="btn-nav-2" />
 
-            <select id="languages" class="form-control inline-block">
+            <select id="languages" class="form-control inline-block" asp-items="Model.NewsEN.MultiLingualFieds.Select(mlf => new SelectListItem(mlf.Key, mlf.Key))">
                 <option value="">BackEnd/Default</option>
             </select>
         </div>
-
-        @*<div id="alerts"></div>*@
-        <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
-        <hr />
 
         <div id="backend-info">
             <div class="page-properties">
@@ -78,7 +75,7 @@
             <div class="images-container">
                 <div class="image-buttons-container">
                     <label>Main Image</label>
-                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(false, 'main-image', 'en-main-image')">Main Image</button>
+                    <button id="btn-main-image" class="btn btn-backend" type="button" data-toggle="modal" data-target="#file-upload-modal">Main Image</button>
                 </div>
                 <div class="news-main-image-container" id="en-main-image-container">
                     @if (!string.IsNullOrEmpty(Model.NewsEN.MainImageUrlID))
@@ -91,7 +88,7 @@
                 </div>
                 <div class="image-buttons-container">
                     <label>Images</label>
-                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'en-images')">Images</button>
+                    <button id="btn-images" class="btn btn-backend" type="button" data-toggle="modal" data-target="#file-upload-modal">Images</button>
                 </div>
                 <div class="news-images-container" id="en-images-container">
                     @if (!string.IsNullOrEmpty(Model.NewsEN.ImagesUrlsIDs))
@@ -113,18 +110,39 @@
         </div>
     }
 
-    @Html.Partial("UploadTemplates/FileHandlerModal")
+    <div class="modal fade" id="file-upload-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Files</h4>
+                </div>
+                <div class="file-handler-wrapper">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts{
+    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
+    <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
+    <script type="text/javascript" src="~/js/modules/logger.js"></script>
+    <script type="text/javascript" src="~/js/modules/utils.js"></script>
     <script src="~/js/leaving-warning.js"></script>
     <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script src="~/js/files-handler-2.2.js"></script>
     <script src="~/js/text-editor.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/news.js"></script>
     <script type="text/javascript">
-        var mlf = @Html.Raw(Json.Serialize(Model.NewsEN.MultiLingualFieds));
-        editNews(mlf, '@Url.Action("ValidateEditUrl", "News")', '@Model.NewsEN.Id', '@Url.Action("Mlf","News")');
+        (function () {
+            var mlf = @Html.Raw(Json.Serialize(Model.NewsEN.MultiLingualFieds));
+            var logger = new Logger('debug');
+            var mediator = new Mediator(logger);
+
+            News.editNews(mlf, '@Url.Action("ValidateEditUrl", "News")', '@Model.NewsEN.Id', '@Url.Action("Mlf","News")', mediator, logger);
+        })();
     </script>
 }

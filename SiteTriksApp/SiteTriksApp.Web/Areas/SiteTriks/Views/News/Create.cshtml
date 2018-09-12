@@ -5,7 +5,7 @@
 }
 
 @section Styles {
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/file-handler.css" />
     <link href="~/css/navbar-remove.css" rel="stylesheet" />
 }
 
@@ -65,13 +65,13 @@
             <div class="images-container">
                 <div class="image-buttons-container">
                     <label>Main Image</label>
-                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(false, 'main-image', 'en-main-image')">Main Image</button>
+                    <button id="btn-main-image" class="btn btn-backend" type="button" data-toggle="modal" data-target="#file-upload-modal">Main Image</button>
                 </div>
 
                 <div id="en-main-image-container" class="news-main-image-container"></div>
                 <div class="image-buttons-container">
                     <label>Images</label>
-                    <button class="btn btn-backend" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'en-images')">Images</button>
+                    <button id="btn-images" class="btn btn-backend" type="button" data-toggle="modal" data-target="#file-upload-modal">Images</button>
                 </div>
                 <div id="en-images-container" class="news-images-container"></div>
             </div>
@@ -82,17 +82,38 @@
     }
 </div>
 
-@Html.Partial("UploadTemplates/FileHandlerModal")
+<div class="modal fade" id="file-upload-modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Files</h4>
+            </div>
+            <div class="file-handler-wrapper">
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <br />
 
 @section Scripts{
     <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>s
-    <script src="~/js/files-handler-2.2.js"></script>
+    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
+    <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
+    <script type="text/javascript" src="~/js/modules/logger.js"></script>
+    <script type="text/javascript" src="~/js/modules/utils.js"></script>
     <script src="~/js/text-editor.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/news.js"></script>
     <script type="text/javascript">
-        createNews('@Url.Action("ValidateUrl", "News")');
+        (function () {
+            var logger = new Logger('debug');
+            var mediator = new Mediator(logger);
+
+            News.createNews('@Url.Action("ValidateUrl", "News")', mediator, logger);
+        })();
     </script>
 }

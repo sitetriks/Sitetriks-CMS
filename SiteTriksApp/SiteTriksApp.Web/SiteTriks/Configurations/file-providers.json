@@ -1,0 +1,14 @@
+{
+  "db": {
+    "name": "SiteTriks.Services.StorageProviders.Providers.DBProvider"
+  },
+  "fs": {
+    "name": "SiteTriks.Services.StorageProviders.Providers.FileSystemProvider"
+  },
+  "ab": {
+    "name": "SiteTriks.Services.StorageProviders.Providers.AzureBlobProvider",
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=sitetriksblob;AccountKey=f7GoLZgDNRdNcFiPkHTADULAFcByR9O2ljz8h3rcPfjik8sxK6QthXI1sNmUdcDNLwZlMVlAHm0fDc+PKSiiqA==;EndpointSuffix=core.windows.net",
+    "endpoint": "https://sitetriksblob.blob.core.windows.net",
+    "container": "test"
+  }
+}

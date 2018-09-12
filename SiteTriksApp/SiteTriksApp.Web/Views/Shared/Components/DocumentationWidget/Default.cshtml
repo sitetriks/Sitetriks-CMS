@@ -5,7 +5,7 @@
         <select class="documentation-versions">
             @foreach (var item in Model.Versions)
             {
-                <option>@item</option>
+                <option value="@item.ToString("0.00")">@item.ToString("0.00")</option>
             }
         </select>
         <ul class="docs-menu">

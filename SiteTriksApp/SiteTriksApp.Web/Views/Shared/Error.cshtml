@@ -2,32 +2,6 @@
 @{
     ViewData["Title"] = "Error";
     Layout = "_Layout";
-
-
-
-    var statusCode = Model.StatusCode;
-    var statusMessage = "";
-    switch (statusCode)
-    {
-        case 400:
-            statusMessage = "Bad request: The request cannot be fulfilled due to bad syntax";
-            break;
-        case 403:
-            statusMessage = "Forbidden";
-            break;
-        case 404:
-            statusMessage = "Page not found";
-            break;
-        case 408:
-            statusMessage = "The server timed out waiting for the request";
-            break;
-        case 500:
-            statusMessage = "Internal Server Error - server was unable to finish processing the request";
-            break;
-        default:
-            statusMessage = "That’s odd... Something we didn't expect happened";
-            break;
-    }
 }
 
 @* Overwrite the wrapper navigation from the Layout leaving just the logo link *@
@@ -55,9 +29,24 @@
     </div>
 </div>
 
-<div class="backend-wrapper" style="margin-top: 120px;">
-    <h1 class="text-danger" style="font-size: 65px;">Error @statusCode</h1>
-    <h3 class="text-danger" style="font-size: 35px;">@statusMessage</h3>
+<div class="backend-wrapper">
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<h3>Development Mode</h3>
+<p>
+    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+</p>
+<p>
+    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
+</p>
 </div>
 
 

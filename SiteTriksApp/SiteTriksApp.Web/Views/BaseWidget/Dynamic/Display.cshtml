@@ -1,28 +1,9 @@
 ﻿@model SiteTriks.Extentions.WidgetModels.DynamicWidgetModel
 
-@{
-    Layout = null;
-    var roles = Model.AllowedRoles.Split(';', StringSplitOptions.RemoveEmptyEntries);
-    var canView = roles.Length == 0;
-
-    foreach (var item in roles)
-    {
-        if (this.User.IsInRole(item))
-        {
-            canView = true;
-        }
-
-        if (item == "Unauthorized" && !this.User.Identity.IsAuthenticated)
-        {
-            canView = true;
-        }
-    }
-}
-
 @if (Model.IsPreview)
 {
     <div class="preview-placeholder" data-identifier="@Model.Id">
-        @Html.Partial("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+        @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
 
         <div class="@Model.CssClass">
             @await Component.InvokeAsync("DynamicWidget", new { area = "", element = Model.Element })
@@ -31,7 +12,7 @@
 }
 else
 {
-    if (canView)
+    if (Model.CanViewByRole && Model.CanViewByGroup)
     {
         <div class="@Model.CssClass">
             @await Component.InvokeAsync("DynamicWidget", new { area = "", element = Model.Element })

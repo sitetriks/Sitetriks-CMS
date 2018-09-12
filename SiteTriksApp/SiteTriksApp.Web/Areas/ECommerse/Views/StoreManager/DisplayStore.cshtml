@@ -1,0 +1,35 @@
+﻿@model SiteTriks.ECommerseModule.Models.Stores.DisplayStoreViewModel
+
+@section styles{
+    <link rel="stylesheet" type="text/css" href="~/css/ecommerse.css" />
+}
+
+<div class="backend-wrapper">
+    <div class="row-content" id="store-grid">
+        <div data-placeholder="store-skin" class="placeholder row content-placeholder no-margin row-placeholder preview-placeholder static">
+        </div>
+    </div>
+    <div id="store-item" hidden>
+        <a class="back-to-store">back to store</a>
+        <div class="item-container">
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/modules/logger.js"></script>
+    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/store-skins.js"></script>
+    <script>
+        (function () {
+            var widgets = @Html.Raw(Json.Serialize(Model.GridSkin));
+            var storeId = '@Model.Id';
+            var logger = new Logger('debug');
+            var mediator = new Mediator(logger);
+
+            StoreSkins.displayStore(widgets, storeId, logger, mediator);
+        })();
+    </script>
+}

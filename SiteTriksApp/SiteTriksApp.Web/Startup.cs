@@ -11,23 +11,23 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using SiteTriks.Data.Models;
+using SiteTriks.DatabaseApi.Contracts;
 using SiteTriks.Extentions;
 using SiteTriks.Extentions.DynamicViews;
 using SiteTriks.Extentions.WidgetModels;
 using SiteTriks.Helpers;
 using SiteTriks.Services.Contracts;
+using SiteTriksApp.Web.Areas.ECommerse.Extentions.WidgetModels;
 using SiteTriksApp.Web.Data;
 using SiteTriksApp.Web.Services;
 using System;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 
 namespace SiteTriksApp.Web
 {
     public class Startup
-    {       
-
+    {
         public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
@@ -73,6 +73,7 @@ namespace SiteTriksApp.Web
             services.AddTransient<ISiteTriksEmailSender, MailKitEmailSender>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<IPermissionChecker, PermissionChecker>();
+            services.AddDbContext<SiteTriksAppContext>();
 
             // Area registration
             services.Configure<RazorViewEngineOptions>(options =>
@@ -92,7 +93,8 @@ namespace SiteTriksApp.Web
                 {
                     var provider = scope.ServiceProvider;
                     var service = provider.GetRequiredService<IDynamicViewService>();
-                    var composite = new CompositeFileProvider(options.FileProviders[0], new DatabaseFileProvider(provider, options.FileProviders[0] as PhysicalFileProvider));
+                    var queryHelper = provider.GetService<IQueryHelper>();
+                    var composite = new CompositeFileProvider(options.FileProviders[0], new DatabaseFileProvider(options.FileProviders[0], queryHelper));
 
                     options.FileProviders.RemoveAt(0);
 
@@ -124,7 +126,6 @@ namespace SiteTriksApp.Web
             WidgetRegistry.RegisterWidget<PresentationWidgetModel>("presentation", "Presentation");
             WidgetRegistry.RegisterWidget<CssWidgetModel>("css", "CSS");
             WidgetRegistry.RegisterWidget<JavaScriptWidgetModel>("javascript", "JavaScript");
-            WidgetRegistry.RegisterWidget<EmbeddedScriptWidgetModel>("embeddedscript", "Embedded Script");
             WidgetRegistry.RegisterWidget<LayoutBuilderWidgetModel>("layoutBuilder", "Layout Builder");
             WidgetRegistry.RegisterWidget<SearchWidgetModel>("search", "Google Search");
             WidgetRegistry.RegisterWidget<ImageWidgetModel>("image", "Image");
@@ -139,8 +140,10 @@ namespace SiteTriksApp.Web
             WidgetRegistry.RegisterWidget<LicenseGenerationWidgetModel>("licenseGeneration", "License Form");
 
             // -----------------------------------------------------------------------------------------------------------
-            // user widget needs redesign.
-            //WidgetRegistry.RegisterWidget("changeUserInfo", typeof(UserWidgetController), typeof(ChangePasswordViewModel), "ChangeUserInfo");
+            // Store widgets
+            WidgetRegistry.RegisterWidget<StoreGridWidgetModel>("storeGrid", "Grid");
+            WidgetRegistry.RegisterWidget<StoreFilterWidgetModel>("storeFilter", "Filter Menu");
+            WidgetRegistry.RegisterWidget<StoreItemWidgetModel>("storeItem", "Store Item");
 
             services.AddIdentity<User, IdentityRole>(config =>
             {
@@ -164,10 +167,10 @@ namespace SiteTriksApp.Web
                 options.Level = CompressionLevel.Optimal;
             });
 
-            //services.AddDataProtection()
-            //.PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"))
-            //.SetApplicationName("SiteTriks")
-            //.SetDefaultKeyLifetime(TimeSpan.FromDays(90));
+            services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"))
+            .SetApplicationName("SiteTriks")
+            .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -203,12 +206,18 @@ namespace SiteTriksApp.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseStatusCodePagesWithRedirects("/sitetriks/home/error");
+            ApplicationStart.InjectMiddlewares(app);
+
+            //app.UseStatusCodePagesWithReExecute()
             app.UseResponseCompression();
 
-            app.UseStaticFiles(new StaticFileOptions() {                
+            app.UseStaticFiles(new StaticFileOptions()
+            {
                 OnPrepareResponse = (context) =>
                 {
-                    ApplicationStart.CacheStaticFiles(context, this.Configuration);                   
+                    ApplicationStart.CacheStaticFiles(context, this.Configuration);
                 }
             });
 
@@ -216,7 +225,6 @@ namespace SiteTriksApp.Web
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-
 
             app.UseAuthentication();
 

@@ -18,20 +18,47 @@
                         <h4>Sync models</h4>
                         @if (Model.SiteSyncTargets.Count > 0)
                         {
-                            <select id="site-sync-targets-list" class="site-sync-targets-holder form-control" title="SiteSync Target Website">
-                                @foreach (var target in Model.SiteSyncTargets)
+                            @if (Model.IsConnected)
+                            {
                                 {
-                                    <option value="@target.Url">@target.Name</option>
+                                    var currDomain = Model.Domain;
+                                    var siteId = Model.SiteSyncTargets.FirstOrDefault(x => x.Url == currDomain).SiteId;
+                                <select id="site-sync-targets-list" class="site-sync-targets-holder form-control" title="SiteSync Target Website">
+                                    @foreach (var target in Model.SiteSyncTargets)
+                                    {
+                                        @if (target.Url == Model.Domain)
+                                        {
+                                            <option value="@target.Url, @target.SiteId" selected>@target.Name</option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@target.Url, @target.SiteId">@target.Name</option>
+                                        }
+                                    }
+                                </select>
+                                <input id="domain-holder" class="hide site-sync-domain-holder" value="@currDomain, @siteId" type="text" placeholder="Domain..." disabled="disabled" />
                                 }
-                            </select>
-                            <input id="domain-holder" class="hide site-sync-domain-holder" value="@Model.SiteSyncTargets[0].Url" type="text" placeholder="Domain..." disabled="disabled" />
+
+                            }
+                            else
+                            {
+                                <select id="site-sync-targets-list" class="site-sync-targets-holder form-control" title="SiteSync Target Website">
+                                    <option value=""></option>
+                                    @foreach (var target in Model.SiteSyncTargets)
+                                    {
+                                        <option value="@target.Url, @target.SiteId">@target.Name</option>
+                                    }
+                                </select>
+                                <input id="domain-holder" class="hide site-sync-domain-holder" value="" type="text" placeholder="Domain..." disabled="disabled" />
+                            }
                         }
                         else
                         {
                             <b class="danger">You havent site sync targets @Html.ActionLink("(Create)", "Index", "SiteSyncTargets")!</b>
                         }
                     </li>
-                    <li class="active"><a href="#test-connection" data-toggle="tab" class="custom-tabs-option"><b>Make connection</b></a></li>
+                    <li class="active"><a href="#test-connection" data-toggle="tab" class="custom-tabs-option"><b>Test connection</b></a></li>
                     <li><a href="#granular" data-toggle="tab" class="custom-tabs-option"><b>Sync granular</b></a></li>
                     <li><a href="#dynamic-config" data-toggle="tab" class="custom-tabs-option"><b>Sync dynamic configs</b></a></li>
                     <li><a href="#history" data-toggle="tab" class="custom-tabs-option"><b>Sync history</b></a></li>
@@ -42,102 +69,71 @@
                     <div role="tabpanel" class="tab-pane fade in active" id="test-connection">
                         <div class="well site-sync-option-holder content-form-container">
                             <h4>Connection</h4>
-
-                            <input id="submit-connect" class="btn-sync" type="submit" value="Connect" />
+                          
+                                <input id="submit-connect" class="btn-sync" type="submit" value="Connect" />
+                            
 
                             <div id="connection-result"></div>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="granular">
-                        <div class="choose-list">
-                            <div class="row">
-                                <div class="col-xs-12 content-form-container">
-                                    <div class="well custom-tabs-wrapper">
-                                        <h4>Granular</h4>
-                                        <div class="panel-group">
-                                            <div class="granular-sync-options-container">
-                                                <input class="btn-sync" type="button" id="select-all" value="Select All" />
-                                                <input class="btn-sync" type="button" id="deselect-all" value="Deselect All" />
-                                            </div>
-                                            @if (Model.Pages.Count > 0)
-                                            {
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" href="#pages">Pages</a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="pages" class="panel-collapse collapse">
-                                                        <ul id="pages-list" class="list-group checked-list-box">
-                                                            @foreach (var record in Model.Pages)
-                                                            {
-                                                                <li class="list-group-item">
-                                                                    <span class="model-id" hidden="hidden">@record.Id</span>
-                                                                    <span class="model-title">@record.Title</span>
-                                                                    @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                                                    {
-                                                                        <span class="float-right label-success">Create</span>
-                                                                    }
-                                                                    else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                                                    {
-                                                                        <span class="float-right label label-warning">Edit</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="float-right label label-danger">Delete</span>
-                                                                    }
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
+                        @if (Model.IsConnected)
+                        {
+                            <div class="choose-list">
+                                <div class="row">
+                                    <div class="col-xs-12 content-form-container">
+                                        <div class="well custom-tabs-wrapper">
+                                            <h4>Granular</h4>
+                                            <div class="panel-group">
+                                                <div class="granular-sync-options-container">
+                                                    <input class="btn-sync" type="button" id="select-all" value="Select All" />
+                                                    <input class="btn-sync" type="button" id="deselect-all" value="Deselect All" />
                                                 </div>
-                                            }
-
-                                            @if (Model.Templates.Count > 0)
-                                            {
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" href="#templates">Templates</a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="templates" class="panel-collapse collapse">
-                                                        <ul id="templates-list" class="list-group checked-list-box">
-                                                            @foreach (var record in Model.Templates)
-                                                            {
-                                                                <li class="list-group-item">
-                                                                    <span class="model-id" hidden="hidden">@record.Id</span>
-                                                                    <span class="model-title">@record.Title</span>
-                                                                    @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                                                    {
-                                                                        <span class="float-right label label-success">Create</span>
-                                                                    }
-                                                                    else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                                                    {
-                                                                        <span class="float-right label label-warning">Edit</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="float-right label label-danger">Delete</span>
-                                                                    }
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            }
-
-                                            @*@if (Model.BlogPosts.Count > 0)
+                                                @if (Model.Pages.Count > 0)
                                                 {
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" href="#blogposts">Blog posts</a>
+                                                                <a data-toggle="collapse" href="#pages">Pages</a>
                                                             </h4>
                                                         </div>
-                                                        <div id="blogposts" class="panel-collapse collapse">
-                                                            <ul id="blogposts-list" class="list-group checked-list-box">
-                                                                @foreach (var record in Model.BlogPosts)
+                                                        <div id="pages" class="panel-collapse collapse">
+                                                            <ul id="pages-list" class="list-group checked-list-box">
+                                                                @foreach (var record in Model.Pages)
+                                                                {
+                                                                    <li class="list-group-item">
+                                                                        <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                        <span class="model-title">@record.Title</span>
+                                                                        @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                        {
+                                                                            <span class="float-right label-success">Create</span>
+                                                                        }
+                                                                        else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                        {
+                                                                            <span class="float-right label label-warning">Edit</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="float-right label label-danger">Delete</span>
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                                @if (Model.Templates.Count > 0)
+                                                {
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" href="#templates">Templates</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="templates" class="panel-collapse collapse">
+                                                            <ul id="templates-list" class="list-group checked-list-box">
+                                                                @foreach (var record in Model.Templates)
                                                                 {
                                                                     <li class="list-group-item">
                                                                         <span class="model-id" hidden="hidden">@record.Id</span>
@@ -159,126 +155,19 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                }*@
+                                                }
 
-                                            @if (Model.News.Count > 0)
-                                            {
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" href="#news">News</a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="news" class="panel-collapse collapse">
-                                                        <ul id="news-list" class="list-group checked-list-box">
-                                                            @foreach (var record in Model.News)
-                                                            {
-                                                                <li class="list-group-item">
-                                                                    <span class="model-id" hidden="hidden">@record.Id</span>
-                                                                    <span class="model-title">@record.Title</span>
-                                                                    @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                                                    {
-                                                                        <span class="float-right label label-success">Create</span>
-                                                                    }
-                                                                    else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                                                    {
-                                                                        <span class="float-right label label-warning">Edit</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="float-right label label-danger">Delete</span>
-                                                                    }
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            }
-
-                                            @if (Model.Libraries.Count > 0)
-                                            {
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" href="#libraries">Libraries</a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="libraries" class="panel-collapse collapse">
-                                                        <ul id="libraries-list" class="list-group checked-list-box">
-                                                            @foreach (var record in Model.Libraries)
-                                                            {
-                                                                <li class="list-group-item">
-                                                                    <span class="model-id" hidden="hidden">@record.Id</span>
-                                                                    <span class="model-title">@record.Title</span>
-                                                                    @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                                                    {
-                                                                        <span class="float-right label label-success">Create</span>
-                                                                    }
-                                                                    else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                                                    {
-                                                                        <span class="float-right label label-warning">Edit</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="float-right label label-danger">Delete</span>
-                                                                    }
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            }
-
-                                            @if (Model.Files.Count > 0)
-                                            {
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" href="#files">Files</a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="files" class="panel-collapse collapse">
-                                                        <ul id="files-list" class="list-group checked-list-box">
-                                                            @foreach (var record in Model.Files)
-                                                            {
-                                                                <li class="list-group-item">
-                                                                    <span class="model-id" hidden="hidden">@record.Id</span>
-                                                                    <span class="model-title">@record.Title</span>
-                                                                    @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                                                    {
-                                                                        <span class="float-right label label-success">Create</span>
-                                                                    }
-                                                                    else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                                                    {
-                                                                        <span class="float-right label label-warning">Edit</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="float-right label label-danger">Delete</span>
-                                                                    }
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            }
-
-                                            @if (Model.DynamicItems.Count > 0)
-                                            {
-                                                foreach (var @class in Model.DynamicItems)
-                                                {
-                                                    if (@class.Item2.Count > 0)
+                                                @*@if (Model.BlogPosts.Count > 0)
                                                     {
                                                         <div class="panel panel-default">
                                                             <div class="panel-heading">
                                                                 <h4 class="panel-title">
-                                                                    <a data-toggle="collapse" href="#@(@class.Item1.Name)">@(@class.Item1.Name)</a>
+                                                                    <a data-toggle="collapse" href="#blogposts">Blog posts</a>
                                                                 </h4>
                                                             </div>
-                                                            <div id="@(@class.Item1.Name)" class="panel-collapse collapse dynamic-items-panel">
-                                                                <span class="dynamic-class-name" hidden="hidden">@(@class.Item1.Name)</span>
-                                                                <ul class="list-group checked-list-box">
-                                                                    @foreach (var record in @class.Item2)
+                                                            <div id="blogposts" class="panel-collapse collapse">
+                                                                <ul id="blogposts-list" class="list-group checked-list-box">
+                                                                    @foreach (var record in Model.BlogPosts)
                                                                     {
                                                                         <li class="list-group-item">
                                                                             <span class="model-id" hidden="hidden">@record.Id</span>
@@ -300,85 +189,251 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                    }
-                                                }
-                                            }
+                                                    }*@
 
-                                            @if (Model.CustomModuleItems.Count > 0)
-                                            {
-                                                foreach (var module in Model.CustomModuleItems)
+                                                @if (Model.News.Count > 0)
                                                 {
-                                                    if (module.Item2.Count > 0)
-                                                    {
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <h4 class="panel-title">
-                                                                    <a data-toggle="collapse" href="#@(module.Item1.Name)">@(module.Item1.Name)</a>
-                                                                </h4>
-                                                            </div>
-                                                            <div id="@(module.Item1.Name)" class="panel-collapse collapse custom-module-panel">
-                                                                <span class="custom-module-name" hidden="hidden">@(module.Item1.Name)</span>
-                                                                <ul class="list-group checked-list-box custom-module-items-list">
-                                                                    @foreach (var record in module.Item2)
-                                                                    {
-                                                                        <li class="list-group-item">
-                                                                            <span class="model-id" hidden="hidden">@record.Id</span>
-                                                                            <span class="model-title">@record.Title</span>
-                                                                            @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                                                            {
-                                                                                <span class="float-right label label-success">Create</span>
-                                                                            }
-                                                                            else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                                                            {
-                                                                                <span class="float-right label label-warning">Edit</span>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <span class="float-right label label-danger">Delete</span>
-                                                                            }
-                                                                        </li>
-                                                                    }
-                                                                </ul>
-                                                            </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" href="#news">News</a>
+                                                            </h4>
                                                         </div>
+                                                        <div id="news" class="panel-collapse collapse">
+                                                            <ul id="news-list" class="list-group checked-list-box">
+                                                                @foreach (var record in Model.News)
+                                                                {
+                                                                    <li class="list-group-item">
+                                                                        <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                        <span class="model-title">@record.Title</span>
+                                                                        @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                        {
+                                                                            <span class="float-right label label-success">Create</span>
+                                                                        }
+                                                                        else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                        {
+                                                                            <span class="float-right label label-warning">Edit</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="float-right label label-danger">Delete</span>
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                                @if (Model.Libraries.Count > 0)
+                                                {
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" href="#libraries">Libraries</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="libraries" class="panel-collapse collapse">
+                                                            <ul id="libraries-list" class="list-group checked-list-box">
+                                                                @foreach (var record in Model.Libraries)
+                                                                {
+                                                                    <li class="list-group-item">
+                                                                        <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                        <span class="model-title">@record.Title</span>
+                                                                        @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                        {
+                                                                            <span class="float-right label label-success">Create</span>
+                                                                        }
+                                                                        else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                        {
+                                                                            <span class="float-right label label-warning">Edit</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="float-right label label-danger">Delete</span>
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                                @if (Model.Files.Count > 0)
+                                                {
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" href="#files">Files</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="files" class="panel-collapse collapse">
+                                                            <ul id="files-list" class="list-group checked-list-box">
+                                                                @foreach (var record in Model.Files)
+                                                                {
+                                                                    <li class="list-group-item">
+                                                                        <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                        <span class="model-title">@record.Title</span>
+                                                                        @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                        {
+                                                                            <span class="float-right label label-success">Create</span>
+                                                                        }
+                                                                        else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                        {
+                                                                            <span class="float-right label label-warning">Edit</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="float-right label label-danger">Delete</span>
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                                @if (Model.DynamicItems.Count > 0)
+                                                {
+                                                    foreach (var @class in Model.DynamicItems)
+                                                    {
+                                                        if (@class.Item2.Count > 0)
+                                                        {
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" href="#@(@class.Item1)">@(@class.Item1)</a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="@(@class.Item1)" class="panel-collapse collapse dynamic-items-panel">
+                                                                    <span class="dynamic-class-name" hidden="hidden">@(@class.Item1)</span>
+                                                                    <ul class="list-group checked-list-box">
+                                                                        @foreach (var record in @class.Item2)
+                                                                        {
+                                                                            <li class="list-group-item">
+                                                                                <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                                <span class="model-title">@record.Title</span>
+                                                                                @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                                {
+                                                                                    <span class="float-right label label-success">Create</span>
+                                                                                }
+                                                                                else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                                {
+                                                                                    <span class="float-right label label-warning">Edit</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span class="float-right label label-danger">Delete</span>
+                                                                                }
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        }
                                                     }
                                                 }
-                                            }
+
+                                                @if (Model.CustomModuleItems.Count > 0)
+                                                {
+                                                    foreach (var module in Model.CustomModuleItems)
+                                                    {
+                                                        if (module.Item2.Count > 0)
+                                                        {
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" href="#@(module.Item1.Name)">@(module.Item1.Name)</a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="@(module.Item1.Name)" class="panel-collapse collapse custom-module-panel">
+                                                                    <span class="custom-module-name" hidden="hidden">@(module.Item1.Name)</span>
+                                                                    <ul class="list-group checked-list-box custom-module-items-list">
+                                                                        @foreach (var record in module.Item2)
+                                                                        {
+                                                                            <li class="list-group-item">
+                                                                                <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                                <span class="model-title">@record.Title</span>
+                                                                                @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                                {
+                                                                                    <span class="float-right label label-success">Create</span>
+                                                                                }
+                                                                                else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                                {
+                                                                                    <span class="float-right label label-warning">Edit</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span class="float-right label label-danger">Delete</span>
+                                                                                }
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <br />
+                                            <button class="btn-sync col-xs-12" id="sync-granular">Sync</button>
+                                            <div id="granular-sync-result"></div>
+                                            <div style="height: 50px;"></div>
                                         </div>
-                                        <br />
-                                        <button class="btn-sync col-xs-12" id="sync-granular">Sync</button>
-                                        <div id="granular-sync-result"></div>
-                                        <div style="height: 50px;"></div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="alert-danger">
+                                <h3>Can not found connection to site for sync</h3>
+                            </div>
+                        }
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="dynamic-config">
-                        <div class="row">
-                            <div class="col-xs-6 content-form-container">
-                                <div class="well site-sync-option-holder content-form-container">
-                                    <h4>Dynamic Configs</h4>
-                                    <input id="submit-dynamic-config" class="btn-sync" type="submit" value="Sync" />
-                                    <div id="dynamic-config-sync-result"></div>
+                        @if (Model.IsConnected)
+                        {
+                            <div class="row">
+                                <div class="col-xs-6 content-form-container">
+                                    <div class="well site-sync-option-holder content-form-container">
+                                        <h4>Dynamic Configs</h4>
+                                        <input id="submit-dynamic-config" class="btn-sync" type="submit" value="Sync" />
+                                        <div id="dynamic-config-sync-result"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="alert-danger">
+                                <h3>Can not found connection to site for sync</h3>
+                            </div>
+                        }
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="history">
-                        <div class="row">
-                            <div class="col-xs-6 content-form-container">
-                                <div class="well site-sync-option-holder content-form-container">
-                                    <h4>History</h4>
-                                    @using (Html.BeginForm("LoadDifferences", "SiteSync", FormMethod.Post, htmlAttributes: new { id = "sync-history-form" }))
-                                    {
-                                        @Html.TextBoxFor(m => m.Domain, htmlAttributes: new { hidden = "hidden", id = "history-domain-holder" })
+                        @if (Model.IsConnected)
+                        {
+                            <div class="row">
+                                <div class="col-xs-6 content-form-container">
+                                    <div class="well site-sync-option-holder content-form-container">
+                                        <h4>History</h4>
+                                        @using (Html.BeginForm("LoadDifferences", "SiteSync", FormMethod.Post, htmlAttributes: new { id = "sync-history-form" }))
+                                        {
+                                            @Html.TextBoxFor(m => m.Domain, htmlAttributes: new { hidden = "hidden", id = "history-domain-holder" })
 
-                                        <input id="submit-history" class="btn-sync" type="submit" value="Sync History" />
-                                    }
+                                            <input id="submit-history" class="btn-sync" type="submit" value="Sync History" />
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="alert-danger">
+                                <h3>Can not found connection to site for sync</h3>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -389,8 +444,9 @@
 @section scripts{
     <script src="~/js/site-sync.js"></script>
     <script>
-        $('#site-sync-targets-list').change(function () {
-            $("#domain-holder").val($(this).val());
-        });
+                        //$('#site-sync-targets-list').change(function () {
+                        //    console.log($(this).val());
+                        //    $("#domain-holder").val($(this).val());
+                        //});
     </script>
 }

@@ -2,12 +2,15 @@
  *                           --- file-handler ---
  *                           
  *  - version 2.3: added library support for gallery widget
+ *  
+ *  ----------------------------- DEPRECATED ---------------------------------
+ *  use ~/js/modules/file-handler.js instead
  *============================================================================
  */
 
+console.error('files-handler-2.2.js is DEPRECATED, use ~/js/modules/file-handler.js instead')
 function loadUploadTemplate(isMultiple, type, fieldId, libraryField) {
-    $('#btn-show-upload').hide();
-    $('#btn-show-choice').show();
+    $('#btn-show-upload').hide();    
     let $modal = $('#upload-modal');
     let $container = $('#upload-container');
     $('#files-container').html('');

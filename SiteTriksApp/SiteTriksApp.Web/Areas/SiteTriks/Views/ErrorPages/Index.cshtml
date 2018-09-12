@@ -1,0 +1,117 @@
+﻿@model SiteTriks.ErrorPagesModule.Models.ErrorPageViewModel
+
+@{
+    ViewBag.Title = "Error Pages";
+}
+
+<div class="fixed-top-2">
+    @await Html.PartialAsync("SecondNavHeader")
+    <a href="@Url.Action("Create")" class="btn-nav-2">Create Error Page</a>
+
+
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+
+    <label class="checkbox-inline">
+        <input checked data-toggle="toggle" type="checkbox"> First
+    </label>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function (ev) {
+
+            var grid = Grid();
+            var data = { link: "/sitetriks/errorPages/grid", serverSide: false }
+            var columns = [
+                {
+                    name: 'id',
+                    title: '',
+                    type: 'checkbox',
+                    size: 1
+                },
+                {
+                    name: "statusCode",
+                    title: "StatusCode",
+                    type: 'string',
+                    filter: true,
+                    sort: true,
+                    size: 1,
+                    headerTemplate: '<strong>#item#</strong>'
+                },                
+                {
+                    name: "pageTitle",
+                    title: "Page Title",
+                    type: 'string',
+                    filter: true,
+                    sort: true,
+                    size: 2,
+                    headerTemplate: '<strong>#item#</strong>'
+                },                
+                {
+                    name: "dateCreated",
+                    title: "Date Created",
+                    type: 'date',
+                    sort: true,
+                    size: 2,
+                    headerTemplate: '<strong>#item#</strong>'
+                },
+                {
+                    name: "dateModified",
+                    title: "Date Modified",
+                    type: 'date',
+                    sort: true,
+                    size: 2,
+                    headerTemplate: '<strong>#item#</strong>'
+                },
+                {
+                    name: "isEnabled",
+                    title: "Status",
+                    type: 'string',    
+                    sort: true,                    
+                    size: 1,
+                    contentTemplate: '<strong>#item#</strong>',
+                    headerTemplate: '<strong>#item#</strong>'
+                },
+                {
+                    name: "id",
+                    title: "Action",
+                    type: 'string',
+                    filter: false,
+                    sort: false,
+                    size: 1,
+                    headerTemplate: '<strong>#item#</strong>',
+                    contentTemplate: '<a class="btn" href="/sitetriks/errorPages/edit/#item#">Edit</a>'
+                }               
+            ];
+
+            var buttons = [   
+                {
+                    title: 'Enable',
+                    postUrl: '/sitetriks/errorPages/enable',
+                    type: 'success',
+                    collectionName: 'ids'
+                },
+                {
+                    title: 'Disable',
+                    postUrl: '/sitetriks/errorPages/disable',
+                    type: 'warning',
+                    collectionName: 'ids'
+                },
+                {
+                    title: 'Delete',
+                    postUrl: '/sitetriks/errorPages/delete',
+                    type: 'danger',
+                    collectionName: 'ids'
+                }
+            ];
+
+            var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+            let obj = grid.init('.grid', config);
+        });
+    </script>
+}
