@@ -1,10 +1,14 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 //===================================================================================================
 // Widgets 2.01
 // - v. 2.01 - add func getRoles() and getUserGroups() for loading multiselect dropdowns
 //         for widgets AllowedRoles, AllowedGroups 
 //===================================================================================================
+
+/* globals Data, Loader, Utils, Notifier, Multiselect, WidgetsDraggable, ModuleBuilder */
 
 function widgetsModule($widgetContainer, initFunctions, pageContent) {
     function getRoles(selectedRoles) {
@@ -211,22 +215,26 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
         var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
 
         var element;
-
-        if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
+        if (initFunctions[type] && Utils.isFunction(initFunctions[type].save)) {
             element = initFunctions[type].save();
         }
 
-        if (!element) {
-
-            if (initFunctions[type] && {}.toString.call(initFunctions[type].validation) === '[object Function]') {
-                var result = initFunctions[type].validation();
-
-                if (!result) {
-                    Loader.hide();
-                    return;
+        if (element && (typeof element === 'undefined' ? 'undefined' : _typeof(element)) === 'object') {
+            if (!element.success) {
+                if (element.message) {
+                    createErrorAlert(element.message);
+                } else {
+                    createErrorAlert('Invalid information');
                 }
-            }
 
+                Loader.hide();
+                return;
+            } else {
+                element = element.element;
+            }
+        }
+
+        if (!element) {
             var isValid = widgetValidation(type);
 
             if (!isValid) {
@@ -290,6 +298,25 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
             if (!noAlert) {
                 createAlert('Added', { type: type }, 'success', '#Dialog-Box', null, true);
             } else {
+                Loader.hide();
+            }
+        }, function (error) {
+            $(document).trigger('removeCarousel');
+
+            //Move to create alert
+            if (type == 'dynamic') {
+                Notifier.createAlert({
+                    containerId: '#alerts',
+                    title: '',
+                    message: "Dynamic View can not be loaded correctly.",
+                    status: 'danger',
+                    isPermanent: true
+                });
+
+                $('#Dialog-Box').dialog('close');
+
+                $(document).trigger('initCarousel');
+                $widgetContainer.html('');
                 Loader.hide();
             }
         });
@@ -369,7 +396,22 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
             element = initFunctions[type].save(id);
         }
 
-        if (element === null) {
+        if (element && (typeof element === 'undefined' ? 'undefined' : _typeof(element)) === 'object') {
+            if (!element.success) {
+                if (element.message) {
+                    createErrorAlert(element.message);
+                } else {
+                    createErrorAlert('Invalid information');
+                }
+
+                Loader.hide();
+                return;
+            } else {
+                element = element.element;
+            }
+        }
+
+        if (!element) {
             var isValid = widgetValidation(type, 'edit');
 
             if (!isValid) {
@@ -392,11 +434,10 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
 
         var order = item.order;
 
-        if (item.IsInherited) {
-            item.IsModifiedOnChild = true;
+        if (item.isInherited) {
+            item.isModifiedOnChild = true;
         }
 
-        //var $old = $('.delete-widget[data-type=' + type + '][data-id=' + id + ']').parent('.preview-placeholder');
         var $old = $('.preview-placeholder[data-identifier="' + id + '"]');
 
         var body = {
@@ -422,14 +463,17 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
 
             $(document).trigger('removeCarousel');
 
-            $old.after(data);
-            $old.remove();
-
             if (type === 'layoutBuilder') {
-                console.log('init layout');
-                //makeDrop($(".drop-layout"));
-                //$(".drop-layout").sortable();
+                var l = ModuleBuilder.getInstance('#layout-widget-wrapper', ModuleBuilder.LAYOUT);
+                var layoutRows = l.map(function (r) {
+                    return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass };
+                });
+                ModuleBuilder.renderLayout(layoutRows, $('div.preview-placeholder[data-identifier="' + id + '"]').find('.layout-content').first(), l.deletedPlaceholders);
+
                 WidgetsDraggable.init(w);
+            } else {
+                $old.after(data);
+                $old.remove();
             }
 
             createAlert('Edited', { type: type }, 'warning', '#Dialog-Box-Edit', null, true);
@@ -501,32 +545,49 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
 
     function removeWidget(ev) {
         var $element = $(this);
-        var type = $element.attr("data-type");
-        var id = $element.attr("data-id");
-        var item = pageContent.find(function (e) {
+        var type = $element.attr('data-type');
+        var id = $element.attr('data-id');
+        var index = pageContent.findIndex(function (e) {
             return e.type === type && e.id === id;
         });
-
-        // TODO: logic for deleting widgets with non-existing placeholders
-        //if (item.type == "layoutBuilder") {
-
-        //    var placeholders = JSON.parse(item.element).Placeholders;
-        //    var widgets = pageContent;
-
-        //    for (let i = 0; i < widgets.length; i++) {
-        //        if (placeholders.indexOf(widgets[i].placeholder) > -1
-        //            || placeholders.indexOf(+widgets[i].placeholder) > -1) {
-        //            pageContent.splice(i, 1);
-        //            i--;
-        //        }
-        //    }
-        //}
-
-        var index = pageContent.indexOf(item);
-        pageContent.splice(index, 1);
+        removeSingleWidget(index);
 
         $element.parents('.preview-placeholder[data-identifier="' + id + '"]').remove();
         createAlert('Removed', { type: type }, 'danger', null, '#delete-confirm', true);
+    }
+
+    function removeWidgetForPlaceholder(placeholder, widgets) {
+        widgets = widgets || pageContent || [];
+        var widgetsToDelete = widgets.filter(function (c) {
+            return c.placeholder === placeholder;
+        });
+
+        var _loop = function _loop(i) {
+            var index = widgets.findIndex(function (c) {
+                return c.id === widgetsToDelete[i].id;
+            });
+            removeSingleWidget(index, widgets);
+        };
+
+        for (var i = 0; i < widgetsToDelete.length; i += 1) {
+            _loop(i);
+        }
+    }
+
+    function removeSingleWidget(index, widgets) {
+        widgets = widgets || pageContent || [];
+
+        if (index > -1) {
+            var widget = widgets.splice(index, 1)[0];
+            if (widget.type === 'layoutBuilder') {
+                var layout = JSON.parse(widget.element);
+                for (var j = 0; j < layout.layoutRows.length; j += 1) {
+                    for (var k = 0; k < layout.layoutRows[j].columns.length; k += 1) {
+                        removeWidgetForPlaceholder(layout.layoutRows[j].columns[k].properties.placeholder, widgets);
+                    }
+                }
+            }
+        }
     }
 
     $('body').on('click', '.delete-widget', removeWidget);
@@ -540,7 +601,8 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
         },
         setPageContent: function setPageContent(content) {
             return pageContent = content;
-        }
+        },
+        removeWidgetForPlaceholder: removeWidgetForPlaceholder
     };
 }
 

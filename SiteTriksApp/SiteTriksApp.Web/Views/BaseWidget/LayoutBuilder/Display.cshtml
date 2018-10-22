@@ -6,19 +6,19 @@
 
 @if (Model.IsPreview)
 {
-<div class="preview-placeholder" data-identifier="@Model.Id">
-    @Html.Partial("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+    <div class="preview-placeholder" data-identifier="@Model.Id">
+        @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
 
-    <div>
-        @await Component.InvokeAsync("LayoutWidget", new { area = "", element = Model.Element, preview = true, lang = Model.Language })
+        <div>
+            @await Component.InvokeAsync("LayoutWidget", new { area = "", element = Model.Element, innerContent = Model.InnerContent, preview = true, lang = Model.Language })
+        </div>
+
+        <input id="layout-element-holder" type="text" value="@Model.Element" hidden="hidden" />
     </div>
-
-    <input id="layout-element-holder" type="text" value="@Model.Element" hidden="hidden" />
-</div>
 }
 else
 {
     <div>
-        @await Component.InvokeAsync("LayoutWidget", new { area = "", element = Model.Element, preview = false, lang = Model.Language })
+        @await Component.InvokeAsync("LayoutWidget", new { area = "", element = Model.Element, innerContent = Model.InnerContent, preview = false, lang = Model.Language })
     </div>
 }

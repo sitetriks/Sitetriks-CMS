@@ -36,6 +36,9 @@
     "css": [
       "Admin"
     ],
+    "embeddedscript": [
+      "Admin"
+    ],
     "javascript": [
       "Admin"
     ],
@@ -57,9 +60,6 @@
     "contactUs": [
       "Admin"
     ],
-    "contactUsAlternative": [
-      "Admin"
-    ],
     "market": [
       "Admin"
     ],
@@ -71,6 +71,10 @@
       "Authorized back-end"
     ],
     "licenseGeneration": [
+      "Admin",
+      "Authorized back-end"
+    ],
+    "dynamic": [
       "Admin",
       "Authorized back-end"
     ]

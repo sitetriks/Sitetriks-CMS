@@ -100,6 +100,20 @@ var Utils = function () {
         return func && {}.toString.call(func) === '[object Function]';
     }
 
+    function openInNewTab(html) {
+        var newWindow = window.open('about:blank');
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            //POPUP BLOCKED
+            if (Notifier) {
+                Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
+            }
+        } else {
+            newWindow.document.write(html);
+            newWindow.document.close();
+            newWindow.focus();
+        }
+    }
+
     return {
         s4: s4,
         guid: guid,
@@ -109,7 +123,8 @@ var Utils = function () {
         removejscssfile: removejscssfile,
         loadHandlebarsTemplates: loadHandlebarsTemplates,
         updateQueryStringParameter: updateQueryStringParameter,
-        isFunction: isFunction
+        isFunction: isFunction,
+        openInNewTab: openInNewTab
     };
 }();
 

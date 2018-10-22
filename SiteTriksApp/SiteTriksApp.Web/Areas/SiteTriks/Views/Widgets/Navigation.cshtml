@@ -6,6 +6,7 @@
         <hr>
 
         <h3>Select pages with child depth</h3>
+        <div><label>All Pages: <input type="checkbox" id="input-all-pages" /></label></div>
         <select id="multiselect-pages" multiple></select>
         <select id="depth-level" class="form-control" style="display:inline">
             <option value="0">0</option>
@@ -14,14 +15,16 @@
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-            <option selected="selected" value="@int.MaxValue">All</option>
+            <option selected="selected" value="">All</option>
         </select>
 
-        <hr>
-        <h3>Sort pages</h3>
+        <div>
+            <hr>
+            <div class="col-md-6">
+                <h3>Sort pages</h3>
 
-        <div class="col-md-6">
-            <ul style="list-style-type: none;" id="pages-order"></ul>
+                <ul style="list-style-type: none;" id="pages-order"></ul>
+            </div>
         </div>
     </div>
 </div>

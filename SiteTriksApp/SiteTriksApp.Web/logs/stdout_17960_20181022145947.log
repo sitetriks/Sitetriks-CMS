@@ -1,0 +1,1720 @@
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 2.1.3-rtm-32065 initialized 'SiteTriksAppContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: using lazy-loading proxies MigrationsAssembly=SiteTriksApp.Web 
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (165ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      CREATE DATABASE [aspnet-SiteTriksApp.Web-PeshoPeshoPesho];
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (38ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      IF SERVERPROPERTY('EngineEdition') <> 5
+      BEGIN
+          ALTER DATABASE [aspnet-SiteTriksApp.Web-PeshoPeshoPesho] SET READ_COMMITTED_SNAPSHOT ON;
+      END;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [__EFMigrationsHistory] (
+          [MigrationId] nvarchar(150) NOT NULL,
+          [ProductVersion] nvarchar(32) NOT NULL,
+          CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+info: Microsoft.EntityFrameworkCore.Migrations[20402]
+      Applying migration '20180912122133_Initial'.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [AspNetRoles] (
+          [Id] nvarchar(450) NOT NULL,
+          [Name] nvarchar(256) NULL,
+          [NormalizedName] nvarchar(256) NULL,
+          [ConcurrencyStamp] nvarchar(max) NULL,
+          CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [AspNetUsers] (
+          [Id] nvarchar(450) NOT NULL,
+          [UserName] nvarchar(256) NULL,
+          [NormalizedUserName] nvarchar(256) NULL,
+          [Email] nvarchar(256) NULL,
+          [NormalizedEmail] nvarchar(256) NULL,
+          [EmailConfirmed] bit NOT NULL,
+          [PasswordHash] nvarchar(max) NULL,
+          [SecurityStamp] nvarchar(max) NULL,
+          [ConcurrencyStamp] nvarchar(max) NULL,
+          [PhoneNumber] nvarchar(max) NULL,
+          [PhoneNumberConfirmed] bit NOT NULL,
+          [TwoFactorEnabled] bit NOT NULL,
+          [LockoutEnd] datetimeoffset NULL,
+          [LockoutEnabled] bit NOT NULL,
+          [AccessFailedCount] int NOT NULL,
+          [FullName] nvarchar(150) NULL,
+          [FirstName] nvarchar(150) NULL,
+          [LastName] nvarchar(150) NULL,
+          [IsApproved] bit NOT NULL,
+          [Info] nvarchar(500) NULL,
+          [Company] nvarchar(150) NULL,
+          [GoogleAuthenticatorSecretKey] nvarchar(150) NULL,
+          [IsGoogleAuthenticatorEnabled] bit NOT NULL,
+          [IsDeleted] bit NOT NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [DashboardConfiguration] nvarchar(max) NULL,
+          [UserGroups] nvarchar(max) NULL,
+          CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [FileBinaries] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [FileId] uniqueidentifier NOT NULL,
+          [FileContent] varbinary(max) NULL,
+          CONSTRAINT [PK_FileBinaries] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_classConfigurations] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Fields] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_classConfigurations] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_configs] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [IsIdenticalToFile] bit NOT NULL,
+          [Content] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_configs] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_defaultLinks] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Url] nvarchar(max) NULL,
+          [Type] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_defaultLinks] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_dynamicViews] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [WidgetName] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Location] nvarchar(max) NULL,
+          [Content] nvarchar(max) NULL,
+          [LastRequested] datetime2 NULL,
+          CONSTRAINT [PK_st_dynamicViews] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_categories] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_ec_categories] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ecommerceItems] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(150) NULL,
+          [MainImageUrlID] nvarchar(max) NULL,
+          [ImagesUrlsIDs] nvarchar(max) NULL,
+          [Description] nvarchar(max) NULL,
+          [Price] decimal(18, 6) NOT NULL,
+          CONSTRAINT [PK_st_ecommerceItems] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ecommercePayments] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Amount] decimal(18, 6) NOT NULL,
+          [Method] int NOT NULL,
+          [Status] int NOT NULL,
+          [InvoiceCode] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_ecommercePayments] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_endPoints] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Type] nvarchar(max) NULL,
+          [Skip] int NULL,
+          [Take] int NULL,
+          [Column] nvarchar(max) NULL,
+          [JoinTable] nvarchar(max) NULL,
+          [JoinKey] nvarchar(max) NULL,
+          [JoinFields] nvarchar(max) NULL,
+          [Order] int NOT NULL,
+          [RequestType] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_endPoints] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_exceptionLogs] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NOT NULL,
+          [ExceptionInformation] nvarchar(max) NULL,
+          [Domain] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_exceptionLogs] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_htmlBlocks] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(max) NULL,
+          [Type] int NOT NULL,
+          [Content] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_htmlBlocks] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_languages] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Culture] nvarchar(max) NULL,
+          [UrlPrefix] nvarchar(max) NULL,
+          [IsDefault] bit NOT NULL,
+          CONSTRAINT [PK_st_languages] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_links] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Type] int NOT NULL,
+          [MainUrlId] uniqueidentifier NOT NULL,
+          [MainUrl] nvarchar(150) NOT NULL,
+          CONSTRAINT [PK_st_links] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_marketingEmailOptions] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Index] int NOT NULL,
+          [Name] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_marketingEmailOptions] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_marketingEmailSubscribers] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Email] nvarchar(max) NULL,
+          [MarketingEmailGroups] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_marketingEmailSubscribers] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_seoKeywords] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Words] nvarchar(max) NULL,
+          [ParentId] uniqueidentifier NOT NULL,
+          [Type] int NOT NULL,
+          CONSTRAINT [PK_st_seoKeywords] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_siteConfigs] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [SiteId] uniqueidentifier NOT NULL,
+          [SiteKey] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_siteConfigs] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_sites] (
+          [Id] uniqueidentifier NOT NULL,
+          [Name] nvarchar(max) NULL,
+          [Domain] nvarchar(max) NULL,
+          [DateCreated] datetime2 NULL,
+          CONSTRAINT [PK_st_sites] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_sitesyncHistory] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [ItemId] nvarchar(max) NULL,
+          [ItemType] nvarchar(max) NULL,
+          [SyncTargets] nvarchar(max) NULL,
+          [ItemLastTitle] nvarchar(max) NULL,
+          [Action] int NOT NULL,
+          [IsSynced] bit NOT NULL,
+          CONSTRAINT [PK_st_sitesyncHistory] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_sitesyncStatus] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Status] int NOT NULL,
+          CONSTRAINT [PK_st_sitesyncStatus] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_siteSyncTargets] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Url] nvarchar(max) NULL,
+          [SiteId] nvarchar(max) NULL,
+          [Email] nvarchar(max) NULL,
+          [Password] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_siteSyncTargets] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_tags] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(150) NULL,
+          [Type] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_tags] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_thumbnails_sizes] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Type] int NOT NULL,
+          [Width] int NOT NULL,
+          [Height] int NOT NULL,
+          [OffsetX] int NOT NULL,
+          [OffsetY] int NOT NULL,
+          [MultiplyerX] decimal(18, 6) NOT NULL,
+          [MultiplyerY] decimal(18, 6) NOT NULL,
+          CONSTRAINT [PK_st_thumbnails_sizes] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_topicContents] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Content] nvarchar(max) NULL,
+          [Name] nvarchar(150) NULL,
+          CONSTRAINT [PK_st_topicContents] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_topics] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(150) NULL,
+          [TopicType] int NOT NULL,
+          [ParentId] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_topics] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_topics_st_topics_ParentId] FOREIGN KEY ([ParentId]) REFERENCES [st_topics] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_trackable] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [TypeName] nvarchar(150) NULL,
+          [DefaultPageId] uniqueidentifier NOT NULL,
+          [ContentId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_trackable] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_userGroups] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(max) NULL,
+          [UnsubscribedUsers] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_userGroups] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [AspNetRoleClaims] (
+          [Id] int NOT NULL IDENTITY,
+          [RoleId] nvarchar(450) NOT NULL,
+          [ClaimType] nvarchar(max) NULL,
+          [ClaimValue] nvarchar(max) NULL,
+          CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [AspNetUserClaims] (
+          [Id] int NOT NULL IDENTITY,
+          [UserId] nvarchar(450) NOT NULL,
+          [ClaimType] nvarchar(max) NULL,
+          [ClaimValue] nvarchar(max) NULL,
+          CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [AspNetUserLogins] (
+          [LoginProvider] nvarchar(450) NOT NULL,
+          [ProviderKey] nvarchar(450) NOT NULL,
+          [ProviderDisplayName] nvarchar(max) NULL,
+          [UserId] nvarchar(450) NOT NULL,
+          CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+          CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [AspNetUserRoles] (
+          [UserId] nvarchar(450) NOT NULL,
+          [RoleId] nvarchar(450) NOT NULL,
+          CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+          CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+          CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [AspNetUserTokens] (
+          [UserId] nvarchar(450) NOT NULL,
+          [LoginProvider] nvarchar(450) NOT NULL,
+          [Name] nvarchar(450) NOT NULL,
+          [Value] nvarchar(max) NULL,
+          CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+          CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_blogPosts] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(150) NULL,
+          [Summary] nvarchar(max) NULL,
+          [Content] nvarchar(max) NULL,
+          [CreatorId] nvarchar(450) NULL,
+          CONSTRAINT [PK_st_blogPosts] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_blogPosts_AspNetUsers_CreatorId] FOREIGN KEY ([CreatorId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_comments] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [ParentId] uniqueidentifier NOT NULL,
+          [Content] nvarchar(max) NULL,
+          [CreatorId] nvarchar(450) NULL,
+          CONSTRAINT [PK_st_comments] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_comments_AspNetUsers_CreatorId] FOREIGN KEY ([CreatorId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_discussions] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(max) NULL,
+          [Description] nvarchar(max) NULL,
+          [UserId] nvarchar(450) NULL,
+          CONSTRAINT [PK_st_discussions] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_discussions_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ecommerceOrders] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [ECommerceItemId] uniqueidentifier NOT NULL,
+          [ECommercePaymentId] uniqueidentifier NULL,
+          [BuyerId] nvarchar(450) NULL,
+          [Status] int NOT NULL,
+          CONSTRAINT [PK_st_ecommerceOrders] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ecommerceOrders_AspNetUsers_BuyerId] FOREIGN KEY ([BuyerId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_ecommerceOrders_st_ecommerceItems_ECommerceItemId] FOREIGN KEY ([ECommerceItemId]) REFERENCES [st_ecommerceItems] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_ecommerceOrders_st_ecommercePayments_ECommercePaymentId] FOREIGN KEY ([ECommercePaymentId]) REFERENCES [st_ecommercePayments] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_filters] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [PropertyName] nvarchar(max) NULL,
+          [Value] nvarchar(max) NULL,
+          [Comparison] int NOT NULL,
+          [EndPointId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_filters] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_filters_st_endPoints_EndPointId] FOREIGN KEY ([EndPointId]) REFERENCES [st_endPoints] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_multiLingualFields] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [ParentId] uniqueidentifier NOT NULL,
+          [FieldName] nvarchar(150) NULL,
+          [Value] nvarchar(max) NULL,
+          [LanguageId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_multiLingualFields] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_multiLingualFields_st_languages_LanguageId] FOREIGN KEY ([LanguageId]) REFERENCES [st_languages] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_stores] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [LinkId] uniqueidentifier NOT NULL,
+          [Title] nvarchar(max) NULL,
+          [Skin] nvarchar(max) NULL,
+          [PaymentOptions] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_ec_stores] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_stores_st_links_LinkId] FOREIGN KEY ([LinkId]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_libraries] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [StorageProviderName] nvarchar(max) NULL,
+          [PrefixId] uniqueidentifier NOT NULL,
+          [AllowedTypes] int NOT NULL,
+          CONSTRAINT [PK_st_libraries] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_libraries_st_links_PrefixId] FOREIGN KEY ([PrefixId]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_pageTemplateMetas] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(150) NULL,
+          [Description] nvarchar(max) NULL,
+          [Template] nvarchar(150) NULL,
+          [LinkId] uniqueidentifier NOT NULL,
+          [PageTemplateId] uniqueidentifier NULL,
+          [PageStatus] int NOT NULL,
+          [LastPublished] datetime2 NULL,
+          [DateToBePublished] datetime2 NULL,
+          [IsPublished] bit NOT NULL,
+          [BackgroundJobId] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_pageTemplateMetas] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_pageTemplateMetas_st_links_LinkId] FOREIGN KEY ([LinkId]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_pageTemplateMetas_st_pageTemplateMetas_PageTemplateId] FOREIGN KEY ([PageTemplateId]) REFERENCES [st_pageTemplateMetas] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_rssFeeds] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(150) NULL,
+          [BuilderName] nvarchar(150) NULL,
+          [MapFrom] nvarchar(150) NULL,
+          [LinkId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_rssFeeds] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_rssFeeds_st_links_LinkId] FOREIGN KEY ([LinkId]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_urlbase] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Url] nvarchar(150) NOT NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [SiteId] nvarchar(150) NULL,
+          [Link2Id] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_urlbase] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_urlbase_st_links_Link2Id] FOREIGN KEY ([Link2Id]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_baseMetas_tags] (
+          [Id] uniqueidentifier NOT NULL,
+          [BaseMetaId] uniqueidentifier NOT NULL,
+          [TagId] uniqueidentifier NOT NULL,
+          [Type] nvarchar(max) NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_baseMetas_tags] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_baseMetas_tags_st_tags_TagId] FOREIGN KEY ([TagId]) REFERENCES [st_tags] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_topicVersions] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(150) NULL,
+          [Version] decimal(18, 6) NOT NULL,
+          [TopicId] uniqueidentifier NOT NULL,
+          [TopicContentId] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_topicVersions] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_topicVersions_st_topicContents_TopicContentId] FOREIGN KEY ([TopicContentId]) REFERENCES [st_topicContents] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_topicVersions_st_topics_TopicId] FOREIGN KEY ([TopicId]) REFERENCES [st_topics] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_threads] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(max) NULL,
+          [Content] nvarchar(max) NULL,
+          [Creator] nvarchar(max) NULL,
+          [DiscussionId] uniqueidentifier NOT NULL,
+          [UserId] nvarchar(450) NULL,
+          CONSTRAINT [PK_st_threads] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_threads_st_discussions_DiscussionId] FOREIGN KEY ([DiscussionId]) REFERENCES [st_discussions] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_threads_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_deliveryOptions] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [StatusUpdateMode] nvarchar(max) NULL,
+          [UrlForStatusUpdate] nvarchar(max) NULL,
+          [StoreId] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_ec_deliveryOptions] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_deliveryOptions_st_ec_stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [st_ec_stores] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_physicalLocations] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Address] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Location] nvarchar(max) NULL,
+          [StoreId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_ec_physicalLocations] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_physicalLocations_st_ec_stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [st_ec_stores] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_storeItemExtraFieldsConfig] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Name] nvarchar(max) NULL,
+          [Type] nvarchar(max) NULL,
+          [StoreId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_ec_storeItemExtraFieldsConfig] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_storeItemExtraFieldsConfig_st_ec_stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [st_ec_stores] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_stores_categories] (
+          [StoreId] uniqueidentifier NOT NULL,
+          [CategoryId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_ec_stores_categories] PRIMARY KEY ([StoreId], [CategoryId]),
+          CONSTRAINT [FK_st_ec_stores_categories_st_ec_categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [st_ec_categories] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_ec_stores_categories_st_ec_stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [st_ec_stores] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_storeSkins] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [StoreId] uniqueidentifier NOT NULL,
+          [GridSkin] nvarchar(max) NULL,
+          [PreviewSkin] nvarchar(max) NULL,
+          [FullPageSkin] nvarchar(max) NULL,
+          [Status] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_ec_storeSkins] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_storeSkins_st_ec_stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [st_ec_stores] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_files] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(max) NULL,
+          [Type] int NOT NULL,
+          [Extension] nvarchar(max) NULL,
+          [Alt] nvarchar(max) NULL,
+          [StorageProviderName] nvarchar(max) NULL,
+          [Content] varbinary(max) NULL,
+          [ExpirationDate] datetime2 NULL,
+          [LinkId] uniqueidentifier NOT NULL,
+          [IsDeleted] bit NOT NULL,
+          [LibraryId] uniqueidentifier NOT NULL,
+          [Width] int NOT NULL,
+          [Height] int NOT NULL,
+          [OriginalFile] uniqueidentifier NULL,
+          [IsUsed] bit NOT NULL,
+          [UsedInPages] nvarchar(max) NULL,
+          [RefferedInNews] nvarchar(max) NULL,
+          [SizeName] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_files] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_files_st_libraries_LibraryId] FOREIGN KEY ([LibraryId]) REFERENCES [st_libraries] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_files_st_links_LinkId] FOREIGN KEY ([LinkId]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_library_thumbnails] (
+          [ThumbnailId] uniqueidentifier NOT NULL,
+          [LibraryId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_library_thumbnails] PRIMARY KEY ([ThumbnailId], [LibraryId]),
+          CONSTRAINT [FK_st_library_thumbnails_st_libraries_LibraryId] FOREIGN KEY ([LibraryId]) REFERENCES [st_libraries] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_library_thumbnails_st_thumbnails_sizes_ThumbnailId] FOREIGN KEY ([ThumbnailId]) REFERENCES [st_thumbnails_sizes] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_pageMetas] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(150) NULL,
+          [Description] nvarchar(max) NULL,
+          [Template] nvarchar(150) NULL,
+          [IsInNavigation] bit NOT NULL,
+          [IsHomePage] bit NOT NULL,
+          [ParentId] uniqueidentifier NULL,
+          [LinkId] uniqueidentifier NOT NULL,
+          [NavigationPriority] int NOT NULL,
+          [PermittedRolesIds] nvarchar(max) NULL,
+          [PageStatus] int NOT NULL,
+          [PageTemplateMetaId] uniqueidentifier NULL,
+          [LastPublished] datetime2 NULL,
+          [DateToBePublished] datetime2 NULL,
+          [IsPublished] bit NOT NULL,
+          [BackgroundJobId] nvarchar(max) NULL,
+          [CurrentTags] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_pageMetas] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_pageMetas_st_links_LinkId] FOREIGN KEY ([LinkId]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_pageMetas_st_pageTemplateMetas_PageTemplateMetaId] FOREIGN KEY ([PageTemplateMetaId]) REFERENCES [st_pageTemplateMetas] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_pageMetas_st_pageMetas_ParentId] FOREIGN KEY ([ParentId]) REFERENCES [st_pageMetas] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_pageTemplateVersions] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Type] int NOT NULL,
+          [Version] decimal(18, 6) NOT NULL,
+          [Contents] nvarchar(max) NULL,
+          [PageTemplateMetaId] uniqueidentifier NOT NULL,
+          [Culture] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_pageTemplateVersions] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_pageTemplateVersions_st_pageTemplateMetas_PageTemplateMetaId] FOREIGN KEY ([PageTemplateMetaId]) REFERENCES [st_pageTemplateMetas] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_rssFeedFields] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [FieldValue] nvarchar(max) NULL,
+          [FieldName] nvarchar(max) NULL,
+          [RssFeedId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_rssFeedFields] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_rssFeedFields_st_rssFeeds_RssFeedId] FOREIGN KEY ([RssFeedId]) REFERENCES [st_rssFeeds] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_rssItemMappings] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [FieldFrom] nvarchar(max) NULL,
+          [FieldTo] nvarchar(max) NULL,
+          [RssFeedId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_rssItemMappings] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_rssItemMappings_st_rssFeeds_RssFeedId] FOREIGN KEY ([RssFeedId]) REFERENCES [st_rssFeeds] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_posts] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Content] nvarchar(max) NULL,
+          [Creator] nvarchar(max) NULL,
+          [ThreadId] uniqueidentifier NOT NULL,
+          [UserId] nvarchar(450) NULL,
+          CONSTRAINT [PK_st_posts] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_posts_st_threads_ThreadId] FOREIGN KEY ([ThreadId]) REFERENCES [st_threads] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_posts_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_orders] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [PaymentOption] nvarchar(max) NULL,
+          [PaymentValue] decimal(18, 6) NOT NULL,
+          [DeliveryOptionId] uniqueidentifier NOT NULL,
+          [StoreId] uniqueidentifier NOT NULL,
+          [ExpectedDeliveryDate] datetime2 NULL,
+          [UserFeedBack] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_ec_orders] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_orders_st_ec_deliveryOptions_DeliveryOptionId] FOREIGN KEY ([DeliveryOptionId]) REFERENCES [st_ec_deliveryOptions] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_ec_orders_st_ec_stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [st_ec_stores] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_categories_extraFieldsConfig] (
+          [CategoryId] uniqueidentifier NOT NULL,
+          [StoreItemExtraFieldsConfigId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_ec_categories_extraFieldsConfig] PRIMARY KEY ([StoreItemExtraFieldsConfigId], [CategoryId]),
+          CONSTRAINT [FK_st_ec_categories_extraFieldsConfig_st_ec_categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [st_ec_categories] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_ec_categories_extraFieldsConfig_st_ec_storeItemExtraFieldsConfig_StoreItemExtraFieldsConfigId] FOREIGN KEY ([StoreItemExtraFieldsConfigId]) REFERENCES [st_ec_storeItemExtraFieldsConfig] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_fileUse] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [UsedInPages] nvarchar(max) NULL,
+          [RefferedInObject] nvarchar(max) NULL,
+          [FileId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_fileUse] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_fileUse_st_files_FileId] FOREIGN KEY ([FileId]) REFERENCES [st_files] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_errorPages] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [StatusCode] int NOT NULL,
+          [IsEnabled] bit NOT NULL,
+          [PageMetaId] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_errorPages] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_errorPages_st_pageMetas_PageMetaId] FOREIGN KEY ([PageMetaId]) REFERENCES [st_pageMetas] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_pageVersions] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Type] int NOT NULL,
+          [Version] decimal(18, 6) NOT NULL,
+          [Contents] nvarchar(max) NULL,
+          [PageMetaId] uniqueidentifier NOT NULL,
+          [Culture] nvarchar(450) NULL,
+          CONSTRAINT [PK_st_pageVersions] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_pageVersions_st_pageMetas_PageMetaId] FOREIGN KEY ([PageMetaId]) REFERENCES [st_pageMetas] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_payments] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Value] decimal(18, 6) NOT NULL,
+          [Currency] nvarchar(max) NULL,
+          [Date] datetime2 NOT NULL,
+          [Status] nvarchar(max) NULL,
+          [PaymentIdentifier] nvarchar(max) NULL,
+          [PaymentOptionType] nvarchar(max) NULL,
+          [OrderId] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_ec_payments] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_payments_st_ec_orders_OrderId] FOREIGN KEY ([OrderId]) REFERENCES [st_ec_orders] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_storeItems] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Title] nvarchar(max) NULL,
+          [Price] decimal(18, 6) NOT NULL,
+          [SalePrice] decimal(18, 6) NOT NULL,
+          [IsOnSale] bit NOT NULL,
+          [SalePeriod] int NOT NULL,
+          [SaleQuantity] int NOT NULL,
+          [MainImage] nvarchar(max) NULL,
+          [Images] nvarchar(max) NULL,
+          [AvailableInPhysicalStore] bit NOT NULL,
+          [ManualRelatedItems] nvarchar(max) NULL,
+          [RemainingQuantity] int NOT NULL,
+          [StoreId] uniqueidentifier NOT NULL,
+          [OrderId] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_ec_storeItems] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_storeItems_st_ec_orders_OrderId] FOREIGN KEY ([OrderId]) REFERENCES [st_ec_orders] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_ec_storeItems_st_ec_stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [st_ec_stores] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_review] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [StoreItemId] uniqueidentifier NULL,
+          [UserId] nvarchar(max) NULL,
+          [IsAnonymous] bit NOT NULL,
+          [Text] nvarchar(max) NULL,
+          [Rating] int NOT NULL,
+          CONSTRAINT [PK_st_ec_review] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_review_st_ec_storeItems_StoreItemId] FOREIGN KEY ([StoreItemId]) REFERENCES [st_ec_storeItems] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_storeItemExtraFields] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Value] nvarchar(max) NULL,
+          [StoreItemId] uniqueidentifier NOT NULL,
+          [StoreItemExtraFieldConfigId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_ec_storeItemExtraFields] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_ec_storeItemExtraFields_st_ec_storeItems_StoreItemId] FOREIGN KEY ([StoreItemId]) REFERENCES [st_ec_storeItems] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_ec_storeItems_categories] (
+          [StoreItemId] uniqueidentifier NOT NULL,
+          [CategoryId] uniqueidentifier NOT NULL,
+          CONSTRAINT [PK_st_ec_storeItems_categories] PRIMARY KEY ([StoreItemId], [CategoryId]),
+          CONSTRAINT [FK_st_ec_storeItems_categories_st_ec_categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [st_ec_categories] ([Id]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_st_ec_storeItems_categories_st_ec_storeItems_StoreItemId] FOREIGN KEY ([StoreItemId]) REFERENCES [st_ec_storeItems] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_newsMetas] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [LinkId] uniqueidentifier NULL,
+          [NewsStatus] int NOT NULL,
+          [PublishedNewsVersionId] uniqueidentifier NULL,
+          [DraftNewsVersionId] uniqueidentifier NULL,
+          [LastPublished] datetime2 NULL,
+          [DateToBePublished] datetime2 NULL,
+          [BackgroundJobId] nvarchar(max) NULL,
+          [CurrentTags] nvarchar(max) NULL,
+          CONSTRAINT [PK_st_newsMetas] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_newsMetas_st_links_LinkId] FOREIGN KEY ([LinkId]) REFERENCES [st_links] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [st_newsVersions] (
+          [Id] uniqueidentifier NOT NULL,
+          [DateCreated] datetime2 NULL,
+          [DateModified] datetime2 NULL,
+          [SiteProviderId] uniqueidentifier NOT NULL,
+          [LastUserId] nvarchar(max) NULL,
+          [Type] int NOT NULL,
+          [Version] decimal(18, 6) NOT NULL,
+          [Title] nvarchar(150) NULL,
+          [MainImageUrlID] nvarchar(max) NULL,
+          [ImagesUrlsIDs] nvarchar(max) NULL,
+          [Content] nvarchar(max) NULL,
+          [NewsMetaId] uniqueidentifier NULL,
+          CONSTRAINT [PK_st_newsVersions] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_st_newsVersions_st_newsMetas_NewsMetaId] FOREIGN KEY ([NewsMetaId]) REFERENCES [st_newsMetas] ([Id]) ON DELETE NO ACTION
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_baseMetas_tags_TagId] ON [st_baseMetas_tags] ([TagId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_blogPosts_CreatorId] ON [st_blogPosts] ([CreatorId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_comments_CreatorId] ON [st_comments] ([CreatorId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_discussions_UserId] ON [st_discussions] ([UserId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_categories_extraFieldsConfig_CategoryId] ON [st_ec_categories_extraFieldsConfig] ([CategoryId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_deliveryOptions_StoreId] ON [st_ec_deliveryOptions] ([StoreId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_orders_DeliveryOptionId] ON [st_ec_orders] ([DeliveryOptionId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_orders_StoreId] ON [st_ec_orders] ([StoreId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_payments_OrderId] ON [st_ec_payments] ([OrderId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_physicalLocations_StoreId] ON [st_ec_physicalLocations] ([StoreId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_review_StoreItemId] ON [st_ec_review] ([StoreItemId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_storeItemExtraFields_StoreItemId] ON [st_ec_storeItemExtraFields] ([StoreItemId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_storeItemExtraFieldsConfig_StoreId] ON [st_ec_storeItemExtraFieldsConfig] ([StoreId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_storeItems_OrderId] ON [st_ec_storeItems] ([OrderId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_storeItems_StoreId] ON [st_ec_storeItems] ([StoreId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_storeItems_categories_CategoryId] ON [st_ec_storeItems_categories] ([CategoryId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_stores_LinkId] ON [st_ec_stores] ([LinkId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_stores_categories_CategoryId] ON [st_ec_stores_categories] ([CategoryId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ec_storeSkins_StoreId] ON [st_ec_storeSkins] ([StoreId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ecommerceOrders_BuyerId] ON [st_ecommerceOrders] ([BuyerId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ecommerceOrders_ECommerceItemId] ON [st_ecommerceOrders] ([ECommerceItemId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_ecommerceOrders_ECommercePaymentId] ON [st_ecommerceOrders] ([ECommercePaymentId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_errorPages_PageMetaId] ON [st_errorPages] ([PageMetaId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_files_LibraryId] ON [st_files] ([LibraryId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_files_LinkId] ON [st_files] ([LinkId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_fileUse_FileId] ON [st_fileUse] ([FileId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_filters_EndPointId] ON [st_filters] ([EndPointId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_libraries_PrefixId] ON [st_libraries] ([PrefixId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_library_thumbnails_LibraryId] ON [st_library_thumbnails] ([LibraryId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_multiLingualFields_LanguageId] ON [st_multiLingualFields] ([LanguageId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_newsMetas_DraftNewsVersionId] ON [st_newsMetas] ([DraftNewsVersionId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_newsMetas_LinkId] ON [st_newsMetas] ([LinkId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_newsMetas_PublishedNewsVersionId] ON [st_newsMetas] ([PublishedNewsVersionId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_newsVersions_NewsMetaId] ON [st_newsVersions] ([NewsMetaId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_pageMetas_LinkId] ON [st_pageMetas] ([LinkId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_pageMetas_PageTemplateMetaId] ON [st_pageMetas] ([PageTemplateMetaId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_pageMetas_ParentId] ON [st_pageMetas] ([ParentId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_pageTemplateMetas_LinkId] ON [st_pageTemplateMetas] ([LinkId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_pageTemplateMetas_PageTemplateId] ON [st_pageTemplateMetas] ([PageTemplateId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_pageTemplateVersions_PageTemplateMetaId] ON [st_pageTemplateVersions] ([PageTemplateMetaId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_pageVersions_PageMetaId_Culture_Version] ON [st_pageVersions] ([PageMetaId], [Culture], [Version]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_posts_ThreadId] ON [st_posts] ([ThreadId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_posts_UserId] ON [st_posts] ([UserId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_rssFeedFields_RssFeedId] ON [st_rssFeedFields] ([RssFeedId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_rssFeeds_LinkId] ON [st_rssFeeds] ([LinkId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_rssItemMappings_RssFeedId] ON [st_rssItemMappings] ([RssFeedId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_threads_DiscussionId] ON [st_threads] ([DiscussionId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_threads_UserId] ON [st_threads] ([UserId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_topics_ParentId] ON [st_topics] ([ParentId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_topicVersions_TopicContentId] ON [st_topicVersions] ([TopicContentId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_topicVersions_TopicId] ON [st_topicVersions] ([TopicId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_st_urlbase_Link2Id] ON [st_urlbase] ([Link2Id]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      ALTER TABLE [st_newsMetas] ADD CONSTRAINT [FK_st_newsMetas_st_newsVersions_DraftNewsVersionId] FOREIGN KEY ([DraftNewsVersionId]) REFERENCES [st_newsVersions] ([Id]) ON DELETE NO ACTION;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      ALTER TABLE [st_newsMetas] ADD CONSTRAINT [FK_st_newsMetas_st_newsVersions_PublishedNewsVersionId] FOREIGN KEY ([PublishedNewsVersionId]) REFERENCES [st_newsVersions] ([Id]) ON DELETE NO ACTION;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+      VALUES (N'20180912122133_Initial', N'2.1.3-rtm-32065');
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 2.1.3-rtm-32065 initialized 'SiteTriksAppContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: using lazy-loading proxies MigrationsAssembly=SiteTriksApp.Web 
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (7ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (3ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+      FROM [AspNetRoles] AS [r]
+      WHERE [r].[NormalizedName] = @__normalizedName_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[@__site1_Name_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SELECT CASE
+          WHEN EXISTS (
+              SELECT 1
+              FROM [st_sites] AS [s]
+              WHERE [s].[Name] = @__site1_Name_0)
+          THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+      END
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (DbType = Guid), @p15='?' (DbType = Guid), @p16='?' (DbType = DateTime2), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (DbType = Guid), @p20='?' (DbType = DateTime2), @p21='?' (DbType = DateTime2), @p22='?' (DbType = Int32), @p23='?' (Size = 4000), @p24='?' (DbType = Decimal), @p25='?' (DbType = Decimal), @p26='?' (Size = 4000), @p27='?' (DbType = Int32), @p28='?' (DbType = Int32), @p29='?' (DbType = Guid), @p30='?' (DbType = Int32), @p31='?' (DbType = Int32), @p32='?' (DbType = Guid), @p33='?' (DbType = DateTime2), @p34='?' (DbType = DateTime2), @p35='?' (DbType = Int32), @p36='?' (Size = 4000), @p37='?' (DbType = Decimal), @p38='?' (DbType = Decimal), @p39='?' (Size = 4000), @p40='?' (DbType = Int32), @p41='?' (DbType = Int32), @p42='?' (DbType = Guid), @p43='?' (DbType = Int32), @p44='?' (DbType = Int32), @p45='?' (DbType = Guid), @p46='?' (DbType = DateTime2), @p47='?' (DbType = DateTime2), @p48='?' (DbType = Int32), @p49='?' (Size = 4000), @p50='?' (DbType = Decimal), @p51='?' (DbType = Decimal), @p52='?' (Size = 4000), @p53='?' (DbType = Int32), @p54='?' (DbType = Int32), @p55='?' (DbType = Guid), @p56='?' (DbType = Int32), @p57='?' (DbType = Int32), @p58='?' (DbType = Guid), @p59='?' (DbType = DateTime2), @p60='?' (DbType = DateTime2), @p61='?' (DbType = Int32), @p62='?' (Size = 4000), @p63='?' (DbType = Decimal), @p64='?' (DbType = Decimal), @p65='?' (Size = 4000), @p66='?' (DbType = Int32), @p67='?' (DbType = Int32), @p68='?' (DbType = Guid), @p69='?' (DbType = Int32), @p70='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_languages] ([Id], [Culture], [DateCreated], [DateModified], [IsDefault], [LastUserId], [SiteProviderId], [UrlPrefix])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+      INSERT INTO [st_siteConfigs] ([Id], [DateCreated], [DateModified], [LastUserId], [SiteId], [SiteKey], [SiteProviderId])
+      VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+      INSERT INTO [st_sites] ([Id], [DateCreated], [Domain], [Name])
+      VALUES (@p15, @p16, @p17, @p18);
+      INSERT INTO [st_thumbnails_sizes] ([Id], [DateCreated], [DateModified], [Height], [LastUserId], [MultiplyerX], [MultiplyerY], [Name], [OffsetX], [OffsetY], [SiteProviderId], [Type], [Width])
+      VALUES (@p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31),
+      (@p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43, @p44),
+      (@p45, @p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54, @p55, @p56, @p57),
+      (@p58, @p59, @p60, @p61, @p62, @p63, @p64, @p65, @p66, @p67, @p68, @p69, @p70);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT CASE
+          WHEN EXISTS (
+              SELECT 1
+              FROM [st_languages] AS [s]
+              WHERE [s].[SiteProviderId] = '00000000-0000-0000-0000-000000000000')
+          THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+      END
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (Size = 4000), @p12='?' (Size = 150), @p13='?' (DbType = Guid), @p14='?' (DbType = Guid), @p15='?' (DbType = Int32), @p16='?' (DbType = Guid), @p17='?' (DbType = DateTime2), @p18='?' (DbType = DateTime2), @p19='?' (Size = 4000), @p20='?' (Size = 150), @p21='?' (DbType = Guid), @p22='?' (DbType = Guid), @p23='?' (DbType = Int32), @p24='?' (DbType = Guid), @p25='?' (DbType = DateTime2), @p26='?' (DbType = DateTime2), @p27='?' (DbType = Int32), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (DbType = Guid), @p31='?' (DbType = Guid), @p32='?' (DbType = DateTime2), @p33='?' (DbType = DateTime2), @p34='?' (DbType = Int32), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (DbType = Guid), @p38='?' (DbType = Guid), @p39='?' (DbType = DateTime2), @p40='?' (DbType = DateTime2), @p41='?' (Size = 4000), @p42='?' (DbType = Guid), @p43='?' (DbType = Guid), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (DbType = DateTime2), @p47='?' (DbType = DateTime2), @p48='?' (DbType = Int32), @p49='?' (Size = 4000), @p50='?' (DbType = Decimal), @p51='?' (DbType = Decimal), @p52='?' (Size = 4000), @p53='?' (DbType = Int32), @p54='?' (DbType = Int32), @p55='?' (DbType = Guid), @p56='?' (DbType = Int32), @p57='?' (DbType = Int32), @p58='?' (DbType = Guid), @p59='?' (DbType = DateTime2), @p60='?' (DbType = DateTime2), @p61='?' (DbType = Int32), @p62='?' (Size = 4000), @p63='?' (DbType = Decimal), @p64='?' (DbType = Decimal), @p65='?' (Size = 4000), @p66='?' (DbType = Int32), @p67='?' (DbType = Int32), @p68='?' (DbType = Guid), @p69='?' (DbType = Int32), @p70='?' (DbType = Int32), @p71='?' (DbType = Guid), @p72='?' (DbType = DateTime2), @p73='?' (DbType = DateTime2), @p74='?' (DbType = Int32), @p75='?' (Size = 4000), @p76='?' (DbType = Decimal), @p77='?' (DbType = Decimal), @p78='?' (Size = 4000), @p79='?' (DbType = Int32), @p80='?' (DbType = Int32), @p81='?' (DbType = Guid), @p82='?' (DbType = Int32), @p83='?' (DbType = Int32), @p84='?' (DbType = Guid), @p85='?' (DbType = DateTime2), @p86='?' (DbType = DateTime2), @p87='?' (DbType = Int32), @p88='?' (Size = 4000), @p89='?' (DbType = Decimal), @p90='?' (DbType = Decimal), @p91='?' (Size = 4000), @p92='?' (DbType = Int32), @p93='?' (DbType = Int32), @p94='?' (DbType = Guid), @p95='?' (DbType = Int32), @p96='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_languages] ([Id], [Culture], [DateCreated], [DateModified], [IsDefault], [LastUserId], [SiteProviderId], [UrlPrefix])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+      INSERT INTO [st_links] ([Id], [DateCreated], [DateModified], [LastUserId], [MainUrl], [MainUrlId], [SiteProviderId], [Type])
+      VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15),
+      (@p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23);
+      INSERT INTO [st_marketingEmailOptions] ([Id], [DateCreated], [DateModified], [Index], [LastUserId], [Name], [SiteProviderId])
+      VALUES (@p24, @p25, @p26, @p27, @p28, @p29, @p30),
+      (@p31, @p32, @p33, @p34, @p35, @p36, @p37);
+      INSERT INTO [st_siteConfigs] ([Id], [DateCreated], [DateModified], [LastUserId], [SiteId], [SiteKey], [SiteProviderId])
+      VALUES (@p38, @p39, @p40, @p41, @p42, @p43, @p44);
+      INSERT INTO [st_thumbnails_sizes] ([Id], [DateCreated], [DateModified], [Height], [LastUserId], [MultiplyerX], [MultiplyerY], [Name], [OffsetX], [OffsetY], [SiteProviderId], [Type], [Width])
+      VALUES (@p45, @p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54, @p55, @p56, @p57),
+      (@p58, @p59, @p60, @p61, @p62, @p63, @p64, @p65, @p66, @p67, @p68, @p69, @p70),
+      (@p71, @p72, @p73, @p74, @p75, @p76, @p77, @p78, @p79, @p80, @p81, @p82, @p83),
+      (@p84, @p85, @p86, @p87, @p88, @p89, @p90, @p91, @p92, @p93, @p94, @p95, @p96);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_libraries] ([Id], [AllowedTypes], [DateCreated], [DateModified], [LastUserId], [Name], [PrefixId], [SiteProviderId], [StorageProviderName])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_libraries] ([Id], [AllowedTypes], [DateCreated], [DateModified], [LastUserId], [Name], [PrefixId], [SiteProviderId], [StorageProviderName])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4ms) [Parameters=[@p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (DbType = Guid), @p15='?' (DbType = Guid), @p16='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_library_thumbnails] ([ThumbnailId], [LibraryId])
+      VALUES (@p9, @p10),
+      (@p11, @p12),
+      (@p13, @p14),
+      (@p15, @p16);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (Size = 150), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Int32), @p8='?' (DbType = Guid), @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (Size = 4000), @p12='?' (Size = 150), @p13='?' (DbType = Guid), @p14='?' (DbType = Guid), @p15='?' (DbType = Int32), @p16='?' (DbType = Guid), @p17='?' (DbType = DateTime2), @p18='?' (DbType = DateTime2), @p19='?' (DbType = Int32), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (DbType = Guid), @p23='?' (DbType = Guid), @p24='?' (DbType = DateTime2), @p25='?' (DbType = DateTime2), @p26='?' (DbType = Int32), @p27='?' (Size = 4000), @p28='?' (Size = 4000), @p29='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_links] ([Id], [DateCreated], [DateModified], [LastUserId], [MainUrl], [MainUrlId], [SiteProviderId], [Type])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7),
+      (@p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+      INSERT INTO [st_marketingEmailOptions] ([Id], [DateCreated], [DateModified], [Index], [LastUserId], [Name], [SiteProviderId])
+      VALUES (@p16, @p17, @p18, @p19, @p20, @p21, @p22),
+      (@p23, @p24, @p25, @p26, @p27, @p28, @p29);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_libraries] ([Id], [AllowedTypes], [DateCreated], [DateModified], [LastUserId], [Name], [PrefixId], [SiteProviderId], [StorageProviderName])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_libraries] ([Id], [AllowedTypes], [DateCreated], [DateModified], [LastUserId], [Name], [PrefixId], [SiteProviderId], [StorageProviderName])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[@p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (DbType = Guid), @p15='?' (DbType = Guid), @p16='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_library_thumbnails] ([ThumbnailId], [LibraryId])
+      VALUES (@p9, @p10),
+      (@p11, @p12),
+      (@p13, @p14),
+      (@p15, @p16);
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 2.1.3-rtm-32065 initialized 'SiteTriksAppContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: using lazy-loading proxies MigrationsAssembly=SiteTriksApp.Web 
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [st_configs] ([Id], [Content], [DateCreated], [DateModified], [IsIdenticalToFile], [LastUserId], [Name], [SiteProviderId])
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 2.1.3-rtm-32065 initialized 'SiteTriksAppContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: using lazy-loading proxies MigrationsAssembly=SiteTriksApp.Web 
+Hosting environment: Development
+Content root path: E:\Kaloyan\Projects\AlphaPreview0001\Deploy\Sitetriks-CMS\SiteTriksApp\SiteTriksApp.Web
+Now listening on: http://127.0.0.1:3644
+Application started. Press Ctrl+C to shut down.
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+      Request starting HTTP/1.1 GET http://localhost:44327/  
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 2.1.3-rtm-32065 initialized 'SiteTriksAppContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: using lazy-loading proxies MigrationsAssembly=SiteTriksApp.Web 
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[Company], [e].[ConcurrencyStamp], [e].[DashboardConfiguration], [e].[Email], [e].[EmailConfirmed], [e].[FirstName], [e].[FullName], [e].[GoogleAuthenticatorSecretKey], [e].[Info], [e].[IsApproved], [e].[IsDeleted], [e].[IsGoogleAuthenticatorEnabled], [e].[LastName], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[SiteProviderId], [e].[TwoFactorEnabled], [e].[UserGroups], [e].[UserName]
+      FROM [AspNetUsers] AS [e]
+      WHERE [e].[Id] = @__get_Item_0
+info: Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler[11]
+      AuthenticationScheme: Identity.Application signed out.
+info: Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler[11]
+      AuthenticationScheme: Identity.External signed out.
+info: Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler[11]
+      AuthenticationScheme: Identity.TwoFactorUserId signed out.
+info: Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler[7]
+      Identity.Application was not authenticated. Failure message: No principal.
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+      Route matched with {area = "Setup", action = "RedirectWrongRoutes", controller = "Setup"}. Executing action SiteTriks.Controllers.SetupController.RedirectWrongRoutes (SiteTriks)
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+      Executing action method SiteTriks.Controllers.SetupController.RedirectWrongRoutes (SiteTriks) - Validation state: Valid
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+      Executed action method SiteTriks.Controllers.SetupController.RedirectWrongRoutes (SiteTriks), returned result Microsoft.AspNetCore.Mvc.RedirectToActionResult in 0.2363ms.
+info: Microsoft.AspNetCore.Mvc.RedirectToActionResult[1]
+      Executing RedirectResult, redirecting to /setup.
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+      Executed action SiteTriks.Controllers.SetupController.RedirectWrongRoutes (SiteTriks) in 15.0751ms
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+      Request finished in 242.3106ms 302 
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+      Request starting HTTP/1.1 GET http://localhost:44327/setup  
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+      Route matched with {area = "Setup", action = "Init", controller = "Setup"}. Executing action SiteTriks.Controllers.SetupController.Init (SiteTriks)
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+      Executing action method SiteTriks.Controllers.SetupController.Init (SiteTriks) - Validation state: Valid
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+      Executed action method SiteTriks.Controllers.SetupController.Init (SiteTriks), returned result Microsoft.AspNetCore.Mvc.ViewResult in 2.6105ms.
+info: Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor[1]
+      Executing ViewResult, running view Init.
+info: Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor[4]
+      Executed ViewResult - view Init executed in 198.8033ms.
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+      Executed action SiteTriks.Controllers.SetupController.Init (SiteTriks) in 203.8608ms
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+      Request finished in 209.9994ms 200 text/html; charset=utf-8
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+      Request starting HTTP/1.1 GET http://localhost:44327/images/Sitetriks_logo.svg  
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/images/Sitetriks_logo.svg'. Physical path: 'E:\Kaloyan\Projects\AlphaPreview0001\Deploy\Sitetriks-CMS\SiteTriksApp\SiteTriksApp.Web\wwwroot\images\Sitetriks_logo.svg'
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+      Request finished in 104.6768ms 200 image/svg+xml
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+      Request starting HTTP/1.1 GET http://localhost:44327/js/restart-app.js  
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/js/restart-app.js'. Physical path: 'E:\Kaloyan\Projects\AlphaPreview0001\Deploy\Sitetriks-CMS\SiteTriksApp\SiteTriksApp.Web\wwwroot\js\restart-app.js'
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+      Request finished in 46.5963ms 200 application/javascript
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+      Request starting HTTP/1.1 GET http://localhost:44327/apple-touch-icon.png  
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/apple-touch-icon.png'. Physical path: 'E:\Kaloyan\Projects\AlphaPreview0001\Deploy\Sitetriks-CMS\SiteTriksApp\SiteTriksApp.Web\wwwroot\apple-touch-icon.png'
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+      Request finished in 11.8339ms 200 image/png
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+      Request starting HTTP/1.1 GET http://localhost:44327/setup  
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+      Route matched with {area = "Setup", action = "Init", controller = "Setup"}. Executing action SiteTriks.Controllers.SetupController.Init (SiteTriks)
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+      Executing action method SiteTriks.Controllers.SetupController.Init (SiteTriks) - Validation state: Valid
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+      Executed action method SiteTriks.Controllers.SetupController.Init (SiteTriks), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.2861ms.
+info: Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor[1]
+      Executing ViewResult, running view Init.
+info: Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor[4]
+      Executed ViewResult - view Init executed in 4.7182ms.
+info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+      Executed action SiteTriks.Controllers.SetupController.Init (SiteTriks) in 5.5402ms
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+      Request finished in 6.7706ms 200 text/html; charset=utf-8
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+      Request starting HTTP/1.1 GET http://localhost:44327/lib/bootstrap/dist/css/bootstrap.css  
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/lib/bootstrap/dist/css/bootstrap.css'. Physical path: 'E:\Kaloyan\Projects\AlphaPreview0001\Deploy\Sitetriks-CMS\SiteTriksApp\SiteTriksApp.Web\wwwroot\lib\bootstrap\dist\css\bootstrap.css'
+info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+      Request finished in 78.5287ms 200 text/css
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,7 +21,7 @@
                 if (SignInManager.IsSignedIn(User))
                 {
                     <div class="">
-                        @using (Html.BeginForm("LogOut", "Account", new { returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
+                        @using (Html.BeginForm("LogOut", "Account", new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
                         {
                             @Html.AntiForgeryToken()
                             <input type="submit" value="Logout" />
@@ -33,23 +33,21 @@
                 }
                 else
                 {
-                    if (ViewData["Type"] == "login")
+                    if (ViewData["Type"]?.ToString() == "login")
                     {
                         <div class="register-icon">
-                            @Html.ActionLink("", "Register", "Account", new { area = "" }, new { title = "Register" })
+                            @Html.ActionLink("", "Register", "Account", new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, new { title = "Register" })
                         </div>
-
                     }
-                    else if (ViewData["Type"] == "register")
+                    else
                     {
                         <div class="login-icon">
-                            @Html.ActionLink("", "Login", "Account", new { area = "" }, new { title = "Login" })
-
+                            @Html.ActionLink("", "Login", "Account", new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, new { title = "Login" })
                         </div>
                     }
                 }
             }
-            </div>
+        </div>
         <div class="logo-container-mobile">
             <div id="hamburger-menu"><img class="hamburger-image" src="~/images/mobile/hamburger menu.svg" alt="menu" /></div>
             <div class="logo-mobile"><img class="logo-mobile-image" src="~/images/mobile/LOGO_mob.svg" alt="Sitetriks logo" /> <img class="logo-mobile-image" style="display: none;" src="~/images/mobile/LOGO_mob_w.svg" alt="Sitetriks logo" /></div>
@@ -60,46 +58,16 @@
     <div class="nav-container header-wrapper header-blue">
         <nav class="multi-level-navigation">
             <ul class="main-navigation">
-                    @for (int i = 0; i < Model.Root.ChildrenCount; i++)
-                    {
-                        <li>
-                            @{
-                                var child = Model.Root.GetChild(i);
-                            }
-                            @Html.DisplayFor(m => child, "TreeNavigationItem", new { Lang = ViewData["Lang"] })
-                        </li>
-                    }
-
-                    @if (ViewData.ContainsKey("Preview") && (ViewData["Preview"].ToString() == "preview" || ViewData["Preview"].ToString() == "partial"))
-                    {
-                        <li class="nav-right">User Navigation</li>
-                    }
-                    else
-                    {
-                        if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-right">
-                                @using (Html.BeginForm("LogOut", "Account", new { returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <input type="submit" value="Logout" />
-                                }
-                            </li>
-                            <li class="nav-right">
-                                @Html.ActionLink("Hello " + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
-                            </li>
+                @for (int i = 0; i < Model.Root.ChildrenCount; i++)
+                {
+                    <li>
+                        @{
+                            var child = Model.Root.GetChild(i);
                         }
-                        else
-                        {
-                            <li class="nav-right">
-                                @Html.ActionLink("Register", "Register", "Account", new { area = "" }, new { title = "Register" })
-                            </li>
-                            <li class="nav-right">
-                                @Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { title = "Login" })
-                            </li>
-                        }
-                    }
-                </ul>
+                        @Html.DisplayFor(m => child, "TreeNavigationItem", new { Lang = ViewData["Lang"] })
+                    </li>
+                }
+            </ul>
         </nav>
     </div>
 </div>

@@ -504,6 +504,24 @@ namespace SiteTriksApp.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ResetPasswordMultipleUsers([FromBody]UserIdsViewModel viewModel)
+        {
+            foreach (var id in viewModel.Ids)
+            {
+                var user = await _userManager.FindByIdAsync(id);
+
+                // For more information on how to enable account confirmation and password reset please
+                // visit https://go.microsoft.com/fwlink/?LinkID=532713
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+
+                await _emailSender.SendEmailFromTemplateAsync(user.Email, "Reset Password", "ForgotPasswordEmail", callbackUrl);
+            }
+
+            return RedirectToAction("Index", "User");
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()

@@ -1,7 +1,9 @@
-﻿function createPage(validateUrlUrl) {
+﻿/* globals Data, Tags, Multiselect */
+
+function createPage(validateUrlUrl) {
     populateUrl('#title', '#url', validateUrlOnChange);
 
-    Multiselect.Setup("multiselect-roles");
+    Multiselect.SetupElement($('.multiselect-roles'));
 
     $('#date-picker').datetimepicker({
         defaultDate: '',
@@ -108,7 +110,7 @@
         Data.getJson({ url: validateUrlUrl + url }).then(function (res) {
             if (res.success) {
                 $btnSubmit.attr("disabled", false);
-                return Data.post({ url: _this.action, data: $(_this).serialize() });
+                return Data.postForm({ url: _this.action, formData: new FormData(_this) });
             } else {
                 Validator.validate($urlField, 'Url is invalid or already in use!', function (val) { return false; })
 
@@ -139,7 +141,7 @@
 function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 
     populateUrl('#title', '#url', validateUrlOnChange);
-    Multiselect.Setup("multiselect-roles");
+    Multiselect.SetupElement($('.multiselect-roles'));
 
     Data.getJson({ url: '/templates/page-multilingual.html' }).then(function (res) {
         for (var key in mlf) {
@@ -320,11 +322,11 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 
         Loader.show(true);
 
-        $btnSubmit.attr("disabled", true);
+        $btnSubmit.attr('disabled', true);
         Data.getJson({ url: validateUrlUrl + url + '&id=' + pageId }).then(function (res) {
             if (res.success) {
-                $btnSubmit.attr("disabled", false);
-                return Data.post({ url: _this.action, data: $(_this).serialize() });
+                $btnSubmit.attr('disabled', false);
+                return Data.postForm({ url: _this.action, formData: new FormData(_this) });
             } else {
                 Validator.validate($urlField, res.message, function (val) { return false; });
                 window.onbeforeunload = onUnload;
@@ -369,7 +371,7 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
     });
 }
 
-function editPageContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
+function editPageContent(url, currentLanguage, currentVersion, currentTemplate, w) {
     // Layout handling
     $('.resolution').on('click', function (ev) {
         let active = $('.selected-option').attr('data-type');
@@ -385,7 +387,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
                 $el.removeClass('selected');
                 let type = $el.attr('data-type');
 
-                Utils.removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
+                Utils.removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css');
             });
 
             $target.addClass('selected');
@@ -394,15 +396,18 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         }
     });
 
-    $('.show-layout').on('click', function (ev) {
+    let $previewContainer = $('#preview-container');
+    let $showContent = $('.show-content');
+    let $showLayout = $('.show-layout');
+    $showLayout.on('click', function (ev) {
         $('#preview-layout').show();
         $('#layout-properties').show();
         $('#widgets-holder').hide();
-        $('#preview-container').hide();
+        $previewContainer.hide();
 
         // button styles 1.1
         $(this).parent().addClass('selected-option');
-        $('.show-content').parent().removeClass('selected-option');
+        $showContent.parent().removeClass('selected-option');
 
         //reset resolutions
         $('.resolution').each(function (_, element) {
@@ -411,15 +416,15 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT).resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 
-    $('.show-content').on('click', function (ev) {
+    $showContent.on('click', function (ev) {
         $('#preview-layout').hide();
         $('#layout-properties').hide();
         $('#widgets-holder').show();
-        $('#preview-container').show();
+        $previewContainer.show();
 
         // button styles 1.1
         $(this).parent().addClass('selected-option');
-        $('.show-layout').parent().removeClass('selected-option');
+        $showLayout.parent().removeClass('selected-option');
 
         $('.resolution.selected').each(function (_, element) {
             let $el = $(element);
@@ -438,48 +443,23 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
 
         ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout'; });
 
-        $('.show-content').on('click', saveLayout.bind($('.show-content'), true));
+        $showContent.on('click', saveLayout);
     } else {
         console.error('Layout was not found!');
     }
 
-    function saveLayout(sendToServer) {
+    function saveLayout() {
         let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
         let layout = JSON.parse(layoutWidget.element);
         let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
         layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
 
-        for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
-            removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
-        }
+        ModuleBuilder.renderLayout(layout.layoutRows, $(`div.preview-placeholder[data-identifier="${layoutWidget.id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
+        WidgetsDraggable.init(w);
 
         layoutWidget.element = JSON.stringify(layout);
         if (layoutWidget.IsInherited) {
             layoutWidget.IsModifiedOnChild = true;
-        }
-
-        if (sendToServer) {
-            saveEditWidgetServer(layoutWidget);
-        }
-    }
-
-    function removeWidgetForPlaceholder(placeholder) {
-        let widgets = w.getPageContent().filter(c => c.placeholder === placeholder);
-
-        for (let i = 0; i < widgets.length; i += 1) {
-            let index = w.getPageContent().findIndex(c => c.id === widgets[i].id);
-
-            if (index !== -1) {
-                w.getPageContent().splice(index, 1);
-                if (widgets[i].type === 'layoutBuilder') {
-                    let layout = JSON.parse(widgets[i].element);
-                    for (let j = 0; j < layout.length; j += 1) {
-                        for (let k = 0; k < layout[j].columns.length; k += 1) {
-                            removeWidget(layout[j].columns[k].properties.placeholder);
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -510,92 +490,44 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         document.getElementById(callerId).dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: type, rowIndex: rowIndex } }));
     });
 
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------
-    // Sticky widgets
+    initStickyWidgets();
 
-    let $window = $(window);
-    let itemTop = 0;
-    $window.on('scroll resize', stickyWidgets);
-    $window.trigger('scroll');
-
-    function stickyWidgets() {
-        let scrollPosition = $window.scrollTop();
-        let $widgetsList = $('.widgets-list');
-
-        if (!itemTop) {
-            itemTop = $widgetsList.offset().top;
-        }
-
-        if ($widgetsList && $widgetsList.length === 1) {
-            if (scrollPosition > itemTop - 100) {
-                $widgetsList.addClass('scrolling');
-            } else {
-                $widgetsList.removeClass('scrolling');
-            }
-        }
-    }
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    $(document).on('updatePreview', {
-    }, function () {
-        updatePreview(url);
-    });
-
-    $(document).trigger('updatePreview');
-
-    function loadVersions(lang) {
-        $('#versions')
-            .find('option')
-            .remove();
-
-        return Data.getJson({ url: '/sitetriks/pages/getpageversions?url=' + url + '&lang=' + lang, disableCache: true }).then(function (res) {
-            if (res.success) {
-                res.versions.forEach(function (element) {
-                    let $v = $(`<option value="${element}">${element}</option>`);
-                    if (element === +currentVersion) {
-                        $v.attr('selected', 'selected');
-                    }
-
-                    $v.appendTo('#versions');
-                });
-            }
-
-            return res;
-        }, Data.defaultError);
-    }
-
-    loadVersions(currentCulture);
+    $(document).on('updatePreview', {}, updatePreview.bind(document, url));
+    updatePreview(url);
+    let $languages = $('#languages');
+    let versions = new revisionControl('pages', $languages, $('#versions'), $('#version-control'));
+    versions.loadVersions(currentLanguage, currentVersion);
 
     Data.getJson({ url: '/sitetriks/pages/getlanguages', disableCache: true }).then(function (res) {
         if (res.success) {
             res.cultures.forEach(function (element) {
-                let $l = $('<option value="' + element + '">' + element + '</option>');
+                let $option = $('<option></option>', {
+                    value: element,
+                    text: element
+                });
                 if (element === currentLanguage) {
-                    $l.attr('selected', 'selected');
+                    $option.attr('selected', 'selected');
                 }
 
-                $l.appendTo('#languages');
+                $option.appendTo($languages);
             });
         }
     }, Data.defaultError);
 
-    $('#languages').on('change', function (ev) {
+    $languages.on('change', function (ev) {
         updatePreview(url);
-        let lang = $('#languages').val();
-        currentLanguage = lang;
-        loadVersions(lang);
+        currentLanguage = $languages.val();
+        versions.loadVersions(currentLanguage);
     });
 
     function updatePreview(url) {
-        var fullUrl = '/sitetriks/display/previewpage';
         let lang = $('#languages').val() || '';
 
-        $('#preview-container').html('');
+        $previewContainer.html('');
         Loader.show(true);
 
-        Data.getJson({ url: fullUrl + '?url=' + url + '&lang=' + lang, disableCache: true }).then(function (res) {
-            $('#preview-container').html(res.view);
+        Data.getJson({ url: `/sitetriks/display/previewpage?url=${url}&lang=${lang}`, disableCache: true }).then(function (res) {
+            $previewContainer.html(res.view);
 
             $(document).trigger('initCarousel');
             w.setPageContent(res.content);
@@ -621,7 +553,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         }, Data.defaultError);
     }
 
-    $('#preview-container').on('click', '.lock-widget', function (ev) {
+    $previewContainer.on('click', '.lock-widget', function (ev) {
         var $caller = $(this);
         var status = $caller.prop('checked');
         var id = $caller.attr('data-id');
@@ -630,160 +562,141 @@ function editPageContent(url, currentLanguage, currentVersion, currentCulture, c
         item.isLocked = !!status;
     });
 
-    $(document).on('keyup', '#video-input', function () {
-        validateVideo();
-    });
-
     $('#btn-publish').on('click', function (ev) {
-        saveLayout();
-        let body = {
-            url: url,
-            content: w.getPageContent(),
-            lang: currentLanguage
-        };
-
-        Data.postJson({ url: '/sitetriks/Pages/PublishPageWithContent', data: body }).then(function (res) {
-            if (res.success) {
-                location.replace('/sitetriks/pages');
-            }
-        }, Data.defaultError);
+        ev.preventDefault();
+        Data.postJson({ url: '/sitetriks/Pages/PublishPageWithContent', data: prepareSave() }).then(redirectToPagesGridOnSuccess, Data.defaultError);
     });
 
-    $('#btn-save-draft').on('click', function (ev) {
-        saveLayout();
-        saveDraft().then(function (res) {
-            if (res.success) {
-                location.replace('/sitetriks/pages');
-            }
-        });
-    });
+    $('#btn-save-draft').on('click', saveDraft);
 
-    function saveDraft() {
-        let body = {
+    function prepareSave() {
+        saveLayout();
+        return {
             url: url,
             content: w.getPageContent(),
-            lang: currentLanguage
+            lang: $languages.val()
         };
+    }
 
-        return Data.postJson({ url: '/sitetriks/Pages/SaveDraft', data: body });
+    function saveDraft(ev) {
+        ev.preventDefault();
+        return Data.postJson({ url: '/sitetriks/Pages/SaveDraft', data: prepareSave() }).then(redirectToPagesGridOnSuccess);
     }
 
     $('#btn-preview-page').on('click', function (ev) {
         Loader.show('#fff');
         saveLayout();
-        saveDraft().then(function (res) {
-            if (res.success) {
-                let body = {
-                    content: w.getPageContent(),
-                    template: currentTemplate,
-                    language: currentLanguage
-                };
+        let body = {
+            content: w.getPageContent(),
+            template: currentTemplate,
+            language: $languages.val()
+        };
 
-                return Data.postJson({ url: '/sitetriks/Display/Preview', data: body });
-            }
-
-            Loader.hide();
-            return Promise.reject();
-        }).then(function (res) {
-            createPreveiwWindow(res);
+        Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
+            Utils.openInNewTab(res);
 
             Loader.hide();
         }, Data.defaultError);
     });
 
-    $('#btn-preview-version').on('click', function (evt) {
-        let lang = $('#languages').val();
+    $('#btn-reset').on('click', updatePreview.bind(document, url));
+
+    $('.btn-revision').on('click', versions.toggle);
+    $('#btn-preview-version').on('click', versions.previewVersion);
+    $('#btn-revert-version').on('click', versions.revertVersion);
+
+    function redirectToPagesGridOnSuccess(res) {
+        if (res.success) {
+            location.replace('/sitetriks/pages');
+        }
+    }
+}
+
+function revisionControl(type, $languages, $versions, $versionControl) {
+    function previewVersion(ev) {
         let body = {
-            version: $('#versions').val(),
+            version: $versions.val(),
             url: url,
-            lang: lang
+            lang: $languages.val()
         };
 
         Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
-            createPreveiwWindow(res);
+            Utils.openInNewTab(res);
         }, Data.defaultError);
-    });
+    }
 
-    $('#btn-revert-version').on('click', function (ev) {
-        let lang = $('#languages').val();
+    function revertVersion(ev) {
         let body = {
-            version: $('#versions').val(),
+            version: $versions.val(),
             url: url,
-            lang: lang
+            lang: $languages.val()
         };
 
-        Data.postJson({ url: '/sitetriks/pages/RevertVersion', data: body }).then(function (res) {
+        Data.postJson({ url: `/sitetriks/${type}/RevertVersion`, data: body }).then(function (res) {
             location.reload(true);
         }, Data.defaultError);
-    });
+    }
 
-    $('#btn-reset').on('click', function (ev) {
-        $(document).trigger('updatePreview');
-    });
-
-    $('.btn-revision').on('click', function (ev) {
+    function toggle(ev) {
         let $span = $(this).children('span');
         if ($span.hasClass('glyphicon-menu-right')) {
             $span.removeClass('glyphicon-menu-right');
             $span.addClass('glyphicon-menu-left');
-            $('#version-control').css('display', 'inline-block');
+            $versionControl.css('display', 'inline-block');
         } else {
             $span.removeClass('glyphicon-menu-left');
             $span.addClass('glyphicon-menu-right');
-            $('#version-control').css('display', 'none');
+            $versionControl.css('display', 'none');
         }
-    });
+    }
+    
+    function loadVersions(lang, selected) {
+        $versions.children().remove();
 
-    function saveEditWidgetServer(widget) {
-
-        var $old = $('.preview-placeholder[data-identifier="' + widget.id + '"]');
-
-        var body = {
-            content: widget,
-            preview: 'preview',
-            lang: currentLanguage
-        };
-
-        Loader.show(true);
-
-        return saveDraft().then(function (res) {
+        return Data.getJson({ url: `/sitetriks/${type}/getpageversions?url=${url}&lang=${lang}`, disableCache: true }).then(function (res) {
             if (res.success) {
-                return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body });
+                res.versions.forEach(function (element) {
+                    let $v = $(`<option value="${element}">${element}</option>`);
+                    if (selected && element === +selected) {
+                        $v.attr('selected', 'selected');
+                    }
+
+                    $versions.append($v);
+                });
             }
 
-            return Promise.reject();
-        }).then(function (data) {
-
-            $(document).trigger('removeCarousel');
-
-            $old.after(data);
-            $old.remove();
-
-            if (type === 'layoutBuilder') {
-                console.log('init layout');
-                WidgetsDraggable.init(w);
-            }
-
-            Loader.hide();
-
-            return loadVersions(currentLanguage);
-        }).then(function (res) {
-            $('#versions').find('option[selected="selected"]').removeAttr('selected');
-            $('#versions').find('option').first().attr('selected', 'selected');
-
-            return { success: true };
+            return res;
         }, Data.defaultError);
     }
 
-    function createPreveiwWindow(html) {
-        let newWindow = window.open('', 'Preview');
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-            //POPUP BLOCKED
-            Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
-        } else {
-            newWindow.document.write(html);
-            newWindow.document.close();
-            newWindow.focus();
+    return {
+        loadVersions,
+        previewVersion,
+        revertVersion,
+        toggle
+    };
+}
+
+function initStickyWidgets() {
+    let $window = $(window);
+    let itemTop = 0;
+    $window.on('scroll resize', stickyWidgets);
+    stickyWidgets();
+
+    function stickyWidgets() {
+        let scrollPosition = $window.scrollTop();
+        let $widgetsList = $('.widgets-list');
+
+        if (!itemTop) {
+            itemTop = $widgetsList.offset().top;
+        }
+
+        if ($widgetsList && $widgetsList.length === 1) {
+            if (scrollPosition > itemTop - 100) {
+                $widgetsList.addClass('scrolling');
+            } else {
+                $widgetsList.removeClass('scrolling');
+            }
         }
     }
 }

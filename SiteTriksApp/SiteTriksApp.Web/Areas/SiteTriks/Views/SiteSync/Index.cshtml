@@ -158,38 +158,38 @@
                                                 }
 
                                                 @*@if (Model.BlogPosts.Count > 0)
-                                                    {
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <h4 class="panel-title">
-                                                                    <a data-toggle="collapse" href="#blogposts">Blog posts</a>
-                                                                </h4>
-                                                            </div>
-                                                            <div id="blogposts" class="panel-collapse collapse">
-                                                                <ul id="blogposts-list" class="list-group checked-list-box">
-                                                                    @foreach (var record in Model.BlogPosts)
-                                                                    {
-                                                                        <li class="list-group-item">
-                                                                            <span class="model-id" hidden="hidden">@record.Id</span>
-                                                                            <span class="model-title">@record.Title</span>
-                                                                            @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                                                            {
-                                                                                <span class="float-right label label-success">Create</span>
-                                                                            }
-                                                                            else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                                                            {
-                                                                                <span class="float-right label label-warning">Edit</span>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <span class="float-right label label-danger">Delete</span>
-                                                                            }
-                                                                        </li>
-                                                                    }
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    }*@
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#blogposts">Blog posts</a>
+                    </h4>
+                </div>
+                <div id="blogposts" class="panel-collapse collapse">
+                    <ul id="blogposts-list" class="list-group checked-list-box">
+                        @foreach (var record in Model.BlogPosts)
+                        {
+                            <li class="list-group-item">
+                                <span class="model-id" hidden="hidden">@record.Id</span>
+                                <span class="model-title">@record.Title</span>
+                                @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                {
+                                    <span class="float-right label label-success">Create</span>
+                                }
+                                else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                {
+                                    <span class="float-right label label-warning">Edit</span>
+                                }
+                                else
+                                {
+                                    <span class="float-right label label-danger">Delete</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }*@
 
                                                 @if (Model.News.Count > 0)
                                                 {
@@ -292,6 +292,41 @@
                                                         </div>
                                                     </div>
                                                 }
+
+                                                @if (Model.HtmlBlocks.Count > 0)
+                                                {
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" href="#html-blocks">Html Blocks</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="html-blocks" class="panel-collapse collapse">
+                                                            <ul id="html-blocks-list" class="list-group checked-list-box">
+                                                                @foreach (var record in Model.HtmlBlocks)
+                                                                {
+                                                                    <li class="list-group-item">
+                                                                        <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                        <span class="model-title">@record.Title</span>
+                                                                        @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                        {
+                                                                            <span class="float-right label-success">Create</span>
+                                                                        }
+                                                                        else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                        {
+                                                                            <span class="float-right label label-warning">Edit</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="float-right label label-danger">Delete</span>
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+
 
                                                 @if (Model.DynamicItems.Count > 0)
                                                 {

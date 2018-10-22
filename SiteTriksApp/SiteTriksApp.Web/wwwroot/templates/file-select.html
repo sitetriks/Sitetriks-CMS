@@ -1,27 +1,30 @@
-﻿<div class="image-container2">
-    <div class="image-checkbox-wrapper">
-        <input class="image-checkbox" type="{{inputType}}" data-id="{{id}}" data-alt-id="{{linkId}}" data-sizename="Original" name="images-list" />
-        <span class="checkmark"></span>
-    </div>
-    <img src="/files/{{url}}" class="listed-image" />
-    <div class="thumbnailSelector">
-        {{#if thumbnails}}
-        <select class="thumbnailSelect">
-            <option value="{{linkId}}" class="size-option" data-alt-id="{{linkId}}" data-sizename="Original">
-                <span>{{title}} - Original</span>
-            </option>
-            {{# each thumbnails}}
-            <option value="{{linkId}}" class="size-option" data-alt-id="{{linkId}}" data-sizename="{{sizeName}}">
-                {{sizeName}}
-            </option>
-            {{/each}}
-        </select>
-        {{else}}
-        <div class="thumbnailSelector">
-            <span>{{title}}</span>
+﻿<div class="select-parent">
+    <div class="image-container2">
+        <div class="image-checkbox-wrapper">
+            <input data-click-id="click" class="image-checkbox" type="{{inputType}}" data-id="{{linkId}}" data-alt-id="{{linkId}}" data-sizename="Original" name="images-list" />
+            <span class="checkmark"></span>
         </div>
-        {{/if}}
-        <span class="arrow-down"></span>
+        <img src="/files/{{url}}" class="listed-image" />
+        <div class="thumbnailSelector wrapper">
+            {{#if thumbnails}}
+            <select class="thumbnailSelect dropdown">
+                <option value="{{linkId}}" class="size-option" data-alt-id="{{linkId}}" data-sizename="Original">
+                    <span>{{title}} - Original</span>
+                </option>
+                {{# each thumbnails}}
+                <option value="{{linkId}}" class="size-option" data-alt-id="{{linkId}}" data-sizename="{{sizeName}}">
+                    {{sizeName}}
+                </option>
+                {{/each}}
+            </select>
+            {{else}}
+            <div class="image-title">
+                <span>{{title}}</span>
+            </div>
+            {{/if}}
+            <span class="arrow-down"></span>
+        </div>
     </div>
 </div>
+
 

@@ -27,7 +27,7 @@
 </div>
 
 <div class="backend-wrapper">
-    <div class="grid">
+    <div class="grid library-grid">
     </div>
 </div>
 
@@ -48,15 +48,14 @@
 </div>
 
 @section scripts{
-    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
     <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
-    <script type="text/javascript" src="~/js/modules/logger.js"></script>
     <script type="text/javascript" src="~/js/modules/utils.js"></script>
+    <script type="text/javascript" src="~/js/modules/pager.js"></script>
+    <script type="text/javascript" src="~/js/modules/data-source.js"></script>
+    <script type="text/javascript" src="~/js/modules/grid.js"></script>
     <script src="~/js/sitetriks/libraries.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var grid = Grid();
-            var data = { link: "/sitetriks/files/grid", serverSide: false }
             var columns = [{
                 name: 'id',
                 title: '',
@@ -113,23 +112,91 @@
                 trueTemplate: '<div class="isUsed-true"></div>'
             },];
 
-            let buttons = [{
+            var buttons = [{
                 title: 'Delete',
                 postUrl: '/sitetriks/files/delete',
                 type: 'danger'
             },
             {
-                title: 'RegenerateThumbNails',
+                title: 'Create ThumbNails',
                 postUrl: '/sitetriks/files/generatethumbnails',
                 type: 'danger'
             }];
 
-            var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+            var helpers = {
+                'switch': function(value, options) {
+                    this._switch_value_ = value;
+                    this._switch_break_ = false;
+                    var html = options.fn(this);
+                    delete this._switch_break_;
+                    delete this._switch_value_;
+                    return html;
+                },
+                'case': function(value, options) {
+                    var args = Array.prototype.slice.call(arguments);
+                    var options = args.pop();
+                    var caseValues = args;
+
+                    if (this._switch_break_ || caseValues.indexOf(this._switch_value_) === -1) {
+                        return '';
+                    } else {
+                        if (options.hash.break === true) {
+                            this._switch_break_ = true;
+                        }
+                        return options.fn(this);
+                    }
+                },
+                'default': function(options) {
+                    if (!this._switch_break_) {
+                        return options.fn(this);
+                    }
+                }
+            };
+
+            for (let key in helpers) {
+                Handlebars.registerHelper(key, helpers[key]);
+            }
+
+
+            /* Image = 0,
+             * Document = 1,
+             * Video = 3,
+             * Svg = 4,
+             * ImageTmb = 5
+             */
+            var handlebarsTemplate = 
+            '<div style="width:auto; position:relative; border: 1px solid #979797; border-radius: 3px; margin: 1px;">'+
+                '<div style="position: absolute;top: 7px;left: 5px;">'+
+                    '<input class="st-grid-checkbox" type="checkbox" data-id="{{id}}" style="margin-left: 5px;" >'+
+                '</div>'+
+                '{{#switch type}}'+
+                    '{{#case 0 4 5 break=true}}<img src="/files/{{url}}" style="height:150px" >{{/case}}'+
+                    '{{#case 1 break=true}}<img src="/images/default-document-image.png" alt="document" style="height:150px" >{{/case}}'+
+                    '{{#case 3 break=true}}<img src="/images/mp4-icon.png" alt="video" style="height:150px" >{{/case}}'+
+                    '{{#default}}not supported file type{{/default}}'+
+                '{{/switch}}'+
+                '<div class="thumbnailSelector">'+
+                    '<div class="thumbnailSelector">'+
+                        '<span><a href="/sitetriks/files/edit?url={{url}}">{{ title }}</a></span>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'
+
+            var filesGrid = new _Grid({
+                wrapperId: '.grid',
+                type: 'grid',
+                fields: columns,
+                sourceConfig: { type: 'client', url: '/sitetriks/files/grid' },
+                pagerConfig: defaultPager,
+                customActions: buttons,
+                handlebarsTemplate: handlebarsTemplate,
+            });
 
             var logger = new Logger('debug');
             var mediator = new Mediator(logger);
 
-            initLibraries(grid, config, mediator, logger);
+            initLibraries(filesGrid, mediator, logger);
         });
     </script>
 }

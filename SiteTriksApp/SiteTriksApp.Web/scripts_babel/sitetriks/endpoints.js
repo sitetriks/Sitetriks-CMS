@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals Data, Loader, Validator */
+
 function initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey, selectedColumn) {
     $('#select-request-type').on('change', function (ev) {
         var $trigger = $(this);
@@ -10,6 +12,7 @@ function initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey
         }
     }).trigger('change');
 
+    var $selectType = $('#select-type');
     Loader.show('#fff');
     Data.getJson({ url: '/sitetriks/endpoints/gettables' }).then(function (res) {
         if (res.success) {
@@ -24,7 +27,7 @@ function initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey
                     value: res.tables[i],
                     text: res.tables[i],
                     selected: selectedType && selectedType.toLowerCase() === res.tables[i].toLowerCase()
-                }).appendTo('#select-type');
+                }).appendTo($selectType);
             }
         }
 
@@ -32,11 +35,11 @@ function initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey
         return res;
     }).then(function (res) {
         if (res.success) {
-            $('#select-type').trigger('change');
+            $selectType.trigger('change');
         }
     });
 
-    $('#select-type').on('change', function (ev) {
+    $selectType.on('change', function (ev) {
         var table = $(this).val();
         var $select = $('#select-join-key');
         $select.html('');
@@ -111,7 +114,7 @@ function initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey
                 var value = $(element).val();
                 if (value && value.trim()) {
                     if (!Validator.validate($(element), 'Must be positive number or zero!', function (val) {
-                        return parseInt(val) != val && parseInt(val) >= 0;
+                        return Validator.isInteger(val) && +val >= 0;
                     })) {
                         flag = true;
                     }

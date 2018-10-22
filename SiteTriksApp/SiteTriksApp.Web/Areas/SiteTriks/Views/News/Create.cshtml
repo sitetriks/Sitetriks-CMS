@@ -17,7 +17,7 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create News</button>
+            <button type="submit" id="submit" class="btn-nav-2">Save & Exit</button>
         </div>
 
         <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
@@ -102,9 +102,7 @@
 
 @section Scripts{
     <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
     <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
-    <script type="text/javascript" src="~/js/modules/logger.js"></script>
     <script type="text/javascript" src="~/js/modules/utils.js"></script>
     <script src="~/js/text-editor.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/news.js"></script>

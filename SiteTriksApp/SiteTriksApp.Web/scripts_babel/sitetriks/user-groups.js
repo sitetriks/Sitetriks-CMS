@@ -66,7 +66,6 @@ function createUserGroup(url) {
 
 function editUserGroup(url) {
     $('.move-to-right').on('click', function () {
-        $('.delete-btn').addClass('disabled');
         $('.all-users-select option:selected').each(function () {
             $(this).remove();
             var usersToRoleSelect = $('.users-to-role-select').append($('<option>', {
@@ -77,7 +76,6 @@ function editUserGroup(url) {
     });
 
     $('.move-to-left').on('click', function () {
-        $('.delete-btn').addClass('disabled');
         $('.users-to-role-select option:selected').each(function () {
             $(this).remove();
             var usersToAllUsers = $('.all-users-select').append($('<option>', {
@@ -110,7 +108,7 @@ function editUserGroup(url) {
             dataType: 'json',
             data: userGroup,
             success: function success(data, status) {
-                Notifier.createAlert({ containerId: '#alerts', title: 'Success!', message: 'User Group was edited successfully', status: 'success' });
+                window.location.replace('/sitetriks/usergroups');
             },
             error: function error(_error) {
                 Notifier.createAlert('alerts', 'Something went wrong');

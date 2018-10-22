@@ -78,13 +78,6 @@ namespace SiteTriksApp.Web
             // Area registration
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                //Load views from another assemblies
-                //var fileProviders = ApplicationStart.GetModulesFileProviders();
-                //foreach(var fileProvider in fileProviders)
-                //{
-                //    options.FileProviders.Add(fileProvider);
-                //}
-                //options.FileProviders.Add(new EmbeddedFileProvider(assembly));
                 var scopeFactory = services
                     .BuildServiceProvider()
                     .GetRequiredService<IServiceScopeFactory>();
@@ -94,13 +87,7 @@ namespace SiteTriksApp.Web
                     var provider = scope.ServiceProvider;
                     var service = provider.GetRequiredService<IDynamicViewService>();
                     var queryHelper = provider.GetService<IQueryHelper>();
-                    var composite = new CompositeFileProvider(options.FileProviders[0], new DatabaseFileProvider(options.FileProviders[0], queryHelper));
-
-                    options.FileProviders.RemoveAt(0);
-
-                    options.FileProviders.Add(
-                        composite
-                    );
+                    options.FileProviders.Add(new DatabaseFileProvider(options.FileProviders[0], queryHelper));
 
                     foreach (var item in providers)
                     {
@@ -126,6 +113,7 @@ namespace SiteTriksApp.Web
             WidgetRegistry.RegisterWidget<PresentationWidgetModel>("presentation", "Presentation");
             WidgetRegistry.RegisterWidget<CssWidgetModel>("css", "CSS");
             WidgetRegistry.RegisterWidget<JavaScriptWidgetModel>("javascript", "JavaScript");
+            WidgetRegistry.RegisterWidget<EmbeddedScriptWidgetModel>("embeddedscript", "Embedded Script");
             WidgetRegistry.RegisterWidget<LayoutBuilderWidgetModel>("layoutBuilder", "Layout Builder");
             WidgetRegistry.RegisterWidget<SearchWidgetModel>("search", "Google Search");
             WidgetRegistry.RegisterWidget<ImageWidgetModel>("image", "Image");

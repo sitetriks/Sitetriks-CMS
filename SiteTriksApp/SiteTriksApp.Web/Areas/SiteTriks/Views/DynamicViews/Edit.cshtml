@@ -16,7 +16,7 @@
             <p>@ViewBag.Title</p>
 
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to List</a>
-            <input type="submit" value="Edit" id="create-news" class="btn-nav-2" />
+            <input type="submit" value="Save & Exit" id="create-news" class="btn-nav-2" />
         </div>
 
         <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
@@ -38,7 +38,7 @@
                     <select asp-for="WidgetName">
                         @foreach (var widgetName in Model.WidgetNames)
                         {
-                            <option value="@widgetName">@widgetName</option>
+                            <option value="@widgetName.Name">@widgetName.Name</option>
                         }
                     </select>
                     <br />

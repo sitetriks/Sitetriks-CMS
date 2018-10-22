@@ -1,6 +1,7 @@
 'use strict';
 
-function createStoreItem(efc, storeId, logger, mediator) {
+function createStoreItem(efc, storeId, logger, mediator, currentExtraFields) {
+    currentExtraFields = currentExtraFields || {};
     var $extraFields = $('.extra-fields-wrapper');
     var $multiselect = $('#categories-multiselect');
     var $form = $('#create-store-item-form');
@@ -128,6 +129,7 @@ function createStoreItem(efc, storeId, logger, mediator) {
         $('<input/>', {
             class: 'form-control inline-block validate',
             type: 'text',
+            value: currentExtraFields[config.id] || '',
             'data-validation-type': config.type,
             'data-id': config.id
         }).appendTo($innerWrapper);

@@ -1,4 +1,5 @@
-﻿function createStoreItem(efc, storeId, logger, mediator) {
+﻿function createStoreItem(efc, storeId, logger, mediator, currentExtraFields) {
+    currentExtraFields = currentExtraFields || {};
     let $extraFields = $('.extra-fields-wrapper');
     let $multiselect = $('#categories-multiselect');
     let $form = $('#create-store-item-form');
@@ -122,6 +123,7 @@
         $('<input/>', {
             class: 'form-control inline-block validate',
             type: 'text',
+            value: currentExtraFields[config.id] || '',
             'data-validation-type': config.type,
             'data-id': config.id
         }).appendTo($innerWrapper);

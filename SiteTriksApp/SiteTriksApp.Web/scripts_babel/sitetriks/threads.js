@@ -14,10 +14,9 @@ function createThread() {
 
         $('#content').val(tinymce.activeEditor.getContent());
 
-        var form = $(this)[0];
-        var formData = new FormData(form);
+        var formData = new FormData(this);
 
-        Data.postForm({ formData: formData }).then(function (res) {
+        Data.postForm({ url: this.action, formData: formData }).then(function (res) {
             if (res.success) {
                 window.location.replace('/forum/threads/thread/' + res.threadId);
             } else {
@@ -43,10 +42,9 @@ function editThread() {
 
         $('#content').val(tinymce.activeEditor.getContent());
 
-        var form = $(this)[0];
-        var formData = new FormData(form);
+        var formData = new FormData(this);
 
-        Data.postForm({ formData: formData }).then(function (res) {
+        Data.postForm({ url: this.action, formData: formData }).then(function (res) {
             if (res.success) {
                 window.location.replace('/forum/threads/thread/' + res.threadId);
             } else {

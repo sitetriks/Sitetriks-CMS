@@ -54,7 +54,31 @@ namespace SiteTriksApp.Web.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new IndexViewModel
+            var model = new ProfileViewModel()
+            {
+                IndexViewModel = PopulateIndexModel(user),
+                TwoFactorAuthenticationViewModel = await this.Populate2FAModel(user),
+                ChangePasswordViewModel = new ChangePasswordViewModel { StatusMessage = StatusMessage }
+            };
+
+            return View(model);
+        }
+
+        [NonAction]
+        private async Task<TwoFactorAuthenticationViewModel> Populate2FAModel(User user)
+        {
+            return new TwoFactorAuthenticationViewModel()
+            {
+                HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
+                Is2faEnabled = user.TwoFactorEnabled,
+                RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user),
+            };
+        }
+
+        [NonAction]
+        private IndexViewModel PopulateIndexModel(User user)
+        {
+            return new IndexViewModel
             {
                 Username = user.UserName,
                 Email = user.Email,
@@ -62,23 +86,22 @@ namespace SiteTriksApp.Web.Controllers
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
-
-            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> Index(ProfileViewModel viewModel)
         {
+            var model = viewModel.IndexViewModel;
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return this.Json(new { success = false, message = "invalid modelstate" });
             }
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return this.Json(new { success = false, message = "user not found" });
             }
 
             var email = user.Email;
@@ -87,7 +110,7 @@ namespace SiteTriksApp.Web.Controllers
                 var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
                 if (!setEmailResult.Succeeded)
                 {
-                    throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
+                    return this.Json(new { success = false, message = "failed to update email" });
                 }
             }
 
@@ -97,12 +120,11 @@ namespace SiteTriksApp.Web.Controllers
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                    return this.Json(new { success = false, message = "failed to update phone number" });
                 }
             }
 
-            StatusMessage = "Your profile has been updated";
-            return RedirectToAction(nameof(Index));
+            return this.Json(new { success = true, message =  "Your profile has been updated" });
         }
 
         [HttpPost]
@@ -150,31 +172,29 @@ namespace SiteTriksApp.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePassword(ProfileViewModel viewModel)
         {
+            var model = viewModel.ChangePasswordViewModel;
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return this.Json(new { success = false, message = "invalid modelstate" });
             }
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return this.Json(new { success = false, message = "user not found" });
             }
 
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
-                AddErrors(changePasswordResult);
-                return View(model);
+                return this.Json(new { success = false, messages = changePasswordResult.Errors.Select(e => e.Description) });
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
-
-            return RedirectToAction(nameof(ChangePassword));
+            return this.Json(new { success = true, message = "Your password has been changed." });
         }
 
         [HttpGet]

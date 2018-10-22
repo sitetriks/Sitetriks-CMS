@@ -49,10 +49,11 @@ function loadMainLayout() {
 
         var lock = false;
         var animateWidth;
+        var $btnAccount = $('.login-partial-loged .btn-account'); // login, register, logout 'buttons'
 
         $('.nav-logo-secondary a').on("click", function () {
-            if ($('.login-partial-loged a').css('color') == 'rgb(234, 234, 234)') {
-                $('.login-partial-loged a').css('color', "transparent");
+            if ($btnAccount.css('color') == 'rgb(234, 234, 234)') {
+                $btnAccount.css('color', "transparent");
             }
             lock = true;
             $('.nav-logo-secondary a img').attr('src', '/images/spinner.gif');
@@ -73,11 +74,11 @@ function loadMainLayout() {
             };
 
             $('.navbar-right').animate({ width: animateWidth }, 500, function () {
-                $('.login-partial-loged a').css('color', "#EAEAEA");
+                $btnAccount.css('color', "#EAEAEA");
                 $('.nav-logo-secondary a img').attr('src', '/images/Sitetriks_logo2.png');
                 lock = false;
 
-                $('.login-partial-loged a').toggle();
+                $btnAccount.toggle();
             });
         });
 

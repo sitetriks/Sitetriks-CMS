@@ -1,6 +1,10 @@
 'use strict';
 
+/* globals Data, Loader, Notifier */
+
 function initExtensions() {
+    var $dropArea = $('#drop-area');
+
     $('body').on('change', '.activate-module', function (ev) {
         var isActive = this.checked;
         var name = $(this).attr('data-name');
@@ -13,7 +17,7 @@ function initExtensions() {
                     return;
                 }
 
-                handleAppRestart({ url: '/sitetriks/extensions', timeout: 2000 });
+                handleAppRestart({ url: '/sitetriks/extensions' });
 
                 //window.location.reload(true);
             } else {
@@ -55,26 +59,26 @@ function initExtensions() {
 
             Loader.hide();
         }, Data.defaultError);
-    };
+    }
 
-    $('#drop-area').on('dragover', function (e) {
+    $dropArea.on('dragover', function (e) {
         e.preventDefault();
         e.stopPropagation();
     });
 
-    $('#drop-area').on('dragenter', function (e) {
+    $dropArea.on('dragenter', function (e) {
         $(this).addClass('drop-highlight');
         e.preventDefault();
         e.stopPropagation();
     });
 
-    $('#drop-area').on('dragleave', function (e) {
+    $dropArea.on('dragleave', function (e) {
         $(this).removeClass('drop-highlight');
         e.preventDefault();
         e.stopPropagation();
     });
 
-    $('#drop-area').on('drop', function (e) {
+    $dropArea.on('drop', function (e) {
         if (e.originalEvent.dataTransfer) {
             if (e.originalEvent.dataTransfer.files.length) {
                 e.preventDefault();

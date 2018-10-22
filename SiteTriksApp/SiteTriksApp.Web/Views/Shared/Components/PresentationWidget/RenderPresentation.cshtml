@@ -1,7 +1,7 @@
-﻿@model string
+﻿@model SiteTriks.CoreWidgets.ViewComponents.PresentationModel
 
 <div class="jumbotron">
-    @Html.ActionLink("Full screen", "ViewFileByUrl", "Files", new { area = "sitetriks", url = $"{Model}" })
+    @Html.ActionLink("Full screen", "ViewFileByUrl", "Files", new { area = "sitetriks", url = Model.Url })
     <br />
-    <iframe src="@Url.Action("ViewFileByUrl", "Files", new { area="sitetriks", url = $"{Model}" })" width="560" height="450"></iframe>
+    <iframe src="@Url.Action("ViewFileByUrl", "Files", new { area="sitetriks", url = Model.Url })" width="560" height="450"></iframe>
 </div>

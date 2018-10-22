@@ -23,29 +23,29 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.17" />
     <PackageReference Include="Hangfire.MySql.Core" Version="2.1.5" />
     <PackageReference Include="HangFire.SqlServer" Version="1.6.17" />
-    <PackageReference Include="LicenseBuilder" Version="1.0.2" />
     <PackageReference Include="MailKit" Version="2.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="LicenseBuilder" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
-    <PackageReference Include="SiteTriks" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.Configuration" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.Data" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.DatabaseApi" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.Dynamic" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.ECommerseModule" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.Extensions" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.Infrastructure" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.Services" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.2" />
-    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.Configuration" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.Data" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.DatabaseApi" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.2.2" />
+    <PackageReference Include="SiteTriks.Dynamic" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.ECommerseModule" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.Extensions" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.Infrastructure" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.Services" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.2.1" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.2.2" />
     <PackageReference Include="SiteTriksLicenseManager.Models" Version="1.0.2" />
   </ItemGroup>
 
@@ -176,9 +176,12 @@
     <None Include="wwwroot\lib\custom\code-prettify\src\run_prettify.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\css.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
-  </ItemGroup>  
+  </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\ECommerse\Views\CategoryManager\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\SiteTriks\Views\Widgets\StoreItem.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

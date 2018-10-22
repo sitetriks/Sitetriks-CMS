@@ -12,10 +12,10 @@
 
 <div class="dashboard-wrapper">
     <div class="row">
-        <div class="side-navigation col-md-3 col-lg-2 col-sm-3 col-xs-3">
-            @await Html.PartialAsync("SideNavigation")
-        </div>
-        <div class="dashboard-content col-lg-10 col-md-9 col-sm-9 col-xs-9">
+        @*<div class="side-navigation col-md-3 col-lg-2 col-sm-3 col-xs-3">
+                @await Html.PartialAsync("SideNavigation")
+            </div>*@
+        <div class="dashboard-content">
             <div class="row" id="dashbpard-widgets">
                 @foreach (var dashboardConfig in Model)
                 {
@@ -24,38 +24,61 @@
                     </div>
                 }
 
-                <div class="google-analytics col-lg-12 col-md-12 col-sm-9 col-xs-9">
-                    <div class="row">
-                        <div class="dashboard-table">
-                            <div class="panel panel-primary" style="border: none;">
-                                <div class="controle-header panel-heading panel-heading-landing">
-                                    <img src="~/images/dragable.svg">
-                                    <h1 class="panel-title panel-title-landing">
-                                        Google Analytics
-                                    </h1>
-                                </div>
+                <div class=" google-analytics  dashboard-conten-column dashboard-widget" data-type="Google Analytics">
 
-                                <div class="panel-body panel-body-landing">
-                                    <div class="col-lg-6 col-md-6 col-xs-6">
-                                        Page
+                    <div class="text-center">
+                        <div>
+                            <div class="dashboard-table">
+                                <div class="panel panel-primary" style="border: none;">
+                                    <div class="controle-header panel-heading panel-heading-landing">
+                                        <img src="/images/dragable.svg">
+                                        <h1 class="panel-title panel-title-landing">
+                                            Google Analytics
+                                        </h1>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-xs-6">
-                                        Active Users
+                                    <div class="panel-body panel-body-landing">
+                      
                                     </div>
-                                    <table class="table"></table>
-                                </div>
-                                <div class="panel-footer panel-footer-landing">
+                                    <div class="panel-footer panel-footer-landing">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                @*<div class="google-analytics col-lg-8 col-md-3 col-sm-9 col-xs-9">
+                        <div class="row">
+                            <div class="dashboard-table">
+                                <div class="panel panel-primary" style="border: none;">
+                                    <div class="controle-header panel-heading panel-heading-landing">
+                                        <img src="~/images/dragable.svg">
+                                        <h1 class="panel-title panel-title-landing">
+                                            Google Analytics
+                                        </h1>
+                                    </div>
+
+                                    <div class="panel-body panel-body-landing">
+                                        <div class="col-lg-6 col-md-6 col-xs-6">
+                                            Page
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-xs-6">
+                                            Active Users
+                                        </div>
+                                        <table class="table"></table>
+                                    </div>
+                                    <div class="panel-footer panel-footer-landing">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
             </div>
         </div>
     </div>
 </div>
 
-@section scripts{ 
+@section scripts{
     <script>
         $(document).ready(function (ev) {
             $('#dashbpard-widgets').sortable({
@@ -68,8 +91,21 @@
                     }, Data.defaultError);
                 }
             });
+
+            let $container = $('.body-content');
+            let dashboard = $container.find('.dashboard-wrapper');
+
+            if (dashboard.length >= 1) {
+                let $sideMenuButton = $('.open-side-nav.btn-side-nav img');
+                $sideMenuButton.attr('src', '/images/show_white.svg')
+            }
+            else {
+                $sideMenuButton.attr('src', '/images/show.svg')
+            }
         });
 
-        $('.side-nav-collapse').hide();
+
+
+                    //$('.side-nav-collapse').hide();
     </script>
 }

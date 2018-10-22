@@ -38,7 +38,7 @@ function createStore(validateUrlLink, isNameAvailableLink) {
             }
         }).then(function (res) {
             if (res.success) {
-                return Data.postForm({ formData: new FormData(_this) });
+                return Data.postForm({ url: _this.action, formData: new FormData(_this) });
             } else {
                 Validator.validate($inputTitle, res.message || 'Name is already taken!', function (val) {
                     return res.success;

@@ -15,13 +15,14 @@
     <content>
         <div class="sitetriks-login container main-content content-placeholder">
             <div class="row">
-                <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+                <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div id="loginForm">
                         <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                             <div class="login-logo-container">
-                                <img src="~/images/Sitetriks_logo.svg" />
+                                <img src="~/images/homepage/Login.svg" />
+                                <div>Login</div>
                             </div>
-                            <div asp-validation-summary="All" class="text-danger"></div>
+                            @*<div asp-validation-summary="All" class="text-danger"></div>*@
                             <div class="form-group">
                                 <label asp-for="Email"></label>
                                 <div class="input-form">
@@ -46,7 +47,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="login-button">
-                                    <button type="submit" class="btn btn-default">Log in</button>
+                                    <button type="submit" class="btn btn-default">Login</button>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -63,45 +64,19 @@
                         </form>
                     </div>
                 </div>
+                <div class="image-holder col col-lg-9 col-md-9 col-sm-9">
+                    <img class="login-image" src="" alt="login image" />
+                </div>
             </div>
         </div>
     </content>
 </div>
 
-@*<div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-                if (loginProviders.Count == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in loginProviders)
-                                {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>*@
-
 @await Html.PartialAsync("_AccountFooter")
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script type="text/javascript" src="~/js/login-image-select.js"></script>
 }
+
+

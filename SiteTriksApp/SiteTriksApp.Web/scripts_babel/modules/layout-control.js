@@ -1,3 +1,5 @@
+/* globals Data, Utils, Handlebars */
+
 'use strict';
 
 /*===============================================================================================
@@ -19,6 +21,7 @@
  * -v0.10: multiselect for resolutions
  * -v0.10.1: deleted placeholders
  * -v0.11: delete confirmation is handled with events
+ * -v0.12: added stacking of collapsed columns, styles polishing
  * 
  *===============================================================================================*/
 
@@ -282,7 +285,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             return;
         }
 
-        if (offset != multiple) {
+        if (offset !== multiple) {
             if (offset && (offset < 0 || offset > 11)) {
                 $notifier.text('offset must be empty or between 0 and 11!');
                 return;
@@ -470,6 +473,22 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         buildLayout($wrapper, l);
     });
 
+    $wrapper.on('dblclick', '.layout-drag.empty', function (ev) {
+        var colIndex = ev.target.getAttribute('data-index');
+        var rowIndex = ev.target.getAttribute('data-rowindex');
+
+        for (var i = colIndex; i >= 0; i -= 1) {
+            var col = l[rowIndex].columns[i].resolutions[l.resolutions[0]];
+            if (col.size > 0) {
+                break;
+            }
+
+            col.size = 1;
+        }
+
+        buildRow(l[rowIndex].row, l[rowIndex].columns);
+    });
+
     //-----------------------------------------------------------------------------
     // Methods
     function buildLayout($wrapper, l) {
@@ -514,10 +533,10 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         clearSelected();
 
         // check if col length > 9 -1.1
-        var result = "";
+        var result = '';
 
         if (columns.length <= 9) {
-            result = "0" + columns.length;
+            result = '0' + columns.length;
         } else {
             result = columns.length;
         }
@@ -540,6 +559,8 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
                     count++;
                 }
+
+                buildFiller(count - 1, $row);
             }
 
             for (var _j = 12 - colsLeft; _j < 12 - colsLeft + offset; _j += 1) {
@@ -574,6 +595,11 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             if (currentSize === 0) {
                 buildEmpyColumn(count - 1, $row, i);
             }
+
+            // if on the end of the row and not the last row, build filler separator for the start of the next row
+            if (12 - count % 12 === 12 && i < columns.length - 1 && !$row.children('.separator').last().hasClass('filler')) {
+                buildFiller(count - 1, $row);
+            }
         }
 
         // fill remaining space until the end of the row with empty columns
@@ -582,6 +608,12 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
                 buildColumn(count, $row, false, count, 'empty');
                 count++;
             }
+        }
+
+        var $last = $row.children('.separator').last();
+        // clear last element in the row if it is a filler
+        if ($last.hasClass('filler')) {
+            $last.remove();
         }
 
         $('.layout-drag').draggable({ revert: 'invalid' });
@@ -616,13 +648,25 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     function buildEmpyColumn(position, $row, colIndex) {
+        var $separator = $row.children('.separator').not('.filler').last();
+
+        var $collapsed = $separator.children('.empty');
+        if ($collapsed && $collapsed.length) {
+            $collapsed.attr('data-index', colIndex);
+            $collapsed.attr('data-position', position);
+            $collapsed.text(parseInt($collapsed.text()) + 1);
+        } else {
+            $separator.append('<span class="layout-drag empty" data-index="' + colIndex + '" data-position="' + position + '" data-rowIndex="' + $row.attr('data-position') + '">1</span>');
+        }
+    }
+
+    function buildFiller(position, $row) {
         $row.append(templates['layout-separator']({
+            cssClass: 'empty-separator filler',
             position: position,
-            cssClass: 'empty',
-            spanClass: 'empty',
             rowIndex: $row.attr('data-position'),
-            active: true,
-            index: colIndex
+            active: false,
+            index: position
         }));
     }
 
@@ -655,19 +699,21 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             }
         }
 
-        var rowIndex = $row.attr('data-position');
+        handleMovement({
+            position: $target.attr('data-position'),
+            rowIndex: $row.attr('data-position')
+        }, data);
+    }
 
-        if (rowIndex !== data.rowIndex) {
+    function handleMovement(newPosition, data) {
+        if (newPosition.rowIndex !== data.rowIndex) {
             console.warn('Can not drag to different rows!');
             return;
         }
 
-        var position = $target.attr('data-position');
-        var move = position - data.position;
-
         var col = l[data.rowIndex].columns[data.colIndex].resolutions[l.resolutions[0]];
 
-        col.size += move;
+        col.size += newPosition.position - data.position;
 
         if (col.size > 12) {
             col.size = 12;

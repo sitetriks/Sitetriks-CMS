@@ -1,4 +1,6 @@
-﻿function createDocumentation() {
+﻿/* globals Data, Loader, Validator */
+
+function createDocumentation() {
     let $parentInput = $('#parent');
     let $form = $('#create-topic-form');
     let validateFormFunc = Validator.createFieldsValidation();
@@ -27,7 +29,7 @@
 
         Loader.show('#fff');
         let formData = new FormData(this);
-        Data.postForm({ formData: formData }).then(function (res) {
+        Data.postForm({ url: this.action, formData: formData }).then(function (res) {
             if (res.success) {
                 location.replace('/sitetriks/documentation');
             } else {
@@ -292,9 +294,9 @@ function editDocumentation(ev) {
         }
 
 
-        Data.postForm({ formData }).then(function (res) {
+        Data.postForm({ url: this.action, formData }).then(function (res) {
             location.replace('/sitetriks/documentation');
-        })
+        });
 
         ev.preventDefault();
         return false;

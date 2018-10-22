@@ -295,6 +295,22 @@
         return validateUrlOnChange;
     }
 
+    function validateUniquenes(name, classToValidate) {
+        var counter = 0;
+        var $allNames = $('.' + classToValidate);
+        for (inputName in $allNames) {
+            if ($allNames[inputName].value === name) {
+                counter++;
+            }
+        }
+
+        if (counter > 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     return {
         validate,
         isAlphaNumeric,
@@ -311,6 +327,7 @@
         isInteger,
         createValidateOnChangeHandler,
         validateField,
-        createFieldValidationHandler
+        createFieldValidationHandler,
+        validateUniquenes
     };
 }());

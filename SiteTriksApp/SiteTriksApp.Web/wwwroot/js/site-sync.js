@@ -217,6 +217,7 @@ $(document).ready(function () {
         var checkedDynamicItems = [];
         var checkedBlogPosts = [];
         var checkedCustomModulesItems = [];
+        var checkedHtmlBlocks = [];
 
         $("#pages-list li.active").each(function (idx, li) {
             checkedPages.push($(li).children(".model-id").text());
@@ -245,6 +246,15 @@ $(document).ready(function () {
 
         $("#files-list li.active").each(function (idx, li) {
             checkedFiles.push($(li).children(".model-id").text());
+            $(this).remove();
+        });
+
+        $("#html-blocks-list li.active").each(function (idx, li) {
+            console.log(checkedHtmlBlocks);
+            console.log($(li).children(".model-id").text());
+            checkedHtmlBlocks.push($(li).children(".model-id").text());
+            console.log(checkedHtmlBlocks);
+
             $(this).remove();
         });
 
@@ -291,6 +301,7 @@ $(document).ready(function () {
             FilesIds: checkedFiles,
             BlogPostsIds: checkedBlogPosts,
             DynamicItems: checkedDynamicItems,
+            HtmlBlocks: checkedHtmlBlocks,
             CustomModulesItems: checkedCustomModulesItems,
             Domain: domain,
             SiteId: siteId

@@ -313,6 +313,22 @@ var Validator = function () {
         return validateUrlOnChange;
     }
 
+    function validateUniquenes(name, classToValidate) {
+        var counter = 0;
+        var $allNames = $('.' + classToValidate);
+        for (inputName in $allNames) {
+            if ($allNames[inputName].value === name) {
+                counter++;
+            }
+        }
+
+        if (counter > 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     return {
         validate: validate,
         isAlphaNumeric: isAlphaNumeric,
@@ -329,6 +345,7 @@ var Validator = function () {
         isInteger: isInteger,
         createValidateOnChangeHandler: createValidateOnChangeHandler,
         validateField: validateField,
-        createFieldValidationHandler: createFieldValidationHandler
+        createFieldValidationHandler: createFieldValidationHandler,
+        validateUniquenes: validateUniquenes
     };
 }();

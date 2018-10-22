@@ -9,11 +9,12 @@
         <div class="sitetriks-login container main-content content-placeholder">
             @*<h2>@ViewBag.Title.</h2>*@
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div id="loginForm">
                         <form method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                             <div class="login-logo-container">
-                                <img src="~/images/Sitetriks_logo.svg" />
+                                <img src="~/images/homepage/Login.svg" />
+                                <div>Login</div>
                             </div>
                             <div>
                                 <p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
@@ -49,6 +50,9 @@
                         </form>
                     </div>
                 </div>
+                <div class="image-holder col col-lg-9 col-md-9 col-sm-9">
+                    <img class="login-image" src="" alt="login image" />
+                </div>
             </div>
         </div>
     </content>
@@ -58,4 +62,5 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script type="text/javascript" src="~/js/login-image-select.js"></script>
 }

@@ -68,7 +68,8 @@
 
 #add-widget-container {
     padding-top: 50px;
-    padding-left: 40px;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
     #add-widget-container .col-md-5 .row,
@@ -282,8 +283,7 @@ div.ui-dialog .ui-dialog-content {
         background-color: #fff;
         color: #048CFF;
         font-weight: bold;
-        padding-top: 0;
-        margin-top: 0;
+        padding-top: 3px;
     }
 
         .revision-history-wrapper .btn-revision > span {
@@ -447,6 +447,7 @@ div.ui-dialog .ui-dialog-content {
     align-items: center;
     margin-bottom: 10px;
     width: 100%;
+    min-width: 130px;
     cursor: pointer;
 }
 
@@ -476,17 +477,14 @@ div.ui-dialog .ui-dialog-content {
         border-radius: 0 6px 6px 0;
     }
 
-    .toggle-layout-content .show-layout {
-        text-align: right;
+    .toggle-layout-content > diV:nth-of-type(2) .circle {
+        border-radius: 0 6px 6px 0;
     }
 
     .toggle-layout-content div.circle {
-        height: 10px;
         background-color: #bf2000;
         width: 10px;
-        border: 1px solid #979797;
-        border-radius: 50%;
-        margin: 5%;
+        height: 98%;
     }
 
 .show-content,
@@ -497,6 +495,7 @@ div.ui-dialog .ui-dialog-content {
     font-size: 14px;
     font-weight: bold;
     color: #383838;
+    text-align: center;
 }
 
 .selected-option {
@@ -532,6 +531,7 @@ div.ui-dialog .ui-dialog-content {
 #widgets-holder {
     overflow-y: scroll;
     height: 100%;
+    min-width: 130px;
 }
 
     #widgets-holder .drag {
@@ -924,11 +924,11 @@ select#gallery-libs {
 /*Chrome specific*/
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    .revision-history-wrapper .btn-revision {
+    /*.revision-history-wrapper .btn-revision {
         margin-top: -1px;
     }
 
     .revision-history-wrapper .btn-revision {
         margin-top: -1px;
-    }
+    }*/
 }

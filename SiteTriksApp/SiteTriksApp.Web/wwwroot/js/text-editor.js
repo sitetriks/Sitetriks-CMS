@@ -5,16 +5,16 @@
                 selector: selector,
                 verify_html: false,
                 extended_valid_elements: 'span',
-                extended_valid_elements: "div[class|id|style|span],span[class|id|style]",
-                extended_valid_elements: "div[*],span[*]",
+                extended_valid_elements: 'div[class|id|style|span],span[class|id|style]',
+                extended_valid_elements: 'div[*],span[*]',
                 theme: 'modern',
-                mode: "textareas",
+                mode: 'textareas',
                 force_br_newlines: false,
                 force_p_newlines: false,
                 forced_root_block: '',
                 width: width,
                 height: height,
-                plugins: ['advlist autolink codesample link image lists charmap print preview hr anchor pagebreak',
+                plugins: ['advlist autolink codesample link image lists charmap print preview hr anchor pagebreak fullscreen',
                     'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor'],
                 external_plugins: {
                     'codeHighl': '/js/code-highlight-tinymce-plugin.js',
@@ -31,6 +31,9 @@
                         success(images);
                     });
                 },
+                browser_spellcheck: true,
+                contextmenu: false,
+                paste_as_text: true,
                 image_caption: true,
                 image_advtab: true,
                 file_picker_types: 'file image media',
@@ -69,7 +72,7 @@
                     input.click();
                 },
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor code | codeHighl | fontsizeselect | fontselect | custombutton',
-                fontsize_formats: '8px 10px 12px 14px 18px 20px 22px 24px 36px 48px',
+                fontsize_formats: '8px 10px 12px 14px 16px 18px 20px 22px 24px 36px 48px',
                 setup: function (editor) {
                     editor.addButton('custombutton', {
                         type: 'menubutton',
@@ -96,10 +99,10 @@
                 verify_html: false,
                 selector: selector,
                 extended_valid_elements: 'span',
-                extended_valid_elements: "div[class|id|style|span],span[class|id|style]",
-                extended_valid_elements: "div[*],span[*]",
+                extended_valid_elements: 'div[class|id|style|span],span[class|id|style]',
+                extended_valid_elements: 'div[*],span[*]',
                 theme: 'modern',
-                mode: "textareas",
+                mode: 'textareas',
                 force_br_newlines: false,
                 force_p_newlines: false,
                 forced_root_block: '',
@@ -166,9 +169,10 @@
                 }
             });
         },
+     
         // selector must be Id
-        getContent: function (selector) {
-            return tinymce.get(selector).getContent();
+        getContent: function (id) {
+            return tinymce.get(id).getContent();
         },
         remove: function (selector) {
             let editor = tinymce.get(selector);
@@ -190,7 +194,7 @@
 
 var fix = function () {
     $(document).on('focusin', function (e) {
-        if ($(e.target).closest(".mce-window").length) {
+        if ($(e.target).closest('.mce-window').length) {
             e.stopImmediatePropagation();
         }
     });

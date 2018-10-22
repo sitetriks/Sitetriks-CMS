@@ -1,22 +1,24 @@
 'use strict';
 
-function initLibraries(grid, config, mediator, logger) {
+/* globals Data, Utils, Loader, Notifier, Validator, FileHandler, Multiselect */
+
+function initLibraries(grid, mediator, logger) {
     var $libs = $('#libs');
     var $btnEditLibrary = $('#btn-edit-lib');
     var $btnDeleteLibrary = $('#btn-delete-lib');
 
     if ($libs.val()) {
-        config.defaultFilters = [{
-            propertyName: 'LibraryId',
+        grid.updateDefaultFilters([{
+            propertyName: 'libraryId',
             comparison: 1,
             value: $libs.val()
-        }];
+        }]);
     } else {
         $btnEditLibrary.hide();
         $btnDeleteLibrary.hide();
     }
 
-    var gridObj = grid.init('.grid', config);
+    grid.load(true);
     var $grid = $('.grid');
 
     var $modal = $('#file-upload-modal');
@@ -31,18 +33,26 @@ function initLibraries(grid, config, mediator, logger) {
         if (data) {
             var id = data.libraryId.toLowerCase();
             if ($libs.val() !== id) {
-                $libs.val(id).trigger('change');
-            } else {
-                $(document).trigger('refreshGrid');
+                $libs.val(id);
+                grid.updateDefaultFilters([{
+                    propertyName: 'libraryId',
+                    comparison: 1,
+                    value: id
+                }], true).load(true);
             }
 
+            if (!id) {
+                grid.updateDefaultFilters();
+            }
+
+            grid.load(true);
             $modal.modal('hide');
         }
     }
 
     function copyUrl(ev) {
         var $target = $(ev.target);
-        var url = location.origin + "/files/" + $target.attr("data-url");
+        var url = location.origin + '/files/' + $target.attr('data-url');
 
         copyToClipboard(url);
     }
@@ -51,16 +61,16 @@ function initLibraries(grid, config, mediator, logger) {
         var value = $(this).val();
 
         if (value) {
-            gridObj.changeDefaultFilter({
-                propertyName: 'LibraryId',
+            grid.updateDefaultFilters([{
+                propertyName: 'libraryId',
                 comparison: 1,
                 value: value
-            });
+            }], true).load();
 
             $btnEditLibrary.show();
             $btnDeleteLibrary.show();
         } else {
-            gridObj.changeDefaultFilter();
+            grid.updateDefaultFilters().load();
 
             $btnEditLibrary.hide();
             $btnDeleteLibrary.hide();
@@ -92,11 +102,15 @@ function initLibraries(grid, config, mediator, logger) {
     }
 
     function copyToClipboard(element) {
-        var $temp = $("<input>");
-        $("body").append($temp);
+        var $temp = $('<input/>');
+        $('body').append($temp);
         $temp.val(element).select();
-        document.execCommand("copy");
+        document.execCommand('copy');
         $temp.remove();
+    }
+
+    function cleanUp() {
+        mediator.dispatch('fileHandlerClean');
     }
 
     // --------------------------------------------------------
@@ -105,6 +119,7 @@ function initLibraries(grid, config, mediator, logger) {
         $libs.on('change', selectLibrary);
         $btnDeleteLibrary.on('click', deleteLibrary);
         $btnEditLibrary.on('click', editLibrary);
+        $modal.on('show.bs.modal hidden.bs.modal', cleanUp);
         mediator.on('filesUploaded', fileUploadedHandler, 'filesUploaded', 'General');
         mediator.on('alert', Notifier.createAlert, 'createAlert', 'Notifier');
     }
@@ -114,6 +129,7 @@ function initLibraries(grid, config, mediator, logger) {
         $libs.off('change', selectLibrary);
         $btnDeleteLibrary.off('click', deleteLibrary);
         $btnEditLibrary.off('click', editLibrary);
+        $modal.off('show.bs.modal hidden.bs.modal', cleanUp);
         mediator.off('filesUploaded', 'filesUploaded', 'General');
         mediator.off('alert', 'createAlert', 'Notifier');
     }
@@ -126,6 +142,8 @@ function initLibraries(grid, config, mediator, logger) {
 function editLibraries(isNameAvailableLink, libraryId) {
     var $inputName = $('#input-name');
     var $editForm = $('#create-library-form');
+
+    Multiselect.SetupElement($('.multiselect-thumbnails'));
 
     bindEvents();
 
@@ -200,6 +218,7 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
     var $allowedTypes = $('#allowed-types');
     var $createForm = $('#create-library-form');
 
+    Multiselect.SetupElement($('.multiselect-thumbnails'));
     populateUrl($inputName, $inputPrefix, validateUrlOnChange);
     displayAllowedTypes.apply($libraryType[0]);
     var timer = 0;
@@ -293,7 +312,7 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
             }
         }, Data.defaultError).then(function (res) {
             if (res.success) {
-                return Data.postForm({ formData: new FormData(_this) });
+                return Data.postForm({ url: _this.action, formData: new FormData(_this) });
             } else {
                 Validator.validate($inputName, res.message || 'Name is already taken!', function (val) {
                     return false;

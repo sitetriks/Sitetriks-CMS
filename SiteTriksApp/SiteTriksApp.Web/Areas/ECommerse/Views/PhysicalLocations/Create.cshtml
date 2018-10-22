@@ -9,8 +9,8 @@
     {
         <div class="fixed-top-2">
             @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/SecondNavHeader.cshtml")
-            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <button type="submit" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Physical Location</button>
+            <a href="@Url.Action("Details", "StoreManager", new { id = Model.StoreId })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <button type="submit" class="btn-nav-2">Save & Exit</button>
         </div>
 
         <div class="page-properties">

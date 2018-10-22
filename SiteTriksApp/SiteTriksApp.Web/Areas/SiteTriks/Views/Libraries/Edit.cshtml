@@ -16,7 +16,7 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <input type="submit" value="Save" class="btn-nav-2" />
+            <input type="submit" value="Save & Exit" class="btn-nav-2" />
         </div>
 
         @Html.AntiForgeryToken()
@@ -59,10 +59,8 @@
                         dropdownList.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString(), Selected = Model.SelectedThumbailSizes.Contains(item.Id) });
                     }
                 }
-                @Html.ListBoxFor(model => Model.SelectedThumbailSizes, dropdownList,
-                              new { @class = "form-control", id = "multiselect-roles" })
-                @Html.ValidationMessageFor(model => model.SelectedThumbailSizes,
-                              "", new { @class = "text-warning" })
+                @Html.ListBoxFor(model => Model.SelectedThumbailSizes, dropdownList, new { @class = "form-control multiselect-thumbnails" })
+                @Html.ValidationMessageFor(model => model.SelectedThumbailSizes, "", new { @class = "text-warning" })
             </div>
         </div>
     }
@@ -70,6 +68,7 @@
 
 @section scripts{
     <script src="~/js/tags.js"></script>
+    <script src="~/js/multiselect-setup.js"></script>
     <script src="~/js/sitetriks/libraries.js"></script>
     <script src="~/js/validator.js"></script>
     <script>

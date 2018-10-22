@@ -1,25 +1,15 @@
 ﻿@model SiteTriks.Models.News.NewsModel
 
-@{
-    var url = "/news/" + Model.Url;
+@{ 
+    string attributes = string.IsNullOrWhiteSpace(Model.MainImageUrlID) ? "" : $"style=\"background-image: url('/files/id/{Model.MainImageUrlID}'); background-size: cover; border-color:transparent; \"";
 }
 
-<div>
-    <div class="testimonial">
-        @*<a href="@url">*@
-        <a>
-            <div class="testimonial-description testimonial-description-modified">
-                <p id="show-@Model.Id">
-                </p>
-            </div>
-
-            <div class="testimonial-image">
-                @if (!string.IsNullOrEmpty(Model.MainImageUrlID))
-                {
-                    <img class="round" src="/files/id/@Model.MainImageUrlID" alt="image">
-                }
-                <h4>@Model.Title</h4>
-            </div>
-        </a>
+<div class="testimonial news-carousel-item" @Html.Raw(attributes)>
+    <div class="news-description-wrapper">
+        <div class="news-description">
+            <h4>@Model.Title</h4>
+            <div class="news-carousel-content">@Html.Raw(Model.Content)</div>
+            <a class="read-more">Read More...</a>
+        </div>
     </div>
 </div>

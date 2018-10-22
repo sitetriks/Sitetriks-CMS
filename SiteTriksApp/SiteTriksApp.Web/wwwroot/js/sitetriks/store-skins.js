@@ -18,7 +18,7 @@ var StoreSkins = (function () {
         let w = ModuleBuilder.createWidgets('#add-widget-container', pageWidgets, widgets);
 
         ModuleBuilder.initializeLayout(previewLayoutSelector, layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout'; });
-        renderLayout(layout.layoutRows, $mainPlaceholder);
+        ModuleBuilder.renderLayout(layout.layoutRows, $mainPlaceholder);
         WidgetsDraggable.init(w);
         renderWidgets(widgets, $mainPlaceholder, 'preview');
 
@@ -91,7 +91,7 @@ var StoreSkins = (function () {
             element.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
             layoutWidget.element = JSON.stringify(element);
 
-            renderLayout(layout, $mainPlaceholder, l.deletedPlaceholders);
+            ModuleBuilder.renderLayout(layout, $mainPlaceholder, l.deletedPlaceholders);
             WidgetsDraggable.init(w);
         }
 
@@ -100,17 +100,21 @@ var StoreSkins = (function () {
         }
 
         function saveLayoutAndWidgets(ev) {
-            let formData = new FormData();
-            if (Validator.isFunction(formData.set)) {
-                formData.set('SerializedSkin', JSON.stringify(w.getPageContent()));
-                formData.set('id', skinId);
-            } else {
-                formData.append('SerializedSkin', JSON.stringify(w.getPageContent()));
-                formData.append('id', skinId);
-            }
-
             Loader.show('#fff');
-            Data.postForm({ url: postUrl, formData }).then(function (res) {
+            compileSkinTemplate(w.getPageContent()).then(function (res) {
+                let formData = new FormData();
+                if (Validator.isFunction(formData.set)) {
+                    formData.set('SerializedSkin', JSON.stringify(w.getPageContent()));
+                    formData.set('CompiledSkin', res.template);
+                    formData.set('id', skinId);
+                } else {
+                    formData.append('SerializedSkin', JSON.stringify(w.getPageContent()));
+                    formData.append('CompiledSkin', res.template);
+                    formData.append('id', skinId);
+                }
+
+                return Data.postForm({ url: postUrl, formData });
+            }).then(function (res) {
                 if (res && res.success) {
                     window.location.replace(`/ecommerse/storemanager/details/${storeId}`);
                 } else {
@@ -445,50 +449,15 @@ var StoreSkins = (function () {
         });
     }
 
-    function renderLayout(layout, $container, deletedPlaceholders) {
-        if (!$container || !$container.length) { return false; }
-
-        for (let i = 0; i < (deletedPlaceholders || []).length; i += 1) {
-            $container.find(`div[data-placeholder="${deletedPlaceholders[i]}"]`).remove();
-        }
-
-        for (let i = 0; i < layout.length; i += 1) {
-            let $row = $(`<${layout[i].tag}></${layout[i].tag}>`, {
-                class: layout[i].cssClass
-            });
-
-            for (let j = 0; j < layout[i].columns.length; j++) {
-                let col = layout[i].columns[j];
-                let cssClass = '';
-                for (let key in col.resolutions) {
-                    cssClass += `col-${key}-${col.resolutions[key].size} st-col-${key}-${col.resolutions[key].size} `;
-                }
-
-                let $col = $(`div[data-placeholder="${col.properties.placeholder}"]`);
-
-                if ($col.length > 0) {
-                    $col.attr('class', cssClass + 'drop drop-layout connected-widget-container placeholder');
-                } else {
-                    $col = $('<div></div>', {
-                        class: cssClass + 'drop drop-layout connected-widget-container placeholder',
-                        'data-placeholder': col.properties.placeholder
-                    }).appendTo($row);
-                }
-            }
-
-            $row.appendTo($container);
-        }
-    }
-
     function compileSkinTemplate(widgets, name) {
         let l = widgets.find(c => c.placeholder === 'store-skin' && c.type === 'layoutBuilder' && c.order === 0);
         let layout = JSON.parse(l.element);
 
         let $container = $(document.createElement('div'));
-        renderLayout(layout.layoutRows, $container);
+        ModuleBuilder.renderLayout(layout.layoutRows, $container);
 
         return renderWidgets(widgets, $container).then(function (res) {
-            let template = Handlebars.compile($container[0].innerHTML);
+            let template = $container[0].innerHTML;
             let result = {};
             result[name || 'template'] = template;
             return result;
@@ -781,22 +750,12 @@ var StoreSkins = (function () {
         let applyFiltersHandler;
         let viewDetailsHandler;
 
-        renderLayout(layout.layoutRows, $mainPlaceholder);
+        ModuleBuilder.renderLayout(layout.layoutRows, $mainPlaceholder);
         renderWidgets(widgets, $mainPlaceholder).then(function (res) {
-            // TODO: compile templates on skin creation
             return Data.getJson({ url: '/ecommerse/storemanager/getskins?id=' + storeId });
         }).then(function (res) {
-            let skins = [];
-            let previewSkin = JSON.parse(res.previewSkin);
-            skins.push(compileSkinTemplate(previewSkin, 'previewTemplate'));
-
-            let fullPageSkin = JSON.parse(res.fullPageSkin);
-            skins.push(compileSkinTemplate(fullPageSkin, 'fullPageTemplate'));
-
-            return Promise.all(skins);
-        }).then(function (res) {
-            let previewTemplate = res[0].previewTemplate;
-            let fullPageTemplate = res[1].fullPageTemplate;
+            let previewTemplate = Handlebars.compile(res.compiledPreviewSkin);
+            let fullPageTemplate = Handlebars.compile(res.compiledFullPageSkin);
 
             let storeGrid = grid({ selector: '.display-store-grid', storeId, template: previewTemplate });
             applyFiltersHandler = storeGrid.applyFilters;
@@ -811,7 +770,7 @@ var StoreSkins = (function () {
         // ui
         function toggleFilterSection(ev) {
             let $target = $(this);
-            $target.parents('.section-wrapper').toggleClass('collapsed');
+            $target.parents('.section-wrapper').first().toggleClass('collapsed');
             $target.find('span.glyphicon').toggleClass('glyphicon-chevron-up').toggleClass('glyphicon-chevron-down');
         }
 
@@ -823,11 +782,9 @@ var StoreSkins = (function () {
                 let id = $target.attr('data-id');
                 Data.getJson({ url: '/ecommerse/storemanager/getstoreitem?id=' + id }).then(function (res) {
                     if (res.success) {
-                        let html = template(res.item);
-
                         $fullPageView.show();
                         $gridView.hide();
-                        $itemContainer.html(html);
+                        $itemContainer.html(template(res.item));
                     }
                 });
             };

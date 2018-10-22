@@ -8,14 +8,13 @@
     <content>
         <div class="sitetriks-login container main-content content-placeholder">
             <div class="row">
-                <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+                <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div id="registerForm">
-                        <div class="register-form-container">
-                            <img src="~/images/Sitetriks_logo.svg" />
+                        <div class="login-logo-container">
+                            <img src="~/images/homepage/Login.svg" />
+                            <div>@ViewData["Title"]</div>
                         </div>
                         <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" class="clearfix">
-                            <h3>@ViewData["Title"]</h3>
-                            <h4>Create a new account.</h4>
                             <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="FirstName"></label>
@@ -39,7 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Password"></label>
-                                <div class="st-hint" >
+                                <div class="st-hint">
                                     <input asp-for="Password" class="form-control" />
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                     <span class="st-tooltip">Password must be ateast 6 symbols and must contain special symbol, uppercase letter and digit.</span>
@@ -68,6 +67,9 @@
                         </form>
                     </div>
                 </div>
+                <div class="image-holder col col-lg-9 col-md-9 col-sm-9">
+                    <img class="login-image" src="" alt="login image" />
+                </div>
             </div>
         </div>
     </content>
@@ -84,4 +86,5 @@
             });
         })
     </script>
+    <script type="text/javascript" src="~/js/login-image-select.js"></script>
 }

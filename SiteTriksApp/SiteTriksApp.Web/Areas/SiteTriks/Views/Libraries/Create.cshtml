@@ -16,7 +16,7 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Library</button>
+            <button type="submit" id="submit" class="btn-nav-2">Save & Exit</button>
         </div>
         @Html.AntiForgeryToken()
 
@@ -58,17 +58,15 @@
             <div class="form-group row">
                 @Html.LabelFor(model => model.SelectedThumbailSizes, new { @class = "control-label col-xs-2" })
                 <div class="clearme"></div>
-                @{ 
+                @{
                     var dropdownList = new List<SelectListItem>();
                     foreach (var item in Model.ThumbnailsSizes)
                     {
                         dropdownList.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString() });
                     }
                 }
-                @Html.ListBoxFor(model => Model.SelectedThumbailSizes, dropdownList,
-                              new { @class = "form-control", id = "multiselect-roles" })
-                @Html.ValidationMessageFor(model => model.SelectedThumbailSizes,
-                              "", new { @class = "text-warning" })
+                @Html.ListBoxFor(model => Model.SelectedThumbailSizes, dropdownList, new { @class = "form-control multiselect-thumbnails", id = "multiselect-roles" })
+                @Html.ValidationMessageFor(model => model.SelectedThumbailSizes, "", new { @class = "text-warning" })
             </div>
 
             <div class="form-group row">
@@ -81,6 +79,7 @@
 
 @section scripts{
     <script src="~/js/tags.js"></script>
+    <script src="~/js/multiselect-setup.js"></script>
     <script src="~/js/sitetriks/libraries.js"></script>
     <script src="~/js/validator.js"></script>
     <script>

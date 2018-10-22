@@ -93,6 +93,7 @@ function sendEmails() {
 
 
     $('input[type=submit]').on("click", function (e) {
+        Loader.show(true);
         let $validationBox = $('#email-group-options > .validation-output');
 
         e.preventDefault();
@@ -138,5 +139,7 @@ function sendEmails() {
                 }
             });
         }
+
+        Loader.hide();
     });
 }

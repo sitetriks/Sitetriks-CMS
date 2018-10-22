@@ -50,9 +50,9 @@
         }
     });
 
-    $('input[type=submit]').on('click', function (e) {
+    $('button[type=submit]').on('click', function (e) {
+        Loader.show(true);
         let flag = true;
-
         if (!Validator.validate($('#email'), 'Invalid email', function (val) {
             return Validator.validateEmail(val);
         })) {
@@ -62,7 +62,7 @@
         if (!flag) {
             e.preventDefault();
         }
-
+        Loader.hide();
     });
 }
 
@@ -119,8 +119,8 @@ function initUserEdit() {
     });
 
     $('input[type=submit]').on('click', function (e) {
+        Loader.show(true);
         let flag = true;
-        console.log("lakdjaskldja");
         if (!Validator.validate($('#email'), 'Invalid email', function (val) {
             return Validator.validateEmail(val);
         })) {
@@ -130,6 +130,7 @@ function initUserEdit() {
         if (!flag) {
             e.preventDefault();
         }
+        Loader.hide();
     });
 
     initialDeselect("SuperAdmin");

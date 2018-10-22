@@ -12,10 +12,11 @@ var ModuleBuilder = function () {
 
     /**
      * Create scroll control.
-     * @param {any} wrapperId
-     * @param {any} scrollViewClass
-     * @param {any} innerContentClass
-     * @param {{styles: Map<string, string>}} config
+     * @param {any} wrapperId wrapper id
+     * @param {any} scrollViewClass scroll view class
+     * @param {any} innerContentClass inner conten class
+     * @param {{styles: Map<string, string>}} config config
+     * @return {scrollControl} scroll-control
      */
     function createScroll(wrapperId, scrollViewClass, innerContentClass, config) {
         var $element = $(wrapperId);
@@ -57,6 +58,48 @@ var ModuleBuilder = function () {
         $wrapper.data('layout-control', layout);
 
         return layout;
+    }
+
+    function renderLayout(layout, $container, deletedPlaceholders, widgets) {
+        if (!$container || !$container.length) {
+            return false;
+        }
+
+        for (var i = 0; i < (deletedPlaceholders || []).length; i += 1) {
+            $container.find('div[data-placeholder="' + deletedPlaceholders[i] + '"]').remove();
+            w.removeWidgetForPlaceholder(deletedPlaceholders[i], widgets);
+        }
+
+        var $rows = $container.children('.row');
+
+        for (var _i = 0; _i < layout.length; _i += 1) {
+            var isExistingRow = $rows.length > _i;
+            var $row = isExistingRow ? $($rows[_i]) : $('<' + layout[_i].tag + '></' + layout[_i].tag + '>');
+            $row.removeClass().addClass('row ' + layout[_i].cssClass + ' ');
+
+            for (var j = 0; j < layout[_i].columns.length; j++) {
+                var col = layout[_i].columns[j];
+                var cssClass = '';
+                for (var key in col.resolutions) {
+                    cssClass += 'col-' + key + '-' + col.resolutions[key].size + ' st-col-' + key + '-' + col.resolutions[key].size + ' ';
+                }
+
+                var $col = $container.find('div[data-placeholder="' + col.properties.placeholder + '"]');
+
+                if ($col.length > 0) {
+                    $col.attr('class', cssClass + 'drop drop-layout connected-widget-container placeholder');
+                } else {
+                    $col = $('<div></div>', {
+                        class: cssClass + 'drop drop-layout connected-widget-container placeholder',
+                        'data-placeholder': col.properties.placeholder
+                    }).appendTo($row);
+                }
+            }
+
+            if (!isExistingRow) {
+                $row.appendTo($container);
+            }
+        }
     }
 
     function getSiteTriksWidgets() {
@@ -289,6 +332,35 @@ var ModuleBuilder = function () {
             }
         };
 
+        initFunctions['embeddedscript'] = {
+            init: function init() {
+                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
+                    lineNumbers: true,
+                    mode: 'javascript'
+                });
+            },
+            show: function show(element) {
+                editor = CodeMirror.fromTextArea(document.getElementById('embedded-script'), {
+                    lineNumbers: true,
+                    mode: 'javascript'
+                });
+                var model = JSON.parse(element);
+
+                if (editor) {
+                    editor.setValue(model.RawCode);
+                }
+            },
+            save: function save() {
+                if (editor) {
+                    var model = {
+                        RawCode: editor.getValue()
+                    };
+                    return JSON.stringify(model);
+                }
+                return "";
+            }
+        };
+
         initFunctions['image'] = function () {
             var fileHandler = void 0;
 
@@ -325,7 +397,7 @@ var ModuleBuilder = function () {
 
                 setTimeout(function () {
                     _mediator.dispatch('populatedSelected', JSON.parse(JSON.parse(parsedElement.imagesFullInfo)));
-                }, 1000);
+                }, 500);
             }
 
             function save() {
@@ -409,7 +481,6 @@ var ModuleBuilder = function () {
                 var fieldId = 'image';
                 var $field = $('#' + fieldId);
                 $field.val(galleryConfig.ids);
-
                 if (galleryConfig.imagesFullInfo != '') {
                     $('#selectedImages').attr('data-selectedImages', galleryConfig.imagesFullInfo);
                 }
@@ -447,22 +518,14 @@ var ModuleBuilder = function () {
                 var currentType = $('#gallery-source').data('source-type');
                 var showType = $('#gallery-show-type option:selected').val();
                 var ids = $('#image').val();
+                console.log(ids);
                 var imagesFullInfo = $('#selectedImages').attr('data-selectedImages');
 
-                if (currentType == 'images' && ids.indexOf(';') !== 0) {
-                    //ids = ids.substring(ids.indexOf(';'), ids.length); // what is the purpose of this line?
-                }
-
-                if (ids.indexOf(';') == -1 && currentType == 'images') {
-                    $('#image').val('');
-                    return null;
+                if (currentType == 'library') {
+                    ids = $('#gallery-libs').val();
                 }
 
                 if (ids.indexOf(';') !== -1 && currentType == 'library') {
-                    return null;
-                }
-
-                if (ids == '') {
                     return null;
                 }
 
@@ -482,6 +545,7 @@ var ModuleBuilder = function () {
 
             $('body').on('click', '#btn-select-library', function (e) {
                 $('#image').val($('#gallery-libs').val());
+
                 Notifier.createAlert({
                     containerId: '#file-handler-notfier',
                     message: 'Library was selected!',
@@ -544,14 +608,17 @@ var ModuleBuilder = function () {
 
             function selectFiles(data) {
                 var $images = $('.gallery-widget #image');
+
                 var currentImages = $images.val();
+                console.log(currentImages);
                 var $mainContainer = $('.gallery-main-image-container');
+
                 if (currentImages) {
                     if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
                         currentImages += ';';
                     }
 
-                    $images.val(currentImages + data.fileIds.join(';'));
+                    $images.val(data.fileIds.join(';'));
                 } else {
                     $images.val(data.fileIds.join(';'));
                 }
@@ -559,6 +626,7 @@ var ModuleBuilder = function () {
                 $mainContainer.html('');
 
                 for (var i = 0; i < data.fileIds.length; i += 1) {
+                    console.log(data.fileIds[i]);
                     createImageView('image', data.fileIds[i], $mainContainer);
                 }
             }
@@ -592,17 +660,11 @@ var ModuleBuilder = function () {
                 });
             },
             save: function save() {
-                var css = '';
-
-                var pageUrl = url;
-
                 var layout = ModuleBuilder.getInstance('#layout-widget-wrapper', 'layout-control').map(function (r) {
                     return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass };
                 });
 
                 var model = {
-                    PageUrl: pageUrl,
-                    css: css,
                     layoutRows: layout
                 };
 
@@ -610,112 +672,86 @@ var ModuleBuilder = function () {
             }
         };
 
+        function initNavigation(element) {
+            Data.getJson({ url: '/sitetriks/Display/GetAllParentPages' }).then(function (data) {
+                var pages = JSON.parse(data);
+                var $order = $('#pages-order');
+                var $multiselect = $('#multiselect-pages');
+                var $allPages = $('#input-all-pages');
+
+                for (var i = 0; i < pages.length; i++) {
+                    $('<option>', {
+                        value: pages[i].Id,
+                        text: pages[i].Title
+                    }).appendTo($multiselect);
+                }
+
+                Multiselect.Destroy($multiselect.attr('id'));
+                Multiselect.Setup($multiselect.attr('id'), function (option, checked, select) {
+                    var $option = $(option);
+                    if (!checked) {
+                        $order.children('li[data-identifier="' + opselected + '"]').first().remove();
+                    } else {
+                        $order.append(createSortablePage($option.text(), $option.val()));
+                    }
+                });
+
+                function createSortablePage(text, id) {
+                    var $li = $('<li></li>', {
+                        'class': 'ui-state-default',
+                        'data-identifier': id
+                    });
+                    $('<span></span>', {
+                        class: 'ui-icon ui-icon-arrowthick-2-n-s'
+                    }).appendTo($li);
+
+                    $li.append(text);
+                    return $li;
+                }
+
+                $order.sortable({ opacity: 0.5 });
+                $order.disableSelection();
+
+                $allPages.on('click', disableSelection);
+                function disableSelection(ev) {
+                    if (this.checked) {
+                        $order.sortable('disable').parent().hide();
+                        $multiselect.multiselect('disable').hide();
+                    } else {
+                        $order.sortable('enable').parent().show();
+                        $multiselect.multiselect('enable').show();
+                    }
+                }
+
+                if (element) {
+                    var content = JSON.parse(element);
+                    var selectedOptions = content.pageIds;
+                    for (var _i2 = 0; _i2 < selectedOptions.length; _i2++) {
+                        var $option = $multiselect.find('option[value="' + selectedOptions[_i2] + '"]').attr('selected', 'selected');
+                        $order.append(createSortablePage($option.text(), selectedOptions[_i2]));
+                    }
+
+                    var depthOption = content.maxDepth;
+                    $('#depth-level option[value="' + depthOption + '"]').attr('selected', 'selected');
+                    $allPages[0].checked = !!content.allPages;
+                    disableSelection.apply($allPages[0]);
+                }
+            });
+        }
+
         initFunctions['navigation'] = {
-            init: function init() {
-                Data.getJson({ url: '/sitetriks/Display/GetAllParentPages' }).then(function (data) {
-                    var pages = JSON.parse(data);
-
-                    for (var i = 0; i < pages.length; i++) {
-                        var option = $("<option>");
-                        option.attr("value", pages[i].Id);
-                        option.text(pages[i].Title);
-
-                        $("#multiselect-pages").append(option);
-                    }
-
-                    Multiselect.Setup("multiselect-pages", function (option, checked, select) {
-                        var opselected = $(option).val();
-
-                        if (!checked) {
-                            var el = $("#pages-order").children("li[data-identifier='" + opselected + "']").first();
-                            el.remove();
-                        } else {
-                            var $li = $('<li></li>', {
-                                class: 'ui-state-default',
-                                'data-identifier': opselected
-                            });
-                            var $span = $('<span></span>', {
-                                class: 'ui-icon ui-icon-arrowthick-2-n-s'
-                            });
-
-                            $li.append($span).append(pages.find(function (p) {
-                                return p.Id == opselected;
-                            }).Title).appendTo('#pages-order');
-                        }
-                    });
-
-                    $("#pages-order").sortable({ opacity: 0.5 });
-                    $("#pages-order").disableSelection();
-                });
-            },
-            show: function show(element) {
-                Data.getJson({ url: '/sitetriks/Display/GetAllParentPages' }).then(function (data) {
-                    var pages = JSON.parse(data);
-
-                    for (var i = 0; i < pages.length; i++) {
-                        var option = $("<option>");
-                        option.attr("value", pages[i].Id);
-                        option.text(pages[i].Title);
-
-                        $("#multiselect-pages").append(option);
-                    }
-
-                    var selectedOptions = JSON.parse(element).pageIds;
-
-                    for (var i = 0; i < selectedOptions.length; i++) {
-                        var li = $("<li>");
-                        li.addClass("ui-state-default");
-                        var span = $("<span>");
-                        span.addClass("ui-icon ui-icon-arrowthick-2-n-s");
-                        li.append(span);
-                        li.attr("data-identifier", selectedOptions[i]);
-                        li.append(pages.find(function (p) {
-                            return p.Id == selectedOptions[i];
-                        }).Title);
-
-                        $("#multiselect-pages option[value='" + selectedOptions[i] + "']").attr('selected', 'selected');
-                        $("#pages-order").append(li);
-                    }
-
-                    Multiselect.Setup("multiselect-pages", function (option, checked, select) {
-                        var opselected = $(option).val();
-
-                        if (!checked) {
-                            var el = $("#pages-order").children("li[data-identifier='" + opselected + "']").first();
-                            el.remove();
-                        } else {
-                            var li = $("<li>");
-                            li.addClass("ui-state-default");
-                            var span = $("<span>");
-                            span.addClass("ui-icon ui-icon-arrowthick-2-n-s");
-                            li.append(span);
-                            li.attr("data-identifier", opselected);
-                            li.append(pages.find(function (p) {
-                                return p.Id == opselected;
-                            }).Title);
-
-                            $("#pages-order").append(li);
-                        }
-                    });
-
-                    var depthOption = JSON.parse(element).maxDepth;
-
-                    $("#depth-level option[value='" + depthOption + "']").attr('selected', 'selected');
-
-                    $("#pages-order").sortable({ opacity: 0.5 });
-                    $("#pages-order").disableSelection();
-                });
-            },
+            init: initNavigation,
+            show: initNavigation,
             save: function save() {
                 var ordered = [];
-
-                $("#pages-order").children().each(function () {
-                    ordered.push($(this).attr("data-identifier"));
+                $('#pages-order').children().each(function () {
+                    ordered.push($(this).attr('data-identifier'));
                 });
 
                 var depthLevel = $('#depth-level option:selected').val();
+                var allPages = $('#input-all-pages')[0].checked;
 
-                return JSON.stringify({ pageIds: ordered, maxDepth: depthLevel });
+                return JSON.stringify({ pageIds: ordered, maxDepth: depthLevel, allPages: allPages });
             }
         };
 
@@ -769,65 +805,74 @@ var ModuleBuilder = function () {
             save: function save() {}
         };
 
-        initFunctions['video'] = {
-            init: function init() {},
-            show: function show(element) {
-                var elements = element.split('/');
-                $('#video-source').val(elements[0]);
-                $('#default-video').val(elements[2]);
-
-                if (elements[0] === 'youtube') {
-                    $('#video-name').val('https://www.youtube.com/watch?v=' + elements[1]);
-                } else {
-                    $('#video-name').val(elements[1]);
-                }
-            },
-            save: function save() {
-                var source = $('#video-source').val();
-                var name = '';
-                var defaultVideo = '';
-                switch (source) {
-                    case 'youtube':
-                        name = parseYouTubeUrl($('#video-name').val());
-                        break;
-                    case 'database':
-                        name = $('#video-name').val();
-                        break;
-                    case 'youtubePlaylist':
-                        name = $('#video-name').val();
-                        break;
-                    case 'youtubeCustomPlaylist':
-                        name = parseYoutubeVideosList($('#video-name').val()).join(';');
-                        break;
-                    case 'youtubeMultiplePlaylists':
-                        name = $('#video-name').val();
-                        defaultVideo = $('#default-video').val();
-                        break;
-                }
-                return '' + source + '/' + name + '/' + defaultVideo;
+        initFunctions['video'] = function () {
+            function onSourceChange(ev) {
+                var source = this.value;
+                var container = this.closest('.widget-container');
+                var instructions = container.querySelector('#customVideoInstructions');
+                var defaultVideo = container.querySelector('.default-video');
+                instructions.style.display = source === 'youtubeCustomPlaylist' || source === 'youtubeMultiplePlaylists' ? 'block' : 'none';
+                defaultVideo.style.display = source === 'youtubeMultiplePlaylists' ? 'block' : 'none';
             }
-        };
+
+            return {
+                init: function init() {
+                    $('#video-source').on('change', onSourceChange);
+                },
+                show: function show(element) {
+                    var elements = element.split('/');
+                    $('#video-source').on('change', onSourceChange).val(elements[0]).trigger('change');
+                    $('#default-video').val(elements[2]);
+
+                    $('#video-name').val(elements[0] === 'youtube' ? 'https://www.youtube.com/watch?v=' + elements[1] : element[1]);
+                },
+                save: function save() {
+                    var source = $('#video-source').val();
+                    var name = $('#video-name').val();
+                    if (!name) {
+                        return { success: false, message: 'Video name is required!' };
+                    }
+
+                    var defaultVideo = $('#default-video').val();
+                    switch (source) {
+                        case 'youtube':
+                            name = parseYouTubeUrl(name);
+                            break;
+                        case 'database':
+                            break;
+                        case 'youtubePlaylist':
+                            break;
+                        case 'youtubeCustomPlaylist':
+                            name = parseYoutubeVideosList(name).join(';');
+                            break;
+                        case 'youtubeMultiplePlaylists':
+                            break;
+                    }
+
+                    if (!name || name.indexOf('error') > -1) {
+                        return { success: false, message: 'Invalid youtube url!' };
+                    }
+
+                    return { success: true, element: '' + source + '/' + name + '/' + defaultVideo };
+                }
+            };
+        }();
 
         initFunctions['presentation'] = {
             init: function init() {},
             show: function show(element) {
-                var elements = element.split('/');
-                $('#presentation-type').val(elements[0]);
-                $('#presentation-url').val(elements[1]);
+                var config = JSON.parse(element);
+                $('#presentation-type').val(config.type);
+                $('#presentation-url').val(config.url);
             },
             save: function save() {
                 var type = $('#presentation-type').val();
                 var url = $('#presentation-url').val();
-
-                if (url == '') {
-                    return null;
+                if (!url || url.length < 3) {
+                    return { success: false, message: 'Url is required and must be atleast 3 characters long!' };
                 }
 
-                if (url.length >= 3 && isValidUrl('@Url.Action("ValidateUrl", "Pages")?url=' + url, url)) {
-                    return '' + type + '/' + url;
-                }
-
-                return null;
+                return { success: true, element: JSON.stringify({ type: type, url: url }) };
             }
         };
 
@@ -1021,6 +1066,7 @@ var ModuleBuilder = function () {
         createScroll: createScroll,
         createWidgets: createWidgets,
         initializeLayout: initializeLayout,
+        renderLayout: renderLayout,
         getInstance: getInstance,
         setInstance: setInstance,
         SCROLL: 'scroll-bar',

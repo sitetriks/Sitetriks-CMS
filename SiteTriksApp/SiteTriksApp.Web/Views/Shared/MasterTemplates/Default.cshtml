@@ -42,10 +42,10 @@
     <div class="conntent-wrapper main-content">
         <div class="row-content">
             <div data-placeholder="main" class="placeholder row content-placeholder no-margin row-placeholder @(isPreview ? "preview-placeholder static" : "")">
-                @{ var main = Model.Contents.Where(c => c.Placeholder == "main").OrderBy(c => c.Order).ToArray(); }
-                @foreach (var item in main)
+                @{ var mainLayout = Model.Contents.Where(c => c.Placeholder == "main" && c.Type == "layoutBuilder" && c.Order == 0).FirstOrDefault(); }
+                @if (mainLayout != null)
                 {
-                    @await Component.InvokeAsync("RenderWidget", new { content = item, preview = isPreview ? "preview" : "", lang });
+                    @await Component.InvokeAsync("RenderLayout", new { content = mainLayout, innerContent = Model.Contents, preview = isPreview ? "preview" : "", lang });
                 }
             </div>
         </div>

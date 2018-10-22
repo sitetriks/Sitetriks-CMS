@@ -9,7 +9,7 @@
 <div class="fixed-top-2">
     @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/SecondNavHeader.cshtml")
     <a href="@Url.Action("Details", "StoreManager", new { id = Model.StoreId })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-    <a class="btn-nav-2 btn-save"><span class="glyphicon glyphicon-plus"></span>Save</a>
+    <a class="btn-nav-2 btn-save">Save & Exit</a>
 </div>
 
 <div class="backend-wrapper">
@@ -111,8 +111,6 @@
 
 @section scripts{
     <script src="~/js/modules/utils.js"></script>
-    <script type="text/javascript" src="~/js/modules/logger.js"></script>
-    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
     <script type="text/javascript" src="~/js/modules/layout-control.js"></script>
     <script type="text/javascript" src="~/js/modules/widgets.js"></script>
     <script type="text/javascript" src="~/js/modules/module-builder.js"></script>

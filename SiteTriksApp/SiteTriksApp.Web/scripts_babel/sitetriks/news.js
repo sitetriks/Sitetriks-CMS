@@ -4,7 +4,7 @@ var News = function () {
     function createNews(validateNewsLinkUrl, mediator, logger) {
         var $modal = $('#file-upload-modal');
         var $container = $modal.find('.file-handler-wrapper');
-        var fileHandler = FileHandler($container, ['Upload', 'Select'], '', mediator, logger, true);
+        var fileHandler = FileHandler($container, ['Upload', 'Select', 'Selected'], '', mediator, logger, true);
 
         var $seoWordsCounter = $('#seo-words-counter');
         var $urlFlied = $('#url');
@@ -30,6 +30,7 @@ var News = function () {
 
         function submitCreateNewsForm(evt) {
             var form = this;
+            console.log(form);
             var url = $urlFlied.val();
 
             if (url.length < 3) {
@@ -114,7 +115,7 @@ var News = function () {
 
         var $modal = $('#file-upload-modal');
         var $container = $modal.find('.file-handler-wrapper');
-        var fileHandler = FileHandler($container, ['Upload', 'Select'], '', mediator, logger, true);
+        var fileHandler = FileHandler($container, ['Upload', 'Select', 'Selected'], '', mediator, logger, true);
 
         var $urlFlied = $('#url');
         var $urlValidation = $('#url-validation');
@@ -135,10 +136,16 @@ var News = function () {
             bindEvents();
 
             common.countSEOWords.apply($('#seo-words'));
+            var dateToPublish = $dateTimePicker.attr('value');
 
             $dateTimePicker.datetimepicker({
-                minDate: new Date()
-            }).val('');
+                minDate: new Date(),
+                date: dateToPublish
+            });
+
+            if (!dateToPublish || new Date(dateToPublish) < new Date()) {
+                $dateTimePicker.datetimepicker().val(' ');
+            }
 
             populateUrl('#title', '#url', common.validateUrlOnChange);
         }, Data.defaultError);
@@ -186,7 +193,7 @@ var News = function () {
                 Data.postJson({ url: newsMlfUrl, data: body }).then(function (res) {
                     if (res.success) {
                         mlf = res.mlf;
-                        mediator.dispatch('alert', { selector: '#alerts', title: 'Success', message: 'News updated!', status: 'success' });
+                        window.location.replace('/sitetriks/news');
                     } else {
                         mediator.dispatch('alert', { selector: '#alerts', title: 'Failed', message: res.message || 'News was not updated!', status: 'daneger' });
                     }
@@ -230,16 +237,16 @@ var News = function () {
                 $btnSubmit.attr("disabled", false);
             }, Data.defaultError).then(function (res) {
                 if (res.success) {
-                    var _url = $urlFlied.val();
-                    var pageUrl = document.location.href;
-                    var newUrl = Utils.updateQueryStringParameter(pageUrl, 'url', _url);
-                    if (history.pushState) {
-                        window.history.replaceState({}, '', newUrl);
-                    } else {
-                        window.location.href = newUrl;
-                    }
+                    //let url = $urlFlied.val();
+                    //let pageUrl = document.location.href;
+                    //let newUrl = Utils.updateQueryStringParameter(pageUrl, 'url', url);
+                    //if (history.pushState) {
+                    //    window.history.replaceState({}, '', newUrl);
+                    //} else {
+                    //    window.location.href = newUrl;
+                    //}
 
-                    mediator.dispatch('alert', { selector: '#alerts', title: 'Success', message: 'News updated!', status: 'success' });
+                    window.location.replace('/sitetriks/news');
                 } else {
                     mediator.dispatch('alert', { selector: '#alerts', title: 'Failed', message: res.message, status: 'danger' });
                     window.onbeforeunload = onUnload;
@@ -331,21 +338,19 @@ var News = function () {
         }
 
         function selectFiles(data) {
-
             if (data.requester === 'images') {
                 var currentImages = $imagesInput.val();
                 console.log(currentImages);
-                // if (currentImages) {
-                //    if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
-                //        currentImages += ';';
-                //    }
 
-                //    $imagesInput.val(currentImages + data.fileIds.join(';'));
-                //} else {
-                //    $imagesInput.val(data.fileIds.join(';'));
-                //}
+                if (currentImages) {
+                    if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
+                        currentImages += ';';
+                    }
 
-                $imagesInput.val('');
+                    $imagesInput.val(currentImages + data.fileIds.join(';'));
+                } else {
+                    $imagesInput.val(data.fileIds.join(';'));
+                }
 
                 var imagesInputId = $imagesInput.attr('id');
                 var $mainContainer = $('#' + imagesInputId + '-container');
@@ -364,7 +369,7 @@ var News = function () {
                 createImageView(mainImgInputId, data.fileIds[0], $('#' + mainImgInputId + '-container'));
             }
 
-            //  $modal.modal('hide');
+            $('#file-upload-modal').modal('hide');
         }
 
         function openDatePicker() {

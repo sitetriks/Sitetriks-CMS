@@ -2,7 +2,11 @@
 
 var Multiselect = function () {
     function setup(id, onChangeCallback) {
-        $('#' + id).multiselect({
+        setupElement($('#' + id), onChangeCallback);
+    }
+
+    function setupElement($element, callback) {
+        $element.multiselect({
             multiple: true,
             height: '105px',
             header: '',
@@ -18,7 +22,7 @@ var Multiselect = function () {
                 my: 'left top',
                 at: 'left bottom'
             },
-            onChange: onChangeCallback
+            onChange: callback
         });
     }
 
@@ -32,6 +36,7 @@ var Multiselect = function () {
 
     return {
         Setup: setup,
+        SetupElement: setupElement,
         Refresh: refresh,
         Destroy: destroy
     };

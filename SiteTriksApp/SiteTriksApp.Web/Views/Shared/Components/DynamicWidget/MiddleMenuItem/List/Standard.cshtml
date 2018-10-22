@@ -1,0 +1,120 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
+
+@{
+    var entries = Model.Entries.OrderBy(e => e["Position"]).ToList();
+}
+
+
+@*add order of the items
+    - *@
+
+<div class="detailed-menu hidden-by-menu">
+    <div class="wrapper-detailed-menu">
+        <div class="row">
+            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 before-middle-box"></div>
+            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 before-middle-box"></div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div id="middle-box">
+                    <div class="advanced-cms">
+                        Advance CMS
+                    </div>
+                    <div class="entreprise-features">
+                        Enterprise Features
+                    </div>
+                    <div class="entreprise-description">
+                        Available with SiteTriks's free basic license.
+                    </div>
+                    <div class="arrows">
+                        <img src="~/images/mobile/shrank.svg" alt="shrank" class="side-arrow main-arrows" />
+                        <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="arrow-down main-arrows" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 after-middle-box"></div>
+            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 after-middle-box"></div>
+        </div>
+        <div class="wrapper-menu-items">
+            @{
+
+            }
+            @for (int i = 0; i < 13 && i < Model.Entries.Count(); i += 2)
+            {
+                bool flag = i >= 3 && i <= 11;
+                bool flagLastText = i >= 12;
+                bool lastine = i == 12;
+
+                <div class="row @if (flag) {<text> hidden-section </text> }" @if (flag) {<text> style="display: none" </text> }>
+                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item"></div>
+                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item"></div>
+                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item @if(lastine) {<text> last-before-item </text> }"></div>
+                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item fourth-last"></div>
+                </div>
+                <div class="row @if(flag) {<text> hidden-section </text> }" @if (flag) {<text> style="display: none" </text> }>
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 item item-left">
+                        @*@{Html.RenderPartial("MiddleMenuTemplate");}*@
+                        <div class="tree-item">
+                            @*item image*@
+                            <div id="@entries[i]["CustomId"])" class="icon">
+                                <img src="~/images/icons-svg/@entries[i]["IconPath"]" alt="menu-icon">
+                            </div>
+                            <div class="item-header">
+                                <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="arrow-down item-arrow" />
+                                <img src="~/images/mobile/side arrow dark.svg" alt="shrank" class="side-arrow item-arrow" />
+                                @*Title*@
+                                @*Envirement sync*@
+                                <div>@entries[i]["Title"]</div>
+                            </div>
+                            @*// item contents*@
+                            <div class="item-body @if(flagLastText) {<text> hidden-section-last-body </text> }" @if (flagLastText) {<text> style="display: none" </text> }>
+                                @Html.Raw(System.Net.WebUtility.HtmlDecode(entries[i]["Content"]))
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.Entries.Count() % 2 == 1 && i + 1 == 13)
+                    {
+                        <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 item item-right last-item }" style="border-left: none">
+                            @*@{Html.RenderPartial("MiddleMenuTemplate");}*@
+                            <div class="tree-item more-items">
+                                <div class="icon">
+                                    @*<img src="" alt="menu-icon">*@
+                                </div>
+                                <div class="item-header">
+                                    <div class="more-less-text">SHOW MORE</div>
+                                    <div class="more-less-text" style="display:none;">SHOW LESS</div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 item item-right">
+                            <div class="tree-item">
+                                <div id="@entries[i+1]["CustomId"]" class="icon">
+                                    <img src="~/images/icons-svg/@entries[i+1]["IconPath"]" alt="menu-icon">
+                                </div>
+                                <div class="item-header">
+                                    <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="arrow-down item-arrow" />
+                                    <img src="~/images/mobile/side arrow dark.svg" alt="shrank" class="side-arrow item-arrow" />
+                                    @*Title*@
+                                    <div>@entries[i + 1]["Title"]</div>
+                                </div>
+                                @*// item contents*@
+                                <div class="item-body">
+                                    @Html.Raw(System.Net.WebUtility.HtmlDecode(entries[i+ 1]["Content"]))
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+    }
+
+        </div>
+    </div>
+</div>

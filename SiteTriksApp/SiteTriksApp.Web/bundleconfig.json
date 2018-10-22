@@ -19,8 +19,10 @@
       "wwwroot/css/multi-level-dropdown.css",
       "wwwroot/css/front-end.css",
       "wwwroot/css/home-page.css",
+      "wwwroot/css/extensions.css",
       "wwwroot/lib/custom/jquery-ui/jquery-ui.css",
-      "wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css"    ]
+      "wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css"
+    ]
   },
   {
     "outputFileName": "wwwroot/js/site.min.js",

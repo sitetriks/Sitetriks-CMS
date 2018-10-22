@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals Data, Loader, Validator */
+
 function createDocumentation() {
     var $parentInput = $('#parent');
     var $form = $('#create-topic-form');
@@ -29,7 +31,7 @@ function createDocumentation() {
 
         Loader.show('#fff');
         var formData = new FormData(this);
-        Data.postForm({ formData: formData }).then(function (res) {
+        Data.postForm({ url: this.action, formData: formData }).then(function (res) {
             if (res.success) {
                 location.replace('/sitetriks/documentation');
             } else {
@@ -288,7 +290,7 @@ function editDocumentation(ev) {
             formData.append('Content', $(contentField).html());
         }
 
-        Data.postForm({ formData: formData }).then(function (res) {
+        Data.postForm({ url: this.action, formData: formData }).then(function (res) {
             location.replace('/sitetriks/documentation');
         });
 

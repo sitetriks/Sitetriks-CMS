@@ -6,6 +6,6 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <span>You are logged in as: </span>
+    <span>Logged as: </span>
     @Html.ActionLink(UserManager.GetUserName(User), "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage", @class = "profile-link" })
 }

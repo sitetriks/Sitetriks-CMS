@@ -15,7 +15,7 @@ namespace SiteTriksApp.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -819,6 +819,8 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<bool>("IsPublished");
 
+                    b.Property<bool>("IsStaticPage");
+
                     b.Property<DateTime?>("LastPublished");
 
                     b.Property<string>("LastUserId");
@@ -1016,6 +1018,30 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_urlbase");
                 });
 
+            modelBuilder.Entity("SiteTriks.Data.Models.Permission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Action");
+
+                    b.Property<string>("AllowedRoles");
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.Property<string>("System");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_permissions");
+                });
+
             modelBuilder.Entity("SiteTriks.Data.Models.SEOKeywords", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1091,7 +1117,7 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<bool>("IsSynced");
 
-                    b.Property<string>("ItemId");
+                    b.Property<Guid>("ItemId");
 
                     b.Property<string>("ItemLastTitle");
 
@@ -1101,7 +1127,7 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<Guid>("SiteProviderId");
 
-                    b.Property<string>("SyncTargets");
+                    b.Property<Guid>("SyncTarget");
 
                     b.HasKey("Id");
 
@@ -1126,6 +1152,30 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("st_sitesyncStatus");
+                });
+
+            modelBuilder.Entity("SiteTriks.Data.Models.StaticPageCache", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<string>("Language");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<Guid>("PageId");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_static_page_cache");
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Tag", b =>
@@ -1746,6 +1796,12 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("CompiledFullPageSkin");
+
+                    b.Property<string>("CompiledGridSkin");
+
+                    b.Property<string>("CompiledPreviewSkin");
+
                     b.Property<DateTime?>("DateCreated");
 
                     b.Property<DateTime?>("DateModified");
@@ -2009,7 +2065,7 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("SiteId");
+                    b.Property<Guid>("SiteId");
 
                     b.Property<Guid>("SiteProviderId");
 

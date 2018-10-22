@@ -25,6 +25,7 @@
     <link type="text/css" rel="stylesheet" href="~/css/st-grid.css" />
     <link type="text/css" rel="stylesheet" href="~/css/resolutions-icons.css" />
     <link type="text/css" rel="stylesheet" href="~/css/Glyphter.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/extensions.css" />
 
     @* Manually added librarires. TODO: use package manager *@
     <link type="text/css" rel="stylesheet" href="~/lib/custom/slick/slick.css" />
@@ -135,6 +136,7 @@
                                                         <li>@Html.ActionLink("Users", "Index", "Users", new { Area = "SiteTriks" }, new { })</li>
                                                         <li>@Html.ActionLink("User Groups", "Index", "UserGroups", new { Area = "SiteTriks" }, new { })</li>
                                                         <li>@Html.ActionLink("Roles", "Index", "Roles", new { Area = "SiteTriks" }, new { })</li>
+                                                        <li>@Html.ActionLink("Permissions", "Index", "Permission", new { Area = "SiteTriks" }, new { })</li>
                                                         <li class="nav-section-separator"><span>Content Management</span></li>
                                                         <li>@Html.ActionLink("Tags", "Index", "Tags", new { Area = "SiteTriks" }, new { })</li>
                                                         <li class="nav-section-separator"><span>Settings & Configurations</span></li>
@@ -225,6 +227,10 @@
     <script type="text/javascript" src="~/js/populate-url.js"></script>
     <script type="text/javascript" src="~/js/grid.js"></script>
     <script type="text/javascript" src="~/js/all-news.js"></script>
+    <script type="text/javascript" src="~/js/carousel.js"></script>
+    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
+    <script type="text/javascript" src="~/js/modules/logger.js"></script>
+    <script type="text/javascript" src="~/js/modules/warning-window.js"></script>
 
     @* Manually added librarires. TODO: use package manager *@
     <script type="text/javascript" src="~/lib/custom/slick/slick.min.js"></script>
@@ -237,9 +243,7 @@
     <script type="text/javascript" src="~/lib/custom/moment/moment.min.js"></script>
     <script type="text/javascript" src="~/lib/custom/moment/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
-    <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
-    <script type="text/javascript" src="~/js/carousel.js"></script>
+    <script type="text/javascript" src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
     @*@if (!LicenseManager.PersonalizationWithGroups)
         {*@
     <script>
@@ -266,6 +270,16 @@
                 prettify();
             }
         });
+
+
+        function initWarningWindow() {
+            let logger = new Logger();
+            let mediator = new Mediator(logger);
+
+            let warning = new WarningWindow(mediator, logger);
+        }
+
+        initWarningWindow();
 
         loadMainLayout();
 

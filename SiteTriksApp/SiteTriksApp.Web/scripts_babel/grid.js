@@ -755,7 +755,7 @@ var Grid = function Grid() {
 
                 $('<input/>', {
                     type: 'text',
-                    placeholder: 'SEARCH',
+                    placeholder: 'SEARCH: ' + columnConfiguration[i].title,
                     'data-property': columnConfiguration[i].name,
                     'data-type': columnConfiguration[i].type,
                     // class: 'search-field hidden'

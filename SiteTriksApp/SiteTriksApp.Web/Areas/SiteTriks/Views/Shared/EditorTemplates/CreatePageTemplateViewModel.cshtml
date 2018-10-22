@@ -26,12 +26,6 @@
     </div>
 
     <div class="form-group row">
-        @Html.LabelFor(model => Model.PageViewModel.Template, "Template", htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.DropDownListFor(model => Model.PageViewModel.Template, new SelectList(Model.Templates.Select(x => new { Value = x, Text = x }), "Value", "Text"), "-- Select Template --", new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => Model.PageViewModel.Template, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group row">
         @Html.LabelFor(model => Model.PageViewModel.PageTemplateId, "Template page", htmlAttributes: new { @class = "control-label col-xs-2" })
         @Html.DropDownListFor(model => Model.PageViewModel.PageTemplateId, new SelectList(Model.PageTemplateList, "Id", "Title"), new { @class = "form-control" })
     </div>

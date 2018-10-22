@@ -21,12 +21,15 @@ function createClass(assemblyName) {
         $(ev.target).parents('.field-item').remove();
     }
 
+    //A field with this name already exist. Please choose a different name.
     function customValidation($element) {
         if ($element.hasClass('validate-field-name')) {
             return Validator.validate($element, 'The field name must consist of at least 3 symbols. Please, use only alphanumeric symbols and do not use blank spaces.', function (val) {
                 return Validator.hasMinimumLength(val, 3) && Validator.isAlphaNumeric(val) && Validator.isStartingWithLetter(val);
             }) && Validator.validate($element, 'Title and link are system reserved words.', function (val) {
                 return val.toLocaleLowerCase() !== 'link' && val.toLocaleLowerCase() !== 'title';
+            }) && Validator.validate($element, 'A field with this name already exist. Please choose a different name.', function (val) {
+                return Validator.validateUniquenes(val, 'validate-field-name');
             });
         }
     }
@@ -64,7 +67,7 @@ function createClass(assemblyName) {
             formData.append('properties', JSON.stringify(properties));
         }
 
-        Data.postForm({ formData: formData }).then(function (res) {
+        Data.postForm({ url: '/sitetriks/dynamic/createclass', formData: formData }).then(function (res) {
             if (res.success) {
                 handleAppRestart({});
             } else {
@@ -179,7 +182,7 @@ function editClass(modelName, assemblyName) {
             formData.append('properties', JSON.stringify(properties));
         }
 
-        Data.postForm({ formData: formData }).then(function (res) {
+        Data.postForm({ url: '/sitetriks/dynamic/editclass', formData: formData }).then(function (res) {
             if (res.success) {
                 handleAppRestart({});
             }
@@ -225,7 +228,7 @@ var Dynamics = function () {
                 properties: result.properties
             };
 
-            Data.post({ url: '/sitetriks/dynamic/createitem', data: body }).then(function (res) {
+            Data.postJson({ url: '/sitetriks/dynamic/createitem', data: body }).then(function (res) {
                 if (res.success) {
                     window.location.replace('/sitetriks/dynamic/classdetails?assemblyName=' + body.assemblyName + '&className=' + body.className);
                 }
@@ -326,6 +329,9 @@ var Dynamics = function () {
             var name = $item.attr('data-name');
             var type = $item.attr('data-type');
             var value = $item.val();
+            if (type === 'string-html') {
+                value = textEditor.getContent('area-' + name);
+            }
 
             if (!Validator.validateField($item)) {
                 flag = true;

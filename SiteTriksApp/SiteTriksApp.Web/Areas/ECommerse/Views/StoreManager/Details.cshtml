@@ -93,8 +93,8 @@
                     sort: true,
                     extraFields: ['id'],
                     size: 2,
-                    headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
-                    //contentTemplate: '<a href="/ecommerse/storemanager/details?id=#item0#">#item#</a>'
+                    headerTemplate: '<b>#item#</b>',
+                    contentTemplate: '<a href="/ecommerse/categorymanager/edit?id=#item0#">#item#</a>'
                 }];
 
                 let buttons = [{
@@ -150,8 +150,8 @@
                     sort: true,
                     extraFields: ['id'],
                     size: 2,
-                    headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
-                    //contentTemplate: '<a href="/ecommerse/storemanager/details?id=#item0#">#item#</a>'
+                    headerTemplate: '<b>#item#</b>', // #item# is the placeholder for the content
+                    contentTemplate: '<a href="/ecommerse/physicallocations/edit?id=#item0#">#item#</a>'
                 },
                 {
                     name: 'address',
@@ -237,7 +237,7 @@
 
                 let buttons = [{
                     title: 'Delete',
-                    postUrl: '/ecommerse/StoreItemExtraFieldsConfigViewModel/delete',
+                    postUrl: '/ecommerse/StoreItemExtraFieldsConfig/delete',
                     type: 'danger'
                 }];
 
@@ -264,8 +264,8 @@
                     sort: true,
                     extraFields: ['id'],
                     size: 2,
-                    headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
-                    //contentTemplate: '<a href="/ecommerse/storemanager/details?id=#item0#">#item#</a>'
+                    headerTemplate: '<b>#item#</b>',
+                    contentTemplate: '<a href="/ecommerse/storeitemmanager/edit?id=#item0#">#item#</a>'
                 },
                 {
                     name: 'isOnSale',
@@ -310,7 +310,7 @@
             })();
 
             //--------------------------------------------------------------------------------------
-            // store items
+            // store skins
             (function () {
                 var grid = Grid();
                 var data = { link: '/ecommerse/storeskinmanager/grid?storeId=@Model.Id', serverSide: false };

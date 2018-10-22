@@ -1,4 +1,4 @@
-﻿function createCategory(storeId) {
+﻿function createCategory(storeId, categoryId) {
     let $form = $('#create-category-form');
     let $title = $form.find('.title-field');
     let $extraFields = $form.find('.extra-fields-wrapper');
@@ -30,9 +30,11 @@
         if (Validator.isFunction(validationForm.set)) {
             validationForm.set('storeId', storeId);
             validationForm.set('name', name);
+            validationForm.set('categoryId', categoryId || '');
         } else {
             validationForm.append('storeId', storeId);
             validationForm.append('name', name);
+            validationForm.append('categoryId', categoryId || '');
         }
 
         Data.postForm({ url: '/ecommerse/categorymanager/validatecategory', formData: validationForm }).then(function (res) {

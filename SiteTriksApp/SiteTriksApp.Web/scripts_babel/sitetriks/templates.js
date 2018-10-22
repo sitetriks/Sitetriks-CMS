@@ -2,6 +2,8 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+/* globals Data, Utils, Loader, ModuleBuilder, Notifier, WidgetsDraggable */
+
 function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
     // Layout handling
     $('.resolution').on('click', function (ev) {
@@ -22,8 +24,8 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
             });
 
             $target.addClass('selected');
-            var _type = $target.attr('data-type');
-            Utils.loadjscssfile('/css/sitetriks/st-' + _type + '-preview.css', 'css');
+            var type = $target.attr('data-type');
+            Utils.loadjscssfile('/css/sitetriks/st-' + type + '-preview.css', 'css');
         }
     });
 
@@ -90,45 +92,12 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
             return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass };
         });
 
-        for (var i = 0; i < l.deletedPlaceholders.length; i += 1) {
-            removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
-        }
+        ModuleBuilder.renderLayout(layout.layoutRows, $('div.preview-placeholder[data-identifier="' + layoutWidget.id + '"]').find('.layout-content').first(), l.deletedPlaceholders);
+        WidgetsDraggable.init(w);
 
         layoutWidget.element = JSON.stringify(layout);
         if (layoutWidget.IsInherited) {
             layoutWidget.IsModifiedOnChild = true;
-        }
-
-        if (sendToServer) {
-            saveEditWidgetServer(layoutWidget);
-        }
-    }
-
-    function removeWidgetForPlaceholder(placeholder) {
-        var widgets = w.getPageContent().filter(function (c) {
-            return c.placeholder === placeholder;
-        });
-
-        var _loop = function _loop(i) {
-            var index = w.getPageContent().findIndex(function (c) {
-                return c.id === widgets[i].id;
-            });
-
-            if (index !== -1) {
-                w.getPageContent().splice(index, 1);
-                if (widgets[i].type === 'layoutBuilder') {
-                    var _layout = JSON.parse(widgets[i].element);
-                    for (var j = 0; j < _layout.length; j += 1) {
-                        for (var k = 0; k < _layout[j].columns.length; k += 1) {
-                            removeWidget(_layout[j].columns[k].properties.placeholder);
-                        }
-                    }
-                }
-            }
-        };
-
-        for (var i = 0; i < widgets.length; i += 1) {
-            _loop(i);
         }
     }
 
@@ -136,7 +105,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         var placeholders = e.detail.placeholders;
         console.log('checking for updateds');
 
-        var _loop2 = function _loop2(i) {
+        var _loop = function _loop(i) {
             if (typeof w.getPageContent() !== 'undefined' && w.getPageContent().find(function (e) {
                 return e.placeholder == placeholders[i];
             })) {
@@ -152,9 +121,9 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         };
 
         for (var i = 0; i < placeholders.length; i += 1) {
-            var _ret2 = _loop2(i);
+            var _ret = _loop(i);
 
-            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
         }
 
         e.target.dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: e.detail.type, rowIndex: e.detail.rowIndex } }));
@@ -170,63 +139,12 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         document.getElementById(callerId).dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: type, rowIndex: rowIndex } }));
     });
 
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------
-    // Sticky widgets
+    initStickyWidgets();
 
-    var $window = $(window);
-    var itemTop = 0;
-    $window.on('scroll resize', stickyWidgets);
-    $window.trigger('scroll');
-
-    function stickyWidgets() {
-        var scrollPosition = $window.scrollTop();
-        var $widgetsList = $('.widgets-list');
-
-        if (!itemTop) {
-            itemTop = $widgetsList.offset().top;
-        }
-
-        if ($widgetsList && $widgetsList.length === 1) {
-            if (scrollPosition > itemTop - 100) {
-                $widgetsList.addClass('scrolling');
-            } else {
-                $widgetsList.removeClass('scrolling');
-            }
-        }
-    }
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    $(document).on("updatePreview", {}, function () {
-        updatePreview(url);
-    });
-
-    $(document).trigger("updatePreview");
-
-    $(document).on('focusin', function (e) {
-        if ($(e.target).closest(".mce-window").length) {
-            e.stopImmediatePropagation();
-        }
-    });
-
-    function loadVersions(lang) {
-        $('#versions').find('option').remove();
-
-        return Data.getJson({ url: '/sitetriks/templates/getpageversions?url=' + url + '&lang=' + lang, disableCache: true }).then(function (res) {
-            if (res.success) {
-                res.versions.forEach(function (element) {
-                    var $v = $('<option value="' + element + '">' + element + '</option>');
-                    if (element === +currentVersion) {
-                        $v.attr('selected', 'selected');
-                    }
-
-                    $v.appendTo('#versions');
-                });
-            }
-        }, Data.defaultError);
-    }
-
-    loadVersions(currentCulture);
+    $(document).on('updatePreview', {}, updatePreview.bind(document, url));
+    updatePreview(url);
+    var versions = new revisionControl('templates', $('#languages'), $('#versions'), $('#version-control'));
+    versions.loadVersions(currentCulture, currentVersion);
 
     Data.getJson({ url: '/sitetriks/templates/getlanguages', disableCache: true }).then(function (res) {
         if (res.success) {
@@ -245,7 +163,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         updatePreview(url);
         var lang = $('#languages').val();
         currentLanguage = lang;
-        loadVersions(lang);
+        versions.loadVersions(lang);
     });
 
     function updatePreview(url) {
@@ -283,10 +201,6 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
             return c.id === id;
         });
         item.isLocked = !!status;
-    });
-
-    $(document).on('keyup', '#video-input', function () {
-        validateVideo();
     });
 
     $('#btn-publish').on('click', function (evt) {
@@ -346,9 +260,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         });
     });
 
-    $('#warning-modal-publish').on('click', function (evt) {
-        publishTemplate();
-    });
+    $('#warning-modal-publish').on('click', publishTemplate);
 
     function publishTemplate() {
         saveLayout();
@@ -360,13 +272,14 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
 
         Data.postJson({ url: '/sitetriks/Templates/PublishPageWithContent', data: body }).then(function (res) {
             if (res.success) {
+                window.onbeforeunload = null;
                 location.replace('/sitetriks/templates');
             }
         }, Data.defaultError);
     }
 
     $('#btn-save-draft').on('click', function (evt) {
-        saveDraft(function (res) {
+        saveDraft().then(function (res) {
             if (res.success) {
                 location.replace('/sitetriks/templates');
             }
@@ -386,117 +299,24 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
     $('#btn-preview-page').on('click', function (evt) {
         Loader.show('#fff');
         saveLayout();
-        saveDraft().then(function (res) {
-            if (res.success) {
-                var body = {
-                    content: w.getPageContent(),
-                    template: currentTemplate,
-                    language: currentLanguage
-                };
+        var body = {
+            content: w.getPageContent(),
+            template: currentTemplate,
+            language: currentLanguage
+        };
 
-                return Data.postJson({ url: '/sitetriks/Display/Preview', data: body });
-            }
-
-            Loader.hide();
-            return Promise.reject();
-        }).then(function (res) {
-            createPreveiwWindow(res);
+        return Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
+            Utils.openInNewTab(res);
 
             Loader.hide();
         }, Data.defaultError);
     });
 
-    $('#btn-preview-version').on('click', function (evt) {
-        var body = {
-            version: $('#versions').val(),
-            url: url
-        };
+    $('#btn-reset').on('click', updatePreview.bind(document, url));
 
-        Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
-            createPreveiwWindow(res);
-        }, Data.defaultError);
-    });
-
-    $('#btn-revert-version').on('click', function (evt) {
-        var body = {
-            version: $('#versions').val(),
-            url: url
-        };
-
-        Data.postJson({ url: '/sitetriks/templates/RevertVersion', data: body }).then(function (res) {
-            location.reload(true);
-        }, Data.defaultError);
-    });
-
-    $('#btn-reset').on('click', function (evt) {
-        $(document).trigger('updatePreview');
-    });
-
-    $('.btn-revision').on('click', function (ev) {
-        var $span = $(this).children('span');
-        if ($span.hasClass('glyphicon-menu-right')) {
-            $span.removeClass('glyphicon-menu-right');
-            $span.addClass('glyphicon-menu-left');
-            $('#version-control').css('display', 'inline-block');
-        } else {
-            $span.removeClass('glyphicon-menu-left');
-            $span.addClass('glyphicon-menu-right');
-            $('#version-control').css('display', 'none');
-        }
-    });
-
-    function saveEditWidgetServer(widget) {
-
-        var $old = $('.preview-placeholder[data-identifier="' + widget.id + '"]');
-
-        var body = {
-            content: widget,
-            preview: 'preview',
-            lang: currentLanguage
-        };
-
-        Loader.show(true);
-
-        return saveDraft().then(function (res) {
-            if (res.success) {
-                return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body });
-            }
-
-            return Promise.reject();
-        }).then(function (data) {
-
-            $(document).trigger('removeCarousel');
-
-            $old.after(data);
-            $old.remove();
-
-            if (type === 'layoutBuilder') {
-                console.log('init layout');
-                WidgetsDraggable.init(w);
-            }
-
-            Loader.hide();
-
-            return loadVersions(currentLanguage);
-        }).then(function (res) {
-            $('#versions').find('option[selected="selected"]').removeAttr('selected');
-            $('#versions').find('option').first().attr('selected', 'selected');
-
-            return { success: true };
-        }, Data.defaultError);
-    }
-
-    function createPreveiwWindow(html) {
-        var newWindow = window.open('', 'Preview');
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-            //POPUP BLOCKED
-            Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
-        } else {
-            newWindow.document.write(html);
-            newWindow.document.close();
-            newWindow.focus();
-        }
-    }
+    $('.btn-revision').on('click', versions.toggle);
+    $('#btn-preview-version').on('click', versions.previewVersion);
+    $('#btn-revert-version').on('click', versions.revertVersion);
 }
 
 function createTemplate(checkValidUrlLink) {

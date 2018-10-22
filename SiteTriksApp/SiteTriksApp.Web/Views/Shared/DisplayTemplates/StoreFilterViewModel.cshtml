@@ -5,13 +5,19 @@
     if (item.Type == "item")
     {
         string attributes = $"data-identifier={item.Id} data-field={item.Field} ";
-        <div>
-            <div>@item.Text</div>
+        <div class="filter-type-@item.Filter">
+            @if (@item.Filter != "select-one" && @item.Filter != "multi-select")
+            {
+                <div class="item-title">
+                    @item.Text @if (@item.Filter == "checkbox" || @item.Filter == "range")
+                    {<text>:</text>}
+                </div>
+            }
             @switch (item.Filter)
             {
                 case "range":
                     <input class="filter form-control range-filter" placeholder="min" data-type="min" @attributes />
-                    <span>-</span>
+                    <span> &nbsp;</span>
                     <input class="filter form-control range-filter" placeholder="max" data-type="max" @attributes />
                     break;
 
@@ -21,7 +27,7 @@
 
                 case "select-one":
                     <select class="filter form-control" data-type="select" @attributes>
-                        <option value="">-- select --</option>
+                        <option value="">@item.Text </option>
                     </select>
                     break;
 
@@ -30,7 +36,13 @@
                     break;
 
                 case "checkbox":
-                    <input class="filter" data-type="checkbox" @attributes type="checkbox" />
+                    <label class="checkbox-container">
+                        &nbsp;
+                        <span class="checkmark-border">
+                            <input class="filter" data-type="checkbox" data-identifier="AvailableInPhysicalStore" data-field="base" type="checkbox">
+                            <span class="checkmark"></span>
+                        </span>
+                    </label>
                     break;
 
                 default:

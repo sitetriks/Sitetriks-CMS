@@ -9,14 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using SiteTriks.Data;
 using SiteTriks.Data.Models;
 using SiteTriks.Data.Seeders;
-using SiteTriks.DatabaseApi.Contracts;
-using SiteTriks.DatabaseApi.Enums;
 using SiteTriks.Dynamic.Contracts;
-using SiteTriks.Infrastructure.Common;
+using SiteTriks.Helpers;
+using SiteTriks.Services.Contracts;
 using SiteTriksApp.Web.Services.Seeders;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SiteTriksApp.Web
 {
@@ -25,8 +23,9 @@ namespace SiteTriksApp.Web
         public static void Main(string[] args)
         {
             BuildMainWebHost(args)
-                .MigrateDatabase()
-                .Run();
+            .MigrateDatabase()
+            .AddPermissions()
+            .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
@@ -69,26 +68,20 @@ namespace SiteTriksApp.Web
                 SiteSeeder.Seed(dbContext);
 
                 // Init dynamic types
-                var dynamicService = services.GetRequiredService<IDynamicAssemblyService>();
-                var queryHelper = services.GetRequiredService<IQueryHelper>();
+                var dynamicService = services.GetRequiredService<IDynamicService>();
+                dynamicService.PopulateDynamicTypesInDatabase();
+            }
 
-                var assemblies = dynamicService.GetAssembliesFromFile();
-                string linkConstraint = queryHelper.CreateConstraint(ConstraintType.ForeignKey, "LinkId", "st_links");
+            return webHost;
+        }
 
-                foreach (var a in assemblies)
-                {
-                    foreach (var item in a.Classes)
-                    {
-                        var constraints = new List<string>();
-                        if (item.Properties.Where(p => p.Name == "LinkId").Any())
-                        {
-                            constraints.Add(linkConstraint);
-                        }
-
-                        var props = new Dictionary<string, string>(item.Properties.Select(p => new KeyValuePair<string, string>(p.Name, p.Type)));
-                        queryHelper.CreateTable(DatabasePrefix.Dynamic + item.Name, props, constraints);
-                    }
-                }
+        public static IWebHost AddPermissions(this IWebHost webHost, IEnumerable<string> assemblyNames = null)
+        {
+            using (var scope = webHost.Services.CreateScope())
+            {
+                var sevices = scope.ServiceProvider;
+                var permissionService = sevices.GetService<IPermissionService>();
+                ApplicationStart.RegisterCustomPermissions(permissionService, assemblyNames);
             }
 
             return webHost;

@@ -1,4 +1,6 @@
-﻿'use strict';
+﻿/* globals Data, Utils, Handlebars */
+
+'use strict';
 
 /*===============================================================================================
  * --- Layout.js ---
@@ -19,13 +21,14 @@
  * -v0.10: multiselect for resolutions
  * -v0.10.1: deleted placeholders
  * -v0.11: delete confirmation is handled with events
+ * -v0.12: added stacking of collapsed columns, styles polishing
  * 
  *===============================================================================================*/
 
 function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     if (!resolutionValidation || {}.toString.call(resolutionValidation) !== '[object Function]') {
         console.error('no resolutuion validation function was specified');
-        resolutionValidation = function () { return true };
+        resolutionValidation = function () { return true; };
     }
 
     const defaultResolution = 'xs';
@@ -41,8 +44,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         }
 
         buildLayout($wrapper, l);
-    })
-
+    });
 
     function loadTemplates(templates) {
         let templateNames = ['layout-row-options', 'layout-column-options', 'layout-row-control', 'layout-column-control', 'layout-separator', 'layout-column', 'layout-row'];
@@ -54,7 +56,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
                 templates[templateNames[i]] = template;
 
                 return true;
-            }, function (res) { return false }));
+            }, function (res) { return false; }));
         }
 
         return Promise.all(promises);
@@ -111,7 +113,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
     $wrapper.on('click', '.middle-col, .start-col, .end-col, .single-col', function (ev) {
         let $trigger = $(this);
-        let $row = $trigger.parents('.row-layout')
+        let $row = $trigger.parents('.row-layout');
 
         let rowIndex = +$row.attr('data-position');
         let colIndex = +$trigger.attr('data-index');
@@ -162,7 +164,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     function selectColumn($element, direction, unselect) {
-        if (($element.hasClass('selected') && !unselect) || (!$element.hasClass('selected') && unselect)) {
+        if ($element.hasClass('selected') && !unselect || !$element.hasClass('selected') && unselect) {
             return;
         }
 
@@ -202,7 +204,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         const multiple = 'multiple';
 
         if (!l.selected || !l.selected.length) {
-            console.warn('there are no selected elements')
+            console.warn('there are no selected elements');
             return;
         }
 
@@ -274,7 +276,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             return;
         }
 
-        if (offset != multiple) {
+        if (offset !== multiple) {
             if (offset && (offset < 0 || offset > 11)) {
                 $notifier.text('offset must be empty or between 0 and 11!');
                 return;
@@ -303,7 +305,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
                 }
             }
 
-            let updateCssClass = cssClass === multiple ? (l[rowIndex].columns[colIndex].properties ? l[rowIndex].columns[colIndex].properties.cssClass : '') : cssClass;
+            let updateCssClass = cssClass === multiple ? l[rowIndex].columns[colIndex].properties ? l[rowIndex].columns[colIndex].properties.cssClass : '' : cssClass;
             if (cssClass) {
                 if (l[rowIndex].columns[colIndex].properties) {
                     l[rowIndex].columns[colIndex].properties.cssClass = updateCssClass;
@@ -317,7 +319,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     });
 
     function deleteColums() {
-        l.selected.sort((a, b) => { return (a.col > b.col) ? -1 : ((b.col > a.col) ? 1 : 0); });
+        l.selected.sort((a, b) => { return a.col > b.col ? -1 : b.col > a.col ? 1 : 0; });
 
         for (let i = 0; i < l.selected.length; i += 1) {
             let removed = l[l.selected[i].row].columns.splice(l.selected[i].col, 1)[0];
@@ -372,7 +374,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             default:
                 break;
         }
-    })
+    });
 
     $wrapper.on('click', '.select-row', function (ev) {
         let $target = $(this);
@@ -391,7 +393,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         $options.html('');
 
         let selectedRow = l[rowIndex];
-        let resolution = l.resolutions[0]
+        let resolution = l.resolutions[0];
         let cols = selectedRow.columns.map(c => c.resolutions[resolution]);
 
         let template = templates['layout-row-options'];
@@ -434,7 +436,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         selectColumn($element, 'both');
 
         let selectedColumn = l[rowIndex].columns[colIndex];
-        l.selected = [{ row: rowIndex, col: colIndex }]
+        l.selected = [{ row: rowIndex, col: colIndex }];
 
         $options.html('');
 
@@ -456,7 +458,23 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         l.deletedPlaceholders = [];
 
         buildLayout($wrapper, l);
-    })
+    });
+
+    $wrapper.on('dblclick', '.layout-drag.empty', function (ev) {
+        let colIndex = ev.target.getAttribute('data-index');
+        let rowIndex = ev.target.getAttribute('data-rowindex');
+
+        for (let i = colIndex; i >= 0; i -= 1) {
+            let col = l[rowIndex].columns[i].resolutions[l.resolutions[0]];
+            if (col.size > 0) {
+                break;
+            }
+
+            col.size = 1;
+        }
+
+        buildRow(l[rowIndex].row, l[rowIndex].columns);
+    });
 
     //-----------------------------------------------------------------------------
     // Methods
@@ -503,10 +521,10 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         clearSelected();
 
         // check if col length > 9 -1.1
-        let result = "";
+        let result = '';
 
         if (columns.length <= 9) {
-            result = "0" + columns.length;
+            result = '0' + columns.length;
         } else {
             result = columns.length;
         }
@@ -520,7 +538,7 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
         for (let i = 0; i < columns.length; i += 1) {
             let colsLeft = 12 - count % 12;
             let currentSize = columns[i].resolutions[l.resolutions[0]].size;
-            let offset = (columns[i].resolutions[l.resolutions[0]].offset) || 0;
+            let offset = columns[i].resolutions[l.resolutions[0]].offset || 0;
 
             // if there is no space left for the column
             if (currentSize + offset > colsLeft) {
@@ -529,6 +547,8 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
 
                     count++;
                 }
+
+                buildFiller(count - 1, $row);
             }
 
             for (let j = 12 - colsLeft; j < 12 - colsLeft + offset; j += 1) {
@@ -563,6 +583,11 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             if (currentSize === 0) {
                 buildEmpyColumn(count - 1, $row, i);
             }
+
+            // if on the end of the row and not the last row, build filler separator for the start of the next row
+            if (12 - count % 12 === 12 && i < columns.length - 1 && !$row.children('.separator').last().hasClass('filler')) {
+                buildFiller(count - 1, $row);
+            }
         }
 
         // fill remaining space until the end of the row with empty columns
@@ -571,6 +596,12 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
                 buildColumn(count, $row, false, count, 'empty');
                 count++;
             }
+        }
+
+        let $last = $row.children('.separator').last();
+        // clear last element in the row if it is a filler
+        if ($last.hasClass('filler')) {
+            $last.remove();
         }
 
         $('.layout-drag').draggable({ revert: 'invalid' });
@@ -605,13 +636,25 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
     }
 
     function buildEmpyColumn(position, $row, colIndex) {
+        let $separator = $row.children('.separator').not('.filler').last();
+
+        let $collapsed = $separator.children('.empty');
+        if ($collapsed && $collapsed.length) {
+            $collapsed.attr('data-index', colIndex);
+            $collapsed.attr('data-position', position);
+            $collapsed.text(parseInt($collapsed.text()) + 1);
+        } else {
+            $separator.append(`<span class="layout-drag empty" data-index="${colIndex}" data-position="${position}" data-rowIndex="${$row.attr('data-position')}">1</span>`);
+        }
+    }
+
+    function buildFiller(position, $row) {
         $row.append(templates['layout-separator']({
+            cssClass: 'empty-separator filler',
             position: position,
-            cssClass: 'empty',
-            spanClass: 'empty',
             rowIndex: $row.attr('data-position'),
-            active: true,
-            index: colIndex
+            active: false,
+            index: position
         }));
     }
 
@@ -644,19 +687,21 @@ function initLayout($wrapper, l, $resolutions, $options, resolutionValidation) {
             }
         }
 
-        let rowIndex = $row.attr('data-position');
+        handleMovement({
+            position: $target.attr('data-position'),
+            rowIndex: $row.attr('data-position')
+        }, data);
+    }
 
-        if (rowIndex !== data.rowIndex) {
+    function handleMovement(newPosition, data) {
+        if (newPosition.rowIndex !== data.rowIndex) {
             console.warn('Can not drag to different rows!');
             return;
         }
 
-        let position = $target.attr('data-position');
-        let move = position - data.position;
-
         let col = l[data.rowIndex].columns[data.colIndex].resolutions[l.resolutions[0]];
 
-        col.size += move;
+        col.size += newPosition.position - data.position;
 
         if (col.size > 12) {
             col.size = 12;

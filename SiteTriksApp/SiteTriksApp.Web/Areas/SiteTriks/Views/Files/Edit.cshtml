@@ -8,122 +8,123 @@
     <link href="~/css/navbar-remove.css" rel="stylesheet" />
 }
 
-    <div class="backend-wrapper">
-        <div id="file-edit-notfier"></div>
-        @using (Html.BeginForm("Edit", "Files", null, FormMethod.Post, null, htmlAttributes: new { id = "submit-form" }))
-        {
-            <div class="fixed-top-2">
-                @await Html.PartialAsync("SecondNavHeader")
+<div class="backend-wrapper">
+    <div id="file-edit-notfier"></div>
+    @using (Html.BeginForm("Edit", "Files", null, FormMethod.Post, null, htmlAttributes: new { id = "submit-form" }))
+    {
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("SecondNavHeader")
 
-                <a href="@Url.Action("Index", "Libraries")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-                <input type="submit" value="Update" class="btn-nav-2" />
-            </div>
+            <a href="@Url.Action("Index", "Libraries")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <input type="submit" value="Save & Exit" class="btn-nav-2" />
+        </div>
 
-            @*<div id="alerts"></div>*@
-            <hr />
+        @*<div id="alerts"></div>*@
+        <hr />
 
-            <input type="text" value="@Model.Id" name="Id" class="hidden" />
-            <input type="text" value="@Model.Url" name="CurrentUrl" class="hidden" />
+        <input type="text" value="@Model.Id" name="Id" class="hidden" />
+        <input type="text" value="@Model.Url" name="CurrentUrl" class="hidden" />
 
-            <div class="row">
-                <div class="page-properties col-md-6 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        @Html.LabelFor(m => Model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(m => Model.Title, new { htmlAttributes = new { @class = "form-control", Id = "title" } })
-                            <span class="text-danger"></span>
-                        </div>
+        <div class="row">
+            <div class="page-properties col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group row">
+                    @Html.LabelFor(m => Model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => Model.Title, new { htmlAttributes = new { @class = "form-control", Id = "title" } })
+                        <span class="text-danger"></span>
                     </div>
+                </div>
 
-                    <div class="form-group row">
-                        @Html.LabelFor(m => Model.Alt, "Alt text", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(m => Model.Alt, new { htmlAttributes = new { @class = "form-control", id = "alt" } })
-                        </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => Model.Alt, "Alt text", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => Model.Alt, new { htmlAttributes = new { @class = "form-control", id = "alt" } })
                     </div>
+                </div>
 
-                    <div class="form-group row">
-                        @Html.LabelFor(m => Model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DisplayFor(m => Model.Url, new { htmlAttributes = new { @class = "form-control", Id = "url" } })
-                        </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => Model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(m => Model.Url, new { htmlAttributes = new { @class = "form-control", Id = "url" } })
                     </div>
+                </div>
 
-                    <div class="form-group row">
-                        @Html.LabelFor(m => Model.ExpirationDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="input-group date-picker-group">
-                                @Html.EditorFor(m => Model.ExpirationDate, new { htmlAttributes = new { @class = "form-control", Id = "date-picker", type = "text" } })
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-md-2" for="input-update-file">File</label>
-                        <div class="col-md-10">
-                            <input id="input-update-file" type="file" name="File" />
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-md-2">File Type</label>
-                        <div class="col-md-10">@Model.Type</div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-md-2"></label>
-                        <div class="col-md-10">
-                            @if (Model.Type == SiteTriks.Data.Models.Helpers.FileType.Image || Model.Type == SiteTriks.Data.Models.Helpers.FileType.Svg)
-                            {
-                                <img src="/files/id/@Model.LinkId" class="display-image" />
-                            }
-                            else
-                            {
-                                <img src="/images/default-document-image.png" class="type-container-element" />
-
-                            }
+                <div class="form-group row">
+                    @Html.LabelFor(m => Model.ExpirationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="input-group date-picker-group">
+                            @Html.EditorFor(m => Model.ExpirationDate, new { htmlAttributes = new { @class = "form-control", Id = "date-picker", type = "text" } })
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6  col-sm-12 col-xs-12 used-in-files">
-                    <p>Used In Pages:</p>
-                    <ul class="list-of-pages">
-                        @foreach (var pageTitle in @Model.IsUsedInPages)
-                        {
-                            <li>@pageTitle</li>
 
-                        }
-                    </ul>
-                    <p>Used In Items:</p>
-                    <ul class="list-of-pages">
-                        @foreach (var newsTitle in @Model.RefferedInNews)
-                        {
-                            <li>@newsTitle</li>
+                <div class="form-group row">
+                    <label class="control-label col-md-2" for="input-update-file">File</label>
+                    <div class="col-md-10">
+                        <input id="input-update-file" type="file" name="File" />
+                    </div>
+                </div>
 
+                <div class="form-group row">
+                    <label class="control-label col-md-2">File Type</label>
+                    <div class="col-md-10">@Model.Type</div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        @if (Model.Type == SiteTriks.Data.Models.Helpers.FileType.Image || Model.Type == SiteTriks.Data.Models.Helpers.FileType.Svg)
+                        {
+                            <img src="/files/@Model.Url" class="display-image" />
                         }
-                    </ul>
+                        else if (Model.Type == SiteTriks.Data.Models.Helpers.FileType.Video)
+                        {
+                            <video width="560" height="315" controls>
+                                <source src="/files/@Model.Url" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            < img src = "/images/default-document-image.png" class="type-container-element" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6  col-sm-12 col-xs-12 used-in-files">
+                <p>Used In Pages:</p>
+                <ul class="list-of-pages">
+                    @foreach (var pageTitle in @Model.IsUsedInPages)
+                    {
+                        <li>@pageTitle</li>
+
+                    }
+                </ul>
+                <p>Used In Items:</p>
+                <ul class="list-of-pages">
+                    @foreach (var newsTitle in @Model.RefferedInNews)
+                    {
+                        <li>@newsTitle</li>
+
+                    }
+                </ul>
+                <div>
+                    <div id="generate-thumbnails" data-fileId="@Model.Id">
+                        <a class="btn btn-success">Create ThumbNails</a>
+                    </div>
                     <div>
-                        <div id="generate-thumbnails" data-fileId="@Model.Id">
-                            <a class="btn btn-success">Regenerate ThumbNails</a>
-                        </div>
                         @Html.DisplayFor(x => x.Thumbnails, "Thumbnails")
-                        @*<div class="thumb-list">
-                            @foreach (var item in Model.Thumbnails)
-                            {
-                                <img style="height:100px" src="@item.Url" />
-                            }
-                        </div>*@
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
-        }
-    </div>
+    }
+</div>
 
 @section Scripts{
     <script type="text/javascript" src="~/js/validator.js"></script>

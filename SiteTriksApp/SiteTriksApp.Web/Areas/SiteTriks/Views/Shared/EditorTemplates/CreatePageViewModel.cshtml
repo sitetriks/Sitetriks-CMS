@@ -42,6 +42,12 @@
     </div>
 
     <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.IsStaticPage, "Is static page", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.EditorFor(model => Model.PageViewModel.IsStaticPage, new { htmlAttributes = new { @class = "custom-checkbox" } })
+        @Html.ValidationMessageFor(model => Model.PageViewModel.IsStaticPage, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group row">
         @Html.LabelFor(model => Model.PageViewModel.ParentId, "Parent page", htmlAttributes: new { @class = "control-label col-xs-2" })
         @Html.DropDownListFor(model => Model.PageViewModel.ParentId, new SelectList(Model.ParentList, "Id", "Title"), new { @class = "form-control" })
     </div>
@@ -62,16 +68,12 @@
         @Html.EditorFor(model => Model.PageViewModel.SEOKeyword, new { htmlAttributes = new { @class = "form-control inline-block", id = "seo-words", placeholder = "The keywords should be separate by comma!" } })
         <span id="seo-words-counter"></span>
     </div>
-    
+
 
     <div class="form-group row">
         @Html.LabelFor(model => model.Roles, new { @class = "control-label col-xs-2" })
-        <div class="col-md-9">
-            @Html.ListBoxFor(model => Model.RoleIds, Model.Roles,
-                                              new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Roles,
-                                              "", new { @class = "text-warning" })
-        </div>
+        @Html.ListBoxFor(model => Model.RoleIds, Model.Roles, new { @class = "form-control inline-block multiselect-roles" })
+        @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-warning" })
     </div>
 
     <div class="form-group row">
@@ -79,7 +81,7 @@
         <div class="dtb-container">
 
             <div class="input-group date-picker-group">
-                @Html.EditorFor(model => Model.PageViewModel.EnDateToBePublished, new { htmlAttributes = new { @class = "form-control", id = "date-picker", type= "text" } })
+                @Html.EditorFor(model => Model.PageViewModel.EnDateToBePublished, new { htmlAttributes = new { @class = "form-control", id = "date-picker", type = "text" } })
                 <span class="input-group-addon">
                     <i class="fa fa-calendar-o" aria-hidden="true"></i>
                 </span>

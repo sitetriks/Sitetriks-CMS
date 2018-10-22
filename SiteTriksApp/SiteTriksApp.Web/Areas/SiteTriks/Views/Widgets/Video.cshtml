@@ -13,32 +13,12 @@
         <div class="row">
             <label for="video-name" class="col-md-5">Id of the video or url in the database: </label>
             <input id="video-name" type="text" class="form-control title-field text-box single-line" />
-            <label for="default-video" class="col-md-5 default-video">Default Video Id: </label>
-            <input id="default-video" class="form-control title-field text-box single-line" type="text">
+            <div class="default-video" style="display: none;">
+                <label for="default-video" class="col-md-5">Default Video Id: </label>
+                <input id="default-video" class="form-control title-field text-box single-line" type="text">
+            </div>
         </div>
         <hr />
         @await Html.PartialAsync("WidgetsForms")
     </div>
 </div>
-
-<script>
-    $('#video-source').change(function () {
-        if ($('#video-source').val() == "youtubeCustomPlaylist" || $('#video-source').val() == "youtubeMultiplePlaylists") {
-            $("#customVideoInstructions").css('display', 'block');
-        } else {
-            $("#customVideoInstructions").css('display', 'none');
-        }
-
-        if ($('#video-source').val() == "youtubeMultiplePlaylists") {
-            $("#default-video").css('display', 'inline-block');
-            $('.default-video').css('display', 'inline-block');
-
-        } else {
-            $("#default-video").css('display', 'none');
-            $('.default-video').css('display', 'none');
-        }
-
-    })
-    // on value change - show instructions if needed
-    // show hide
-</script>

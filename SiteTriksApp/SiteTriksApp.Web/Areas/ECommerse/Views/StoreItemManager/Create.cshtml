@@ -16,7 +16,7 @@
         <div class="fixed-top-2">
             @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/SecondNavHeader.cshtml")
             <a href="@Url.Action("Details", "StoreManager", new { id = Model.StoreId })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <button type="submit" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Item</button>
+            <button type="submit" class="btn-nav-2">Save & Exit</button>
         </div>
 
         <div class="page-properties">
@@ -138,14 +138,12 @@
 @section scripts{
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/modules/utils.js"></script>
-    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
     <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
-    <script type="text/javascript" src="~/js/modules/logger.js"></script>
     <script type="text/javascript" src="~/js/multiselect-setup.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/storeitemmanager.js"></script>
     <script type="text/javascript">
         (function () {
-            let efc = JSON.parse('@Json.Serialize(Model.ExtraFieldsConfig)');
+            var efc = JSON.parse('@Json.Serialize(Model.ExtraFieldsConfig)');
             var logger = new Logger('debug');
             var mediator = new Mediator(logger);
 

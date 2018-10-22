@@ -1,4 +1,6 @@
-﻿function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
+﻿/* globals Data, Utils, Loader, ModuleBuilder, Notifier, WidgetsDraggable */
+
+function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
     // Layout handling
     $('.resolution').on('click', function (ev) {
         let active = $('.selected-option').attr('data-type');
@@ -78,37 +80,12 @@
         let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
         layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
 
-        for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
-            removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
-        }
+        ModuleBuilder.renderLayout(layout.layoutRows, $(`div.preview-placeholder[data-identifier="${layoutWidget.id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
+        WidgetsDraggable.init(w);
 
         layoutWidget.element = JSON.stringify(layout);
         if (layoutWidget.IsInherited) {
             layoutWidget.IsModifiedOnChild = true;
-        }
-
-        if (sendToServer) {
-            saveEditWidgetServer(layoutWidget);
-        }
-    }
-
-    function removeWidgetForPlaceholder(placeholder) {
-        let widgets = w.getPageContent().filter(c => c.placeholder === placeholder);
-
-        for (let i = 0; i < widgets.length; i += 1) {
-            let index = w.getPageContent().findIndex(c => c.id === widgets[i].id);
-
-            if (index !== -1) {
-                w.getPageContent().splice(index, 1);
-                if (widgets[i].type === 'layoutBuilder') {
-                    let layout = JSON.parse(widgets[i].element);
-                    for (let j = 0; j < layout.length; j += 1) {
-                        for (let k = 0; k < layout[j].columns.length; k += 1) {
-                            removeWidget(layout[j].columns[k].properties.placeholder);
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -140,66 +117,12 @@
         document.getElementById(callerId).dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: type, rowIndex: rowIndex } }));
     });
 
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------
-    // Sticky widgets
+    initStickyWidgets();
 
-    let $window = $(window);
-    let itemTop = 0;
-    $window.on('scroll resize', stickyWidgets);
-    $window.trigger('scroll');
-
-    function stickyWidgets() {
-        let scrollPosition = $window.scrollTop();
-        let $widgetsList = $('.widgets-list');
-
-        if (!itemTop) {
-            itemTop = $widgetsList.offset().top;
-        }
-
-        if ($widgetsList && $widgetsList.length === 1) {
-            if (scrollPosition > (itemTop - 100)) {
-                $widgetsList.addClass('scrolling');
-            } else {
-                $widgetsList.removeClass('scrolling');
-            }
-        }
-    }
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    $(document).on("updatePreview", {
-    }, function () {
-        updatePreview(url);
-    });
-
-    $(document).trigger("updatePreview");
-
-    $(document).on('focusin', function (e) {
-        if ($(e.target).closest(".mce-window").length) {
-            e.stopImmediatePropagation();
-        }
-    });
-
-    function loadVersions(lang) {
-        $('#versions')
-            .find('option')
-            .remove();
-
-        return Data.getJson({ url: '/sitetriks/templates/getpageversions?url=' + url + '&lang=' + lang, disableCache: true }).then(function (res) {
-            if (res.success) {
-                res.versions.forEach(function (element) {
-                    let $v = $(`<option value="${element}">${element}</option>`)
-                    if (element === +currentVersion) {
-                        $v.attr('selected', 'selected');
-                    }
-
-                    $v.appendTo('#versions');
-                })
-            }
-        }, Data.defaultError);
-    }
-
-    loadVersions(currentCulture);
+    $(document).on('updatePreview', {}, updatePreview.bind(document, url));
+    updatePreview(url);
+    let versions = new revisionControl('templates', $('#languages'), $('#versions'), $('#version-control'));
+    versions.loadVersions(currentCulture, currentVersion);
 
     Data.getJson({ url: '/sitetriks/templates/getlanguages', disableCache: true }).then(function (res) {
         if (res.success) {
@@ -218,7 +141,7 @@
         updatePreview(url);
         let lang = $('#languages').val();
         currentLanguage = lang;
-        loadVersions(lang);
+        versions.loadVersions(lang);
     });
 
     function updatePreview(url) {
@@ -254,10 +177,6 @@
 
         let item = w.getPageContent().find(c => c.id === id);
         item.isLocked = !!status;
-    });
-
-    $(document).on('keyup', '#video-input', function () {
-        validateVideo();
     });
 
     $('#btn-publish').on('click', function (evt) {
@@ -317,9 +236,7 @@
         });
     });
 
-    $('#warning-modal-publish').on('click', function (evt) {
-        publishTemplate();
-    });
+    $('#warning-modal-publish').on('click', publishTemplate);
 
     function publishTemplate() {
         saveLayout();
@@ -331,13 +248,14 @@
 
         Data.postJson({ url: '/sitetriks/Templates/PublishPageWithContent', data: body }).then(function (res) {
             if (res.success) {
+                window.onbeforeunload = null;
                 location.replace('/sitetriks/templates');
             }
         }, Data.defaultError);
     }
 
     $('#btn-save-draft').on('click', function (evt) {
-        saveDraft(function (res) {
+        saveDraft().then(function (res) {
             if (res.success) {
                 location.replace('/sitetriks/templates');
             }
@@ -357,117 +275,24 @@
     $('#btn-preview-page').on('click', function (evt) {
         Loader.show('#fff');
         saveLayout();
-        saveDraft().then(function (res) {
-            if (res.success) {
-                let body = {
-                    content: w.getPageContent(),
-                    template: currentTemplate,
-                    language: currentLanguage
-                };
-
-                return Data.postJson({ url: '/sitetriks/Display/Preview', data: body });
-            }
-
-            Loader.hide();
-            return Promise.reject();
-        }).then(function (res) {
-            createPreveiwWindow(res);
-
-            Loader.hide();
-        }, Data.defaultError);
-    });
-
-    $('#btn-preview-version').on('click', function (evt) {
         let body = {
-            version: $('#versions').val(),
-            url: url
-        }
-
-        Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
-            createPreveiwWindow(res);
-        }, Data.defaultError);
-    });
-
-    $('#btn-revert-version').on('click', function (evt) {
-        let body = {
-            version: $('#versions').val(),
-            url: url
-        }
-
-        Data.postJson({ url: '/sitetriks/templates/RevertVersion', data: body }).then(function (res) {
-            location.reload(true);
-        }, Data.defaultError);
-    });
-
-    $('#btn-reset').on('click', function (evt) {
-        $(document).trigger('updatePreview');
-    });
-
-    $('.btn-revision').on('click', function (ev) {
-        let $span = $(this).children('span');
-        if ($span.hasClass('glyphicon-menu-right')) {
-            $span.removeClass('glyphicon-menu-right');
-            $span.addClass('glyphicon-menu-left');
-            $('#version-control').css('display', 'inline-block');
-        } else {
-            $span.removeClass('glyphicon-menu-left');
-            $span.addClass('glyphicon-menu-right');
-            $('#version-control').css('display', 'none');
-        }
-    });
-    
-    function saveEditWidgetServer(widget) {
-
-        var $old = $('.preview-placeholder[data-identifier="' + widget.id + '"]');
-
-        var body = {
-            content: widget,
-            preview: 'preview',
-            lang: currentLanguage
+            content: w.getPageContent(),
+            template: currentTemplate,
+            language: currentLanguage
         };
 
-        Loader.show(true);
-
-        return saveDraft().then(function (res) {
-            if (res.success) {
-                return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body });
-            }
-
-            return Promise.reject();
-        }).then(function (data) {
-
-            $(document).trigger('removeCarousel');
-
-            $old.after(data);
-            $old.remove();
-
-            if (type === 'layoutBuilder') {
-                console.log('init layout');
-                WidgetsDraggable.init(w);
-            }
+        return Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
+            Utils.openInNewTab(res);
 
             Loader.hide();
-
-            return loadVersions(currentLanguage);
-        }).then(function (res) {
-            $('#versions').find('option[selected="selected"]').removeAttr('selected');
-            $('#versions').find('option').first().attr('selected', 'selected');
-
-            return { success: true };
         }, Data.defaultError);
-    }
+    });
 
-    function createPreveiwWindow(html) {
-        let newWindow = window.open('', 'Preview');
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-            //POPUP BLOCKED
-            Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
-        } else {
-            newWindow.document.write(html);
-            newWindow.document.close();
-            newWindow.focus();
-        }
-    }
+    $('#btn-reset').on('click', updatePreview.bind(document, url));
+
+    $('.btn-revision').on('click', versions.toggle);
+    $('#btn-preview-version').on('click', versions.previewVersion);
+    $('#btn-revert-version').on('click', versions.revertVersion);
 }
 
 function createTemplate(checkValidUrlLink) {

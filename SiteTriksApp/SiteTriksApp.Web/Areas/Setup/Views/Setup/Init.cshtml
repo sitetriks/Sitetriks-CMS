@@ -7,21 +7,24 @@
     <content>
         <div class="sitetriks-login container main-content content-placeholder">
             <div class="row">
-                <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+                <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div id="registerForm">
-                        <div class="register-form-container">
-                            <img src="~/images/Sitetriks_logo.svg" />
+                        <div class="login-logo-container">
+                            <img src="~/images/homepage/Login.svg" />
+                            <div>Welcome to SiteTriks CMS Initialization</div>
                         </div>
-                        <h3>Welcome to SiteTriks CMS Initialization</h3>
-                        <a class="btn" style="margin-left: 30%; float: none;" asp-action="RegisterUser">Create your site</a>
+                        <a class="btn" asp-action="RegisterUser">Create your site</a>
 
                         @if (hostingEnv.EnvironmentName == "Development")
                         {
-                            <a class="btn" style="margin-left: 30%; float: none;" id="dev-button" asp-action="DefaultDeveloperSetup">Create default site</a>
+                            <a class="btn" id="dev-button" asp-action="DefaultDeveloperSetup">Create default site</a>
                             <p class="centered">Email: admin@mail.com</p>
                             <p class="centered">Password: 12345qQ!</p>
                         }
                     </div>
+                </div>
+                <div class="image-holder col col-lg-9 col-md-9 col-sm-9">
+                    <img class="login-image" src="" alt="login image" />
                 </div>
             </div>
         </div>
@@ -31,6 +34,7 @@
     <script src="~/js/loader.js"></script>
     <script src="~/js/data.js"></script>
     <script src="~/js/restart-app.js"></script>
+    <script type="text/javascript" src="~/js/login-image-select.js"></script>
     <script>
         $('#dev-button').on('click', (e) => {
             Loader.show('#fff', "/images/LOGO.png");

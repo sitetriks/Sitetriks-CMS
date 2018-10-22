@@ -1,0 +1,32 @@
+﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
+
+@{
+    var entries = Model.Entries.OrderBy(e => e["Position"]).ToList();
+}
+
+<div id="desktop-view-menu" class="features-section bottom-menu">
+    <div class="row">
+        <div class="col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            @for (int i = 0; i < 10 && i < Model.Entries.Count(); i += 2)
+            {
+                <div class="menu-icon" data-url="@entries[i]["Url"]">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["PrimaryImage"]">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["SecondaryImage"]" style="display:none">
+                </div>
+            }
+        </div>
+        <div class="col col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            <div class="selected-feature" id="static-section"><div class="feature-content"></div></div>
+        </div>
+        <div class="col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            @for (int i = 1; i < 10 && i < Model.Entries.Count(); i += 2)
+            {
+                <div class="menu-icon" data-url="@entries[i]["Url"]">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["PrimaryImage"]">
+                    <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["SecondaryImage"]" style="display:none">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

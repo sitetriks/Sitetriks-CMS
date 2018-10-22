@@ -6,7 +6,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    using (Html.BeginForm("LogOut", "Account", new { area = "" }, FormMethod.Post, true, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOut", "Account", new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
@@ -15,7 +15,7 @@
                 @Html.ActionLink("Hello" + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
             </div>*@
             <div style="float:right">
-                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                <button type="submit" class="btn-account">Log off</button>
             </div>
         </div>
     }
@@ -24,8 +24,8 @@ else
 {
     <div class="navbar-right">
         <div class="login-partial-loged">
-            <div>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</div>
-            <div>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "loginLink" })</div>
+            <div>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, htmlAttributes: new { id = "registerLink", @class = "btn-account"})</div>
+            <div>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, htmlAttributes: new { id = "loginLink", @class = "btn-account" })</div>
         </div>
     </div>
 }

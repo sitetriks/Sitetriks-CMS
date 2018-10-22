@@ -1,4 +1,6 @@
-﻿function initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey, selectedColumn) {
+﻿/* globals Data, Loader, Validator */
+
+function initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey, selectedColumn) {
     $('#select-request-type').on('change', function (ev) {
         let $trigger = $(this);
         if ($trigger.val() === 'GET') {
@@ -8,6 +10,7 @@
         }
     }).trigger('change');
 
+    let $selectType = $('#select-type');
     Loader.show('#fff');
     Data.getJson({ url: '/sitetriks/endpoints/gettables' }).then(function (res) {
         if (res.success) {
@@ -15,14 +18,14 @@
                 $('<option></option>', {
                     value: res.tables[i],
                     text: res.tables[i],
-                    selected: (selectedJoinTable && selectedJoinTable.toLowerCase() === res.tables[i].toLowerCase())
+                    selected: selectedJoinTable && selectedJoinTable.toLowerCase() === res.tables[i].toLowerCase()
                 }).appendTo('#select-join-table');
 
                 $('<option></option>', {
                     value: res.tables[i],
                     text: res.tables[i],
-                    selected: (selectedType && selectedType.toLowerCase() === res.tables[i].toLowerCase())
-                }).appendTo('#select-type');
+                    selected: selectedType && selectedType.toLowerCase() === res.tables[i].toLowerCase()
+                }).appendTo($selectType);
             }
         }
 
@@ -30,11 +33,11 @@
         return res;
     }).then(function (res) {
         if (res.success) {
-            $('#select-type').trigger('change');
+            $selectType.trigger('change');
         }
     });
 
-    $('#select-type').on('change', function (ev) {
+    $selectType.on('change', function (ev) {
         let table = $(this).val();
         let $select = $('#select-join-key');
         $select.html('');
@@ -48,27 +51,27 @@
                         $('<option></option>', {
                             value: res.columns[i],
                             text: res.columns[i],
-                            selected: (selectedJoinKey && selectedJoinKey === res.columns[i])
+                            selected: selectedJoinKey && selectedJoinKey === res.columns[i]
                         }).appendTo($select);
 
 
                         $('<option></option>', {
                             value: res.columns[i],
                             text: res.columns[i],
-                            selected: (selectedColumn && selectedColumn === res.columns[i])
+                            selected: selectedColumn && selectedColumn === res.columns[i]
                         }).appendTo('#select-column');
                     }
                 }
 
                 Loader.hide();
-            })
+            });
         }
     });
 
     $('#form-endpoint').on('submit', function (ev) {
         let flag = false;
 
-        if (!Validator.validate($('#select-type'), 'Type must be selected!', function (val) { return !!val })) {
+        if (!Validator.validate($('#select-type'), 'Type must be selected!', function (val) { return !!val; })) {
             flag = true;
         }
 
@@ -90,7 +93,7 @@
                         flag = true;
                     }
                 } else {
-                    if (!Validator.validate($(element), '', function (val) { return true })) {
+                    if (!Validator.validate($(element), '', function (val) { return true; })) {
                         flag = true;
                     }
                 }
@@ -99,11 +102,11 @@
             $('.input-paging').each(function (_, element) {
                 let value = $(element).val();
                 if (value && value.trim()) {
-                    if (!Validator.validate($(element), 'Must be positive number or zero!', function (val) { return (parseInt(val) != val) && (parseInt(val) >= 0) })) {
+                    if (!Validator.validate($(element), 'Must be positive number or zero!', function (val) { return Validator.isInteger(val) && +val >= 0; })) {
                         flag = true;
                     }
                 } else {
-                    if (!Validator.validate($(element), '', function (val) { return true })) {
+                    if (!Validator.validate($(element), '', function (val) { return true; })) {
                         flag = true;
                     }
                 }
