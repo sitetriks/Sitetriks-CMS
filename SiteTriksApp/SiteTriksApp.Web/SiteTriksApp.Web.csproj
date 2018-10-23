@@ -36,7 +36,6 @@
     <PackageReference Include="SiteTriks.DatabaseApi" Version="1.0.2.1" />
     <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.2.2" />
     <PackageReference Include="SiteTriks.Dynamic" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.ECommerseModule" Version="1.0.2.1" />
     <PackageReference Include="SiteTriks.ErrorPagesModule" Version="1.0.2.1" />
     <PackageReference Include="SiteTriks.Extensions" Version="1.0.2.1" />
     <PackageReference Include="SiteTriks.ForumModule" Version="1.0.2.1" />
@@ -56,9 +55,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\ECommerse\Controllers\" />
-    <Folder Include="Areas\ECommerse\Data\" />
-    <Folder Include="Areas\ECommerse\Models\" />
     <Folder Include="Areas\Forum\Controllers\" />
     <Folder Include="Areas\Forum\Data\" />
     <Folder Include="Areas\Forum\Models\" />
@@ -179,16 +175,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\ECommerse\Views\CategoryManager\Edit.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Areas\SiteTriks\Views\Widgets\StoreItem.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\BaseWidget\StoreItem\Display.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\Components\StoreGridWidget\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

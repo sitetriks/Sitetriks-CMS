@@ -17,7 +17,6 @@ using SiteTriks.Extentions.DynamicViews;
 using SiteTriks.Extentions.WidgetModels;
 using SiteTriks.Helpers;
 using SiteTriks.Services.Contracts;
-using SiteTriksApp.Web.Areas.ECommerse.Extentions.WidgetModels;
 using SiteTriksApp.Web.Data;
 using SiteTriksApp.Web.Services;
 using System;
@@ -129,9 +128,9 @@ namespace SiteTriksApp.Web
 
             // -----------------------------------------------------------------------------------------------------------
             // Store widgets
-            WidgetRegistry.RegisterWidget<StoreGridWidgetModel>("storeGrid", "Grid");
-            WidgetRegistry.RegisterWidget<StoreFilterWidgetModel>("storeFilter", "Filter Menu");
-            WidgetRegistry.RegisterWidget<StoreItemWidgetModel>("storeItem", "Store Item");
+            //WidgetRegistry.RegisterWidget<StoreGridWidgetModel>("storeGrid", "Grid");
+            //WidgetRegistry.RegisterWidget<StoreFilterWidgetModel>("storeFilter", "Filter Menu");
+            //WidgetRegistry.RegisterWidget<StoreItemWidgetModel>("storeItem", "Store Item");
 
             services.AddIdentity<User, IdentityRole>(config =>
             {

@@ -50,13 +50,8 @@
       "IsActive": false,
       "DisplayName": "Site Map",
       "Dependencies": []
-    },
-    {
-      "Name": "SiteTriks.ECommerseModule",
-      "IsActive": true,
-      "DisplayName": "ECommerse",
-      "Dependencies": []
     }
+  
   ],
   "Installed": [
     {
@@ -108,12 +103,6 @@
       "Name": "SiteTriks.DocumentationModule",
       "IsActive": true,
       "DisplayName": "Documentation",
-      "Dependencies": []
-    },
-    {
-      "Name": "SiteTriks.ECommerseModule",
-      "IsActive": true,
-      "DisplayName": "ECommerse",
       "Dependencies": []
     }
   ]
