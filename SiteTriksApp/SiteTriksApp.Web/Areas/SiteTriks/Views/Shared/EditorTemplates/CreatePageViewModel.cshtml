@@ -36,13 +36,13 @@
     </div>
 
     <div class="form-group row">
-        @Html.LabelFor(model => Model.PageViewModel.IsInNavigation, "Is in navigation", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.LabelFor(model => Model.PageViewModel.IsInNavigation, "In navigation", htmlAttributes: new { @class = "control-label col-xs-2" })
         @Html.EditorFor(model => Model.PageViewModel.IsInNavigation, new { htmlAttributes = new { @class = "custom-checkbox" } })
         @Html.ValidationMessageFor(model => Model.PageViewModel.IsInNavigation, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group row">
-        @Html.LabelFor(model => Model.PageViewModel.IsStaticPage, "Is static page", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.LabelFor(model => Model.PageViewModel.IsStaticPage, "Static Page", htmlAttributes: new { @class = "control-label col-xs-2" })
         @Html.EditorFor(model => Model.PageViewModel.IsStaticPage, new { htmlAttributes = new { @class = "custom-checkbox" } })
         @Html.ValidationMessageFor(model => Model.PageViewModel.IsStaticPage, "", new { @class = "text-danger" })
     </div>
@@ -51,12 +51,6 @@
         @Html.LabelFor(model => Model.PageViewModel.ParentId, "Parent page", htmlAttributes: new { @class = "control-label col-xs-2" })
         @Html.DropDownListFor(model => Model.PageViewModel.ParentId, new SelectList(Model.ParentList, "Id", "Title"), new { @class = "form-control" })
     </div>
-
-    @*<div class="form-group row">
-            @Html.LabelFor(model => Model.PageViewModel.Template, "Template", htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.DropDownListFor(model => Model.PageViewModel.Template, new SelectList(Model.Templates.Select(x => new { Value = x, Text = x }), "Value", "Text"), "-- Select Template --", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => Model.PageViewModel.Template, "", new { @class = "text-danger" })
-        </div>*@
 
     <div class="form-group row">
         @Html.LabelFor(model => Model.PageViewModel.PageTemplateMetaId, "Template page", htmlAttributes: new { @class = "control-label col-xs-2" })
@@ -77,7 +71,7 @@
     </div>
 
     <div class="form-group row">
-        @Html.LabelFor(model => Model.PageViewModel.EnDateToBePublished, "Date to be published", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.LabelFor(model => Model.PageViewModel.EnDateToBePublished, "Published date", htmlAttributes: new { @class = "control-label col-xs-2" })
         <div class="dtb-container">
 
             <div class="input-group date-picker-group">

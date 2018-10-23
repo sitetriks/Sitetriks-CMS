@@ -69,13 +69,69 @@ body {
     margin-bottom: 10px;
 }
 
+/*------------------------------------------------------------------------------------*/
+/*Recovery codes*/
+
+.manage-profile-container .recovery-codes-warning {
+    margin: 20px;
+    border: solid 2px #faebcc;
+    background-color: #fcf8e3;
+}
+
+.manage-profile-container .recovery-codes-list > div {
+    width: 32%;
+    margin: 50px auto;
+    justify-content: center;
+    border-radius: 21px;
+    border: solid 4px #ffffff;
+    background-color: #92bed6;
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f7f7f7;
+}
+
+    .manage-profile-container .recovery-codes-list > div h4 {
+        font-size: 20px;
+        font-family: Montserrat;
+        padding: 18px 0;
+    }
+
+.manage-profile-container .recovery-codes-list .codes {
+    background: white;
+    width: 98%;
+    margin-left: 1%;
+    height: 301px;
+    border: solid 1px #979797;
+    padding: 50px 70px;
+    font-family: Montserrat;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #393939;
+    line-height: 37px;
+}
+
+    .manage-profile-container .recovery-codes-list .codes code {
+        color: #393939;
+    }
+
+    .manage-profile-container .recovery-codes-list .codes .left {
+        width: 49%;
+        display: inline-block;
+        text-align: left;
+    }
+
+    .manage-profile-container .recovery-codes-list .codes .right {
+        width: 49%;
+        display: inline-block;
+        text-align: right;
+    }
+
 /* Login page */
-/* Header - see navbar*/
-/*Login form*/
 
 .sitetriks-login {
     width: 100%;
-    height: calc(100vh - 35px);
+    height: 100vh;
     padding: 0;
 }
 
@@ -91,10 +147,20 @@ body {
             padding: 0;
         }
 
-        .sitetriks-login .row .col-lg-9 img {
-            width: 100%;
-            height: 100%;
-            min-height: 800px;
+        .sitetriks-login .row .image-holder {
+            position: relative;
+        }
+
+        .sitetriks-login .row .login-image-container {
+            height: 90%;
+            width: 97%;
+            background-image: url('/images/homepage/Login_Wide.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 47%;
+            top: 50%;
         }
 
 
@@ -270,7 +336,7 @@ body {
 /*------------------------------------------------------------------------------------*/
 /* news carousel*/
 
-.slick-dots li button::before{
+.slick-dots li button::before {
     font-size: 14px;
 }
 
@@ -354,6 +420,25 @@ a.read-more {
         text-align: center;
     }
 
+    #loginForm p {
+        margin-bottom: 0;
+    }
+
+    #loginForm .registration-link {
+        text-align: center;
+        color: #777777;
+        font-family: Montserrat;
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
+        #loginForm .registration-link a {
+            color: #337ab7;
+            text-decoration: none;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
 .login-logo-container,
 .forgotten-password-container,
 .register-form-container {
@@ -365,18 +450,18 @@ a.read-more {
     .login-logo-container img {
         margin: 0 auto;
         display: block;
+        height: 200px;
+        width: auto;
     }
 
     .login-logo-container div {
         text-align: center;
         font-family: LucidaGrande;
-        font-size: 24px;
+        font-size: 28px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
         letter-spacing: normal;
         color: #777777;
+        padding: 15px 0 20px 0;
     }
 
 #loginForm label,
@@ -425,7 +510,7 @@ a.read-more {
     font-size: 11px;
     font-weight: bold;
     color: #ddeeff;
-    width: 60%;
+    width: 55%;
     border-radius: 4px;
     background-color: #5fb6fd;
     border: solid 0.5px #123e7a;
@@ -1073,9 +1158,9 @@ a.read-more {
 
 /*Responsive*/
 
-@media (max-width: 1200px) {
-    .sitetriks-login .row .col-lg-9 img {
-        min-height: 600px;
+@media (max-width: 1400px) {
+    .sitetriks-login .row .login-image-container {
+        background-image: url('/images/homepage/Login_image.jpg');
     }
 }
 
@@ -1286,12 +1371,6 @@ a.read-more {
     #loginForm,
     #forgttenPassword,
     #registerForm {
-        /*width: 90%;
-        border-radius: 15px;
-        color: #173b6d;
-        background-color: #c9c9c9;
-        padding: 70px 10% 23px 10%;
-        border: solid 3px #173b6d;*/
         font-size: 12px;
     }
 
@@ -1301,6 +1380,7 @@ a.read-more {
 
     /*Contact us page responsive*/
     /*Main page*/
+
     .contact-us-widget .slogan p,
     .contact-us-widget .slogan p:nth-child(2) {
         font-size: 20px;
@@ -1353,3 +1433,28 @@ a.read-more {
     .two-factor-auth a {
         margin-bottom: 20px;
     }
+
+/*4K / Wide screen resolutions*/
+
+@media (min-width: 2800px) {
+
+    .sitetriks-login .row .login-image-container {
+        background-image: url('/images/homepage/Login_4K.jpg');
+    }
+
+    .login-button .btn {
+        width: 40%;
+    }
+}
+
+
+@media (min-width: 3800px) {
+
+    .sitetriks-login .row .login-image-container {
+        background-image: url('/images/homepage/Login_Wide4K.jpg');
+    }
+
+    .login-button .btn {
+        width: 40%;
+    }
+}

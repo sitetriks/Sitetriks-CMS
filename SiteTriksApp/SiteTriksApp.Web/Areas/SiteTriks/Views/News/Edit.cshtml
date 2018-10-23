@@ -16,8 +16,8 @@
         <div class="fixed-top-2">
             @await Html.PartialAsync("SecondNavHeader")
 
-            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <input type="submit" value="Save" id="submit-form" class="btn-nav-2" />
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span></a>
+            <input type="submit" value="Save & Exit" id="submit-form" class="btn-nav-2" />
 
             <select id="languages" class="form-control inline-block" asp-items="Model.NewsEN.MultiLingualFieds.Select(mlf => new SelectListItem(mlf.Key, mlf.Key))">
                 <option value="">BackEnd/Default</option>
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="form-group row" style="position:relative;">
-                    @Html.LabelFor(m => Model.NewsEN.DateToBePublished, "Date to be published", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(m => Model.NewsEN.DateToBePublished, "Published date", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="input-group date-picker-group">
                         @Html.EditorFor(m => Model.NewsEN.DateToBePublished, new { htmlAttributes = new { @class = "form-control", Id = "date-picker", type = "text" } })
                         <span class="input-group-addon">
@@ -130,7 +130,6 @@
 @section Scripts{
     <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
     <script type="text/javascript" src="~/js/modules/utils.js"></script>
-    <script src="~/js/leaving-warning.js"></script>
     <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
     <script src="~/js/text-editor.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/news.js"></script>

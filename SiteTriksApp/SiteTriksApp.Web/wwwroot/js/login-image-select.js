@@ -5,8 +5,6 @@
     let imageHD = '/images/homepage/Login_img_HD.jpg';
     let imageMiddle = '/images/homepage/Login_image.jpg';
 
-    console.log(windowWidth);
-
     function selectLoginImage() {
         if (windowWidth >= 2800) {
             $image.attr('src', imageFourk);

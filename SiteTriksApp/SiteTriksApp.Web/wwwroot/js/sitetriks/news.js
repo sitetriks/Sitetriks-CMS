@@ -1,4 +1,6 @@
-﻿var News = (function () {
+﻿/* globals Data, Loader, Utils, FileHandler */
+
+var News = (function () {
     function createNews(validateNewsLinkUrl, mediator, logger) {
         let $modal = $('#file-upload-modal');
         let $container = $modal.find('.file-handler-wrapper');
@@ -205,7 +207,6 @@
 
             //--------------------------------------------------------
 
-            window.onbeforeunload = null;
             var url = $urlFlied.val();
 
             if (url.length < 3) {
@@ -224,7 +225,6 @@
                     $urlFlied.css("border", "1px solid red");
                     $urlValidation.text('Url is invalid or already in use!');
                     Loader.hide();
-                    window.onbeforeunload = onUnload;
                 }
             }, Data.defaultError).then(function (res) {
                 if (res.success) {
@@ -235,19 +235,9 @@
                 $btnSubmit.attr("disabled", false);
             }, Data.defaultError).then(function (res) {
                 if (res.success) {
-                    //let url = $urlFlied.val();
-                    //let pageUrl = document.location.href;
-                    //let newUrl = Utils.updateQueryStringParameter(pageUrl, 'url', url);
-                    //if (history.pushState) {
-                    //    window.history.replaceState({}, '', newUrl);
-                    //} else {
-                    //    window.location.href = newUrl;
-                    //}
-
                     window.location.replace('/sitetriks/news');
                 } else {
                     mediator.dispatch('alert', { selector: '#alerts', title: 'Failed', message: res.message, status: 'danger' });
-                    window.onbeforeunload = onUnload;
                 }
 
                 Loader.hide();

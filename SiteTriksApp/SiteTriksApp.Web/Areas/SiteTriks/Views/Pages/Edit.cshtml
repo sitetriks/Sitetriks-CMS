@@ -13,9 +13,7 @@
     {
         @Html.AntiForgeryToken()
         <div class="fixed-top-2">
-            @*@await Html.PartialAsync("SecondNavHeader")*@
-
-            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span></a>
             <a href="@Url.Action("EditContent", new { url = Model.PageViewModel.Url })" class="btn-nav-2">Content</a>
             <input type="submit" id="submit" value="Save" class="btn-nav-2" />
             <input type="submit" value="Save & Exit" class="btn-nav-2 btn-save-and-exit" />
@@ -26,8 +24,7 @@
             
             <div class="page-title"><span>@ViewBag.Title</span></div>
         </div>
-
-        @*<div id="alerts"></div>*@
+        
         <strong><span class="text-danger" id="notifier"></span></strong>
         <hr />
 
@@ -47,14 +44,13 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/leaving-warning.js"></script>
     <script src="~/js/multiselect-setup.js"></script>
     <script src="~/js/date-extentions.js"></script>
     <script src="~/js/tags.js"></script>
     <script src="~/js/validator.js"></script>
     <script src="~/js/sitetriks/pages.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        (function () {
             var validateUrlUrl = '@Url.Action("ValidateEditUrl", "Pages")?url=';
             var mlf = @Html.Raw(Json.Serialize(Model.PageViewModel.MultiLingualFieds));
             var pageId = '@Model.PageViewModel.EnId';
@@ -62,6 +58,6 @@
             var initialUrl = '@Model.PageViewModel.Url';
 
             editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl);
-        });
+        })();
     </script>
 }

@@ -410,10 +410,8 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     let $pageNumber;
     const pageSize = 9;
     let nextPageExists = false;
-    let $btnSelect, $btnSelect2;
+    let $btnSelect;
     let requester;
-    let firstStage = true;
-    let $thumbnailSelector = $('.thumbnailSelect');
     let selectedFiles = {};
 
     logger.log('init select module');
@@ -427,8 +425,6 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         $btnPrev = $container.find('.previous-page');
         $pageNumber = $container.find('.page-number');
         $btnSelect = $container.find('.btn-select');
-        $btnSelect2 = $container.find('.btn-select-2');
-
 
         return Utils.loadHandlebarsTemplates(templatesCache, templates);
     }).then(function (res) {
@@ -446,11 +442,10 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
 
         logger.log(selectedLinkIds);
         for (var i = 0; i < selectedLinkIds.length; i += 1) {
-
             selectedFiles[selectedLinkIds[i]] = {
                 selectedLinkId: selectedLinkIds[i],
                 sizeName: 'Original'
-            }
+            };
         }
 
         loadImages();
@@ -461,7 +456,7 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         $libraries.on('change', changeLibrary);
         $btnNext.on('click', nextPage);
         $btnPrev.on('click', prevPage);
-        $container.on('click', '.thumbnailSelect', selectSize);
+        $container.on('change', '.thumbnailSelect', selectSize);
         $container.on('click', '.image-checkbox', checkCheckbox);
         $container.on('click', '.image-checkbox', toggleSelectDropdown);
         $btnSave.on('click', selectFiles);
@@ -477,7 +472,7 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     function dispose() {
         logger.log('destoy select module');
         $libraries.off('change', changeLibrary);
-        $container.off('click', '.thumbnailSelect', selectSize);
+        $container.off('change', '.thumbnailSelect', selectSize);
         $container.off('click', '.image-checkbox', checkCheckbox);
         $container.off('click', '.image-checkbox', toggleSelectDropdown);
         $btnSave.off('click', selectFiles);
@@ -537,10 +532,6 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         }, Data.defaultError);
     }
 
-    function loadThumbnailsForImage(imageId) {
-
-    }
-
     function nextPage() {
         if (!nextPageExists) {
             return;
@@ -564,47 +555,39 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         loadImages();
     }
 
-    // 
-
     function selectSize() {
         let $option = $(this);
         let selectedId = $option.val();
-        let sizeName = $option.find(":selected").attr('data-sizename');
-        let $checkbox = $(this).parent().parent().find("input");
-        $checkbox.prop('checked', false);
-        $($option.parent().parent().find("input")).attr("data-alt-id", selectedId);
-        $($option.parent().parent().find("input")).attr("data-sizename", sizeName);
+        let id = $option.attr('data-id');
+        let sizeName = $option.find(':selected').attr('data-sizename');
 
-        selectFileUI()
+        selectedFiles[id] = {
+            selectedLinkId: selectedId,
+            sizeName: sizeName
+        };
     }
-
 
     function checkCheckbox(ev) {
         let $checkbox = $(this);
         let id = $checkbox.attr('data-id');
 
         if ($checkbox.is(':checked')) {
-
-            let thumbnails = $checkbox.attr('data-thumbnails');
-            let selectedLinkId = $checkbox.attr('data-alt-id');
-            let sizeName = $checkbox.attr('data-sizename');
-
-            if ($checkbox.attr("type") == "radio") {
+            let selectedId = id;
+            let sizeName = 'Original';
+            if ($checkbox.attr('type') === 'radio') {
                 selectedFiles = {};
-
-                selectedFiles[id] = {
-                    selectedLinkId: selectedLinkId,
-                    sizeName: sizeName
-                };
-            } else {
-                if (!(id in selectedFiles)) {
-                    selectedFiles[id] = {
-                        selectedLinkId: selectedLinkId,
-                        sizeName: sizeName
-                    };
-                }
-
             }
+
+            let $select = $checkbox.parents('.image-container2').find('.thumbnailSelect');
+            if ($select.length > 0) {
+                selectedId = $select.val() || selectedId;
+                sizeName = $select.find(':selected').attr('data-sizename') || sizeName;
+            }
+
+            selectedFiles[id] = {
+                selectedLinkId: selectedId,
+                sizeName: sizeName
+            };
 
         } else {
             delete selectedFiles[id];
@@ -614,17 +597,15 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     }
 
     function selectFiles() {
-
         let selectedImagesFullInfo = JSON.stringify(selectedFiles);
         let selectedLinkIds = [];
 
-        for (const [key, value] of Object.entries(selectedFiles)) {
+        for (const key in selectedFiles) {
             selectedLinkIds.push(selectedFiles[key].selectedLinkId);
         }
 
         $('#selectedImages').attr('data-selectedImages', JSON.stringify(selectedImagesFullInfo));
         $('#image').val(selectedLinkIds);
-
 
         mediator.dispatch('filesSelected', { fileIds: selectedLinkIds, selectedImagesFullInfo: selectedImagesFullInfo, libraryId: libraryId, requester });
     }
@@ -638,21 +619,11 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
 
     function selectFileUI() {
         $('input[name=images-list]').each(function (_, element) {
-            let $selected = $(this);
+            let $selected = $(element);
             if ($selected.is(':checked')) {
-                $selected.parent().css('background', '#4a90e2');
-                $selected.parent().parent().find('.thumbnailSelector').css('background', '#4a90e2')
-                    .css('color', '#ffffff');
-                $selected.parent().parent().find('.thumbnailSelect').css('background', '#4a90e2')
-                    .css('color', '#ffffff');
-                $selected.parent().parent().find('.arrow-down').css('display', 'inline-block');
-
+                $selected.parents('.image-container2').addClass('selected');
             } else {
-                $selected.parent().css('background', 'transparent');
-                $selected.parent().parent().find('.thumbnailSelect').css('background', 'white')
-                    .css('color', '#4e4e4e');
-                $selected.parent().parent().find('.thumbnailSelector').css('background', 'white')
-                    .css('color', '#4e4e4e');
+                $selected.parents('.image-container2').removeClass('selected');
             }
         });
     }
@@ -699,32 +670,20 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     }
 
     function toggleSelectDropdown(ev) {
-        let $checkbox = ev.target;
-        console.log($checkbox);
-        let $target = $($checkbox).parent().parent().find('.thumbnailSelect.dropdown');
-        let $clone = $target.clone().removeAttr('data-click-id');
-        $clone.val($target.val()).css({
-            overflow: 'hidden',
-            position: 'absolute',
-            background: 'white',
-            color: 'black',
-            'z-index': 999,
-            left: '2px',
-            top: '203px',
-            width: '100%',
-            outline: 'none',
-            border: '1px solid #b7b7b7',
-            overflow: 'hidden',
-            'text-align': 'left'
-        }).attr('size', $clone.find('option').length > 10 ? 10 : $clone.find('option').length).change(function () {
-            $target.val($clone.val());
-        }).on('click blur keypress', function (e) {
-            if (e.type !== 'keypress' || e.which === 13)
-                $(this).remove();
-        });
-        console.log($clone);
-        $($checkbox).parents('.select-parent').append($clone);
-        $clone.focus();
+        let $checkbox = $(ev.target);
+        if ($checkbox.is(':checked')) {
+            let $target = $checkbox.parent().parent().find('.thumbnailSelect.dropdown');
+            let $clone = $target.clone().removeAttr('data-click-id');
+            $clone.val($target.val()).addClass('cloned').attr('size', $clone.find('option').length > 10 ? 10 : $clone.find('option').length).change(function () {
+                $target.val($clone.val());
+            }).on('click blur keypress', function (e) {
+                if (e.type !== 'keypress' || e.which === 13) {
+                    $(this).remove();
+                }
+            });
+            $checkbox.parents('.select-parent').append($clone);
+            $clone.focus();
+        }
     }
 
     return {

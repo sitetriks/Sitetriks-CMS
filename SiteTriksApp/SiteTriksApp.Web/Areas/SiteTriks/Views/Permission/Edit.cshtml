@@ -1,8 +1,8 @@
 ﻿@model SiteTriks.Models.Permission.PermissionWithRolesViewModel
+
 @{
     ViewBag.Title = "Permissions";
 }
-
 
 <div class="backend-wrapper">
     @using (Html.BeginForm("Edit", "Permission", FormMethod.Post, new { id = "permission-form" }))
@@ -10,7 +10,7 @@
         <div class="fixed-top-2">
             @await Html.PartialAsync("SecondNavHeader")
 
-            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Back</a>
+            <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
             <input id="btnSubmit" type="submit" value="Save & Exit" class="btn-nav-2" />
         </div>
 
@@ -51,7 +51,6 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/leaving-warning.js"></script>
     <script>
         editPermission('@Model.Id')
         function editPermission(id) {

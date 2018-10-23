@@ -121,7 +121,7 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
 
     $(document).on('updatePreview', {}, updatePreview.bind(document, url));
     updatePreview(url);
-    let versions = new revisionControl('templates', $('#languages'), $('#versions'), $('#version-control'));
+    let versions = new revisionControl(url, 'templates', $('#languages'), $('#versions'), $('#version-control'));
     versions.loadVersions(currentCulture, currentVersion);
 
     Data.getJson({ url: '/sitetriks/templates/getlanguages', disableCache: true }).then(function (res) {
@@ -496,14 +496,12 @@ function editTemplate(checkValidUrlLink) {
 
         if (flag) {
             evt.preventDefault();
-            window.onbeforeunload = onUnload;
             $notfier.text('Titles required and must be atleast 3 characters long!');
             return false;
         }
 
         if (url.length < 3) {
             evt.preventDefault();
-            window.onbeforeunload = onUnload;
             $notfier.text('Please provide valid information in the required fields!');
             return false;
         }
@@ -535,7 +533,6 @@ function editTemplate(checkValidUrlLink) {
                 } else {
                     $urlField.css("border", "1px solid red");
                     $urlValidation.text('Url is invalid or already in use!');
-                    window.onbeforeunload = onUnload;
                     Loader.hide();
                 }
             }
@@ -549,7 +546,6 @@ function editTemplate(checkValidUrlLink) {
                         if (res.success) {
                             window.location.replace('/sitetriks/templates');
                         } else {
-                            window.onbeforeunload = onUnload;
                             $notfier.text(res.message);
                             Loader.hide();
                         }

@@ -1,4 +1,4 @@
-﻿/* globals Data, Tags, Multiselect */
+﻿/* globals Data, Validator, Loader, Notifier, Tags, Multiselect */
 
 function createPage(validateUrlUrl) {
     populateUrl('#title', '#url', validateUrlOnChange);
@@ -260,6 +260,7 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
                         window.location.replace('/sitetriks/pages');
                     }
 
+                    WarningWindow.reset();
                     mlf = res.mlf;
                     Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
                 } else {
@@ -276,7 +277,6 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 
         //--------------------------------------------------------
 
-        window.onbeforeunload = null;
         var url = $urlField.val();
         $notfier.text('');
         var flag = false;
@@ -302,12 +302,6 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
             return false;
         }
 
-        if (flag) {
-            evt.preventDefault();
-            window.onbeforeunload = onUnload;
-            return false;
-        }
-
         let dateVal = $('#date-picker').val();
 
         if (!!dateVal) {
@@ -329,7 +323,6 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
                 return Data.postForm({ url: _this.action, formData: new FormData(_this) });
             } else {
                 Validator.validate($urlField, res.message, function (val) { return false; });
-                window.onbeforeunload = onUnload;
                 $target.removeAttr('data-exit');
                 Loader.hide();
                 return Promise.reject(res.message);
@@ -338,9 +331,11 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
             if (res.success) {
                 if (saveAndExit) {
                     window.location.replace('/sitetriks/pages');
+                    return;
                 }
 
-                Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' })
+                WarningWindow.reset();
+                Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
                 if (url !== initialUrl) {
                     // update url if
                     if (window.history.replaceState) {
@@ -351,8 +346,7 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
                     }
                 }
             } else {
-                Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' })
-                window.onbeforeunload = onUnload;
+                Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' });
                 $target.removeAttr('data-exit');
             }
 
@@ -495,7 +489,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentTemplate, 
     $(document).on('updatePreview', {}, updatePreview.bind(document, url));
     updatePreview(url);
     let $languages = $('#languages');
-    let versions = new revisionControl('pages', $languages, $('#versions'), $('#version-control'));
+    let versions = new revisionControl(url, 'pages', $languages, $('#versions'), $('#version-control'));
     versions.loadVersions(currentLanguage, currentVersion);
 
     Data.getJson({ url: '/sitetriks/pages/getlanguages', disableCache: true }).then(function (res) {
@@ -612,7 +606,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentTemplate, 
     }
 }
 
-function revisionControl(type, $languages, $versions, $versionControl) {
+function revisionControl(url, type, $languages, $versions, $versionControl) {
     function previewVersion(ev) {
         let body = {
             version: $versions.val(),

@@ -9,7 +9,7 @@
         <div class="sitetriks-login container main-content content-placeholder">
             @*<h2>@ViewBag.Title.</h2>*@
             <div class="row">
-                <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <div id="loginForm">
                         <form method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                             <div class="login-logo-container">
@@ -50,17 +50,17 @@
                         </form>
                     </div>
                 </div>
-                <div class="image-holder col col-lg-9 col-md-9 col-sm-9">
-                    <img class="login-image" src="" alt="login image" />
+                <div class="image-holder col col-lg-8 col-md-8 col-sm-8">
+                    <div class="login-image-container"></div>
                 </div>
             </div>
         </div>
     </content>
 </div>
 
-@await Html.PartialAsync("_AccountFooter")
+@*@await Html.PartialAsync("_AccountFooter")*@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script type="text/javascript" src="~/js/login-image-select.js"></script>
+    @*<script type="text/javascript" src="~/js/login-image-select.js"></script>*@
 }
