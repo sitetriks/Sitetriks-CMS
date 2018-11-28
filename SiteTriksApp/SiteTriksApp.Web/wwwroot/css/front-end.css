@@ -16,11 +16,6 @@
 }
 
 @font-face {
-    font-family: BlairMd;
-    src: url("../fonts/Blaimim.ttf")
-}
-
-@font-face {
     font-family: LucidaGrande;
     src: url("../fonts/LucidaGrande.ttf")
 }
@@ -65,52 +60,584 @@ body {
 
 .enable-authenticator-wrapper label,
 .enable-authenticator-wrapper input,
-.enable-authenticator-wrapper span{
-   margin-bottom: 10px;
+.enable-authenticator-wrapper span {
+    margin-bottom: 10px;
 }
 
+/*------------------------------------------------------------------------------------*/
+/*Recovery codes*/
+
+.manage-profile-container .recovery-codes-warning {
+    margin: 20px;
+    border: solid 2px #faebcc;
+    background-color: #fcf8e3;
+}
+
+.manage-profile-container .recovery-codes-list > div {
+    width: 32%;
+    margin: 50px auto;
+    justify-content: center;
+    border-radius: 21px;
+    border: solid 4px #ffffff;
+    background-color: #92bed6;
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f7f7f7;
+}
+
+    .manage-profile-container .recovery-codes-list > div h4 {
+        font-size: 20px;
+        font-family: Montserrat;
+        padding: 18px 0;
+    }
+
+.manage-profile-container .recovery-codes-list .codes {
+    background: white;
+    width: 98%;
+    margin-left: 1%;
+    height: 301px;
+    border: solid 1px #979797;
+    padding: 50px 70px;
+    font-family: Montserrat;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #393939;
+    line-height: 37px;
+}
+
+    .manage-profile-container .recovery-codes-list .codes code {
+        color: #393939;
+    }
+
+    .manage-profile-container .recovery-codes-list .codes .left {
+        width: 49%;
+        display: inline-block;
+        text-align: left;
+    }
+
+    .manage-profile-container .recovery-codes-list .codes .right {
+        width: 49%;
+        display: inline-block;
+        text-align: right;
+    }
+
 /* Login page */
-/* Header - see navbar*/
-/*Login form*/
-.row {
-    margin: 0;
+
+.sitetriks-login {
+    width: 100%;
+    height: 100vh;
     padding: 0;
 }
 
+    .sitetriks-login .row {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+        .sitetriks-login .row .col {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sitetriks-login .row .image-holder {
+            position: relative;
+        }
+
+        .sitetriks-login .row .login-image-container {
+            height: 90%;
+            width: 97%;
+            min-height: 700px;
+            background-image: url('/images/homepage/Login_Wide.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            transform: translate(-2%, 6%);
+        }
+
+/* Upload license page*/
+
+#uploadLicense {
+    padding: 12% 20% 23px 20%;
+    font-size: 12px;
+    min-height: 260px;
+}
+
+.login-logo-container .upload-license-title {
+    font-size: 22px;
+}
+
+.upload-container-license #drop-area-license {
+    height: 200px;
+}
+
+    .upload-container-license #drop-area-license .drop-info-btn {
+        padding: 0;
+    }
+
+#drop-area-license .drop-info-btn {
+    cursor: pointer;
+    margin-top: 3%;
+}
+
+#drop-area-license {
+    background-color: yellowgreen;
+    height: 500px;
+    background-color: #f8f8f8;
+    border: dashed 2px #979797;
+    position: relative;
+}
+
+    #drop-area-license .drop-info-btn {
+        font-size: 20px;
+        padding: 10px;
+        padding-right: 20px;
+        display: inline-block;
+        font-weight: bold;
+        border-radius: 4px;
+        background-color: #adadad;
+        cursor: pointer;
+        top: calc(50% - 60px);
+        padding-top: 9px;
+    }
+
+    #drop-area-license > div {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        color: #a1a1a1;
+        text-align: center;
+        cursor: default;
+    }
+
+.uppercase {
+    line-height: 38px;
+}
+
+#drop-area-license .drop-info-btn a {
+    color: #fff;
+}
+
+.upload-container-license #drop-area-license #license-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#drop-area-license.disabled .drop-info-btn label {
+    cursor: no-drop;
+    font-size: 17px;
+}
+
+#drop-area-license .drop-info-btn label {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.upload-container-license #drop-area-license label {
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-right: 0px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 34px;
+}
+
+.uppercase img {
+    height: 25px;
+    margin-right: 15px;
+    margin-top: -8px;
+}
+
+#drop-area-license > div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    color: #a1a1a1;
+    text-align: center;
+    cursor: default;
+}
+
+#drop-area-license .max-size {
+    top: 80%;
+    font-weight: bold;
+}
+
+#drop-area-license .drop-info-btn a {
+    color: #fff;
+}
+
+#drop-area-license .drop-info-text {
+    top: 60%;
+    font-size: 22px;
+}
+
+.domain-container {
+    padding: 15px;
+    border: 1px solid black;
+    background-color: #f8f8f8;
+    border: solid 1px #5fb6fd;
+    position: relative;
+    font-size: 13px;
+    color: #173b6d;
+    font-weight: bold;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.btn-license {
+    display: block;
+    margin: 5% auto;
+    padding: 13px;
+    width: 65%;
+    background-color: #5fb6fd;
+    border: 1px solid #123e7a;
+    color: #ffffff;
+    font-family: Montserrat;
+    /*font-weight: bold;*/
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+    .btn-license:hover {
+        background-color: #123e7a;
+        color: white;
+    }
+
+.domain-ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#uploadLicense h3 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: normal;
+    text-align: center;
+    color: #383838;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* profile page styles */
+.account-form {
+    padding: 20% 10% 23px 10%;
+    font-size: 12px;
+    min-height: 260px;
+    overflow-x: auto;
+    height: 100%;
+}
+
+    .account-form label {
+        color: #173b6d;
+        font-family: Montserrat;
+    }
+
+    .account-form input {
+        max-width: inherit;
+        margin-bottom: 10px;
+        border: solid 1px #258afb;
+        background-color: #ebebeb;
+    }
+
+    .account-form .btn {
+        padding-top: 10px;
+        padding-bottom: 18px;
+        display: block;
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: bold;
+        color: #ddeeff;
+        width: 60%;
+        border-radius: 4px;
+        background-color: #5fb6fd;
+        border: solid 0.5px #123e7a;
+        height: 36px;
+        margin: 10% auto;
+    }
+
+    .account-form .account-form-header {
+        margin-bottom: 50px;
+    }
+
+        .account-form .account-form-header img {
+            margin: auto;
+            display: block;
+        }
+
+        .account-form .account-form-header div {
+            padding: 15px;
+            text-align: center;
+            font-family: LucidaGrande;
+            font-size: 26px;
+            font-weight: bold;
+            color: #777;
+            word-break: break-all;
+        }
+
+.profile-form-carousel {
+    height: 100vh;
+    padding: 50px 200px;
+    overflow-x: auto;
+    white-space: nowrap;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cbedff+80,92bed6+80 */
+    background: #cbedff; /* Old browsers */
+    background: -moz-linear-gradient(top, #cbedff 80%, #92bed6 80%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #cbedff 80%,#92bed6 80%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #cbedff 80%,#92bed6 80%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cbedff', endColorstr='#92bed6',GradientType=0 ); /* IE6-9 */
+}
+
+    .profile-form-carousel .profile-form-wrapper {
+        display: inline-block;
+        margin: 56px;
+        font-family: Montserrat;
+        vertical-align: top;
+    }
+
+        .profile-form-carousel .profile-form-wrapper .profile-form {
+            width: 430px;
+            padding: 35px 35px;
+            background-color: #92bed6;
+            border: 4px solid #fff;
+            border-radius: 21px;
+        }
+
+        .profile-form-carousel .profile-form-wrapper .image-wrapper {
+            height: 160px;
+            position: relative;
+        }
+
+        .profile-form-carousel .profile-form-wrapper img.profile-form-img.key {
+            height: auto;
+            width: 150px;
+            min-height: inherit;
+            display: block;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            position: absolute;
+            left: 50%;
+        }
+
+        .profile-form-carousel .profile-form-wrapper img.profile-form-img.phone {
+            height: 140px;
+            width: auto;
+            min-height: inherit;
+            margin: 0 auto;
+            margin-bottom: 50px;
+            display: block;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            position: absolute;
+            left: 50%;
+        }
+
+        .profile-form-carousel .profile-form-wrapper .profile-form .form-header {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            color: #f7f7f7;
+            margin-bottom: 40px;
+        }
+
+        .profile-form-carousel .profile-form-wrapper .profile-form input {
+            border-radius: 3px;
+            border: solid 1px #626262;
+            background-color: #f6f6f6;
+            margin-bottom: 10px;
+            max-width: inherit;
+        }
+
+        .profile-form-carousel .profile-form-wrapper .profile-form label {
+            font-size: 10px;
+            font-weight: normal;
+            color: #173b6d;
+        }
+
+            .profile-form-carousel .profile-form-wrapper .profile-form label::after {
+                content: ':';
+            }
+
+        .profile-form-carousel .profile-form-wrapper .profile-form .btn-save, .btn-tfa {
+            display: block;
+            margin: auto;
+            font-size: 10px;
+            font-weight: bold;
+            color: #626262;
+            border-radius: 3px;
+            border: solid 2.5px #616161;
+            background-color: #fff;
+            width: 180px;
+            margin-top: 40px;
+        }
+
+.tfa-wrapper {
+    margin-top: 45px;
+    margin-bottom: 15px;
+}
+
+.btn-tfa {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.btn-dark {
+    border-color: #f6f6f6;
+    background-color: #626262;
+    color: #fff;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* news carousel*/
+
+.slick-dots li button::before {
+    font-size: 14px;
+}
+
+.carousel-wrapper {
+    margin-top: 50px;
+}
+
+.news-carousel-item {
+    height: 500px;
+    background-image: url('/images/no_image.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    border: 6px solid #BFBFBF;
+}
+
+    .news-carousel-item .news-description-wrapper {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .news-carousel-item .news-description {
+        margin: 30px;
+        padding: 20px;
+        background-color: rgba(0,0,0,0.6);
+        color: #fff;
+        border: 1px solid #888;
+    }
+
+        .news-carousel-item .news-description h4 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .news-carousel-item .news-description .news-carousel-content {
+            max-height: 75px;
+            overflow: hidden;
+        }
+
+    .news-carousel-item:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+    }
+
+a.read-more {
+    color: #fff;
+    text-align: right;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*------------------------------------------------------------------------------------*/
 
 #loginForm,
 #forgttenPassword,
-#registerForm {
-    margin: 15% auto;
+#registerForm,
+#accessDenied,
+#lockout {
+    /*margin: 15% auto;
     width: 70%;
     border-radius: 15px;
     color: #173b6d;
-    background-color: #c9c9c9;
-    padding: 70px 10% 23px 10%;
-    border: solid 3px #173b6d;
+    background-color: #c9c9c9;*/
+    padding: 20% 20% 23px 20%;
+    /*border: solid 3px #173b6d;*/
     font-size: 12px;
     min-height: 260px;
     /*padding-top: 70px;*/
 }
 
+    #accessDenied p,
+    #lockout p {
+        text-align: center;
+    }
+
+    #loginForm p {
+        margin-bottom: 0;
+    }
+
+    #loginForm .registration-link {
+        text-align: center;
+        color: #777777;
+        font-family: Montserrat;
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
+        #loginForm .registration-link a {
+            color: #337ab7;
+            text-decoration: none;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
 .login-logo-container,
 .forgotten-password-container,
 .register-form-container {
     /*margin-left: 40%;*/
-    margin-top: -33px;
-    z-index: 1000;
+    /*margin-top: -33px;
+    z-index: 1000;*/
 }
 
     .login-logo-container img {
-        /*margin-bottom: 20px;*/
-        width: 70px;
-        height: 70px;
-        margin-top: -80px;
-        z-index: 1000;
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, 0%);
+        margin: 0 auto;
+        display: block;
+        height: 160px;
+        width: auto;
     }
+
+    .login-logo-container div {
+        text-align: center;
+        font-family: LucidaGrande;
+        font-size: 28px;
+        font-weight: bold;
+        letter-spacing: normal;
+        color: #777777;
+        padding: 15px 0 20px 0;
+        line-height: 32px;
+    }
+
+#loginForm label,
+#forgttenPassword label,
+#registerForm label {
+    color: #173b6d;
+    font-family: Montserrat;
+}
 
 .login-label {
     margin: 0;
@@ -129,7 +656,7 @@ body {
     max-width: 100%;
     background-color: #ebebeb;
     margin-bottom: 4%;
-    border: solid 2px #258afb;
+    border: solid 1px #258afb;
 }
 
 /*.input-form {
@@ -143,22 +670,20 @@ body {
 }
 
 .login-button .btn {
-    /* position: relative; */
     padding: 0;
     padding-top: 10px;
     padding-bottom: 18px;
-    margin-bottom: 5%;
-    display: inline-block;
-    float: right;
+    display: block;
     text-transform: uppercase;
     font-size: 11px;
     font-weight: bold;
     color: #ddeeff;
-    width: 25%;
+    width: 55%;
     border-radius: 4px;
-    background-color: #123e7a;
-    border: solid 1px #73bcf9;
+    background-color: #5fb6fd;
+    border: solid 0.5px #123e7a;
     height: 36px;
+    margin: 10% auto;
 }
 
 /* Error message style */
@@ -202,7 +727,7 @@ body {
 #registerForm input {
     max-width: inherit;
     margin-bottom: 10px;
-    border: solid 2px #258afb;
+    border: solid 1px #258afb;
     background-color: #ebebeb;
 }
 
@@ -226,26 +751,24 @@ body {
 
 #forgttenPassword .btn,
 #registerForm .btn {
-    /* position: relative; */
     padding: 0;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     padding-top: 10px;
     padding-bottom: 18px;
-    margin-bottom: 5%;
-    margin-top: 20px;
-    /*margin-left: 75%;*/
-    display: inline-block;
-    float: right;
+    display: block;
     text-transform: uppercase;
     font-size: 11px;
     font-weight: bold;
     color: #ddeeff;
-    /*width: 25%;*/
+    width: 60%;
     border-radius: 4px;
-    background-color: #123e7a;
-    border: solid 1px #73bcf9;
+    background-color: #5fb6fd;
+    border: solid 0.5px #123e7a;
     height: 36px;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin: 10% auto;
 }
 
 #forgttenPassword h3,
@@ -270,6 +793,107 @@ body {
     /*display: inline-block;*/
     margin-left: 15%;
 }
+
+/*Upload Licenses view*/
+
+#license-file {
+    display: block;
+    margin: 0 auto;
+}
+
+/* checkbox filter styles */
+
+.default-settings-checkbox {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: -20px;
+}
+
+    .default-settings-checkbox span,
+    .default-settings-checkbox label {
+        display: inline-block;
+    }
+
+    .default-settings-checkbox span {
+        font-family: Montserrat;
+        font-size: 18px;
+        text-align: center;
+        color: #777777;
+    }
+
+.search-filters .section-wrapper .filter-section .filter-type-checkbox {
+    text-align: center;
+}
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    width: 20px;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+.default-settings-checkbox .checkmark-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 28px;
+    width: 28px;
+    border: 1px solid #979797;
+    border-radius: 3px;
+}
+
+.default-settings-checkbox .checkmark {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #979797;
+    border-radius: 3px;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #68b8ff;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.default-settings-checkbox .checkbox-container .checkmark:after {
+    left: 7px;
+    top: 2px;
+    width: 9px;
+    height: 14px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    border-radius: 2px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
 
 /********************/
 
@@ -328,21 +952,51 @@ body {
         font-family: OpenSans, Helvetica, Arial, sans-serif;
         margin-top: 5px;
     }
-    /***************************************************/
-    /*Navbar widjet form Front-end pages + multilevel dropdown*/
-    /*Manage color-profile pages*/
-    #manageProfile {
-        margin: 25% auto;
-        border-radius: 15px;
-        border: 1px solid #123e7a;
-        color: #ddeeff;
-        background-color: #123e7a;
-        padding-top: 70px;
-        width: 70%;
-        font-family: Montserrat;
-        /*font-weight: bold;*/
-        font-size: 1.4em;
+
+    /* Footer - Profile page only*/
+
+    .frontend-footer.profile-only-footer {
+        min-width: 767px;
     }
+
+        .frontend-footer.profile-only-footer .back-button {
+            margin-left: 30px;
+            width: 200px;
+            display: inline-block;
+        }
+
+            .frontend-footer.profile-only-footer .back-button img {
+                height: auto;
+                margin-top: -3px;
+            }
+
+            .frontend-footer.profile-only-footer .back-button span {
+                color: white;
+                font-size: 14px;
+                font-weight: bold;
+                margin-left: 20px;
+            }
+
+        .frontend-footer.profile-only-footer p {
+            display: inline-block;
+            width: calc(100% - 450px);
+        }
+
+/***************************************************/
+/*Navbar widjet form Front-end pages + multilevel dropdown*/
+/*Manage color-profile pages*/
+#manageProfile {
+    margin: 25% auto;
+    border-radius: 15px;
+    border: 1px solid #123e7a;
+    color: #ddeeff;
+    background-color: #123e7a;
+    padding-top: 70px;
+    width: 70%;
+    font-family: Montserrat;
+    /*font-weight: bold;*/
+    font-size: 1.4em;
+}
 
     #manageProfile .login-logo-container {
         /*margin-bottom: 30px;*/
@@ -392,8 +1046,8 @@ body {
 }
 
 
- .suggestions {
-     font-size: 14px;
+.suggestions {
+    font-size: 14px;
     position: absolute;
     z-index: 1;
     background: white;
@@ -401,7 +1055,7 @@ body {
     width: 98%;
     margin-left: 15px;
     overflow-y: auto;
-     list-style-type: none;
+    list-style-type: none;
     cursor: pointer;
     display: inline-block;
 }
@@ -443,18 +1097,18 @@ body {
     position: relative;
 }
 
-.playlist-title:hover {
-    font-size: 14px;
-}
+    .playlist-title:hover {
+        font-size: 14px;
+    }
 
 .video-thumbnail img:hover,
 .playlist-thumbnail img:hover {
     border: 4px solid #3876cf;
 }
 
-    .playlist-thumbnail:hover .playlist-title {
-        font-size: 14px;
-    }
+.playlist-thumbnail:hover .playlist-title {
+    font-size: 14px;
+}
 
 /*custom styles for the floating menu*/
 
@@ -488,20 +1142,21 @@ body {
     margin: 10px;
 }
 
+/*News styles*/
 
-/*Custom Youtube playlist styles*/
-/*.youtube-playlist {
-    max-height: 580px;
-    margin-top: 20px;
-    overflow-y: auto;
-}*/
+.row.allnews-container {
+    margin: 20px;
+}
 
+/*All news styles*/
 
+.news-container {
+    margin: 20px;
+}
 
 /*============================================================*/
 /*============================  Contact us Page   ============*/
 /*============================================================*/
-
 .wrapper-contact-form {
     background-color: #6d92cd;
     /*border: solid 1px #d8d8d8;*/
@@ -587,7 +1242,7 @@ body {
 /*Sub menus*/
 .expanded-contacts {
     background-color: #3876cf;
-    height: auto;
+    height: 480px;
 }
 
 .go-back-to-menu {
@@ -734,10 +1389,6 @@ body {
     margin-bottom: 35px;
 }
 
-/*.expanded-contacts .contacts-content-main .contacts-content-centered .social-media .skype-button img {
-    margin: 0;
-}*/
-
 /* Form styles*/
 
 .expanded-contacts .contacts-content-form {
@@ -769,8 +1420,6 @@ body {
         width: 90%;
         height: 32px;
         margin-bottom: 20px;
-        font-size: 14px;
-        padding-left: 10px;
     }
 
     .expanded-contacts .contacts-content-form .col-md-6 select {
@@ -810,14 +1459,19 @@ body {
 /*==========Contact us respnsive==================*/
 /*====================================================*/
 
-
 /*Responsive*/
+
+@media (max-width: 1400px) {
+    .sitetriks-login .row .login-image-container {
+        background-image: url('/images/homepage/Login_image.jpg');
+    }
+}
 
 @media (max-width: 1000px) {
     .login-logo-container img {
-        width: 60px;
-        height: 60px;
-        margin-top: -80px;
+        width: 100px;
+        height: 100px;
+        /*margin-top: -80px;*/
     }
 
     .forgotten-password-container img,
@@ -830,12 +1484,6 @@ body {
     /*Contact us widget*/
     .contact-us-widget .slogan {
         padding-top: unset;
-    }
-
-    .contact-options .phone-contact,
-    .contact-options .mail-contact {
-        height: 100px;
-        width: 50%;
     }
 
         .contact-us-widget .slogan p {
@@ -882,33 +1530,75 @@ body {
 
 @media (max-width: 767px), (max-height: 620px) {
 
-/*Navigation widget custom css*/
 
-.navigation-widget-wrapper .header-wrapper.header-white {
-    height: 102px;
-}
+    /*Navigation widget custom css*/
 
-.navigation-widget-wrapper.expanded .header-blue {
-    display: block;
-    height: 100%;
-    padding: 0;
-}
+    .navigation-widget-wrapper .header-wrapper.header-white {
+        height: 102px;
+    }
 
-.navigation-widget-wrapper.expanded .multi-level-navigation {
-    position: relative;
-    width: 100%;
-}
-
-    .navigation-widget-wrapper.expanded .multi-level-navigation .main-navigation{
+    .navigation-widget-wrapper.expanded .header-blue {
+        display: block;
+        height: 100%;
         padding: 0;
     }
 
-    .navigation-widget-wrapper.expanded .multi-level-navigation .main-navigation > li.nav-right {
-        float: unset;
-        display: block;
-        text-align: left;
-        border-bottom: 1px solid #008cff;
+    .navigation-widget-wrapper.expanded .multi-level-navigation {
+        position: relative;
+        width: 100%;
     }
+
+        .navigation-widget-wrapper.expanded .multi-level-navigation .main-navigation {
+            padding: 0;
+        }
+
+            .navigation-widget-wrapper.expanded .multi-level-navigation .main-navigation > li.nav-right {
+                float: unset;
+                display: block;
+                text-align: left;
+                border-bottom: 1px solid #008cff;
+            }
+}
+
+
+@media (max-width: 767px) {
+
+    /*Login page styles*/
+
+    .sitetriks-login .row .col {
+        height: auto;
+    }
+
+    .sitetriks-login .row .image-holder {
+        display: none;
+    }
+
+    .sitetriks-login .row .carousel-holder {
+        background: #cbedff;
+    }
+
+
+    /*Profile page*/
+
+    .profile-form-carousel {
+        height: auto;
+        padding: inherit;
+        overflow-x: inherit;
+        white-space: normal;
+        background: #cbedff;
+    }
+
+        .profile-form-carousel .profile-form-wrapper {
+            display: block;
+        }
+
+            .profile-form-carousel .profile-form-wrapper .profile-form {
+                width: auto;
+            }
+
+            .profile-form-carousel .profile-form-wrapper img.profile-form-img {
+                min-height: inherit;
+            }
 }
 
 @media (max-width: 640px) {
@@ -962,11 +1652,11 @@ body {
 
     /*Login ad register form responsive design*/
 
-    .login-logo-container img {
+    /*.login-logo-container img {
         width: 50px;
         height: 50px;
         margin-top: -72px;
-    }
+    }*/
 
 
     .forgotten-password-container img,
@@ -984,14 +1674,7 @@ body {
     #loginForm,
     #forgttenPassword,
     #registerForm {
-        width: 90%;
-        border-radius: 15px;
-        color: #173b6d;
-        background-color: #c9c9c9;
-        padding: 70px 10% 23px 10%;
-        border: solid 3px #173b6d;
         font-size: 12px;
-        /*padding-top: 70px;*/
     }
 
         #forgttenPassword .btn, #registerForm .btn {
@@ -1000,6 +1683,7 @@ body {
 
     /*Contact us page responsive*/
     /*Main page*/
+
     .contact-us-widget .slogan p,
     .contact-us-widget .slogan p:nth-child(2) {
         font-size: 20px;
@@ -1050,74 +1734,30 @@ body {
     .two-factor-auth h4,
     .two-factor-auth h5,
     .two-factor-auth a {
-      margin-bottom: 20px;
-}
-
-
-/*@media (max-width: 1320px) {
-    .navbar-nav > li > a {
-        height: 100%;
-        margin-left: 30px;
-        margin-right: 30px;
+        margin-bottom: 20px;
     }
 
-    .navbar-nav > li.with-dd > a {
-        height: 100%;
-        margin-left: 30px;
-        margin-right: 24px;
-    }
-}
+/*4K / Wide screen resolutions*/
 
-.form {
-    font-size: 12px;
-}
+@media (min-width: 2800px) {
 
-
-@media (max-width: 1091px) {
-    .navbar-nav > li > a {
-        height: 100%;
-        font-size: 14px;
-        margin-left: 10px;
-        margin-right: 10px;
+    .sitetriks-login .row .login-image-container {
+        background-image: url('/images/homepage/Login_4K.jpg');
     }
 
-    .navbar-nav > li.with-dd > a {
-        height: 100%;
-        font-size: 14px;
-        margin-left: 10px;
-        margin-right: 4px;
-    }
-
-    .form {
-        font-size: 12px;
+    .login-button .btn {
+        width: 40%;
     }
 }
 
 
-@media (max-width: 1110px) {
-    .navbar-nav > li > a {
-        height: 100%;
-        margin-left: 6px;
-        margin-right: 6px;
-        font-size: 10px;
+@media (min-width: 3800px) {
+
+    .sitetriks-login .row .login-image-container {
+        background-image: url('/images/homepage/Login_Wide4K.jpg');
     }
 
-    .navbar-nav > li.with-dd > a {
-        height: 100%;
-        margin-left: 6px;
-        margin-right: 0;
-    }
-
-    .form {
-        font-size: 9px;
+    .login-button .btn {
+        width: 40%;
     }
 }
-
-@media (max-width: 840px) {
-
-    .form {
-        font-size: 7px;
-    }
-}*/
-
-

@@ -7,21 +7,28 @@
     <content>
         <div class="sitetriks-login container main-content content-placeholder">
             <div class="row">
-                <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+                <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <div id="forgttenPassword">
                         <div class="forgotten-password-container">
-                            <img src="~/images/Sitetriks_logo.svg" />
+                            <img src="~/images/homepage/Login.svg" />
                         </div>
                         <h3>@ViewData["Title"]</h3>
                         <p>
-                            Please check your email. 
+                            Please check your email.
                             After confirming your email, log in <a asp-action="Login">here</a>
                         </p>
                     </div>
+                </div>
+                <div class="image-holder col col-lg-8 col-md-8 col-sm-8">
+                    <div class="login-image-container"></div>
                 </div>
             </div>
         </div>
     </content>
 </div>
 
-@await Html.PartialAsync("_AccountFooter")
+@*@await Html.PartialAsync("_AccountFooter")*@
+
+@section Scripts {
+    @*<script type="text/javascript" src="~/js/login-image-select.js"></script>*@
+}

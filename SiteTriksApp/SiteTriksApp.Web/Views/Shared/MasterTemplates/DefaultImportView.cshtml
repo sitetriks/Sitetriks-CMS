@@ -49,5 +49,3 @@
 {
 	<div class="placeholder" data-placeholder="javascript"></div>
 }
-@*@{ var javascript = Model.Contents.Where(c => c.Placeholder == "javascript"); }
-	@Html.Action("RenderWidgets", "Display", new { area = "", contents = javascript, placeholder = "javascript", preview = isPreview ? "preview" : "" })*@

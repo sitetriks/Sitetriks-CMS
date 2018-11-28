@@ -1,72 +1,136 @@
-﻿@model IndexViewModel
+﻿@model ProfileViewModel
+
 @{
     ViewData["Title"] = "Profile";
-    Layout = "_ManageLayout";
-    ViewData.AddActivePage(ManageNavPages.Index);
-}
+    Layout = "/Views/Shared/_AccountLayout.cshtml";
+    string url = "/";
 
-@*<h4>@ViewData["Title"]</h4>*@
-@*@Html.Partial("_StatusMessage", Model.StatusMessage)*@
-@*<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
-            </div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                @if (Model.IsEmailConfirmed)
-                {
-                    <div class="input-group">
-                        <input asp-for="Email" class="form-control" />
-                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
-                    </div>
-                }
-                else
-                {
-                    <input asp-for="Email" class="form-control" />
-                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                }
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Save</button>
-        </form>
-    </div>
-</div>*@
+    if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || User.IsInRole("Authorized back-end"))
+    {
+        // admin, superadmin,
+        url = "/sitetriks";
+
+    }
+
+}
 
 <div>
     <content>
         <div class="sitetriks-login container main-content content-placeholder">
             <div class="row">
-                <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
-                    <div id="forgttenPassword">                      
-                        @*<h3>@ViewData["Title"]</h3>*@
-                        <form method="post" class="clearfix">
-                            <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="account-form">
+                        <div class="account-form-header">
+                            <img src="~/images/requests-copy-2.png" />
+                            <div>@Model.IndexViewModel.Username</div>
+                        </div>
+                        @using (Html.BeginForm("Index", "Manage"))
+                        {
+                            <ul class="form-group form-summary"></ul>
+                            @Html.AntiForgeryToken()
                             <div class="form-group">
-                                <label asp-for="Username"></label>
-                                <input asp-for="Username" class="form-control" disabled />
+                                @Html.LabelFor(m => m.IndexViewModel.Username)
+                                @Html.EditorFor(m => m.IndexViewModel.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.IndexViewModel.Username)
                             </div>
                             <div class="form-group">
-                                <label asp-for="Email"></label>                         
-                                <input asp-for="Email" class="form-control" />                              
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                @Html.LabelFor(m => m.IndexViewModel.Email)
+                                @Html.EditorFor(m => m.IndexViewModel.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.IndexViewModel.Email)
                             </div>
                             <div class="form-group">
-                                <label asp-for="PhoneNumber"></label>
-                                <input asp-for="PhoneNumber" class="form-control" />
-                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                @Html.LabelFor(m => m.IndexViewModel.PhoneNumber)
+                                @Html.EditorFor(m => m.IndexViewModel.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.IndexViewModel.PhoneNumber)
                             </div>
-                            @Html.ActionLink("Delete account","DeleteAccount")
+                            @Html.ActionLink("Delete account", "DeleteAccount")
+
                             <button type="submit" class="btn btn-default">Save</button>
-                        </form>
+                        }
+                    </div>
+                </div>
+                <div class="col col-lg-9 col-md-9 col-sm-9 col-xs-12 carousel-holder">
+                    <div class="profile-form-carousel">
+                        <div class="profile-form-wrapper">
+                            <div class="image-wrapper">
+                                <img class="profile-form-img key" src="~/images/profile/key.png" />
+                            </div>
+                            <div class="profile-form">
+                                <div class="form-header">
+                                    Password
+                                </div>
+                                @using (Html.BeginForm("ChangePassword", "Manage"))
+                                {
+                                    <ul class="form-group form-summary"></ul>
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.ChangePasswordViewModel.OldPassword)
+                                        @Html.EditorFor(m => m.ChangePasswordViewModel.OldPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.ChangePasswordViewModel.OldPassword)
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.ChangePasswordViewModel.NewPassword)
+                                        @Html.EditorFor(m => m.ChangePasswordViewModel.NewPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                        <span asp-validation-for="ChangePasswordViewModel.NewPassword" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.ChangePasswordViewModel.ConfirmPassword)
+                                        @Html.EditorFor(m => m.ChangePasswordViewModel.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.ChangePasswordViewModel.ConfirmPassword)
+                                    </div>
+                                    <button type="submit" class="btn btn-save">Save</button>
+                                }
+                            </div>
+                        </div>
+                        <div class="profile-form-wrapper">
+                            <div class="image-wrapper">
+                                <img class="profile-form-img phone" src="~/images/profile/Mobile.png" />
+                            </div>
+                            <div class="profile-form">
+                                <div class="form-header">
+                                    2 Factor Authentication
+                                </div>
+                                <div class="tfa-wrapper">
+                                    @if (Model.TwoFactorAuthenticationViewModel.Is2faEnabled)
+                                    {
+                                        if (Model.TwoFactorAuthenticationViewModel.RecoveryCodesLeft == 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <strong>You have no recovery codes left.</strong>
+                                                <p>You must <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.</p>
+                                            </div>
+                                        }
+                                        else if (Model.TwoFactorAuthenticationViewModel.RecoveryCodesLeft == 1)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <strong>You have 1 recovery code left.</strong>
+                                                <p>You can <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+                                            </div>
+                                        }
+                                        else if (Model.TwoFactorAuthenticationViewModel.RecoveryCodesLeft <= 3)
+                                        {
+                                            <div class="alert alert-warning">
+                                                <strong>You have @Model.TwoFactorAuthenticationViewModel.RecoveryCodesLeft recovery codes left.</strong>
+                                                <p>You should <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+                                            </div>
+                                        }
+
+                                        <a asp-action="Disable2faWarning" class="btn btn-tfa">Disable 2FA</a>
+                                        <a asp-action="GenerateRecoveryCodesWarning" class="btn btn-tfa">Reset recovery codes</a>
+                                    }
+
+                                    @if (!Model.TwoFactorAuthenticationViewModel.HasAuthenticator)
+                                    {
+                                        <a asp-action="EnableAuthenticator" class="btn btn-tfa">Add authenticator app</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="EnableAuthenticator" class="btn btn-tfa">Configure authenticator app</a>
+                                        <a asp-action="ResetAuthenticatorWarning" class="btn btn-tfa btn-dark">Reset authenticator key</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,6 +138,18 @@
     </content>
 </div>
 
+<footer class="frontend-footer profile-only-footer">
+    <div class="back-button">
+        <a href="@url">
+            <img class="" src="~/images/profile/back.png" alt="Home" /><span>Back to Dashboard</span>
+        </a>
+    </div>
+    <p class="ta-center"> SiteTriks CMS</p>
+</footer>
+
+
 @section Scripts {
+
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/manage-profile-index.js"></script>
 }

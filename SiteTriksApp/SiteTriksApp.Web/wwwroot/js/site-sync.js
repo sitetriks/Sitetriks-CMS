@@ -217,6 +217,7 @@ $(document).ready(function () {
         var checkedDynamicItems = [];
         var checkedBlogPosts = [];
         var checkedCustomModulesItems = [];
+        var checkedHtmlBlocks = [];
 
         $("#pages-list li.active").each(function (idx, li) {
             checkedPages.push($(li).children(".model-id").text());
@@ -245,6 +246,15 @@ $(document).ready(function () {
 
         $("#files-list li.active").each(function (idx, li) {
             checkedFiles.push($(li).children(".model-id").text());
+            $(this).remove();
+        });
+
+        $("#html-blocks-list li.active").each(function (idx, li) {
+            console.log(checkedHtmlBlocks);
+            console.log($(li).children(".model-id").text());
+            checkedHtmlBlocks.push($(li).children(".model-id").text());
+            console.log(checkedHtmlBlocks);
+
             $(this).remove();
         });
 
@@ -279,7 +289,9 @@ $(document).ready(function () {
             checkedCustomModulesItems.push(item);
         });
 
-        var domain = $("#domain-holder").val();
+        var siteSyncInfoArray = $("#domain-holder").val();
+        var siteId = getId(siteSyncInfoArray);
+        var domain = getUrl(siteSyncInfoArray);
         
         let body = {
             PagesIds: checkedPages,
@@ -289,8 +301,10 @@ $(document).ready(function () {
             FilesIds: checkedFiles,
             BlogPostsIds: checkedBlogPosts,
             DynamicItems: checkedDynamicItems,
+            HtmlBlocks: checkedHtmlBlocks,
             CustomModulesItems: checkedCustomModulesItems,
-            Domain: domain
+            Domain: domain,
+            SiteId: siteId
         }
         console.log(body);
         $.ajax({
@@ -340,13 +354,52 @@ $(document).ready(function () {
         });
     });
 
+    function getUrl(input) {
+        var partsOfStr = input.split(',');
+
+        return partsOfStr[0];
+    }
+
+    function getId(input) {
+        var partsOfStr = input.split(',');
+
+        if (partsOfStr.length < 2) {
+            return '';
+        }
+
+        var id = partsOfStr[1].replace(/\s/g, ""); 
+
+        return id;
+    }
+
+    $('#site-sync-targets-list').change(function () {
+        var value = $(this).val();
+
+        if (value != "") {
+            $("#domain-holder").val(value);
+            
+            var id = getId(value);
+
+            window.location.replace('/sitetriks/sitesync?id=' + id);
+        }
+    });
+
     $('#submit-connect').click(function () {
-        var domain = $("#domain-holder").val();
+        var domainString = $("#domain-holder").val();      
+       
         Connection.OnBegin();
 
         let body = {
-            Domain: domain
+            Domain: getUrl(domainString),
+            SiteId: getId(domainString)
         };
+
+        if (body.Domain == '' && body.SiteId == '') {
+            Connection.OnSuccess({ success: false, message: "Sync target is not selected."});
+            return;
+        }
+       
+        console.log(body);
 
         $.ajax({
             url: "/sitetriks/sitesync/connect",
@@ -355,6 +408,7 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify(body),
             success: function (data) {
+                //window.location.replace('/sitetriks/sitesync?id=' + data.id);
                 Connection.OnSuccess(data);
             },
             error: function () {
@@ -364,11 +418,11 @@ $(document).ready(function () {
     });
 
     $('#submit-dynamic-config').click(function () {
-        var domain = $("#domain-holder").val();
+        var domain = getUrl($("#domain-holder").val());
         SyncDynamicModuleConfigsSync.OnBegin();
 
         let body = {
-            Domain: domain
+            Domain: getUrl(domain)
         };
 
         $.ajax({
@@ -387,7 +441,7 @@ $(document).ready(function () {
     });
 
     $('#submit-history').click(function () {
-        var domain = $("#domain-holder").val();
+        var domain = getUrl($("#domain-holder").val());
         $("#history-domain-holder").val(domain);
         sessionStorage.setItem("site-sync-domain", domain);
         $('#sync-history-form').submit();

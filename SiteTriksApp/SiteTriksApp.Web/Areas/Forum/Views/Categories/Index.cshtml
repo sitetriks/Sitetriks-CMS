@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Categories";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/css/grid.css" />
+    <link rel="stylesheet" href="~/css/st-grid.css" />
+}
+
+<div class="fixed-top-2">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="@Url.Action("Create")" class="btn-nav-2">Create Category</a>
+    }
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/grid.js"></script>
+    <script type="text/javascript">
+        (function (ev) {
+            var grid = Grid();
+            var data = { link: "/forum/categories/grid", serverSide: false }
+            var columns = [
+                {
+                    name: 'id',
+                    title: '',
+                    type: 'checkbox',
+                    size: 1
+                },
+                {
+                    name: "title",
+                    title: "Category",
+                    type: 'string',
+                    filter: true,
+                    sort: true,
+                    size: 2,
+                    extraFields: ['id'],
+                    headerTemplate: '<strong>#item#</strong>',
+                    contentTemplate: '<a href="/forum/categories/category?id=#item0#">#item#</a>'
+                },
+                {
+                    name: "description",
+                    title: "Description",
+                    type: 'string',
+                    filter: true,
+                    sort: true,
+                    size: 3,
+                    headerTemplate: '<strong>#item#</strong>' // #item# is the placeholder for the content
+                },
+                {
+                    name: "themesCount",
+                    title: "Themes Count",
+                    type: 'number',
+                    size: 1,
+                    headerTemplate: '<strong>#item#</strong>' // #item# is the placeholder for the content
+                },
+                {
+                    name: "dateModified",
+                    title: "Date Modified",
+                    type: 'date',
+                    size: 1,
+                    headerTemplate: '<strong>#item#</strong>' // #item# is the placeholder for the content
+                },
+                {
+                    name: "id",
+                    title: "Action",
+                    type: 'string',
+                    filter: false,
+                    sort: false,
+                    size: 2,
+                    headerTemplate: '<strong>#item#</strong>',
+                    contentTemplate: '<a class="btn" href="/forum/categories/edit/#item#">Edit</a>'
+                }
+            ];
+
+            var buttons = [{
+                title: 'Delete',
+                postUrl: '/forum/categories/delete',
+                type: 'danger'
+            }];
+
+            var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+            grid.init('.grid', config);
+        })();
+    </script>
+}

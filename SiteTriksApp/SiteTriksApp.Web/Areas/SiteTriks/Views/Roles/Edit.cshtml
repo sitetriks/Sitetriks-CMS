@@ -15,7 +15,7 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index", "Roles")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <input type="submit" value="Save" class="btn btn-success" />
+            <input type="submit" value="Save & Exit" class="btn btn-success" />
         </div>
 
         @Html.AntiForgeryToken()
@@ -39,6 +39,7 @@
     <script type="text/javascript" src="~/js/sitetriks/role.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script>
+        WarningWindow.attach();
         editRole();
     </script>
 }

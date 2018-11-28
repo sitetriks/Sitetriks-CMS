@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="ta-right">
-                    <span class="news-date-created" id="detailed-news-date-created" data-year="@Model.DateCreated.Value.Year" data-month="@Model.DateCreated.Value.Month">Date Created: <span>@Model.DateCreated.Value.ToString("dd.MM.yyyy")</span></span>
+                    <span class="news-date-created">Date Created: <span>@Model.DateCreated.Value.ToString("dd.MM.yyyy")</span></span>
                 </div>
             </div>
         </div>
@@ -34,13 +34,12 @@
             {
                 <div class="gallery">
                     <div class="gallerycontainer">
-                        @foreach (var item in Model.ImagesUrlsIDs.Split(';'))
+                        @foreach (var item in Model.ImagesUrlsIDs.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
                         {
                             <div class="gallery-item inline-block">
                                 <img class="display-image" src="/files/id/@item" alt="Failed to load image!">
                             </div>
                         }
-
                     </div>
                 </div>
             }

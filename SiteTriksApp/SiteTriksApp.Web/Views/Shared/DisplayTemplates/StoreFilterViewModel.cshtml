@@ -1,0 +1,63 @@
+﻿@model SiteTriks.ECommerseModule.ViewComponents.StoreFilterViewModel
+
+@foreach (var item in Model.Items)
+{
+    if (item.Type == "item")
+    {
+        string attributes = $"data-identifier={item.Id} data-field={item.Field} ";
+        <div class="filter-type-@item.Filter">
+            @if (@item.Filter != "select-one" && @item.Filter != "multi-select")
+            {
+                <div class="item-title">
+                    @item.Text @if (@item.Filter == "checkbox" || @item.Filter == "range")
+                    {<text>:</text>}
+                </div>
+            }
+            @switch (item.Filter)
+            {
+                case "range":
+                    <input class="filter form-control range-filter" placeholder="min" data-type="min" @attributes />
+                    <span> &nbsp;</span>
+                    <input class="filter form-control range-filter" placeholder="max" data-type="max" @attributes />
+                    break;
+
+                case "contains":
+                    <input class="filter form-control" placeholder="search" data-type="contains" @attributes />
+                    break;
+
+                case "select-one":
+                    <select class="filter form-control" data-type="select" @attributes>
+                        <option value="">@item.Text </option>
+                    </select>
+                    break;
+
+                case "multi-select":
+                    <select class="filter form-control" data-type="multiselect" multiple @attributes></select>
+                    break;
+
+                case "checkbox":
+                    <label class="checkbox-container">
+                        &nbsp;
+                        <span class="checkmark-border">
+                            <input class="filter" data-type="checkbox" data-identifier="AvailableInPhysicalStore" data-field="base" type="checkbox">
+                            <span class="checkmark"></span>
+                        </span>
+                    </label>
+                    break;
+
+                default:
+                    break;
+            }
+        </div>
+    }
+
+    if (item.Type == "section")
+    {
+        <div class="section-wrapper">
+            <div class="section-name unselectable"><span class="glyphicon glyphicon-chevron-up"></span> @item.Name</div>
+            <div class="filter-section">
+                @Html.DisplayFor(m => item)
+            </div>
+        </div>
+    }
+}

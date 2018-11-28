@@ -1,0 +1,22 @@
+﻿@model SiteTriks.ForumModule.Widgets.Models.ForumWidgetModel
+
+@if (Model.IsPreview)
+{
+    <div class="preview-placeholder" data-identifier="@Model.Id">
+        @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+
+        <div class="@Model.CssClass">
+            @*@await Component.InvokeAsync("ForumWidget")*@
+            Forum widget in <i>preview mode</i>.
+        </div>
+    </div>
+}
+else
+{
+    if (Model.CanViewByRole && Model.CanViewByGroup)
+    {
+        <div class="@Model.CssClass">
+            @await Component.InvokeAsync("ForumWidget")
+        </div>
+    }
+}

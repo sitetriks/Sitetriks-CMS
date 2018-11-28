@@ -10,14 +10,15 @@
     <link href="~/css/page-content-edit.css" rel="stylesheet">
     <link href="~/css/navbar-remove.css" rel="stylesheet" />
     <link href="~/css/layout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/file-handler.css" />
 }
 
 <div class="fixed-top-2">
     @await Html.PartialAsync("SecondNavHeader")
 
     <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-    <a id="btn-save-draft" class="btn-nav-2"><span class="st-icon-save-draft"></span>Save Draft</a>
-    <a id="btn-publish" class="btn-nav-2"><span class="st-icon-publish"></span>Publish</a>
+    <a href="" id="btn-save-draft" data-disable-warning="true" class="btn-nav-2"><span class="st-icon-save-draft"></span>Save Draft</a>
+    <a href="" id="btn-publish" data-disable-warning="true" class="btn-nav-2"><span class="st-icon-publish"></span>Save & Publish</a>
     <div class="nav-2-right">
         <div class="languages-select-wrapper">
             <select id="languages" class="form-control inline-block select-page-language"></select>
@@ -89,37 +90,35 @@
             @await Component.InvokeAsync("ShowWidgets")
             <div id="layout-properties" hidden>
                 <hr />
-                <a id="btn-save-layout" class="btn btn-backend hidden" >Save Layout</a>
                 <div id="main-layout-options"></div>
-
-                <!-- Delete confirmation modal -->
-                <div id="layout-delete-confirmation" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Delete confirmation modal</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>With deletion of rows/cols you will delete and inner content! Are you sure you want to continue?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="delete-layout-content" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
+        </div>
+    </div>
+
+    <!-- Delete confirmation modal -->
+    <div id="layout-delete-confirmation" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete confirmation modal</h4>
+                </div>
+                <div class="modal-body">
+                    <p>With deletion of rows/cols you will delete and inner content! Are you sure you want to continue?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="delete-layout-content" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
-@Html.Partial("AddWidget")
-@Html.Partial("EditWidget")
+@await Html.PartialAsync("AddWidget")
+@await Html.PartialAsync("EditWidget")
 
 <div id="delete-confirm" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -148,9 +147,9 @@
     <script src="~/js/modules/widgets.js"></script>
     <script src="~/js/modules/layout-control.js"></script>
     <script src="~/js/modules/module-builder.js"></script>
+    <script src="~/js/modules/file-handler.js"></script>
     <script src="~/js/widgets-draggable.js"></script>
     <script src="~/js/text-editor.js"></script>
-    <script src="~/js/files-handler-2.2.js"></script>
     <script src="~/js/shared-blocks.js"></script>
     <script src="~/js/multiselect-setup.js"></script>
     <script src="~/js/validator.js"></script>
@@ -163,25 +162,27 @@
     }
 
     <script type="text/javascript">
-        var pageContent = @Html.Raw(Json.Serialize(Model.Contents));
-        var originalPageContent = JSON.stringify(@Html.Raw(Json.Serialize(Model.Contents)));
         var url = '@Model.Url'.replace("/", "%2F");
 
         //===================================================================================================
         // Widgets 2.0
 
-        var w = ModuleBuilder.createWidgets('#add-widget-container', customWidgets);
+        var logger = new Logger('debug');
+        var mediator = new Mediator(logger);
+
+        ModuleBuilder.init(mediator, logger);
+        var w = ModuleBuilder.createWidgets('#add-widget-container', customWidgets, @Html.Raw(Json.Serialize(Model.Contents)));
 
         //===================================================================================================
 
-        $(document).ready(function (ev) {
+        (function (ev) {
             var currentLanguage = '@Model.Culture';
             var currentVersion = '@Model.Version';
-            var currentCulture = '@Model.Culture';
             var currentTemplate = '@Model.Template';
 
-            editPageContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w);
-        });
+            WarningWindow.attach();
+            editPageContent(url, currentLanguage, currentVersion, currentTemplate, w);
+        })();
     </script>
 }
 

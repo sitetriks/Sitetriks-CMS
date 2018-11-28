@@ -9,37 +9,53 @@
 }
 
 <div class="backend-wrapper">
-    @using (Html.BeginForm(actionName: "Edit", controllerName: "HtmlBlocks", method: FormMethod.Post))
+    @using (Html.BeginForm("Edit", "HtmlBlocks", FormMethod.Post, new { id = "edit-shared-block-form" }))
     {
         <div class="fixed-top-2">
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <input id="btnSubmit" type="submit" value="Save" class="btn-nav-2" />
+            <input id="btnSubmit" type="submit" value="Save & Exit" class="btn-nav-2" />
         </div>
 
-        @*<label class="control-label">Add comment</label>*@
-        <div class="form-group">
-            @Html.LabelFor(m => m.Type)
-            @*@Html.EnumDropDownListFor(model => model.Type)*@
-            <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof (SiteTriks.Data.Models.Enums.HtmlBlockType))"></select>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Title)
-            @Html.TextBoxFor(m => m.Title, htmlAttributes: new { @class = "form-control" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Content)
-            @Html.TextAreaFor(m => m.Content, htmlAttributes: new { @class = "form-control", id = "content" })
+        <div class="page-properties">
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof (SiteTriks.Data.Models.Enums.HtmlBlockType))" class="form-control"></select>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control inline-block validate", data_min = "3", data_validation_type = "length" } })
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => m.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.Content, htmlAttributes: new { @class = "form-control", id = "content" })
+                </div>
+            </div>
         </div>
     }
 </div>
 
 @section scripts{
-    <script src="~/js/leaving-warning.js"></script>
+    <script src="~/js/validator.js"></script>
     <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
     <script src="~/js/text-editor.js"></script>
     <script type="text/javascript">
-        textEditor.init('#content', 600, 300);
+        (function () {
+            WarningWindow.attach();
+            textEditor.init('#content', 500, 300);
+            var $form = $('#edit-shared-block-form');
+            var isValidForm = Validator.createFieldsValidation();
+            $form.on('submit', function (ev) {
+                if (!isValidForm.apply(this)) {
+                    ev.preventDefault();
+                    return false;
+                }
+            });
+        })();
     </script>
 }

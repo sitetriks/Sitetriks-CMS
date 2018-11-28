@@ -1,7 +1,7 @@
 ﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
 
 @{
-    var entries = Model.Entries.OrderBy(e => e.Position).ToList();
+    var entries = Model.Entries.OrderBy(e => e["Position"]).ToList();
 }
 
 <div id="mobile-view-top-menu" class="features-section top-menu">
@@ -15,35 +15,22 @@
             Log out
         </a>
     </div>
-    @*<div class="row subscription-form-wrapper">
-            <div class="subscription-button">
-                <div>Subscribe now</div>
-            </div>
-            <div class="form-wrapper" style="display: none;">
-                <form id="subscriptionForm" action="">
-                   <div> <input type="text" name="name" placeholder="Name"></div>
-                   <div> <input type="text" name="email" placeholder="Email"></div>
-                    <div class="subscription-radio-group"><span>I want to receive news from SiteTriks regarding new features and releases.</span> <br><label class="radio-inline"><input name="features-releases" type="radio">Yes</label> <label class="radio-inline"><input name="features-releases" type="radio">No</label></div>
-                    <div class="subscription-radio-group"><span>I want to receive promotional materials regarding SiteTriks.</span> <br><label class="radio-inline"><input name="promotional-materials" type="radio">Yes</label> <label class="radio-inline"><input name="promotional-materials" type="radio">No</label></div>
-                    <input type="button" onclick="myFunction()" value="Submit">
-                </form>
-            </div>
-        </div>*@
+    
     <div class="row">
         @for (int i = 0; i < 9 && i < Model.Entries.Count() - 1; i += 2)
         {
             <div class="row">
                 <div class="row mobile-rows">
                     <div class="col col-lg-6 col-xs-6">
-                        <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i], "Url")">
-                            <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "PrimaryImage")">
-                            <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i], "SecondaryImage")" style="display:none">
+                        <div class="menu-icon" data-url="@entries[i]["Url"]">
+                            <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["PrimaryImage"]">
+                            <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["SecondaryImage"]" style="display:none">
                         </div>
                     </div>
                     <div class="col col-lg-6 col-xs-6">
-                        <div class="menu-icon" data-url="@Model.ClassHelper.GetPropertyValue(entries[i + 1], "Url")">
-                            <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i + 1], "PrimaryImage")">
-                            <img class="icon-image" src="~/images/toggle-menu-icons/@Model.ClassHelper.GetPropertyValue(entries[i + 1], "SecondaryImage")" style="display:none">
+                        <div class="menu-icon" data-url="@entries[i]["Url"]">
+                            <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["PrimaryImage"]">
+                            <img class="icon-image" src="~/images/toggle-menu-icons/@entries[i]["SecondaryImage"]" style="display:none">
                         </div>
                     </div>
                 </div>
@@ -56,17 +43,3 @@
     </div>
 </div>
 
-@*<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
-    <script>
-        $('.top-menu').on('click', '.menu-icon', function () {
-            let pageUrl = ($(this).data("url"));
-            let pageInternalNavigation = 'Page Mobile Interal Navigation';
-            console.log(pageUrl);
-            console.log(pageInternalNavigation);
-            if ("ga" in window) {
-                tracker = ga.getAll()[0];
-                if (tracker)
-                    tracker.send("event", pageInternalNavigation, pageUrl);
-            }
-        });
-    </script>*@

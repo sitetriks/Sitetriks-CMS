@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Users";
+    var isAdmin = (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")).ToString().ToLower();
 }
 
 <div class="fixed-top-2">
@@ -78,13 +79,17 @@
                 title: 'Delete',
                 postUrl: '/sitetriks/users/delete',
                 type: 'danger'
-            },
-            {
-                title: 'Resset Password',
-                postUrl: '/sitetriks/users/RessetPassword',
-                type: 'warning'
             }
         ];
+
+        if (@isAdmin)
+            {
+                buttons.push({
+                title: 'Reset Password',
+                postUrl: '/account/ResetPasswordMultipleUsers',
+                type: 'warning'
+                });
+        }
 
         var config = grid.build(columns, buttons, grid.defaultPager, data);
 

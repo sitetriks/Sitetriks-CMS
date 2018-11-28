@@ -1,28 +1,28 @@
-﻿@model SiteTriks.Models.Comments.CommentViewModel
+﻿@using SiteTriks.Extensions;
+@model SiteTriks.Models.Comments.CommentViewModel
 
 <div class="row">
     <div class="col-sm-2"></div>
-    @* NOTE: #comments-container, .cf_commentWrapper, .panel-body, .panel-header, #edit-post-content, .btn-edit-post, .btn-save-edited-post, .btn-cancel-edited-post and structure here are used for js logic, change with caution! *@
-    <div class="cf_commentWrapper" data-id="@Model.Id">
+    @* NOTE: #comments-container, .cf_commentWrapper, .panel-body, .panel-header, #edit-post-content, .btn-edit-post,
+        .btn-save-edited-post, .btn-cancel-edited-post and structure here are used for js logic, change with caution! *@
+    <div class="comment-wrapper" data-id="@Model.Id">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span class="glyphicon glyphicon-user"></span>
-                <span>
-                    <b>
-                        @Model.Creator
-                    </b>
-                </span>
-                <div style="float:right;">
-                    @if (!string.IsNullOrWhiteSpace(ViewData["userId"].ToString()) && ViewData["userId"].ToString() == Model.CreatorId)
+                <div class="comment-info">
+                    <strong>@Model.Creator</strong>
+                    <br />
+                    <span class="comment-date">@Model.DateCreated</span>
+                </div>
+                <div class="comment-control">
+                    @if (this.User.Identity.IsAuthenticated && this.User.GetUserId() == Model.CreatorId)
                     {
-                        <a class="btn btn-warning btn-edit-post">Edit</a>
-                        <a class="btn btn-danger btn-delete-comment">Delete</a>
+                        <a class="btn-edit-post"><img src="~/images/forum/edit_iconX2.png" alt="edit" /></a>
+                        <a class="btn-delete-comment"><img src="~/images/forum/delete_iconX2.png" alt="delete" /></a>
                     }
                     else if (User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.BackEnd) || User.IsInRole(UserRoles.SuperAdmin))
                     {
-                        <a class="btn btn-danger btn-delete-comment">Delete</a>
+                        <a class="btn-delete-comment"><img src="~/images/forum/delete_iconX2.png" alt="delete" /></a>
                     }
-                    <span>Date created <span class="label label-default">@Model.DateCreated</span></span>
                 </div>
             </div>
             <div class="panel-body">
@@ -30,5 +30,4 @@
             </div>
         </div>
     </div>
-    <div class="clearme"></div>
 </div>

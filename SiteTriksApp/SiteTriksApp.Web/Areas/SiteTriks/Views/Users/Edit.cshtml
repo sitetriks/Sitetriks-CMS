@@ -16,7 +16,7 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <input type="submit" value="Save" class="btn-nav-2" />
+            <input type="submit" value="Save & Exit" class="btn-nav-2" />
         </div>
 
         @Html.AntiForgeryToken()
@@ -63,13 +63,13 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/leaving-warning.js"></script>
     <script src="~/js/multiselect-setup.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script src="~/js/sitetriks/users.js"></script>
     <script>
-        $(document).ready(function () {
+        (function () {
+            WarningWindow.attach();
             initUserEdit();
-        });
+        })();
     </script>
 }

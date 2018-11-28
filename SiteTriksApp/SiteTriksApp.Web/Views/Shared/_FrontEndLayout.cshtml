@@ -1,12 +1,26 @@
 ﻿<!DOCTYPE html>
-<html>
+@{
+    string lang = ViewData.ContainsKey("Lang") ? ViewData["Lang"].ToString() : "en";
+}
+<html lang="@lang">
 <head>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    @RenderSection("MetaTagsSection", required: false)
 
-    @await Html.PartialAsync("_Favicons")
+    @* favicons *@
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="~/apple-touch-icon.png">
+    <link rel="icon" href="https://sitetriks.azureedge.net/static-files/favicon.ico">
+    <link rel="icon" type="image/png" href="https://sitetriks.azureedge.net/static-files/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="~/favicon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="~/favicon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="~/favicon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="~/favicon-180x180.png" sizes="180x180">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-TileImage" content="~/mstile-150x150.png">
+    <link rel="mask-icon" href="~/safari-pinned-tab.svg" color="red">
 
     <environment include="Development">
         <link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -19,15 +33,18 @@
         <link type="text/css" rel="stylesheet" href="~/css/home-page.css" />
         <link type="text/css" rel="stylesheet" href="~/lib/custom/jquery-ui/jquery-ui.css" />
         <link type="text/css" rel="stylesheet" href="~/lib/custom/tinymce/plugins/codesample/css/prism.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/font-awesome/font-awesome.min.css" />
+        <link type="text/css" rel="stylesheet" href="~/fonts/navigation-icons/css/Glyphter.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/frontend.min.css" asp-append-version="true" />
+        <link type="text/css" rel="stylesheet" href="~/css/frontend.min.css" async />
     </environment>
 
-    @await Html.PartialAsync("Polyfills")
+    @* polyfils *@
+    <script asp-fallback-src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"
+            asp-fallback-test="typeof Symbol !== 'undefined'"></script>
+    <script asp-fallback-src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"
+            asp-fallback-test="typeof Promise !== 'undefined'"></script>
 
     @if (User.Identity.IsAuthenticated)
     {
@@ -49,6 +66,17 @@
 
     @RenderSection("styles", required: false)
 
+    @*<!-- Global site tag (gtag.js) - Google Analytics -->
+
+        TODO: uncomment when deploying to azure
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119762809-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'UA-119762809-1');
+        </script>*@
 </head>
 <body class="wide">
     <div id="wrapper" class="wrapper body-content">
@@ -60,14 +88,12 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-
         <script type="text/javascript" src="~/lib/custom/jquery-ui/jquery-ui-1.10.4.js"></script>
         <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
         <script src="~/lib/custom/cookieNoticeJS/dist/cookie.notice.js"></script>
         <script type="text/javascript" src="~/js/data.js"></script>
         <script type="text/javascript" src="~/js/loader.js"></script>
-        <script type="text/javascript" src="~/js/gallery-2.0.js"></script>
+        <script type="text/javascript" src="~/js/modules/hash-router.js"></script>
         <script type="text/javascript" src="~/js/validation.js"></script>
         <script type="text/javascript" src="~/js/validator.js"></script>
         <script type="text/javascript" src="~/js/notifier.js"></script>
@@ -83,46 +109,23 @@
         <script type="text/javascript" src="~/js/modules/scroll-control.js"></script>
         <script type="text/javascript" src="~/js/toggle-bottom-menu.js"></script>
         <script type="text/javascript" src="~/js/navigation-widget.js"></script>
-        @*<script type="text/javascript" src="~/js/video-custom-playlist.js"></script>*@
         <script type="text/javascript" src="~/lib/custom/slider-master/js/jssor.slider.min.js"></script>
         <script type="text/javascript" src="~/js/subscription.js"></script>
         <script type="text/javascript" src="~/js/cookie-notification-configuration.js"></script>
         <script type="text/javascript" src="~/js/licenses-widgets.js"></script>
-        <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+        <script type="text/javascript" src="~/js/modules/utils.js"></script>
         <script type="text/javascript" src="~/js/sitetriks/licensesTable.js"></script>
         <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
-        <script src="~/js/frontend-layout-scripts.js" type="text/javascript"> </script>
-        <script src="~/js/contact-us-widget.js" type="text/javascript"> </script>
-
+        <script src="~/js/frontend-layout-scripts.js" type="text/javascript"></script>
+        <script src="~/js/home-page.js" type="text/javascript"></script>
+        <script type="text/javascript" src="~/js/forum-widget.js"></script>
+        <script type="text/javascript" src="~/js/blog-widget.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
-        <script src="~/js/frontend.min.js" asp-append-version="true"></script>
-        <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
-        <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
-        <script src="~/js/frontend-layout-scripts.js" type="text/javascript"> </script>
-        <script src="~/js/contact-us-widget.js" type="text/javascript"> </script>
+        <script type="text/javascript" src="~/js/frontend.min.js"></script>
     </environment>
 
     @RenderSection("scripts", required: false)
-    <script type="text/javascript">
-        scriptManager.delteScriptCheck();
-    </script>
-
-    <script>
-    </script>
 
 </body>
 </html>

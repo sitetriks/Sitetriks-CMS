@@ -2,15 +2,11 @@
     Layout = "~/Views/Shared/_FrontEndLayout.cshtml";
 }
 
-@section styles {
-    @RenderSection("Styles", required: false)
-}
-
 <div>   
     <div>
         @RenderBody()
     </div>
-    <footer class="frontend-footer"></footer>
+    @*<footer class="frontend-footer"></footer>*@
 </div>
 
 @section Scripts {

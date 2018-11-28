@@ -1,4 +1,4 @@
-﻿@model SiteTriks.Dynamic.Models.DynamicClass
+﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
 
 @{
     ViewBag.Title = "Create item";
@@ -6,14 +6,15 @@
 
 @section Styles {
     <link href="~/css/navbar-remove.css" rel="stylesheet" />
+    <link href="~/css/file-handler.css" rel="stylesheet" />
 }
 
 <div class="fixed-top-2">
     @await Html.PartialAsync("SecondNavHeader")
 
     <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to assemblies</a>
-    <a href="@Url.Action("ClassDetails", new { assemblyName = ViewBag.AssemblyName, className = Model.Name })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to Details</a>
-    <a class="btn-nav-2" id="btn-create-item"><span class="glyphicon glyphicon-plus"></span>Create Item</a>
+    <a href="@Url.Action("ClassDetails", new { assemblyName = Model.AssemblyName, className = Model.DynamicClass.Name })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to Details</a>
+    <a class="btn-nav-2" id="btn-create-item" data-disable-warning="true">Save & Exit</a>
 </div>
 
 <div class="backend-wrapper">
@@ -22,81 +23,129 @@
     </div>
 
     <div class="page-properties">
-        @foreach (var prop in Model.Properties)
+        @foreach (var prop in Model.DynamicClass.Properties)
         {
-        <div class="form-group row">
-            @if (prop.Name == "LinkId")
-            {
-                <label class="col-md-2">Link: </label>
-                <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
-            }
-            else if (prop.Type == "images")
-            {
-                <input class="class-property" id="dynamic-images" data-name="@prop.Name" data-type="@prop.Type" hidden />
-                <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#upload-modal" onclick="loadUploadTemplate(true, 'images', 'dynamic-images')">Images</button>
-                <div id="dynamic-images-container"></div>
-            }
-            else if (prop.Type == "string-long")
-            {
-                <label class="col-md-2">@prop.Name: </label>
-                <div class="col-md-10" style="padding-left:0;">
-                    <textarea class="class-property form-control" rows="10" data-name="@prop.Name" data-type="@prop.Type"></textarea>
-                </div>
-            }
-            else if (prop.Type == "string-html")
-            {
-                <label class="col-md-2">@prop.Name: </label>
-                <div class="col-md-10" style="padding-left:0;">
-                    <textarea class="class-property" id="area-@prop.Name" data-name="@prop.Name" data-type="@prop.Type"></textarea>
-                </div>
-            }
-            else if (prop.Type == "bool")
-            {
-                <label class="col-md-2">@prop.Name: </label>
-                <select class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type">
-                    <option value="0">False</option>
-                    <option value="1">True</option>
-                </select>
-            }
-            else
-            {
-                <label class="col-md-2">@prop.Name: </label>
-                <input class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type" />
-            }
-        </div>
+            <div class="form-group row">
+                @if (prop.Name == "LinkId")
+                {
+                    <label class="col-md-2">Link: </label>
+                    <input class="form-control inline-block class-property validate" data-validation-type="required lenght" data-min="3" data-name="@prop.Name" data-type="@prop.Type" />
+                    <span class="text-danger"></span>
+                }
+                else if (prop.Type == "images")
+                {
+                    <button class="btn btn-backend select-dynamic-images" data-toggle="modal" data-target="#file-upload-modal" data-name="@prop.Name">Images</button>
+                    <input class="class-property dynamic-images" data-name="@prop.Name" data-type="@prop.Type" hidden />
+                    <div class="dynamic-images-container"></div>
+                }
+                else if (prop.Type == "string-long")
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <div class="col-md-10" style="padding-left:0;">
+                        <textarea class="class-property form-control validate" data-validation-type="required lenght" data-max="4000" rows="10" data-name="@prop.Name" data-type="@prop.Type"></textarea>
+                        <span class="text-danger"></span>
+                    </div>
+                }
+                else if (prop.Type == "string-html")
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <div class="col-md-10" style="padding-left:0;">
+                        <textarea class="class-property" id="area-@prop.Name" data-name="@prop.Name" data-type="@prop.Type"></textarea>
+                        <span class="text-danger"></span>
+                    </div>
+                }
+                else if (prop.Type == "bool")
+                {
+                    <label class="col-md-2">@prop.Name: </label>
+                    <select class="form-control inline-block class-property" data-name="@prop.Name" data-type="@prop.Type">
+                        <option value="0">False</option>
+                        <option value="1">True</option>
+                    </select>
+                    <span class="text-danger"></span>
+                }
+                else
+                {
+                    string classes = string.Empty;
+                    string attributes = string.Empty;
+                    switch (prop.Type)
+                    {
+                        case "guid":
+                        case "int":
+                        case "decimal":
+                            classes = "validate";
+                            attributes = $"data-validation-type={prop.Type}";
+                            break;
+
+                        case "string":
+                            classes = "validate";
+                            attributes = "data-validation-type=length data-max=100";
+                            if(prop.Name == "Title")
+                            {
+                                attributes += " data-min=3";
+                            }
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    <label class="col-md-2">@prop.Name: </label>
+                    <input class="form-control inline-block class-property @classes" @attributes data-name="@prop.Name" data-type="@prop.Type" />
+                    <span class="text-danger"></span>
+                }
+            </div>
         }
     </div>
 
-    @Html.Partial("UploadTemplates/FileHandlerModal")
+    <div class="modal fade" id="file-upload-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Files</h4>
+                </div>
+                <div class="file-handler-wrapper">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts{
     <script type="text/javascript" src="~/lib/custom/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript" src="~/js/files-handler-2.2.js"></script>
     <script type="text/javascript" src="~/js/text-editor.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/dynamics.js"></script>
+    <script type="text/javascript" src="~/js/modules/utils.js"></script>
+    <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
+    <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript">
-        Loader.show('#fff');
+        (function () {
+            Loader.show('#fff');
 
-        $(document).ready(function (ev) {
-            @foreach (var item in Model.Properties.Where(p => p.Type == "string-html"))
+            @foreach (var item in Model.DynamicClass.Properties.Where(p => p.Type == "string-html"))
             {
                 <text>
                 textEditor.init('#area-@item.Name', 500, 300, Loader.hide);
                 </text>
             }
 
-            @if (Model.Properties.Where(p => p.Type == "string-html").Count() == 0)
+            @if (Model.DynamicClass.Properties.Where(p => p.Type == "string-html").Count() == 0)
             {
                 <text>
                 Loader.hide();
                 </text>
             }
-        })
 
-        var modelName = '@Model.Name';
-        var assemblyName = '@ViewBag.AssemblyName';
+            var modelName = '@Model.DynamicClass.Name';
+            var assemblyName = '@Model.AssemblyName';
+            var logger = new Logger('debug');
+            var mediator = new Mediator(logger);
 
-        createItem(modelName, assemblyName);
+            WarningWindow.attach();
+            Dynamics.createItem(modelName, assemblyName, logger, mediator);
+        })();
     </script>
 }

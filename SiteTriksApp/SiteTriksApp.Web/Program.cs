@@ -6,17 +6,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SiteTriks.Configuration.Contracts;
 using SiteTriks.Data;
 using SiteTriks.Data.Models;
 using SiteTriks.Data.Seeders;
-using SiteTriks.DatabaseApi;
-using SiteTriks.DatabaseApi.Contracts;
 using SiteTriks.Dynamic.Contracts;
-using SiteTriks.Infrastructure.Common;
+using SiteTriks.Helpers;
+using SiteTriks.Services.Contracts;
 using SiteTriksApp.Web.Services.Seeders;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SiteTriksApp.Web
 {
@@ -25,8 +24,10 @@ namespace SiteTriksApp.Web
         public static void Main(string[] args)
         {
             BuildMainWebHost(args)
-                .MigrateDatabase()
-                .Run();
+            .MigrateDatabase()
+            .AddPermissions()
+            .CollectSiteSyncInformation()
+            .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
@@ -35,9 +36,10 @@ namespace SiteTriksApp.Web
                 .Build();
 
 
-        public static IWebHost BuildMainWebHost(string[] args) => 
+        public static IWebHost BuildMainWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(services => {
+                .ConfigureServices(services =>
+                {
                     services.AddTransient<IStartupFilter, HangfireStartupFilter>();
                 })
                 .UseStartup<Startup>()
@@ -68,26 +70,34 @@ namespace SiteTriksApp.Web
                 SiteSeeder.Seed(dbContext);
 
                 // Init dynamic types
-                var dynamicService = services.GetRequiredService<IDynamicAssemblyService>();
-                var queryHelper = services.GetRequiredService<IQueryHelper>();
-                dynamicService.LoadAssemblies();
+                var dynamicService = services.GetRequiredService<IDynamicService>();
+                dynamicService.PopulateDynamicTypesInDatabase();
+            }
 
-                var assemblies = dynamicService.GetAssemblies();
-                string linkConstraint = queryHelper.CreateConstraint(ConstraintType.ForeignKey, "LinkId", "st_links");
+            return webHost;
+        }
 
-                foreach (var a in assemblies)
-                {
-                    foreach (var item in a.Classes)
-                    {
-                        var constraints = new List<string>();
-                        if (item.Properties.Where(p => p.Name == "LinkId").Any())
-                        {
-                            constraints.Add(linkConstraint);
-                        }
+        public static IWebHost CollectSiteSyncInformation(this IWebHost webHost, IEnumerable<string> assemblyNames = null)
+        {
+            using( var scope = webHost.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var cacheService = services.GetService<ICache>();
 
-                        queryHelper.CreateTable(DatabasePrefix.Dynamic + item.Name, item.Properties, constraints);
-                    }
-                }
+                ApplicationStart.CollectSiteSyncInformation(cacheService, assemblyNames);
+            }
+
+            return webHost;
+        }
+
+        public static IWebHost AddPermissions(this IWebHost webHost, IEnumerable<string> assemblyNames = null)
+        {
+            using (var scope = webHost.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var permissionService = services.GetService<IPermissionService>();
+                ApplicationStart.RegisterCustomPermissions(permissionService, assemblyNames);
+                ApplicationStart.RemoveClearedCustomPermission(permissionService, assemblyNames);
             }
 
             return webHost;

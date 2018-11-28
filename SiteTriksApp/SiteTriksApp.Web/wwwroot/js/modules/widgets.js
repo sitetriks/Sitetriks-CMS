@@ -4,16 +4,18 @@
 //         for widgets AllowedRoles, AllowedGroups 
 //===================================================================================================
 
-function widgetsModule($widgetContainer, initFunctions) {
+/* globals Data, Loader, Utils, Notifier, Multiselect, WidgetsDraggable, ModuleBuilder */
+
+function widgetsModule($widgetContainer, initFunctions, pageContent) {
     function getRoles(selectedRoles) {
         if (!selectedRoles) {
             var selectedRolesNames = [];
         } else {
             var selectedRolesNames = selectedRoles.split(';');
-        } 
+        }
 
 
-        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function(data) {
+        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function (data) {
             $.each(data.names, function (index, item) {
                 if (selectedRolesNames.indexOf(item) >= 0) {
                     var option = $('<option></option>');
@@ -37,9 +39,9 @@ function widgetsModule($widgetContainer, initFunctions) {
             var selectedUserGroupsNames = [];
         } else {
             var selectedUserGroupsNames = selectedUserGroups.split(';');
-        } 
+        }
 
-        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function(data) {
+        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function (data) {
             $.each(data.names, function (index, item) {
                 if (selectedUserGroupsNames.indexOf(item) >= 0) {
                     var option = $('<option></option>');
@@ -56,10 +58,10 @@ function widgetsModule($widgetContainer, initFunctions) {
         });
     }
 
-    function LoadWidget(type) {
+    function LoadWidget(type, extra) {
         $widgetContainer.html('<p>Loading...</p>');
 
-        Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type }).then(function (res) {
+        Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type + '&extra=' + extra }).then(function (res) {
             $widgetContainer.html(res);
 
             if (initFunctions[type] && {}.toString.call(initFunctions[type].init) === '[object Function]') {
@@ -72,15 +74,15 @@ function widgetsModule($widgetContainer, initFunctions) {
             $('.add-widget-dialog .btn-add-widget').prop('disabled', false);
             $('.add-widget-dialog .btn-add-widget').attr('data-type', type);
 
-            var $templatesSelector = $("#template-selector");
+            var $templatesSelector = $('#template-selector');
 
             if ($templatesSelector.length) {
-                Data.getJson({ url: '/WidgetTemplatesController/GetTemplateNames/' + type }).then(function (data) {
+                Data.getJson({ url: '/SiteTriks/Widgets/GetTemplateNames?widgetName=' + type }).then(function (data) {
                     let templateNames = data.templateNames;
                     $templatesSelector.empty();
 
                     for (let i = 0; i < templateNames.length; i++) {
-                        let $option = $("<option></option>");
+                        let $option = $('<option></option>');
                         $option.text(templateNames[i]);
                         $option.val(templateNames[i]);
 
@@ -90,7 +92,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                     $('#add-widget-container').find('input:first').focus();
                 });
             }
-        });      
+        });
     }
 
     function createAlert(action, data, status, dialogId, modalId, isLocal) {
@@ -127,25 +129,25 @@ function widgetsModule($widgetContainer, initFunctions) {
 
                 $('.drop').removeClass('drag-hover');
 
-                if (!ui.draggable.hasClass("preview-placeholder")) {
+                if (!ui.draggable.hasClass('preview-placeholder')) {
+                    let $drag = ui.draggable.first();
                     ui.helper.detach();
 
                     var placeholder = $(event.target).attr('data-placeholder');
-                    var type = ui.draggable.first().data("type");
+                    var type = $drag.data('type');
+                    let extra = $drag.attr('data-extra');
 
-                    OpenDialog(placeholder).text(ui.draggable.first().text());
+                    OpenDialog(placeholder).text($drag.text());
 
-                    LoadWidget(type);
-                    return;
-                }
-                else {
-                    //ui.helper.detach();
-                    //$(event.target).append(ui.draggable);
+                    LoadWidget(type, extra);
                 }
             },
             over: function (event, ui) {
                 $('.drop').removeClass('drag-hover');
                 $(event.target).addClass('drag-hover');
+            },
+            out: function () {
+                $(this).removeClass('drag-hover');
             }
         });
     }
@@ -222,24 +224,28 @@ function widgetsModule($widgetContainer, initFunctions) {
         var templateName = $("#template-selector").val();
         var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
         var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
-        
-        var element;
 
-        if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
+        var element;
+        if (initFunctions[type] && Utils.isFunction(initFunctions[type].save)) {
             element = initFunctions[type].save();
         }
 
-        if (!element) {
-
-            if (initFunctions[type] && {}.toString.call(initFunctions[type].validation) === '[object Function]') {
-                let result = initFunctions[type].validation();
-
-                if (!result) {
-                    Loader.hide();
-                    return;
+        if (element && typeof element === 'object') {
+            if (!element.success) {
+                if (element.message) {
+                    createErrorAlert(element.message);
+                } else {
+                    createErrorAlert('Invalid information');
                 }
-            }
 
+                Loader.hide();
+                return;
+            } else {
+                element = element.element;
+            }
+        }
+
+        if (!element) {
             var isValid = widgetValidation(type);
 
             if (!isValid) {
@@ -250,10 +256,10 @@ function widgetsModule($widgetContainer, initFunctions) {
         addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups);
     });
 
-    function addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups) {
+    function addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups, noAlert) {
         let order = Math.max.apply(Math, pageContent.map(function (c) { return c.order; })) + 1;
 
-        if (order == -Infinity) {
+        if (order === -Infinity) {
             order = 0;
         }
         var id = Utils.guid();
@@ -270,7 +276,7 @@ function widgetsModule($widgetContainer, initFunctions) {
                 order: order || 0
             },
             preview: 'preview'
-        }
+        };
 
         Loader.show(true);
 
@@ -292,14 +298,38 @@ function widgetsModule($widgetContainer, initFunctions) {
             $('.placeholder[data-placeholder="' + placeholder + '"]').append(data);
 
             if (type === 'layoutBuilder') {
-                console.log('init layout')
+                console.log('init layout');
                 //makeDrop($(".drop-layout"));
                 //$(".drop-layout").sortable();
-                WidgetsDraggable.init(w.makeDrop);
+                WidgetsDraggable.init(w);
             }
 
-            createAlert('Added', { type }, 'success', '#Dialog-Box', null, true);
-        })
+            WarningWindow.force();
+            if (!noAlert) {
+                createAlert('Added', { type }, 'success', '#Dialog-Box', null, true);
+            } else {
+                Loader.hide();
+            }
+        }, function (error) {
+            $(document).trigger('removeCarousel');
+
+            //Move to create alert
+            if (type == 'dynamic') {
+                Notifier.createAlert({
+                    containerId: '#alerts',
+                    title: '',
+                    message: "Dynamic View can not be loaded correctly.",
+                    status: 'danger',
+                    isPermanent: true
+                });
+
+                $('#Dialog-Box').dialog('close');
+
+                $(document).trigger('initCarousel');
+                $widgetContainer.html('');
+                Loader.hide();
+            }
+        });
     }
 
     //=================================================================================================================================================
@@ -319,6 +349,8 @@ function widgetsModule($widgetContainer, initFunctions) {
             .dialog('option', 'height', 700)
             .dialog('option', 'dialogClass', 'edit-widget-dialog')
             .dialog('open');
+
+        $widgetContainer.html('');
 
         $('#Dialog-Box-Edit').dialog('option', 'position', ["20%", "10%"]);
         $('#Dialog-Box-Edit').parent().css({ position: "fixed" })
@@ -382,7 +414,22 @@ function widgetsModule($widgetContainer, initFunctions) {
             element = initFunctions[type].save(id);
         }
 
-        if (element === null) {
+        if (element && typeof element === 'object') {
+            if (!element.success) {
+                if (element.message) {
+                    createErrorAlert(element.message);
+                } else {
+                    createErrorAlert('Invalid information');
+                }
+
+                Loader.hide();
+                return;
+            } else {
+                element = element.element;
+            }
+        }
+
+        if (!element) {
             let isValid = widgetValidation(type, 'edit');
 
             if (!isValid) {
@@ -405,11 +452,10 @@ function widgetsModule($widgetContainer, initFunctions) {
 
         let order = item.order;
 
-        if (item.IsInherited) {
-            item.IsModifiedOnChild = true;
+        if (item.isInherited) {
+            item.isModifiedOnChild = true;
         }
 
-        //var $old = $('.delete-widget[data-type=' + type + '][data-id=' + id + ']').parent('.preview-placeholder');
         var $old = $('.preview-placeholder[data-identifier="' + id + '"]');
 
         var body = {
@@ -435,16 +481,19 @@ function widgetsModule($widgetContainer, initFunctions) {
 
             $(document).trigger('removeCarousel');
 
-            $old.after(data);
-            $old.remove();
 
             if (type === 'layoutBuilder') {
-                console.log('init layout')
-                //makeDrop($(".drop-layout"));
-                //$(".drop-layout").sortable();
-                WidgetsDraggable.init(w.makeDrop);
+                let l = ModuleBuilder.getInstance('#layout-widget-wrapper', ModuleBuilder.LAYOUT);
+                let layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
+                ModuleBuilder.renderLayout(layoutRows, $(`div.preview-placeholder[data-identifier="${id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
+
+                WidgetsDraggable.init(w);
+            } else {
+                $old.after(data);
+                $old.remove();
             }
 
+            WarningWindow.force();
             createAlert('Edited', { type: type }, 'warning', '#Dialog-Box-Edit', null, true);
         });
     }
@@ -467,7 +516,7 @@ function widgetsModule($widgetContainer, initFunctions) {
             var $templatesSelector = $("#template-selector");
 
             if ($templatesSelector.length) {
-                Data.getJson({ url: '/WidgetTemplatesController/GetTemplateNames/' + type }).then(function (tempData) {
+                Data.getJson({ url: '/SiteTriks/Widgets/GetTemplateNames?widgetName=' + type }).then(function (tempData) {
                     let templateNames = tempData.templateNames;
                     $templatesSelector.empty();
 
@@ -514,30 +563,40 @@ function widgetsModule($widgetContainer, initFunctions) {
 
     function removeWidget(ev) {
         let $element = $(this);
-        let type = $element.attr("data-type");
-        let id = $element.attr("data-id");
-        let item = pageContent.find(e => e.type === type && e.id === id);
-
-        // TODO: logic for deleting widgets with non-existing placeholders
-        //if (item.type == "layoutBuilder") {
-
-        //    var placeholders = JSON.parse(item.element).Placeholders;
-        //    var widgets = pageContent;
-
-        //    for (let i = 0; i < widgets.length; i++) {
-        //        if (placeholders.indexOf(widgets[i].placeholder) > -1
-        //            || placeholders.indexOf(+widgets[i].placeholder) > -1) {
-        //            pageContent.splice(i, 1);
-        //            i--;
-        //        }
-        //    }
-        //}
-
-        let index = pageContent.indexOf(item);
-        pageContent.splice(index, 1);
+        let type = $element.attr('data-type');
+        let id = $element.attr('data-id');
+        let index = pageContent.findIndex(e => e.type === type && e.id === id);
+        removeSingleWidget(index);
 
         $element.parents('.preview-placeholder[data-identifier="' + id + '"]').remove();
+        WarningWindow.force();
         createAlert('Removed', { type }, 'danger', null, '#delete-confirm', true);
+    }
+
+    function removeWidgetForPlaceholder(placeholder, widgets) {
+        widgets = widgets || pageContent || [];
+        let widgetsToDelete = widgets.filter(c => c.placeholder === placeholder);
+
+        for (let i = 0; i < widgetsToDelete.length; i += 1) {
+            let index = widgets.findIndex(c => c.id === widgetsToDelete[i].id);
+            removeSingleWidget(index, widgets);
+        }
+    }
+
+    function removeSingleWidget(index, widgets) {
+        widgets = widgets || pageContent || [];
+
+        if (index > -1) {
+            let widget = widgets.splice(index, 1)[0];
+            if (widget.type === 'layoutBuilder') {
+                let layout = JSON.parse(widget.element);
+                for (let j = 0; j < layout.layoutRows.length; j += 1) {
+                    for (let k = 0; k < layout.layoutRows[j].columns.length; k += 1) {
+                        removeWidgetForPlaceholder(layout.layoutRows[j].columns[k].properties.placeholder, widgets);
+                    }
+                }
+            }
+        }
     }
 
     $('body').on('click', '.delete-widget', removeWidget);
@@ -545,8 +604,11 @@ function widgetsModule($widgetContainer, initFunctions) {
     return {
         addWidgetLocal,
         saveEditWidgetLocal,
-        makeDrop
-    }
+        makeDrop,
+        getPageContent: () => pageContent,
+        setPageContent: (content) => pageContent = content,
+        removeWidgetForPlaceholder
+    };
 }
 
 function createErrorAlert(msg, type) {

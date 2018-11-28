@@ -5,12 +5,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @*<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://cdnjs.cloudflare.com https://www.google.com https://ajax.googleapis.com data:font/woff">*@
     <title>@ViewData["Title"] - SiteTriksApp.Web</title>
 
     @await Html.PartialAsync("_Favicons")
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -20,11 +21,12 @@
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
 
-    <link type="text/css" rel="stylesheet" href="~/css/back-end.css" asp-append-version="true"/>
-    <link type="text/css" rel="stylesheet" href="~/css/grid.css"  asp-append-version="true"/>
-    <link type="text/css" rel="stylesheet" href="~/css/st-grid.css"  asp-append-version="true"/>
-    <link type="text/css" rel="stylesheet" href="~/css/resolutions-icons.css"/>
-    <link type="text/css" rel="stylesheet" href="~/css/Glyphter.css"/>
+    <link type="text/css" rel="stylesheet" href="~/css/back-end.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/grid.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/st-grid.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/resolutions-icons.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/Glyphter.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/extensions.css" />
 
     @* Manually added librarires. TODO: use package manager *@
     <link type="text/css" rel="stylesheet" href="~/lib/custom/slick/slick.css" />
@@ -117,6 +119,7 @@
                                                         <li class="nav-section-separator"><span>E-commerse</span></li>
                                                         <li>@Html.ActionLink("E-commerce", "Index", "ECommerce", new { Area = "SiteTriks" }, new { })</li>
                                                         <li>@Html.ActionLink("E-commerce Orders", "Index", "ECommerceOrders", new { Area = "SiteTriks" }, new { })</li>
+                                                        @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "ECommerse" })
                                                     </ul>
                                                 </li>
                                             }
@@ -134,6 +137,7 @@
                                                         <li>@Html.ActionLink("Users", "Index", "Users", new { Area = "SiteTriks" }, new { })</li>
                                                         <li>@Html.ActionLink("User Groups", "Index", "UserGroups", new { Area = "SiteTriks" }, new { })</li>
                                                         <li>@Html.ActionLink("Roles", "Index", "Roles", new { Area = "SiteTriks" }, new { })</li>
+                                                        <li>@Html.ActionLink("Permissions", "Index", "Permission", new { Area = "SiteTriks" }, new { })</li>
                                                         <li class="nav-section-separator"><span>Content Management</span></li>
                                                         <li>@Html.ActionLink("Tags", "Index", "Tags", new { Area = "SiteTriks" }, new { })</li>
                                                         <li class="nav-section-separator"><span>Settings & Configurations</span></li>
@@ -145,6 +149,7 @@
                                                         <li>@Html.ActionLink("Dynamic Content Config.", "Index", "Dynamic", new { Area = "SiteTriks" }, new { })</li>
                                                         <li>@Html.ActionLink("Extensions & Modules", "Index", "Extensions", new { Area = "SiteTriks" }, new { })</li>
                                                         <li>@Html.ActionLink("Dashboard Config.", "Index", "DashboardConfiguration", new { Area = "SiteTriks" }, new { })</li>
+                                                        <li>@Html.ActionLink("Thumbnails Config.", "Index", "ThumbnailsSizes", new { Area = "SiteTriks" }, new { })</li>
                                                         @if (LicenseManager.WidgetConfigAccess)
                                                         {
                                                             <li>@Html.ActionLink("Widgets Config.", "Index", "WidgetConfiguration", new { Area = "SiteTriks" }, new { })</li>
@@ -216,14 +221,18 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    <script type="text/javascript" src="~/js/data.js"  asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/loader.js"  asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/gallery-2.0.js"  asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/notifier.js"  asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/validation.js"  asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/populate-url.js"  asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/grid.js"  asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/all-news.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/data.js"></script>
+    <script type="text/javascript" src="~/js/loader.js"></script>
+    <script type="text/javascript" src="~/js/modules/hash-router.js"></script>
+    <script type="text/javascript" src="~/js/notifier.js"></script>
+    <script type="text/javascript" src="~/js/validation.js"></script>
+    <script type="text/javascript" src="~/js/populate-url.js"></script>
+    <script type="text/javascript" src="~/js/grid.js"></script>
+    <script type="text/javascript" src="~/js/all-news.js"></script>
+    <script type="text/javascript" src="~/js/carousel.js"></script>
+    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
+    <script type="text/javascript" src="~/js/modules/logger.js"></script>
+    <script type="text/javascript" src="~/js/modules/warning-window.js"></script>
 
     @* Manually added librarires. TODO: use package manager *@
     <script type="text/javascript" src="~/lib/custom/slick/slick.min.js"></script>
@@ -236,9 +245,7 @@
     <script type="text/javascript" src="~/lib/custom/moment/moment.min.js"></script>
     <script type="text/javascript" src="~/lib/custom/moment/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
-    <script src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
-    <script type="text/javascript" src="~/js/carousel.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
     @*@if (!LicenseManager.PersonalizationWithGroups)
         {*@
     <script>
@@ -258,13 +265,14 @@
     @RenderSection("Scripts", required: false)
 
     <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
-    <script src="~/js/sitetriks/layout.js"  asp-append-version="true"></script>
+    <script src="~/js/sitetriks/layout.js"></script>
     <script>
         $(window).load(function () {
             if ($('.prettyprint').length > 0) {
                 prettify();
             }
         });
+        
 
         loadMainLayout();
 
@@ -274,41 +282,5 @@
         /* Hamburger menu */
         hamburgerMenu();
     </script>
-
-    @*<script>
-        /**********************Hide grid buttons *********************************/
-
-            console.log('in backend')
-
-
-                function checkIfBodyIsEmpty(tableBody) {
-                    var isEmpty = false;
-
-                    if (tableBody.children().length === 0) {
-                        isEmpty = true;
-                    }
-
-                    return isEmpty;
-                }
-
-                function hideTableButtons(tableHeader, tableBody) {
-                    var checkIfEmpty = checkIfBodyIsEmpty($(tableBody));
-                    console.log(tableBody);
-
-                    if (checkIfEmpty == true) {
-                        tableHeader.children().css('visibility', 'hidden');
-                        console.log(tableHeader);
-                    }
-                    else {
-                        tableHeader.children().css('visibility', 'visible');
-                    }
-                }
-
-
-                $(window).load(function () {
-                hideTableButtons($('.buttons-row'), $('.tableBody'));
-        })
-            
-    </script>*@
 </body>
 </html>

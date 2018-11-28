@@ -3,7 +3,33 @@
     Layout = "/Views/Shared/_AccountLayout.cshtml";
 }
 
-<header>
-    <h2 class="text-danger">@ViewData["Title"]</h2>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+@*<header>
+        <h2 class="text-danger">@ViewData["Title"]</h2>
+        <p class="text-danger">You do not have access to this resource.</p>
+    </header>*@
+
+
+<div class="sitetriks-login container main-content content-placeholder">
+    <div class="row">
+        <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div id="accessDenied">
+                <div class="login-logo-container">
+                    <img src="~/images/homepage/Login.svg" />
+                    <div>@ViewData["Title"]</div>
+                    <p class="text-danger">You do not have access to this resource.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="image-holder col col-lg-8 col-md-8 col-sm-8">
+            <div class="login-image-container"></div>
+        </div>
+    </div>
+</div>
+
+@*@await Html.PartialAsync("_AccountFooter")*@
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @*<script type="text/javascript" src="~/js/login-image-select.js"></script>*@
+}

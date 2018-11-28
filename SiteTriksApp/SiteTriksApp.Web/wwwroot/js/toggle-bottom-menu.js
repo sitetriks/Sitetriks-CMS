@@ -1,6 +1,5 @@
 ﻿'use strict';
 
-// activate the scroll event
 function removeSideMenu(e) {
 
     var offSet = $('.bottom-menu').offset();
@@ -18,11 +17,30 @@ function removeSideMenu(e) {
         setTimeout(function () {
             $toggleMenu.removeClass('visuallyhidden');
         }, 30);
-        //$toggleMenu.removeClass('hidden');
     }
 }
 
-// toggle the side menu
+function removeSocialLinks(e) {
+
+    var offSet = $('.bottom-menu').offset();
+    var distance = offSet ? offSet.top + 400 : 0;
+    var $scrollBottom = $(window).scrollTop() + $(window).height();
+    var $socialLinks = $('.social-fixed');
+
+    if (distance && $scrollBottom >= distance && $(window).width() > 767) {
+        $socialLinks.addClass('visuallyhidden');
+        $socialLinks.one('transitionend', function (e) { });
+    }
+
+    if (distance && $scrollBottom <= distance) {
+
+        setTimeout(function () {
+            $socialLinks.removeClass('visuallyhidden');
+        }, 30);
+    }
+}
+
+
 var toggleSideMenu = (function () {
 
     var animateWidth;
@@ -32,15 +50,21 @@ var toggleSideMenu = (function () {
     var $middleSection = $('.middle-section.col-lg-10');
     var menuState = $(".toggle-menu").attr("data-open-state");
     var screenWidth = $(window).width();
+    var setFeatureWidth = "242px";
+    var setSideSectionWidth = "117px";
 
     var setShrinkIcon = function () {
         $('body').on('resize ready', '.toggle-menu', function () {
             if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 $(".shrink-menu").children('img').attr('src', '/Content/Images/menu-buttons/Decrease_window.png');
             }
-            //if ($(".toggle-menu").attr("data-open-state") === "closed" || $(".toggle-menu").attr("data-open-state") === "opened") {
-            //}
         });
+    }
+
+    if (screenWidth >= 2880) {
+        setFeatureWidth = "610px";
+        setSideSectionWidth = "300px";
+        
     }
 
     var setFeatureWidth = "240px";
@@ -49,25 +73,22 @@ var toggleSideMenu = (function () {
         $(".shrink-menu").on("click", function () {
             animateWidth = $('.middle-section.col-lg-10').css('width') == "0px" ? "76%" : "0px";
             var featuresFullWidth = $('.toggle-menu .features-section').css('width') == setFeatureWidth ? "90%" : setFeatureWidth;
-            var sideColsWidth = $('.side-section.col.col-lg-1').css('width') == "117px" ? "12%" : "117px";
+            var sideColsWidth = $('.side-section.col.col-lg-1').css('width') == setSideSectionWidth ? "12%" : setSideSectionWidth;
             var selectedFeatureVisibility = $selectedFeature.css('display') == "block" ? "none" : "block";
 
             if ($(".toggle-menu").attr("data-open-state") === "closed") {
                 return;
             }
 
-            // change image
             $(".leaf-button-2").toggle();
             $(".leaf-button-3").toggle();
 
-            // Hide th arrow images when the menu is expanded - 1.1
             $('.close-menu').toggle();
 
             var anumationDuration = 500;
             var color = '#fff';
 
             $('.middle-section.col-lg-10').animate({ width: animateWidth }, anumationDuration, function () {
-                // $(".toggle-menu .selected-feature").animate(".hidden-selected");
                 $selectedFeature.toggle("slow");
             });
 
@@ -92,7 +113,6 @@ var toggleSideMenu = (function () {
                 }
             });
 
-            // set state
             if ($(".toggle-menu").attr("data-open-state") === "opened") {
                 $(".toggle-menu").attr("data-open-state", "expanded");
                 $('.toggle-menu').css("width", "90%");
@@ -108,29 +128,24 @@ var toggleSideMenu = (function () {
 
     var closeMenu = function () {
         $('.close-menu').on('click', function () {
-            // check state
             if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 return;
             }
-
-            // change images on buttons
             $(".arrows-1").toggle();
             $(".arrows-2").toggle();
 
             $(".leaf-button-2").toggle();
             $(".leaf-button-1").toggle();
 
-            // fix features section width
             $featuresSection.css("width", setFeatureWidth);
+            $sideCol.css("width", setSideSectionWidth);
             $sideCol.css("width", "117px");
             $middleSection.css("width", "0px");
             $selectedFeature.css("display", "none");
 
             var featureVisibility = $featuresSection.css('display') == "none" ? "inline-block" : "none";
-            // console.log(featureVisibility);
             $featuresSection.toggle("slow");
 
-            // set state 
             if ($(".toggle-menu").attr("data-open-state") === "closed") {
                 $(".toggle-menu").attr("data-open-state", "opened");
                 $('.toggle-menu').css("width", "auto");
@@ -149,35 +164,37 @@ var toggleSideMenu = (function () {
     }
 })();
 
-// Features Section content loading.
-
 function loadSection(ev) {
+    var $featureContent = $(this).parents().parents().find('.selected-feature');
+    Loader.show('#ffff', null, $featureContent);
     var $trigger = $(this);
 
     $('.menu-icon').each(function () {
         if ($(this).hasClass('clicked')) {
             $(this).children('.icon-image').toggle();
             $(this).css('background-color', '#123e7a');
-            //$(this).css('border-color', '#3875cf');
+            //$(this).css('background-color', '#123e7a');
             $(this).removeClass('clicked');
         }
     });
 
     $trigger.addClass('clicked');
-    $trigger.css('background-color', '#3876cf');
+    $trigger.css('background-color', '#5fb6fd');
     $trigger.children('.icon-image').toggle();
 
     var url = $trigger.attr('data-url') || '';
     var $section = $trigger.parents('.features-section').find('.feature-content');
- //   var $bottomSection = $('.toggle-bottom-menu.container');
+    //var $bottomSection = $('.toggle-bottom-menu.container');
+
     var $bottomSection = $('.bottom-menu').find('.feature-content');
     var $toggleSection = $(".toggle-menu");
-
     var $toggleMenu = $trigger.parents('.toggle-menu');
 
     $section.html('');
     $bottomSection.html('');
     Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
+        $section.html('')
+        Loader.hide($featureContent);
         if (res.success) {
             if ($(".toggle-menu").attr("data-open-state") === "opened") {
                 $bottomSection.html(res.view);
@@ -195,7 +212,6 @@ function loadSection(ev) {
             DocumentationWidget();
 
             if ($section.find('.multiple-playlists')) {
-                // get all thumbnails ids
                 let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
                 let source;
                 $container.each(function (_, element) {
@@ -211,12 +227,20 @@ function loadSection(ev) {
                 console.warn("Error in toggle menu");
             }
 
-        }                                         
+        }
     });
 }
 
 $(document).ready(function (ev) {
     $('.features-section').on('click', '.menu-icon', loadSection);
+});
+
+$(document).ready(function () {
+    $('.letter-2').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+        $('.leaf-button-text').css('display', 'none');
+        $('.leaf-button-1').css('display', 'inline-block');
+        $('.close-menu').css('display', 'inline-block');
+    });
 });
 
 function getYoutubeData(playlistId) {
@@ -230,6 +254,7 @@ function scrollToElement(targetElement) {
 }
 
 $(window).scroll(removeSideMenu);
+$(window).scroll(removeSocialLinks);
 
 $(document).ready(function () {
     toggleSideMenu.setShrinkIcon();

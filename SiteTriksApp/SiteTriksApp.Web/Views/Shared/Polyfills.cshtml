@@ -1,4 +1,5 @@
-﻿<script asp-fallback-src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script>
+<script asp-fallback-src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"
         asp-fallback-test="typeof Promise !== 'undefined'"></script>
 <script>
     if (!String.prototype.includes) {
@@ -144,7 +145,7 @@
             // 3. Let len be toUint32(lenValue).
             var len = O.length >>> 0;
 
-            // 4. If isCallable(callback) is false, throw a TypeError exception. 
+            // 4. If isCallable(callback) is false, throw a TypeError exception.
             // See: http://es5.github.com/#x9.11
             if (typeof callback !== 'function') {
                 throw new TypeError(callback + ' is not a function');
@@ -186,7 +187,7 @@
             // 8. return undefined.
         };
     }
-    
+
     // custom events
     (function () {
         if (typeof window.CustomEvent === "function") return false; //If not IE
@@ -201,6 +202,25 @@
         CustomEvent.prototype = window.Event.prototype;
 
         window.CustomEvent = CustomEvent;
+    })();
+
+    // htmlElement.closest()
+    (function () {
+        if (!Element.prototype.matches) {
+            Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+        }
+
+        if (!Element.prototype.closest) {
+            Element.prototype.closest = function (s) {
+                var el = this;
+                if (!document.documentElement.contains(el)) return null;
+                do {
+                    if (el.matches(s)) return el;
+                    el = el.parentElement || el.parentNode;
+                } while (el !== null && el.nodeType === 1);
+                return null;
+            };
+        }
     })();
 
 </script>

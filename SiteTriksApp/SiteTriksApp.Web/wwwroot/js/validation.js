@@ -71,7 +71,7 @@ function parseYouTubeUrl(url) {
     var match = url.match(regExp);
     var result = '';
 
-    if (match && match[2].length == 11) {
+    if (match && match[2].length === 11) {
         result = match[2];
     } else {
         return 'error';
@@ -81,10 +81,10 @@ function parseYouTubeUrl(url) {
     if (t) {
         t = t.replace(/\D/g, ':');
 
-        var time = t.split(':').filter(function (n) { return n != '' }).reverse();
+        var time = t.split(':').filter(function (n) { return n !== ''; }).reverse();
         var seconds = Date.UTC(1970, 0, 1, time[2] || 0, time[1] || 0, time[0]) / 1000;
 
-        result = result + "?start=" + seconds;
+        result = result + '?start=' + seconds;
     }
 
     return result;

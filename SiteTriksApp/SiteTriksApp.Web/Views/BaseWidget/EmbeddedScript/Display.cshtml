@@ -8,8 +8,13 @@
 {
     <div class="preview-placeholder" data-identifier="@Model.Id">
         @Html.Partial("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+
+        <div class="@Model.CssClass">
+            @await Component.InvokeAsync("EmbeddedScriptWidget", new { area = "", element = Model.Element, isPreview = Model.IsPreview })
+        </div>
     </div>
 }
+
 else
 {
     @await Component.InvokeAsync("EmbeddedScriptWidget", new { area = "", element = Model.Element, isPreview = Model.IsPreview })

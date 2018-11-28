@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Edit File";
+
+    var libraryThumbnails = Model.LibraryThumbnails;
+    var currentThumbnails = @Model.Thumbnails.Count();
 }
 
 @section Styles {
@@ -16,17 +19,80 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index", "Libraries")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <input type="submit" value="Update" class="btn-nav-2" />
+            <input type="submit" value="Save & Exit" class="btn-nav-2" />
         </div>
 
         @*<div id="alerts"></div>*@
-        <hr />
 
         <input type="text" value="@Model.Id" name="Id" class="hidden" />
         <input type="text" value="@Model.Url" name="CurrentUrl" class="hidden" />
 
+        <div class="row image-holder">
+            <div class="page-properties col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        @if (Model.Type == SiteTriks.Data.Models.Helpers.FileType.Image || Model.Type == SiteTriks.Data.Models.Helpers.FileType.Svg)
+                        {
+                            <div class="images-title">
+                                <span>Main Image</span>
+                            </div>
+                            <img src="/files/@Model.Url" class="display-image" />
+                        }
+                        else if (Model.Type == SiteTriks.Data.Models.Helpers.FileType.Video)
+                        {
+                            <div>
+                                <span>Video</span>
+                            </div>
+                            <video width="560" height="315" controls>
+                                <source src="/files/@Model.Url" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+
+                        }
+                    </div>
+                    <div class="col-md-6  col-sm-12 col-xs-12 used-in-files">
+                        @if (Model.LibraryAllowed == "image/*" && libraryThumbnails > 0)
+                        {
+                            <div class="images-title">
+                                <span>Thumbnails</span>
+                            </div>
+                            <div>
+                                @if (libraryThumbnails > currentThumbnails)
+                                {
+                                    <div id="generate-thumbnails" data-fileId="@Model.Id">
+                                        <a class="btn btn-success">Create ThumbNails</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div id="generate-thumbnails-disabled" data-fileId="@Model.Id">
+                                        <a class="btn btn-grayed-out" disabled>Create ThumbNails</a>
+                                    </div>
+                                }
+                                @if(currentThumbnails > 0)
+                                {
+                                <div>
+                                    @Html.DisplayFor(x => x.Thumbnails, "Thumbnails")
+                                </div>
+
+                                }
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+
         <div class="row">
-            <div class="page-properties col-md-6 col-sm-12 col-xs-12">
+            <div class="col-md-6  col-sm-12 col-xs-12">
+                <div class="form-group row">
+                    <label class="control-label col-md-2">File Type</label>
+                    <div class="col-md-10">@Model.Type</div>
+                </div>
                 <div class="form-group row">
                     @Html.LabelFor(m => Model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -49,77 +115,77 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    @Html.LabelFor(m => Model.ExpirationDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="input-group date-picker-group">
-                            @Html.EditorFor(m => Model.ExpirationDate, new { htmlAttributes = new { @class = "form-control", Id = "date-picker", type = "text" } })
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                            </span>
+                <div class="advanced-features">
+                    <div class="toggle-button"><span>Advanced</span><span class="arrow glyphicon glyphicon-menu-right"></span><span class="arrow glyphicon glyphicon-menu-down" style="display:none;"></span></div>
+                    <div class="features-list" style="display:none;">
+                        <div class="form-group row">
+                            @Html.LabelFor(m => Model.ExpirationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="input-group date-picker-group">
+                                    @Html.EditorFor(m => Model.ExpirationDate, new { htmlAttributes = new { @class = "form-control", Id = "date-picker", type = "text" } })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-2" for="input-update-file">File Swap</label>
+                            <div class="col-md-10">
+                                <input id="input-update-file" type="file" name="File" />
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
-                <div class="form-group row">
-                    <label class="control-label col-md-2" for="input-update-file">File</label>
-                    <div class="col-md-10">
-                        <input id="input-update-file" type="file" name="File" />
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="control-label col-md-2">File Type</label>
-                    <div class="col-md-10">@Model.Type</div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="control-label col-md-2"></label>
-                    <div class="col-md-10">
-                        @if (Model.Type == SiteTriks.Data.Models.Helpers.FileType.Image || Model.Type == SiteTriks.Data.Models.Helpers.FileType.Svg)
-                        {
-                            <img src="/files/id/@Model.LinkId" class="display-image" />
-                        }
-                        else
-                        {
-                            <img src="/images/default-document-image.png" class="type-container-element" />
-
-                        }
-                    </div>
-                </div>
             </div>
+
             <div class="col-md-6  col-sm-12 col-xs-12 used-in-files">
-                <p>Used In Pages:</p>
-                <ul class="list-of-pages">
-                    @foreach (var pageTitle in @Model.IsUsedInPages)
+                @if (Model.LibraryAllowed == "image/*")
                 {
-                        <li>@pageTitle</li>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <p>Pages used on:</p>
+                            <ul class="list-of-pages">
+                                @foreach (var pageTitle in @Model.IsUsedInPages)
+                                {
+                                    <li>@pageTitle</li>
 
-                    }
-                </ul>
-                <p>Used In News Items:</p>
-                <ul class="list-of-pages">
-                    @foreach (var newsTitle in @Model.RefferedInNews)
-                {
-                        <li>@newsTitle</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <p>News items used by:</p>
+                            <ul class="list-of-pages">
+                                @foreach (var newsTitle in @Model.RefferedInNews)
+                                {
+                                    <li>@newsTitle</li>
 
-                    }
-                </ul>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                }
             </div>
-        </div>
 
+
+        </div>
     }
 </div>
 
 @section Scripts{
     <script type="text/javascript" src="~/js/validator.js"></script>
-    <script src="~/js/leaving-warning.js"></script>
     <script src="~/js/populate-url.js"></script>
     <script src="~/js/sitetriks/files.js"></script>
     <script src="~/js/notifier.js"></script>
+    <script src="~/js/edit-file-scripts.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        (function () {
+            WarningWindow.attach();
             initFilesEdit("@Model.ExpirationDate", "@Model.LibraryAllowed");
-        });
+        })();
     </script>
 }

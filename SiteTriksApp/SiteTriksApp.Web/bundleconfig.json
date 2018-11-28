@@ -11,7 +11,7 @@
   {
     "outputFileName": "wwwroot/css/frontend.min.css",
     "inputFiles": [
-      //"wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.css",
       "wwwroot/css/site.css",
       "wwwroot/lib/custom/slick/slick.css",
       "wwwroot/lib/custom/slick/slick-theme.css",
@@ -19,8 +19,12 @@
       "wwwroot/css/multi-level-dropdown.css",
       "wwwroot/css/front-end.css",
       "wwwroot/css/home-page.css",
+      "wwwroot/css/extensions.css",
       "wwwroot/lib/custom/jquery-ui/jquery-ui.css",
-      "wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css"    ]
+      "wwwroot/lib/custom/font-awesome/font-awesome.min.css",
+      "wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css",
+      "wwwroot/fonts/navigation-icons/css/Glyphter.css"
+    ]
   },
   {
     "outputFileName": "wwwroot/js/site.min.js",
@@ -38,28 +42,39 @@
   {
     "outputFileName": "scripts_babel/frontend.min.js",
     "inputFiles": [
+      "wwwroot/lib/_polyfills.js",
+      "wwwroot/lib/jquery/dist/jquery.min.js",
+      "wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
       "wwwroot/lib/custom/jquery-ui/jquery-ui-1.10.4.js",
       "wwwroot/lib/custom/cookieNoticeJS/dist/cookie.notice.js",
+      "wwwroot/lib/custom/tinymce/plugins/codesample/prism.js",
       "scripts_babel/data.js",
       "scripts_babel/loader.js",
-      "scripts_babel/gallery-2.0.js",
       "scripts_babel/validation.js",
       "scripts_babel/validator.js",
-      "scripts_babel/subscription.js",
       "scripts_babel/notifier.js",
       "scripts_babel/carousel.js",
       "scripts_babel/input-number-checker.js",
       "scripts_babel/meta-tags.js",
       "scripts_babel/all-news.js",
       "scripts_babel/documentation-widget.js",
-      "lib/custom/slick/slick.min.js",
+      "wwwroot/lib/custom/slick/slick.min.js",
       "scripts_babel/script-manager.js",
-      "scripts_babel/cookie-notification-configuration.js",
       "scripts_babel/dynamic-widgets.js",
       "scripts_babel/modules/module-builder.js",
       "scripts_babel/modules/scroll-control.js",
       "scripts_babel/toggle-bottom-menu.js",
-      "scripts_babel/licenses-widgets.js"
+      "scripts_babel/navigation-widget.js",
+
+      "scripts_babel/subscription.js",
+      "scripts_babel/cookie-notification-configuration.js",
+      "scripts_babel/licenses-widgets.js",
+      "scripts_babel/modules/utils/.js",
+
+      "wwwroot/lib/custom/code-prettify/src/run_prettify.js",
+      "scripts_babel/frontend-layout-scripts.js",
+      "scripts_babel/home-page.js",
+      "scripts_babel/forum-widget.js"
     ],
     // Optionally specify minification options
     "minify": {

@@ -1,69 +1,74 @@
 ﻿var Data = (function () {
+    //let makeRequest = typeof fetch !== 'undefined' && isFunction(fetch) ? makeFetchRequest : makeAjaxRequest; // fallback to ajax if older browser
+    let makeRequest = makeAjaxRequest;
+
+    function makeAjaxRequest({ url, method, body, headers, isForm }) {
+        return new Promise((resolve, reject) => {
+            let params = {
+                url,
+                method,
+                data: body,
+                success: resolve,
+                error: reject
+            };
+            if (isForm) {
+                params.contentType = false; // tell jQuery not to process the data
+                params.processData = false; // tell jQuery not to set contentType
+            } else {
+                params.headers = headers;
+            }
+
+            $.ajax(params);
+        });
+    }
+
+    function makeFetchRequest({ url, method, body, headers, isForm }) {
+        headers = headers || {};
+        if (isForm) {
+            delete headers['Content-Type'];
+        } else {
+            headers['Content-Type'] = 'application/json';
+        }
+
+        return fetch(url, {
+            method,
+            body,
+            headers
+        }).then(res => {
+            if (res.status >= 200 && res.status < 300) {
+                if (res.headers.get('Content-Type') && res.headers.get('Content-Type').indexOf('application/json') > -1) {
+                    return res.json();
+                }
+
+                return res.text();
+            } else {
+                return Promise.reject(res.text());
+            }
+        });
+    }
 
     function getJson({ url, disableCache }) {
-        var headers = {};
-        
-        if (disableCache == true) {
+        let headers = {};
+        if (disableCache === true) {
             headers = {
                 'Pragma': 'no-cache',
                 'Cache-Control': 'no-cache'
-            }
+            };
         }
 
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: url,
-                headers: headers,
-                method: 'GET',
-                contentType: 'application/json',
-                success: resolve,
-                error: reject
-            });
-        });
-    }
-
-    function post({ url, data, contentType }) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: url,
-                method: 'POST',
-                contentType: contentType,
-                data: data,
-                success: resolve,
-                error: reject
-            });
-        });
+        return makeRequest({ url, method: 'GET', headers });
     }
 
     function postJson({ url, data }) {
-        return post({ url, data: JSON.stringify(data), contentType: 'application/json' })
+        return makeRequest({ url, method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
     }
 
     function postForm({ url, formData }) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: formData,
-                processData: false, // tell jQuery not to process the data
-                contentType: false, // tell jQuery not to set contentType
-                success: resolve,
-                error: reject
-            });
-        });
+        return makeRequest({ url, method: 'POST', body: formData, isForm: true });
     }
 
     function deleteJson({ url, data }) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: url,
-                method: 'DELETE',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: resolve,
-                error: reject
-            });
-        });
+        return makeRequest({ url, method: 'DELETE', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json'  } });
     }
 
     function defaultError() {
@@ -74,18 +79,21 @@
 
     return {
         getJson,
-        post,
         postJson,
         postForm,
         deleteJson,
         defaultError
+    };
+
+    function isFunction(func) {
+        return func && {}.toString.call(func) === '[object Function]';
     }
 }());
 
 //=======================================================================================
 // TODO: move
 function escapeRegExp(str) {
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
 }
 
 function replaceAll(str, find, replace) {

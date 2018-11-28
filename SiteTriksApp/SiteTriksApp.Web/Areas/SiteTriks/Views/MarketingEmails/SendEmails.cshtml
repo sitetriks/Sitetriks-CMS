@@ -65,14 +65,14 @@
 @section Scripts {
     <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
     <script src="~/js/data.js"></script>
-    <script src="~/js/leaving-warning.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script src="~/js/text-editor.js"></script>
     <script src="~/js/sitetriks/marketing-emails.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        (function () {
+            WarningWindow.attach();
             textEditor.init('#content-area', 500, 300);
-        });
+        })();
 
         sendEmails();
     </script>

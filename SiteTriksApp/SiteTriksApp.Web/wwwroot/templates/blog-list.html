@@ -1,0 +1,8 @@
+﻿{{#each items}}
+<div class="blog-item">
+    <h2 class="blog-post-header"><strong>{{this.title}}</strong></h2>
+    <div class="blog-summary">{{{this.summary}}}</div>
+    <div class="blog-info"><span>Written by {{this.creator}}</span><span>Published: {{this.dateCreated}}</span></div>
+    <a class="btn blog-details fancy-btn" data-id="{{this.id}}">Read More ...</a>
+</div>
+{{/each}}

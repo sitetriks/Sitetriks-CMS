@@ -17,11 +17,6 @@
     src: url("../fonts/Dash_Digital-7.ttf")
 }
 
-@font-face {
-    font-family: BlairMd;
-    src: url("../fonts/Blaimim.ttf")
-}
-
 .header-wrapper {
 }
 
@@ -44,14 +39,14 @@
     font-size: 1.1em;
     color: #008CFF;
     text-transform: uppercase;
-    font-family: BlairMd;
+    font-family: Montserrat;
     font-weight: bolder;
     display: inline-block;
 }
 
-    .logo-container img {
-        width: 100%;
-    }
+.logo-container img {
+    width: 100%;
+}
 
 .navigation-widget-wrapper .desktop-account-icons {
     width: 100px;
@@ -76,17 +71,6 @@
         width: auto;
         background-repeat: no-repeat;
     }
-
-    .navigation-widget-wrapper .desktop-account-icons .logout-icon input {
-        display: block;
-        background-image: url("../../images/homepage/Log_out.svg");
-        margin-top: 30px;
-        height: 40px;
-        width: 45px;
-        background-repeat: no-repeat;
-        border: none;
-        background-color: transparent;
-    }
 /*****************************************/
 .nav-container {
     position: relative;
@@ -101,7 +85,7 @@
 }
 
     .multi-level-navigation > ul {
-        display: none;
+        /*display: none;*/
         list-style: none;
         padding: 0 2%;
         margin: 0;
@@ -235,17 +219,16 @@
     }
 
 
-    @media (max-width: 768px) {
-        .navigation-widget-wrapper .desktop-account-icons {
-            display: none;
-        }
-
-        .navigation-widget-wrapper .logo-container {
-           display: none;
-        }
-
-        .multi-level-navigation > ul {
-            display: block;
-        }
-
+@media (max-width: 768px) {
+    .navigation-widget-wrapper .desktop-account-icons {
+        display: none;
     }
+
+    .navigation-widget-wrapper .logo-container {
+        display: none;
+    }
+
+    .multi-level-navigation > ul {
+        display: block;
+    }
+}

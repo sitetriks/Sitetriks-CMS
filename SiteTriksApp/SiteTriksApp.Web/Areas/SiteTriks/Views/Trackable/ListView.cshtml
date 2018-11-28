@@ -1,0 +1,43 @@
+﻿@{
+	ViewBag.Title = "Trackable items";
+}
+
+<div class="fixed-top-2">
+	@await Html.PartialAsync("SecondNavHeader")
+</div>
+<div class="backend-wrapper">
+	<div class="grid"></div>
+</div>
+
+@section scripts{
+	<script type="text/javascript">
+		var grid = Grid();
+		var data = { link: "/sitetriks/trackable/grid", serverSide: false }
+		var columns = [
+			{
+				name: 'typeName',
+				title: 'Type',
+				type: 'string',
+				filter: true,
+				sort: true,
+				size: 5,
+				headerTemplate: '<strong>#item#</strong>'
+			},
+			{
+				name: 'pageName',
+				title: 'Page',
+				type: 'string',
+				filter: true,
+				sort: true,
+				size: 2,
+				headerTemplate: '<strong>#item#</strong>'
+			}
+		];
+
+		let buttons = [];
+
+		var config = grid.build(columns, buttons, grid.defaultPager, data);
+
+		let obj = grid.init('.grid', config);
+	</script>
+}

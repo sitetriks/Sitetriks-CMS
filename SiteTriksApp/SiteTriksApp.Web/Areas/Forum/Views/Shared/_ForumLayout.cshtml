@@ -13,11 +13,10 @@
     <div>
         @RenderBody()
     </div>
-    <footer class="frontend-footer">
-        <p class="ta-center"> SiteTriks CMS</p>
-    </footer>
+    <footer class="frontend-footer"></footer>
 </div>
 
 @section Scripts {
+    <script src="~/js/modules/warning-window.js"></script>
     @RenderSection("Scripts", required: false)
 }

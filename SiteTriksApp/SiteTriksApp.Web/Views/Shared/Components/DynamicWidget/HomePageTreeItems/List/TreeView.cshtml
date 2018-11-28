@@ -1,6 +1,6 @@
 ﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
 
-@{ var items = Model.Entries.OrderBy(e => e.Position).ToList();}
+@{ var items = Model.Entries.OrderBy(e => e["Position"]).ToList();}
 
 <link href="~/Content/custom/home-page.css" rel="stylesheet" />
 <style>

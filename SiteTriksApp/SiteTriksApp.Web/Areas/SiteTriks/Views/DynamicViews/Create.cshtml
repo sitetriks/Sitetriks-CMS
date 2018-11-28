@@ -4,10 +4,6 @@
     ViewBag.Title = "Create Dynamic View";
 }
 
-@section Styles {
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-}
-
 <div class="backend-wrapper">
     @using (Html.BeginForm("Create", "DynamicViews", FormMethod.Post, new { id = "create-dynamic-view-form", encoding = "multipart/form-data", enctype = "multipart/form-data" }))
     {
@@ -16,7 +12,7 @@
             <p>@ViewBag.Title</p>
 
             <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to List</a>
-            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Dynamic View</button>
+            <button type="submit" id="submit" class="btn-nav-2">Save & Exit</button>
         </div>
 
         <strong><span class="text-danger" id="notifier">@ViewBag.ErrorMessage</span></strong>
@@ -37,7 +33,7 @@
                     <select asp-for="WidgetName">
                         @foreach (var widgetName in Model.WidgetNames)
                         {
-                            <option value="@widgetName">@widgetName</option>
+                            <option value="@widgetName.Name">@widgetName.Name</option>
                         }
                     </select>
                     <br />
@@ -60,11 +56,7 @@
     }
 </div>
 
-<br />
-
 @section Scripts{
-    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script src="~/lib/custom/ace/ace.js"></script>
     <script src="~/lib/custom/ace/ext-language_tools.js"></script>
     <script src="~/js/dynamic-views.js"></script>
@@ -73,5 +65,6 @@
     <script>
         RazorViewsEditor.init("", "#create-dynamic-view-form", "#Content");
         DynamicViews.setupWidgetNameDropdown('select[name="WidgetName"]');
+        WarningWindow.attach();
     </script>
 }

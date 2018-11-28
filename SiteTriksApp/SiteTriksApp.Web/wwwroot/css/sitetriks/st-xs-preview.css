@@ -46,6 +46,10 @@
     width: 8.33333333%;
 }
 
+.st-col-xs-0 {
+    display: none;
+}
+
 .st-col-xs-pull-12 {
     right: 100%;
 }

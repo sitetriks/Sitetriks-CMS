@@ -1,30 +1,8 @@
-﻿function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
-    function loadjscssfile(filename, filetype) {
-        if (filetype == "js") { //if filename is a external JavaScript file
-            var fileref = document.createElement('script')
-            fileref.setAttribute("type", "text/javascript")
-            fileref.setAttribute("src", filename)
-        }
-        else if (filetype == "css") { //if filename is an external CSS file
-            var fileref = document.createElement("link")
-            fileref.setAttribute("rel", "stylesheet")
-            fileref.setAttribute("type", "text/css")
-            fileref.setAttribute("href", filename)
-        }
-        if (typeof fileref != "undefined")
-            document.getElementsByTagName("head")[0].appendChild(fileref)
-    }
+﻿/* globals Data, Utils, Loader, ModuleBuilder, Notifier, WidgetsDraggable */
 
-    function removejscssfile(filename, filetype) {
-        var targetelement = (filetype == "js") ? "script" : (filetype == "css") ? "link" : "none" //determine element type to create nodelist from
-        var targetattr = (filetype == "js") ? "src" : (filetype == "css") ? "href" : "none" //determine corresponding attribute to test for
-        var allsuspects = document.getElementsByTagName(targetelement)
-        for (var i = allsuspects.length; i >= 0; i--) { //search backwards within nodelist for matching elements to remove
-            if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) != null && allsuspects[i].getAttribute(targetattr).indexOf(filename) != -1)
-                allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
-        }
-    }
-
+function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
+    // Layout handling
+    Utils.loadjscssfile(`/css/sitetriks/st-lg-preview.css`, 'css');
     $('.resolution').on('click', function (ev) {
         let active = $('.selected-option').attr('data-type');
         let $target = $(this);
@@ -39,12 +17,12 @@
                 $el.removeClass('selected');
                 let type = $el.attr('data-type');
 
-                removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
+                Utils.removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
             });
 
             $target.addClass('selected');
             let type = $target.attr('data-type');
-            loadjscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css');
+            Utils.loadjscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css');
         }
     });
 
@@ -62,7 +40,9 @@
         $('.resolution').each(function (_, element) {
             element.classList.add('selected');
         });
-        $('#preview-layout').data('layout-control').resolutions = ['xs', 'sm', 'md', 'lg'];
+
+        WarningWindow.force();
+        ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT).resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 
     $('.show-content').on('click', function (ev) {
@@ -75,117 +55,77 @@
         $(this).parent().addClass('selected-option');
         $('.show-layout').parent().removeClass('selected-option');
 
-        //save layout on switching back to content
-        $('#btn-save-layout').trigger('click');
-
         $('.resolution.selected').each(function (_, element) {
             let $el = $(element);
             $el.removeClass('selected');
             let type = $el.attr('data-type');
 
-            removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
+            Utils.removejscssfile(`/css/sitetriks/st-${type}-preview.css`, 'css')
         });
 
         $('.resolution[data-type="lg"]').trigger('click');
     });
 
-    let layoutWidget = pageContent.find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
+    let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
     if (layoutWidget) {
         let layout = JSON.parse(layoutWidget.element);
 
         ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout' });
 
-        $('#btn-save-layout').on('click', function (ev) {
-            let l = $('#preview-layout').data('layout-control');
-            layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: (r.tag || 'div'), cssClass: r.cssClass } });
-            //$('.show-content').trigger('click');
-
-            console.log(l.deletedPlaceholders);
-            for (let i = 0; i < l.deletedPlaceholders.length; i += 1) {
-                removeWidgetForPlaceholder(l.deletedPlaceholders[i]);
-            }
-
-            saveEditWidgetServer(layoutWidget.type, JSON.stringify(layout), layoutWidget.id, layoutWidget.placeholder, layoutWidget.cssClass, layoutWidget.templateName, layoutWidget.allowedRoles, layoutWidget.allowedGroups);
-        });
+        $('.show-content').on('click', saveLayout.bind($('.show-content'), true));
     } else {
         console.error('Layout was not found!');
     }
 
-    function removeWidgetForPlaceholder(placeholder) {
-        let widgets = pageContent.filter(c => c.placeholder === placeholder);
+    function saveLayout(sendToServer) {
+        let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
+        let layout = JSON.parse(layoutWidget.element);
+        let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
+        layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
 
-        for (let i = 0; i < widgets.length; i += 1) {
-            let index = pageContent.findIndex(c => c.id === widgets[i].id);
+        ModuleBuilder.renderLayout(layout.layoutRows, $(`div.preview-placeholder[data-identifier="${layoutWidget.id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
+        WidgetsDraggable.init(w);
 
-            if (index !== -1) {
-                pageContent.splice(index, 1);
-                if (widgets[i].type === 'layoutBuilder') {
-                    let layout = JSON.parse(widgets[i].element);
-                    for (let j = 0; j < layout.length; j += 1) {
-                        for (let k = 0; k < layout[j].columns.length; k += 1) {
-                            removeWidget(layout[j].columns[k].properties.placeholder);
-                        }
-                    }
-                }
-            }
+        layoutWidget.element = JSON.stringify(layout);
+        if (layoutWidget.IsInherited) {
+            layoutWidget.IsModifiedOnChild = true;
         }
     }
 
-    let $window = $(window);
-    let itemTop = 0;
-    $window.on('scroll resize', stickyWidgets);
-    $window.trigger('scroll');
+    document.addEventListener('checkForContent', function (e) {
+        let placeholders = e.detail.placeholders;
+        console.log('checking for updateds');
 
-    function stickyWidgets() {
-        let scrollPosition = $window.scrollTop();
-        let $widgetsList = $('.widgets-list');
-
-        if (!itemTop) {
-            itemTop = $widgetsList.offset().top;
-        }
-
-        if ($widgetsList && $widgetsList.length === 1) {
-            if (scrollPosition > (itemTop - 100)) {
-                $widgetsList.addClass('scrolling');
-            } else {
-                $widgetsList.removeClass('scrolling');
+        for (let i = 0; i < placeholders.length; i += 1) {
+            if (typeof w.getPageContent() !== 'undefined' && w.getPageContent().find(e => e.placeholder == placeholders[i])) {
+                let $modal = $('#layout-delete-confirmation');
+                $modal.modal('show');
+                $modal.attr('data-caller-id', e.target.id)
+                $modal.attr('data-type', e.detail.type);
+                $modal.attr("data-rowindex", e.detail.rowIndex);
+                return false;
             }
         }
-    }
 
-    $(document).on("updatePreview", {
-    }, function () {
-        updatePreview(url);
+        e.target.dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: e.detail.type, rowIndex: e.detail.rowIndex } }));
     });
 
-    $(document).trigger("updatePreview");
+    $("#delete-layout-content").on("click", function () {
+        let $modal = $('#layout-delete-confirmation');
 
-    $(document).on('focusin', function (e) {
-        if ($(e.target).closest(".mce-window").length) {
-            e.stopImmediatePropagation();
-        }
+        let callerId = $modal.attr('data-caller-id')
+        let type = $modal.attr('data-type');
+        let rowIndex = $modal.attr("data-rowindex");
+
+        document.getElementById(callerId).dispatchEvent(new CustomEvent('allowedForDeletion', { bubbles: true, detail: { type: type, rowIndex: rowIndex } }));
     });
 
-    function loadVersions(lang) {
-        $('#versions')
-            .find('option')
-            .remove();
+    initStickyWidgets();
 
-        return Data.getJson({ url: '/sitetriks/templates/getpageversions?url=' + url + '&lang=' + lang, disableCache: true }).then(function (res) {
-            if (res.success) {
-                res.versions.forEach(function (element) {
-                    let $v = $(`<option value="${element}">${element}</option>`)
-                    if (element === +currentVersion) {
-                        $v.attr('selected', 'selected');
-                    }
-
-                    $v.appendTo('#versions');
-                })
-            }
-        }, Data.defaultError);
-    }
-
-    loadVersions(currentCulture);
+    $(document).on('updatePreview', {}, updatePreview.bind(document, url));
+    updatePreview(url);
+    let versions = new revisionControl(url, 'templates', $('#languages'), $('#versions'), $('#version-control'));
+    versions.loadVersions(currentCulture, currentVersion);
 
     Data.getJson({ url: '/sitetriks/templates/getlanguages', disableCache: true }).then(function (res) {
         if (res.success) {
@@ -204,7 +144,7 @@
         updatePreview(url);
         let lang = $('#languages').val();
         currentLanguage = lang;
-        loadVersions(lang);
+        versions.loadVersions(lang);
     });
 
     function updatePreview(url) {
@@ -218,7 +158,7 @@
             $('#preview-container').html(res.view);
 
             $(document).trigger("initCarousel");
-            pageContent = res.content;
+            w.setPageContent(res.content);
             $('#alerts').html('');
 
             if (res.message) {
@@ -229,12 +169,8 @@
 
             $('#displayed-version').text(res.version);
 
-            WidgetsDraggable.init(w.makeDrop);
-        }, function (data, textStatus, XMLHttpRequest) {
-            console.log(data);
-            console.log(textStatus);
-            console.log(XMLHttpRequest);
-        });
+            WidgetsDraggable.init(w);
+        }, Data.defaultError);
     }
 
     $('#preview-container').on('click', '.lock-widget', function (ev) {
@@ -242,12 +178,8 @@
         var status = $caller.prop('checked');
         var id = $caller.attr('data-id');
 
-        let item = pageContent.find(c => c.id === id);
+        let item = w.getPageContent().find(c => c.id === id);
         item.isLocked = !!status;
-    });
-
-    $(document).on('keyup', '#video-input', function () {
-        validateVideo();
     });
 
     $('#btn-publish').on('click', function (evt) {
@@ -307,175 +239,63 @@
         });
     });
 
-    $('#warning-modal-publish').on('click', function (evt) {
-        publishTemplate();
-    });
+    $('#warning-modal-publish').on('click', publishTemplate);
 
     function publishTemplate() {
+        saveLayout();
         let body = {
             url: url,
-            content: pageContent,
+            content: w.getPageContent(),
             lang: currentLanguage
-        }
+        };
 
         Data.postJson({ url: '/sitetriks/Templates/PublishPageWithContent', data: body }).then(function (res) {
             if (res.success) {
+                window.onbeforeunload = null;
                 location.replace('/sitetriks/templates');
             }
         }, Data.defaultError);
     }
 
     $('#btn-save-draft').on('click', function (evt) {
-        saveDraft(function (res) {
+        saveDraft().then(function (res) {
             if (res.success) {
                 location.replace('/sitetriks/templates');
             }
         });
     });
 
-    function saveDraft(callback) {
+    function saveDraft() {
         let body = {
             url: url,
-            content: pageContent,
+            content: w.getPageContent(),
             lang: currentLanguage
-        }
+        };
 
-        Data.postJson({ url: '/sitetriks/Templates/SaveDraft', data: body }).then(function (res) {
-            callback(res);
-        }, Data.defaultError);
+        return Data.postJson({ url: '/sitetriks/Templates/SaveDraft', data: body });
     }
 
     $('#btn-preview-page').on('click', function (evt) {
-        Loader.show('#fff')
-        saveDraft(function (res) {
-            if (res.success) {
-                let body = {
-                    content: pageContent,
-                    template: currentTemplate,
-                    language: currentLanguage
-                }
-
-                Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
-                    createPreveiwWindow(res);
-
-                    Loader.hide();
-                }, Data.defaultError);
-            }
-        });
-    });
-
-    $('#btn-preview-version').on('click', function (evt) {
+        Loader.show('#fff');
+        saveLayout();
         let body = {
-            version: $('#versions').val(),
-            url: url
-        }
-
-        Data.postJson({ url: '/sitetriks/Display/PreviewVersion', data: body }).then(function (res) {
-            createPreveiwWindow(res);
-        }, Data.defaultError);
-    });
-
-    $('#btn-revert-version').on('click', function (evt) {
-        let body = {
-            version: $('#versions').val(),
-            url: url
-        }
-
-        Data.postJson({ url: '/sitetriks/templates/RevertVersion', data: body }).then(function (res) {
-            location.reload(true);
-        }, Data.defaultError);
-    });
-
-    $('#btn-reset').on('click', function (evt) {
-        $(document).trigger("updatePreview");
-    });
-
-    $('.btn-revision').on('click', function (ev) {
-        let $span = $(this).children('span');
-        if ($span.hasClass('glyphicon-menu-right')) {
-            $span.removeClass('glyphicon-menu-right');
-            $span.addClass('glyphicon-menu-left');
-            $('#version-control').css('display', 'inline-block');
-        } else {
-            $span.removeClass('glyphicon-menu-left');
-            $span.addClass('glyphicon-menu-right');
-            $('#version-control').css('display', 'none');
-        }
-    });
-
-    function saveEditWidgetServer(type, element, id, placeholder, cssClass, templateName, allowedRoles, allowedGroups) {
-        var item = pageContent.find(function (e) {
-            return e.id === id && e.type === type;
-        });
-        item.element = element;
-        item.cssClass = cssClass;
-        item.allowedRoles = allowedRoles;
-        item.allowedGroups = allowedGroups;
-        item.templateName = templateName;
-
-        let order = item.order;
-
-        if (item.IsInherited) {
-            item.IsModifiedOnChild = true;
-        }
-
-        var $old = $('.preview-placeholder[data-identifier="' + id + '"]');
-
-        var body = {
-            content: {
-                type: type,
-                id: id,
-                element: element,
-                placeholder: placeholder,
-                cssClass: cssClass,
-                templateName: templateName,
-                allowedRoles: allowedRoles,
-                allowedGroups: allowedGroups,
-                order: order,
-                isLocked: item.isLocked,
-                isStatic: item.isStatic
-            },
-            preview: 'preview'
+            content: w.getPageContent(),
+            template: currentTemplate,
+            language: currentLanguage
         };
 
-        Loader.show(true);
+        return Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
+            Utils.openInNewTab(res);
 
-        saveDraft(function (res) {
-            if (res.success) {
-                Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body }).then(function (data) {
+            Loader.hide();
+        }, Data.defaultError);
+    });
 
-                    $(document).trigger('removeCarousel');
+    $('#btn-reset').on('click', updatePreview.bind(document, url));
 
-                    $old.after(data);
-                    $old.remove();
-
-                    if (type === 'layoutBuilder') {
-                        console.log('init layout')
-                        WidgetsDraggable.init(w.makeDrop);
-                    }
-
-                    Loader.hide();
-
-                    loadVersions(currentLanguage).then(function (res) {
-                        $('#versions').find('option[selected="selected"]').removeAttr('selected');
-                        $('#versions').find('option').first().attr('selected', 'selected');
-                    });
-                });
-            }
-        });
-    }
-
-    function createPreveiwWindow(html) {
-        let newWindow = window.open("", "Preview");
-        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-            //POPUP BLOCKED
-            Notifier.createAlert({ containerId: '#alerts', message: 'Browser does not allow opening popup windows!', status: 'danger' });
-        } else {
-            newWindow.document.write(html);
-            newWindow.document.close();
-            newWindow.focus();
-        }
-    }
+    $('.btn-revision').on('click', versions.toggle);
+    $('#btn-preview-version').on('click', versions.previewVersion);
+    $('#btn-revert-version').on('click', versions.revertVersion);
 }
 
 function createTemplate(checkValidUrlLink) {
@@ -679,14 +499,12 @@ function editTemplate(checkValidUrlLink) {
 
         if (flag) {
             evt.preventDefault();
-            window.onbeforeunload = onUnload;
             $notfier.text('Titles required and must be atleast 3 characters long!');
             return false;
         }
 
         if (url.length < 3) {
             evt.preventDefault();
-            window.onbeforeunload = onUnload;
             $notfier.text('Please provide valid information in the required fields!');
             return false;
         }
@@ -718,7 +536,6 @@ function editTemplate(checkValidUrlLink) {
                 } else {
                     $urlField.css("border", "1px solid red");
                     $urlValidation.text('Url is invalid or already in use!');
-                    window.onbeforeunload = onUnload;
                     Loader.hide();
                 }
             }
@@ -732,7 +549,6 @@ function editTemplate(checkValidUrlLink) {
                         if (res.success) {
                             window.location.replace('/sitetriks/templates');
                         } else {
-                            window.onbeforeunload = onUnload;
                             $notfier.text(res.message);
                             Loader.hide();
                         }

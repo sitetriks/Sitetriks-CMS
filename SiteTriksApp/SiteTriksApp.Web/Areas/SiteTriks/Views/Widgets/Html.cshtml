@@ -1,15 +1,14 @@
 ﻿<div id="html-widget-container" class="widget-container">
-    <div class="row">
-        <div class="col-md-9">
-            @await Html.PartialAsync("WidgetsForms")
-        </div>
+    <div class="html-widget-notifier"></div>
+    <div id="html-widget-holder" class="row" style="margin:15px;"></div>
+    <div class="html-widget-config row" style="padding: 10px 0;">
+        <select id="html-options-list" class="form-control inline-block" style="width: 11%; margin: 0 30px;">
+            <option selected value="new">NEW</option>
+            <option value="shared">SHARED</option>
+        </select>
     </div>
-    <select id="html-options-list">
-        <option selected value="new">NEW</option>
-        <option value="shared">SHARED</option>
-    </select>
-    <div id="html-widget-holder">
-
+    <div class="col-md-5">
+        <hr />
+        @await Html.PartialAsync("WidgetsForms")
     </div>
-    <br />
 </div>

@@ -1,0 +1,74 @@
+﻿@model SiteTriks.ForumModule.Models.ThemeViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="fixed-top-2">
+    <a href="/forum/categories/category/@Model.CategoryId" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Back to Themes</a>
+    <a href="/forum/posts/create?id=@Model.Id" class="btn-nav-2">Create Post</a>
+</div>
+
+<div class="backend-wrapper">
+    <div class="grid posts-grid"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/modules/utils.js"></script>
+    <script type="text/javascript" src="~/js/modules/pager.js"></script>
+    <script type="text/javascript" src="~/js/modules/data-source.js"></script>
+    <script type="text/javascript" src="~/js/modules/grid.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var columns = [{
+                name: 'id',
+                title: '',
+                type: 'checkbox',
+                size: 1
+            },
+            {
+                name: 'title',
+                title: 'Title',
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 2,
+                extraFields: ['id'],
+                headerTemplate: '<b>#item#</b>', // #item# is the placeholder for the content
+                contentTemplate: '<a href="/forum/posts/post?id=#item0#">#item#</a>'
+            },
+            {
+                name: 'content',
+                title: 'Content',
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 2,
+                headerTemplate: '<b>#item#</b>'
+            },
+            {
+                name: 'id',
+                title: 'Action',
+                type: 'string',
+                headerTemplate: '<b>#item#</b>',
+                contentTemplate: '<a class="btn" href="/forum/posts/edit/#item#">Edit</a>'
+            }];
+
+            var buttons = [{
+                title: 'Delete',
+                postUrl: '/forum/categories/delete',
+                type: 'danger'
+            }];
+
+            var postsGrid = new _Grid({
+                wrapperId: '.posts-grid',
+                type: 'table',
+                fields: columns,
+                sourceConfig: { type: 'client', url: '/forum/posts/grid?themeId=@Model.Id' },
+                customActions: buttons
+            });
+
+            postsGrid.load(true);
+        })();
+    </script>
+}

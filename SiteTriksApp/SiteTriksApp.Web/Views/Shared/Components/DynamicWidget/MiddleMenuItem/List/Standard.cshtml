@@ -1,9 +1,7 @@
 ﻿@model SiteTriks.Dynamic.Models.DynamicTypeMainViewModel
 
 @{
-    var entries = Model.Entries.OrderBy(e => e.Position).ToList();
-    // var entries = Model.Entries.ToList();
-
+    var entries = Model.Entries.OrderBy(e => e["Position"]).ToList();
 }
 
 
@@ -60,20 +58,19 @@
                         @*@{Html.RenderPartial("MiddleMenuTemplate");}*@
                         <div class="tree-item">
                             @*item image*@
-                            <div id="@Model.ClassHelper.GetPropertyValue(entries[i], "CustomId")" class="icon">
-                                <img src="~/images/icons-svg/@Model.ClassHelper.GetPropertyValue(entries[i], "IconPath")" alt="menu-icon">
+                            <div id="@entries[i]["CustomId"])" class="icon">
+                                <img src="~/images/icons-svg/@entries[i]["IconPath"]" alt="menu-icon">
                             </div>
                             <div class="item-header">
                                 <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="arrow-down item-arrow" />
                                 <img src="~/images/mobile/side arrow dark.svg" alt="shrank" class="side-arrow item-arrow" />
                                 @*Title*@
                                 @*Envirement sync*@
-                                <div>@Model.ClassHelper.GetPropertyValue(entries[i], "Title")</div>
+                                <div>@entries[i]["Title"]</div>
                             </div>
                             @*// item contents*@
                             <div class="item-body @if(flagLastText) {<text> hidden-section-last-body </text> }" @if (flagLastText) {<text> style="display: none" </text> }>
-                                @*@Model.ClassHelper.GetPropertyValue(entries[i], "Content")*@
-                                @Html.Raw(System.Net.WebUtility.HtmlDecode(Model.ClassHelper.GetPropertyValue(entries[i], "Content")))
+                                @Html.Raw(System.Net.WebUtility.HtmlDecode(entries[i]["Content"]))
                             </div>
                         </div>
                     </div>
@@ -97,19 +94,18 @@
                     {
                         <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 item item-right">
                             <div class="tree-item">
-                                <div id="@Model.ClassHelper.GetPropertyValue(entries[i+1], "CustomId")" class="icon">
-                                    <img src="~/images/icons-svg/@Model.ClassHelper.GetPropertyValue(entries[i+1], "IconPath")" alt="menu-icon">
+                                <div id="@entries[i+1]["CustomId"]" class="icon">
+                                    <img src="~/images/icons-svg/@entries[i+1]["IconPath"]" alt="menu-icon">
                                 </div>
                                 <div class="item-header">
                                     <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="arrow-down item-arrow" />
                                     <img src="~/images/mobile/side arrow dark.svg" alt="shrank" class="side-arrow item-arrow" />
                                     @*Title*@
-                                    <div>@Model.ClassHelper.GetPropertyValue(entries[i + 1], "Title")</div>
+                                    <div>@entries[i + 1]["Title"]</div>
                                 </div>
                                 @*// item contents*@
                                 <div class="item-body">
-                                    @*@Model.ClassHelper.GetPropertyValue(entries[i + 1], "Content")*@
-                                    @Html.Raw(System.Net.WebUtility.HtmlDecode(Model.ClassHelper.GetPropertyValue(entries[i + 1], "Content")))
+                                    @Html.Raw(System.Net.WebUtility.HtmlDecode(entries[i+ 1]["Content"]))
                                 </div>
                             </div>
                         </div>

@@ -2,29 +2,30 @@
     return {
         setupWidgetNameDropdown: function (selector) {
             $(selector).change(function () {
-                let $location = $("#location");
-                let $info = $("#custom-location-info");
+                let value = $(this).val();
+                let $location = $('#location');
+                let $info = $('#custom-location-info');
 
-                if ($(this).val() == "none") {
-                    $location.val("");
-                    $info.text("");
-                    $info.attr("hidden", "hidden");
-                    $location.removeAttr("hidden");
-                }
-                else if ($(this).val().indexOf("dynamic/") != -1) {
-                    let dynamicClassName = $(this).val().replace("dynamic/", "");
-                    $location.removeAttr("hidden");
-                    $info.removeAttr("hidden");
+                if (value.indexOf('dynamic/') >= 0) {
 
-                    $location.val("Views/Shared/Components/DynamicWidget/" + dynamicClassName + "/{ViewType}/{ViewName}.cshtml");
-                    $("#custom-location-info").text("Change {ViewType} and {ViewName} placeholders!")
+                    let dynamicClassName = value.replace('dynamic/', '');
+                    $location.show();
+                    $info.show();
+
+                    $location.val('/Views/Shared/Components/DynamicWidget/' + dynamicClassName + '/{ViewType}/{ViewName}.cshtml');
+                    $info.text('Change {ViewType} and {ViewName} placeholders!');
                 }
                 else {
-                    $location.attr("hidden", "hidden");
-                    $info.attr("hidden", "hidden");
 
-                    $location.val("");
-                    $info.val("");
+                    if (value === 'none') {
+                        $location.show();
+                    } else {
+                        $location.hide();
+                    }
+
+                    $location.val('');
+                    $info.hide();
+                    $info.val('');
                 }
             });
         }

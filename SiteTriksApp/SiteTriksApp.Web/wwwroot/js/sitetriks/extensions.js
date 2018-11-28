@@ -1,4 +1,8 @@
-﻿function initExtensions() {
+﻿/* globals Data, Loader, Notifier */
+
+function initExtensions() {
+    let $dropArea = $('#drop-area');
+
     $('body').on('change', '.activate-module', function (ev) {
         let isActive = this.checked;
         let name = $(this).attr('data-name');
@@ -11,7 +15,7 @@
                     return;
                 }
 
-                handleAppRestart({ url: '/sitetriks/extensions', timeout: 2000 });
+                handleAppRestart({ url: '/sitetriks/extensions' });
 
                 //window.location.reload(true);
             } else {
@@ -24,7 +28,7 @@
 
     $('.drop-info-btn').on('click', function (ev) {
         $('#input-files').trigger('click');
-    })
+    });
 
     $('#input-files').on('change', function (ev) {
         upload(this.files);
@@ -53,9 +57,9 @@
 
             Loader.hide();
         }, Data.defaultError);
-    };
+    }
 
-    $('#drop-area').on(
+    $dropArea.on(
         'dragover',
         function (e) {
             e.preventDefault();
@@ -63,7 +67,7 @@
         }
     );
 
-    $('#drop-area').on(
+    $dropArea.on(
         'dragenter',
         function (e) {
             $(this).addClass('drop-highlight');
@@ -72,7 +76,7 @@
         }
     );
 
-    $('#drop-area').on(
+    $dropArea.on(
         'dragleave',
         function (e) {
             $(this).removeClass('drop-highlight');
@@ -81,7 +85,7 @@
         }
     );
 
-    $('#drop-area').on(
+    $dropArea.on(
         'drop',
         function (e) {
             if (e.originalEvent.dataTransfer) {

@@ -87,7 +87,7 @@
                 @await Html.PartialAsync("SecondNavHeader")
 
                 <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to List</a>
-                <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create End Point</button>
+                <button type="submit" id="submit" class="btn-nav-2">Save & Exit</button>
             </div>
         </form>
     </div>
@@ -97,8 +97,9 @@
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/endpoints.js"></script>
     <script>
-        $(document).ready(function (ev) {
+        (function (ev) {
+            WarningWindow.attach();
             initEndpointCreateEdit();
-        })
+        })();
     </script>
 }

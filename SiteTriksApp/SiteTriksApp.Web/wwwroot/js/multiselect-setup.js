@@ -1,6 +1,10 @@
 ﻿var Multiselect = function () {
     function setup(id, onChangeCallback) {
-        $('#' + id).multiselect({
+        setupElement($('#' + id), onChangeCallback);
+    }
+
+    function setupElement($element, callback) {
+        $element.multiselect({
             multiple: true,
             height: '105px',
             header: '',
@@ -16,7 +20,7 @@
                 my: 'left top',
                 at: 'left bottom'
             },
-            onChange: onChangeCallback
+            onChange: callback
         });
     }
 
@@ -24,8 +28,14 @@
         $("#" + id).multiselect("refresh");
     }
 
+    function destroy(id) {
+        $('#' + id).multiselect('destroy');
+    }
+
     return {
         Setup: setup,
-        Refresh: refresh
+        SetupElement: setupElement,
+        Refresh: refresh,
+        Destroy: destroy
     };
 }();

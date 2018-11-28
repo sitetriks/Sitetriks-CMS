@@ -1,7 +1,5 @@
 ﻿.preview-placeholder {
     border: 1px dashed black;
-    min-width: 200px;
-    min-height: 100px;
     padding: 5px;
 }
 
@@ -45,36 +43,19 @@
     }
 
 .widget-control {
-    padding-top: 50px;
-    border-left: 1px solid #B2B2B2;
-    height: 100%;
+    margin-bottom: 10px;
 }
 
-    .widget-control .row {
-        padding: 5px;
-        margin-right: 0px;
-        margin-left: 0px;
-    }
-
-        .widget-control .row div {
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-    .widget-control h1 {
-        letter-spacing: 5px;
-        font-family: OpenSans, Helvetica, Arial, sans-serif;
+    .widget-control .widget-control-actions-wrapper {
+        display: inline-block;
     }
 
 #add-widget-container {
     padding-top: 50px;
-    padding-left: 40px;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
-    #add-widget-container .col-md-11 .row,
-    #edit-widget-container .col-md-11 .row,
-    #add-widget-container .col-md-9 .row,
-    #edit-widget-container .col-md-9 .row,
     #add-widget-container .col-md-5 .row,
     #edit-widget-container .col-md-5 .row,
     #add-widget-container .col-md-6 .row,
@@ -85,12 +66,6 @@
         margin-top: 15px;
     }
 
-    /*HTML widget only*/
-
-    #html-options-list {
-        margin-bottom: 10px;
-    }
-
 
 .widget-container {
     font-family: OpenSans, Helvetica, Arial, sans-serif;
@@ -98,7 +73,6 @@
 
     .widget-container label {
         margin-right: 10px;
-        padding-right: 0;
     }
 
     .widget-container .form-control {
@@ -293,8 +267,7 @@ div.ui-dialog .ui-dialog-content {
         background-color: #fff;
         color: #048CFF;
         font-weight: bold;
-        padding-top: 0;
-        margin-top:0;
+        padding-top: 3px;
     }
 
         .revision-history-wrapper .btn-revision > span {
@@ -458,6 +431,7 @@ div.ui-dialog .ui-dialog-content {
     align-items: center;
     margin-bottom: 10px;
     width: 100%;
+    min-width: 130px;
     cursor: pointer;
 }
 
@@ -487,17 +461,14 @@ div.ui-dialog .ui-dialog-content {
         border-radius: 0 6px 6px 0;
     }
 
-    .toggle-layout-content .show-layout {
-        text-align: right;
-    }
+        .toggle-layout-content > diV:nth-of-type(2) .circle {
+            border-radius: 0 6px 6px 0;
+        }
 
     .toggle-layout-content div.circle {
-        height: 10px;
         background-color: #bf2000;
         width: 10px;
-        border: 1px solid #979797;
-        border-radius: 50%;
-        margin: 5%;
+        height: 98%;
     }
 
 .show-content,
@@ -508,6 +479,7 @@ div.ui-dialog .ui-dialog-content {
     font-size: 14px;
     font-weight: bold;
     color: #383838;
+    text-align: center;
 }
 
 .selected-option {
@@ -543,6 +515,7 @@ div.ui-dialog .ui-dialog-content {
 #widgets-holder {
     overflow-y: scroll;
     height: 100%;
+    min-width: 130px;
 }
 
     #widgets-holder .drag {
@@ -703,6 +676,11 @@ div.ui-dialog .ui-dialog-content {
     font-size: 12px;
 }
 
+.layout-preview-col {
+    float: left;
+    padding: 5px;
+}
+
 /* ----------------------------------------------------------------
 	Images, file-handler inline
 -----------------------------------------------------------------*/
@@ -728,13 +706,8 @@ div.ui-dialog .ui-dialog-content {
         Gallery widget edit page
     ---------------------------------------------------------------*/
 .type-of-gallery-select select.form-control {
-    /*width: 100%;
-    height: 35px;
-    margin: 0;
-    font-size: 18px;
-    border-radius: 5px;
-    border-color: #f4f4f4;*/
     width: 100%;
+    max-width: 50%;
 }
 
 select#gallery-source,
@@ -780,6 +753,83 @@ select#gallery-libs {
          News Carousel Widget styles
     ---------------------------------------------------------------*/
 
+.resolutions-control {
+    background-color: #ececec;
+    border: 1px solid #c5c5c5;
+    border-radius: 7px;
+    padding: 30px 15px;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+    .resolutions-control .resolutions-info {
+        width: 200px;
+        display: inline-block;
+        font-weight: bold;
+        padding-left: 30px;
+    }
+
+    .resolutions-control .res-wrapper {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .resolutions-control .clarification {
+        color: #959595;
+        font-size: 12px;
+    }
+
+    .resolutions-control label {
+        margin: 0;
+        text-align: center;
+    }
+
+    .resolutions-control input.form-control {
+        width: 50px;
+        margin: auto;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    .resolutions-control .resolutions-separator {
+        width: 250px;
+        float: left;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .resolutions-control .res-icon {
+        font-size: 50px;
+        color: #007EF9;
+        margin: 15px;
+        line-height: 80px;
+    }
+
+        .resolutions-control .res-icon.rs-icon-mobile {
+            font-size: 40px;
+        }
+
+        .resolutions-control .res-icon.rs-icon-desktop-hd {
+            font-size: 65px;
+        }
+
+.widget-container .widget-config-label {
+    margin-right: 0;
+}
+
+.widget-config-label > span {
+    margin-right: 20px;
+}
+
+.widget-container .carousel-count-type {
+    width: 150px;
+}
+
+#latest-news-count {
+    width: 150px;
+}
+
 /*------------------------------------------------------------
         Layout Builder Widget styles
     ---------------------------------------------------------------*/
@@ -801,6 +851,10 @@ select#gallery-libs {
 
 #upload-modal .upload-modal-buttons {
     padding: 10px;
+}
+
+.image-widget .multiselect.dropdown-toggle.btn.btn-default {
+    max-width: 100%;
 }
 
 .files-handler-pager #previous-page,
@@ -829,9 +883,22 @@ select#gallery-libs {
     }
 
 /*------------------------------------------------------------
-        Documentation Widget styles
+        Html Widget styles
     ---------------------------------------------------------------*/
 
+.share-container input[type="text"] {
+    width: 300px;
+    max-width: inherit;
+    margin-right: 15px;
+}
+
+.share-container .btn-backend {
+    vertical-align: top;
+}
+
+#shared-block-titles {
+    margin-left: 6.7%;
+}
 
 /*------------------------------------------------------------
         Smaller resolution styles
@@ -844,7 +911,7 @@ select#gallery-libs {
     }
 
     .show-content, .show-layout {
-        font-size: 10px;
+        font-size: 12px;
     }
 }
 
@@ -925,7 +992,7 @@ select#gallery-libs {
     }
 
     .select-page-language {
-       top: 0;
+        top: 0;
     }
 
     .triangles {
@@ -936,11 +1003,11 @@ select#gallery-libs {
 /*Chrome specific*/
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    .revision-history-wrapper .btn-revision {
+    /*.revision-history-wrapper .btn-revision {
         margin-top: -1px;
     }
 
     .revision-history-wrapper .btn-revision {
         margin-top: -1px;
-    }
+    }*/
 }

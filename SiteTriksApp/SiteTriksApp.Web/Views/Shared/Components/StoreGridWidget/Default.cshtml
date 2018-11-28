@@ -1,0 +1,11 @@
+﻿@model IDictionary<string, string>
+
+<div class="display-store-grid" data-columns="@Model["itemsOnRow"]" data-paging="@Model["hasPaging"]" data-rows="@Model["rowsCount"]">
+    <div class="store-items-container"></div>
+
+    <div class="pager">
+        <a class="btn btn-default previous-page">Previous</a>
+        <span class="page-number">0</span>
+        <a class="btn btn-default next-page">Next</a>
+    </div>
+</div>

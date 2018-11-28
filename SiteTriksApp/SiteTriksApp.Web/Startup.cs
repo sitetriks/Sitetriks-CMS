@@ -11,23 +11,24 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using SiteTriks.Data.Models;
+using SiteTriks.DatabaseApi.Contracts;
 using SiteTriks.Extentions;
 using SiteTriks.Extentions.DynamicViews;
 using SiteTriks.Extentions.WidgetModels;
 using SiteTriks.Helpers;
 using SiteTriks.Services.Contracts;
+using SiteTriks.SiteSync.Hubs;
+using SiteTriksApp.Web.Areas.ECommerse.Extentions.WidgetModels;
 using SiteTriksApp.Web.Data;
 using SiteTriksApp.Web.Services;
 using System;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 
 namespace SiteTriksApp.Web
 {
     public class Startup
-    {       
-
+    {
         public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
@@ -40,9 +41,6 @@ namespace SiteTriksApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Load views from another assemblies
-            //var assembly = typeof(HtmlBlocksController).GetTypeInfo().Assembly;
-
             services.Configure<IISOptions>(options =>
             {
                 options.ForwardClientCertificate = false;
@@ -73,17 +71,11 @@ namespace SiteTriksApp.Web
             services.AddTransient<ISiteTriksEmailSender, MailKitEmailSender>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<IPermissionChecker, PermissionChecker>();
+            services.AddDbContext<SiteTriksAppContext>();
 
             // Area registration
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                //Load views from another assemblies
-                //var fileProviders = ApplicationStart.GetModulesFileProviders();
-                //foreach(var fileProvider in fileProviders)
-                //{
-                //    options.FileProviders.Add(fileProvider);
-                //}
-                //options.FileProviders.Add(new EmbeddedFileProvider(assembly));
                 var scopeFactory = services
                     .BuildServiceProvider()
                     .GetRequiredService<IServiceScopeFactory>();
@@ -92,13 +84,8 @@ namespace SiteTriksApp.Web
                 {
                     var provider = scope.ServiceProvider;
                     var service = provider.GetRequiredService<IDynamicViewService>();
-                    var composite = new CompositeFileProvider(options.FileProviders[0], new DatabaseFileProvider(provider, options.FileProviders[0] as PhysicalFileProvider));
-
-                    options.FileProviders.RemoveAt(0);
-
-                    options.FileProviders.Add(
-                        composite
-                    );
+                    var queryHelper = provider.GetService<IQueryHelper>();
+                    options.FileProviders.Add(new DatabaseFileProvider(options.FileProviders[0], queryHelper));
 
                     foreach (var item in providers)
                     {
@@ -139,8 +126,10 @@ namespace SiteTriksApp.Web
             WidgetRegistry.RegisterWidget<LicenseGenerationWidgetModel>("licenseGeneration", "License Form");
 
             // -----------------------------------------------------------------------------------------------------------
-            // user widget needs redesign.
-            //WidgetRegistry.RegisterWidget("changeUserInfo", typeof(UserWidgetController), typeof(ChangePasswordViewModel), "ChangeUserInfo");
+            // Store widgets
+            WidgetRegistry.RegisterWidget<StoreGridWidgetModel>("storeGrid", "Grid");
+            WidgetRegistry.RegisterWidget<StoreFilterWidgetModel>("storeFilter", "Filter Menu");
+            WidgetRegistry.RegisterWidget<StoreItemWidgetModel>("storeItem", "Store Item");
 
             services.AddIdentity<User, IdentityRole>(config =>
             {
@@ -164,10 +153,28 @@ namespace SiteTriksApp.Web
                 options.Level = CompressionLevel.Optimal;
             });
 
-            //services.AddDataProtection()
-            //.PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"))
-            //.SetApplicationName("SiteTriks")
-            //.SetDefaultKeyLifetime(TimeSpan.FromDays(90));
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+                options.KeepAliveInterval = TimeSpan.FromMinutes(1);
+            });           
+
+            var protectionBuilder = services.AddDataProtection().SetApplicationName("SiteTriks")
+                .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
+
+            var storageProviderConfig = this.Configuration.GetSection("SiteTriks").GetSection("StorageProvider");
+            switch (storageProviderConfig.GetSection("Name").Value)
+            {
+                case "azure":
+                    string blobUri = storageProviderConfig.GetSection("BlobUri").Value;
+                    protectionBuilder.PersistKeysToAzureBlobStorage(new Uri(blobUri));
+
+                    break;
+                default:
+                    protectionBuilder.PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"));
+
+                    break;
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -203,20 +210,25 @@ namespace SiteTriksApp.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseStatusCodePagesWithRedirects("/sitetriks/home/error");
+            ApplicationStart.InjectMiddlewares(app);
+
+            //app.UseStatusCodePagesWithReExecute()
             app.UseResponseCompression();
 
-            app.UseStaticFiles(new StaticFileOptions() {                
+            app.UseStaticFiles(new StaticFileOptions()
+            {
                 OnPrepareResponse = (context) =>
                 {
-                    ApplicationStart.CacheStaticFiles(context, this.Configuration);                   
+                    ApplicationStart.CacheStaticFiles(context, this.Configuration);
                 }
             });
-
+           
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-
 
             app.UseAuthentication();
 

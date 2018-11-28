@@ -1,91 +1,36 @@
-﻿@model Dictionary<string, ICollection<SiteTriks.Models.ExceptionLogs.BaseExceptionLog>>
+﻿@model Dictionary<string, List<SiteTriks.Models.ExceptionLogs.BaseExceptionLog>>
 
 @{
-    ViewBag.Title = "Exception Log";
-    var todayDate = DateTime.Today;
-    var yesterdayDate = DateTime.Today.AddDays(-1);
-}
-
-@section Styles {
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    ViewBag.Title = "ExceptionLogs";
 }
 
 <div class="backend-wrapper">
     <div class="fixed-top-2">
         @await Html.PartialAsync("SecondNavHeader")
     </div>
-    <div class="row form-group" style="position: relative">
-        <div class="date-picker-group col-md-4">
-            <label>From date: </label>
-            <input type="text" id="date-picker-from" />
-        </div>
-        <div class="date-picker-group col-md-5">
-            <label>To date: </label>
-            <input type="text" id="date-picker-to" />
-            <a class="btn btn-info" id="filter-exceptions">Filter</a>
-        </div>
+    @foreach (var key in Model.Keys)
+    {
 
+        <table class="table table-responsive">
 
-        <a class="btn btn-danger" id="delete-exceptions" asp-action="DeleteOlderThan30Days" asp-controller="ExceptionLogs">Delete older than 30 days</a>
+            @foreach (var ex in Model[key])
+            {
+                <tr>
+                    <td>@ex.DateCreated</td>
+                    <td>
+                        @ex.Message
 
-    </div>
-    <div id="logs">
-        @await Html.PartialAsync("ExceptionLogs", Model)
-    </div>
+                        @if(ex.InnerExceptionMessage != null)
+                        {
+                        <p><strong>Inner exception Message:</strong> @ex.InnerExceptionMessage</p>
+
+                        }
+                    </td>
+                </tr>
+
+            }
+        </table>
+
+    }
 </div>
-@section Scripts {
-    <script src="~/js/data.js" type="text/javascript"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script>
 
-        $('#filter-exceptions').click(function () {
-            let flag = false;
-            let fromDateValue = $('#date-picker-from').val();
-            let toDateValue = $('#date-picker-to').val();
-            let fromDate = Date.parse(fromDateValue);
-            let toDate = Date.parse(toDateValue);
-
-            if (isNaN(fromDate) == false && isNaN(toDate) == false) {
-                flag = true;
-            }
-
-            let filter = {
-                FromDate: fromDateValue,
-                ToDate: toDateValue
-            };
-
-            if (flag) {
-                let url = '/sitetriks/exceptionLogs/showExceptionsInDataRange';
-                Data.postJson({ url: url, data: filter }).then((res) => {
-
-                    if (res.success) {
-                        $('#logs').html(res.view);
-                    }
-
-                }, (err) => { console.log(err) })
-            }
-        });
-
-
-        $(document).ready(function () {
-            $('#date-picker-from').datetimepicker({
-                maxDate: new Date(),
-            });
-
-            $('#date-picker-to').datetimepicker({
-            });
-        });
-
-
-        $('.copy-stacktrace').click(function () {
-            var $temp = $("<input>");
-            $("body").append($temp);
-            var id = $(this).data("id");
-            $temp.val($('#' + id).text()).select();
-            document.execCommand("copy");
-            $temp.remove();
-        });
-
-
-    </script>
-}

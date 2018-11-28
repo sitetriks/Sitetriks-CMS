@@ -1,45 +1,6 @@
-﻿/* version 1.1 */
+﻿/* Loader.js version 1.1 */
 var Loader = function () {
     var gifSrc = '/images/loading.gif';
-
-    // DEPRECATED: now using gallery blur functionality
-    //var keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
-
-    //function preventDefault(e) {
-    //    e = e || window.event;
-    //    if (e.preventDefault)
-    //        e.preventDefault();
-    //    e.returnValue = false;
-    //}
-
-    //function preventDefaultForScrollKeys(e) {
-    //    if (keys[e.keyCode]) {
-    //        preventDefault(e);
-    //        return false;
-    //    }
-    //}
-
-    //function disableScroll() {
-    //    if (window.addEventListener) // older FF
-    //        window.addEventListener('DOMMouseScroll', preventDefault, false);
-    //    window.onwheel = preventDefault; // modern standard
-    //    window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-    //    window.ontouchmove = preventDefault; // mobile
-    //    document.onkeydown = preventDefaultForScrollKeys;
-
-    //    document.body.style.overflow = 'hidden';
-    //}
-
-    //function enableScroll() {
-    //    if (window.removeEventListener)
-    //        window.removeEventListener('DOMMouseScroll', preventDefault, false);
-    //    window.onmousewheel = document.onmousewheel = null;
-    //    window.onwheel = null;
-    //    window.ontouchmove = null;
-    //    document.onkeydown = null;
-
-    //    document.body.style.overflow = 'visible';
-    //}
 
     return {
         showWithProgress: function (progressBarData, color) {
@@ -71,5 +32,76 @@ var Loader = function () {
         hide: function () {
             Blur.remove();
         }
+    }
+}();
+
+// Gallery registration
+(function () {
+    $('body').on('click', 'img.display-image, img.gallery-image', function (ev) {
+        let $target = $(ev.target);
+        let src = $target.attr('src');
+
+        let $container = Blur.add({ hideOnClick: true });
+        $('<img />', {
+            class: 'blur-content preview-image',
+            src: src,
+        }).appendTo($container);
+    });
+})();
+
+// Helper class for loader and gallery
+var Blur = function () {
+    const PREVIEW_CONTAINER_CLASS = 'preview-container';
+    const PREVIEW_ITEM_CONTAINER_CLASS = 'preview-item-container';
+    const BLUR_ELEMENT_CLASS = 'blur';
+
+    function addBlur({ hideOnClick, color, opacity }) {
+        if (hideOnClick !== true) {
+            hideOnClick = false;
+        }
+
+        $('html').addClass('no-overflow');
+
+        let $blurElement = $('<div></div>', {
+            class: BLUR_ELEMENT_CLASS
+        })
+
+        let $itemContainer = $('<div></div>', {
+            class: PREVIEW_ITEM_CONTAINER_CLASS
+        });
+
+        let $previewContainer = $('<div></div>', {
+            class: PREVIEW_CONTAINER_CLASS
+        });
+
+        if (hideOnClick) {
+            $previewContainer.on('click', removeBlur);
+            $blurElement.on('click', removeBlur);
+        }
+
+        if (color) {
+            $blurElement.css('background-color', color);
+        }
+
+        if (opacity && isNumeric(opacity) && opacity >= 0 && opacity <= 1) {
+            $blurElement.css('opacity', opacity);
+        }
+
+        $previewContainer.append($itemContainer);
+        $('body').append($previewContainer);
+        $('body').append($blurElement);
+
+        return $itemContainer;
+    }
+
+    function removeBlur() {
+        $('body').find('.' + BLUR_ELEMENT_CLASS).remove();
+        $('body').find('.' + PREVIEW_CONTAINER_CLASS).remove();
+        $('html').removeClass('no-overflow');
+    }
+
+    return {
+        add: addBlur,
+        remove: removeBlur
     }
 }();

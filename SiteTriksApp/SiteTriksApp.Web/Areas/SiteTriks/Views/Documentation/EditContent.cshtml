@@ -17,7 +17,7 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("TopicContents")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <input type="submit" value="Save" class="btn-nav-2" />
+            <input type="submit" value="Save & Exit" class="btn-nav-2" />
         </div>
 
         <div class="form-horizontal">
@@ -46,13 +46,13 @@
 </div>
 
 @section scripts{
-    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+    <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/text-editor.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/documentation.js"></script>
     <script type="text/javascript">
         textEditor.init('#content-area', 700, 300);
-
+        WarningWindow.attach();
         editContent();
     </script>
 }

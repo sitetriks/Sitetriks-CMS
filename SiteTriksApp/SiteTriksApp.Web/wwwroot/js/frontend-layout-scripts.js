@@ -1,9 +1,8 @@
 ﻿
 function treeItemsSlide() {
     $('body').on('click', '.more-items', function (event, callback, target) {
-        console.log('I am in Front-end');
         if (callback && {}.toString.call(callback) === '[object Function]' && target) {
-            $('.hidden-section').slideToggle("slow", "swing", function () {
+            $('.hidden-section').slideToggle('slow', 'swing', function () {
                 callback(target);
             });
 
@@ -11,22 +10,42 @@ function treeItemsSlide() {
                 return;
 
             } else {
-                $('.hidden-section-last-body').slideToggle("slow", "swing", function () {
+                $('.hidden-section-last-body').slideToggle('slow', 'swing', function () {
                     callback(target);
                 });
             }
         } else {
-            $('.hidden-section').slideToggle("slow");
+            $('.hidden-section').slideToggle('slow');
             if ($(window).width() <= 767) {
                 return;
 
             } else {
-                $('.hidden-section-last-body').slideToggle("slow");
+                $('.hidden-section-last-body').slideToggle('slow');
             }
         }
         $('.more-less-text').toggle();
         $('.more-items').toggleClass('more-clicked');
-    })
+    });
+}
+
+function readMore() {
+    $('body').on('click', '.read-more', function () {
+        let $target = $(this);
+
+        let $textBlocks = $target.parents('.tree-row').find('.content');
+        let $readMoreText = $target.parents('.tree-row').find('.read-more');
+
+        $textBlocks.each(function () {
+            $(this).toggleClass('short-text');
+        });
+
+        $readMoreText.each(function () {
+            let $currentTarget = $(this);
+            $currentTarget.children('.more').toggle();
+            $currentTarget.children('.less').toggle();
+        });
+
+    });
 }
 
 // PrettyPrint call for Tinymc
@@ -47,7 +66,7 @@ function loadMultiplePlaylistsContent() {
     function getChannelDatails(channelId) {
         return new Promise((resolve, reject) => {
             $.ajax({
-                url: "https://www.googleapis.com/youtube/v3/channels?key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8&part=contentDetails&id=" + channelId,
+                url: 'https://www.googleapis.com/youtube/v3/channels?key=AIzaSyCWH87Tm8-WcMBNXi7N1QoK-AYZR3mhmR8&part=contentDetails&id=' + channelId,
                 method: 'GET',
                 contentType: 'json',
                 success: resolve,
@@ -58,7 +77,7 @@ function loadMultiplePlaylistsContent() {
                 let channelUpload = data.items[0].contentDetails.relatedPlaylists.uploads;
                 return new Promise((resolve, reject) => {
                     $.ajax({
-                        url: "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=" + channelUpload + "&key=AIzaSyCR5In4DZaTP6IEZQ0r1JceuvluJRzQNLE&part=snippet&maxResults=50",
+                        url: 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=' + channelUpload + '&key=AIzaSyCR5In4DZaTP6IEZQ0r1JceuvluJRzQNLE&part=snippet&maxResults=50',
                         method: 'GET',
                         contentType: 'json',
                         success: resolve,
@@ -68,7 +87,7 @@ function loadMultiplePlaylistsContent() {
             })
     };
 
-  
+
 
     function searchVideo() {
         $('body').on('click', '.search-video', function () {
@@ -76,7 +95,7 @@ function loadMultiplePlaylistsContent() {
 
             let $container = ($('.multiple-playlists .playlist-thumbnails-list .playlist-thumbnail'));
             let fullData;
-            let channelId = "UCUsTZWP1OpyBXX2_CfMv1fA";
+            let channelId = 'UCUsTZWP1OpyBXX2_CfMv1fA';
             let titles = [];
 
             fullData = getChannelDatails(channelId);
@@ -122,7 +141,6 @@ function loadMultiplePlaylistsContent() {
         $('.search-video').val(selected);
 
         $('.video-container iframe').attr('src', `https://www.youtube.com/embed/${videoId}`);
-        console.log(videoId);
 
         // Clean the input
         $('.search-video').val('');
@@ -147,7 +165,6 @@ function loadMultiplePlaylistsContent() {
 // custom video playlist
 function loadVideoById() {
     $('body').on('click', '.video-thumbnail', function () {
-        console.log('func 1');
         var iframeCurrentSource = $('.video-container iframe').attr('src');
         var thunmbnailSource = $(this).attr('data-videoId');
 
@@ -160,7 +177,6 @@ function loadVideoById() {
 // multiple playlists
 function loadVideoSource() {
     $('body').on('click', '.playlist-thumbnail', function () {
-        console.log('func 2');
         var iframeCurrentSource = $('.video-container iframe').attr('src');
         var thunmbnailSource = $(this).attr('data-videosource');
 
@@ -170,17 +186,6 @@ function loadVideoSource() {
     });
 };
 
-// Init functions
-$(document).ready(function () {
-    $(document).trigger("initCarousel");
-    MetaTags.populateKeyWords('input[name=SEOKeyword]');
-    DocumentationWidget();
-    treeItemsSlide();
-    loadMultiplePlaylistsContent();
-    loadVideoById();
-    loadVideoSource();
-});
-$(window).load(prettyPrintInit());
 
 // Video Multiple playlists logic
 $(document).ready(function () {
@@ -191,7 +196,6 @@ $(document).ready(function () {
 
         $container.each(function (_, element) {
             source = $(this).data("videoid");
-            console.log(source);
             let url = getYoutubeData(source).then(function (res) {
 
                 let finalUrl = res.items[0].snippet.thumbnails.high.url;
@@ -212,3 +216,51 @@ $(document).ready(function () {
     }
 
 });
+
+function initSkype() {
+    // skype on demand instead of on load
+    let isSkypeLoaded = false;
+    let isAttemptingCall = false;
+
+    $('body').on('click', '.skype-call', loadSkype);
+    function loadSkype(ev) {
+        if (typeof SkypeWebControl === 'undefined' && !isSkypeLoaded) {
+            let fileref = document.createElement('script');
+            fileref.setAttribute('type', 'text/javascript');
+            fileref.setAttribute('src', 'https://swc.cdn.skype.com/sdk/v1/sdk.min.js');
+            document.getElementsByTagName('body')[0].appendChild(fileref);
+
+            isSkypeLoaded = true;
+        }
+
+        if (!isAttemptingCall) {
+            isAttemptingCall = true;
+            attemptCall();
+        }
+    }
+
+    function attemptCall() {
+        if (typeof SkypeWebControl === 'undefined') {
+            setTimeout(attemptCall, 1000);
+            return;
+        } else {
+            isAttemptingCall = false;
+            SkypeWebControl.SDK.Chat.startChat({ ConversationType: 'person', ConversationId: 'live:info_882922' });
+        }
+    }
+}
+
+// Init functions
+$(document).ready(function () {
+    treeItemsSlide();
+    readMore();
+    initSkype();
+    $(document).trigger('initCarousel');
+    //MetaTags.populateKeyWords('input[name=SEOKeyword]');
+    //MetaTags.populateDescriptions('input[name=SEODescription]');
+    DocumentationWidget();
+    loadMultiplePlaylistsContent();
+    loadVideoById();
+    loadVideoSource();
+});
+$(window).load(prettyPrintInit());

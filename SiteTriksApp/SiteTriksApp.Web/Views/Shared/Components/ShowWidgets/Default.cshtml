@@ -5,10 +5,9 @@
 <div id="widgets-holder" class="clearfix">
     @foreach (var item in Model)
     {
-        if (WidgetRegistry.Widgets.ContainsKey(item))
+        if (WidgetRegistry.IsRegistered(item))
         {
-            <div data-type="@item" class="drag">@WidgetRegistry.Widgets[item].DisplayName</div>
+            <div data-type="@item" class="drag">@WidgetRegistry.GetDisplayNameForType(item)</div>
         }
     }
-    <div data-type="dynamic" class="drag">Dynamic</div>
 </div>

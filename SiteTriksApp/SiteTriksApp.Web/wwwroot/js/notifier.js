@@ -1,7 +1,7 @@
 ﻿var Notifier = (function () {
 
     // status is following bootstrap convention: 'danger'(red), 'warning'(yellow), 'success'(green), 'info'(blue)
-    function createAlert({ containerId, title, message, status, seconds, isPermanent }) {
+    function createAlert({ containerId, title, message, status, seconds, isPermanent, selector }) {
         let $title = $('<strong></strong>', { text: title || '' });
         let $closeButton = $('<a></a>', {
             class: 'close',
@@ -15,7 +15,7 @@
         $alert.append($title)
             .append($message)
             .append($closeButton)
-            .appendTo(containerId || 'body');
+            .appendTo(selector || containerId || 'body');
 
         if (!isPermanent) {
             setTimeout(function () {

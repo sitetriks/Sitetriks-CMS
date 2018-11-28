@@ -1,6 +1,10 @@
 ﻿@model ImageWidgetViewModel
 
-<div class="ta-center">
+@*<div class="ta-center">
     <img width="@Model.Width" height="@Model.Height" src="/files/@Model.Url" alt="@Model.AltText" title="@Model.Title" />
+</div>*@
+
+<div class="ta-center">
+    <img width="@Model.Width" height="@Model.Height" src="@Model.Url" alt="@Model.AltText" title="@Model.Title" />
 </div>
 

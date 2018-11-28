@@ -1,0 +1,18 @@
+﻿@model List<SiteTriks.Models.Thumbnails.ThumbnailsIndexViewModel>
+
+<div class="thumb-list">
+    @foreach (var item in Model)
+    {
+        var url = $"/sitetriks/files/DeleteSingleFile?id={item.Id}";
+        var dataId = @item.Id;
+        <div class="thumbnail-wrapper">
+            <div class="thumbnail-image-delete" data-id="@dataId">
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="image-container">
+                <img src="@item.Url" />
+            <div class="title">@item.SizeName</div>
+            </div>
+        </div>
+    }
+</div>

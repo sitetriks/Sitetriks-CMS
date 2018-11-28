@@ -1,0 +1,95 @@
+﻿.version-wrapper {
+    font-size: 10px;
+    margin: 4%;
+    padding: 2.5em 3em 2.5em 0;
+    background-color: #f6f6f6;
+}
+
+    .version-wrapper > div {
+        margin: 0;
+        width: 100%;
+    }
+
+    .version-wrapper .col-lg-2 {
+        text-align: center;
+    }
+
+    .version-wrapper .version-title {
+        font-family: Roboto, Helvetica, sans-serif;
+        font-size: 2.3em;
+        font-weight: bold;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #3b3b3b;
+    }
+
+    .version-wrapper .version-release-date {
+        color: #a9a9a9;
+        text-transform: uppercase;
+        font-size: 1em;
+        font-weight: bolder;
+    }
+
+    .version-wrapper .dotnet-framework {
+        margin-top: 7.5em;
+        font-size: 1.9em;
+        font-weight: bold;
+        color: #a9a9a9;
+    }
+
+    .version-wrapper .items-wrapper {
+        border-left: 1px solid #cfcfcf;
+        margin-top: 1em;
+        padding: 1.5em 2em 0 2em;
+    }
+
+        .version-wrapper .items-wrapper div {
+            padding-left: 2em;
+        }
+
+        .version-wrapper .items-wrapper img {
+            vertical-align: unset;
+            height: 1em;
+            margin-right: 2em;
+        }
+
+    .version-wrapper div .item {
+        height: 3.5em;
+        font-family: Roboto, Helvetica, sans-serif;
+        font-size: 1.9em;
+        font-weight: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #008cff;
+    }
+
+@media (max-width: 1200px) {
+
+    .version-wrapper {
+        font-size: 8px;
+    }
+
+        .version-wrapper .items-wrapper {
+            border-left: none;
+        }
+
+        .version-wrapper .dotnet-framework {
+            margin-top: 1em;
+            font-size: 1.7em;
+        }
+}
+
+    @media (max-width: 768px) {
+
+        .version-wrapper {
+            font-size: 8px;
+        }
+
+            .version-wrapper .items-wrapper div {
+                padding-left: 0;
+            }
+
+            .version-wrapper div .item {
+                text-align: center;
+            }
+    }

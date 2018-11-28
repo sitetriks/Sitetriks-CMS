@@ -28,6 +28,12 @@
       "Dependencies": []
     },
     {
+      "Name": "SiteTriks.ErrorPagesModule",
+      "IsActive": false,
+      "DisplayName": "ErrorPages",
+      "Dependencies": []
+    },
+    {
       "Name": "SiteTriks.RssFeedModule",
       "IsActive": false,
       "DisplayName": "Rss Feed",
@@ -45,6 +51,7 @@
       "DisplayName": "Site Map",
       "Dependencies": []
     }
+  
   ],
   "Installed": [
     {
@@ -55,6 +62,12 @@
         "SiteTriks.SiteSync",
         "SiteTriks.RssFeedModule"
       ]
+    },
+    {
+      "Name": "SiteTriks.ErrorPagesModule",
+      "IsActive": true,
+      "DisplayName": "ErrorPages",
+      "Dependencies": []
     },
     {
       "Name": "SiteTriks.SiteSync",

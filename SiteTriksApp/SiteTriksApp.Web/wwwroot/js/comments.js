@@ -1,136 +1,120 @@
-﻿$(document).ready(function () {
-    textEditor.init('#comment-area', 600, 300);
-})
+﻿/* globals Data, Loader, Utils, textEditor */
 
-function initComments(id) {
-    $('#btn-comment').on('click', function (ev) {
-        Loader.show(true);
+const Comments = (function () {
+    let parentId;
+    let $container;
+    const templatesCache = {};
+    let areaId;
 
-        let content = textEditor.getContent('comment-area');
+    function init(id, $commentsContainer, textAreaId) {
+        parentId = id;
+        $container = $commentsContainer || $('#comments-container');
+        areaId = textAreaId || 'comment-area';
+        textEditor.remove(areaId);
+        textEditor.init('#' + areaId, 600, 300);
 
-        let body = {
-            id: id,
-            content: content
-        };
-
-        $.ajax({
-            method: 'POST',
-            url: '/sitetriks/comments/addcomment',
-            data: JSON.stringify(body),
-            contentType: 'application/json',
-            success: function (res) {
-                if (res.success) {
-                    $('#comments-container').append(res.view);
-                    textEditor.clear('comment-area');
-                }
-
-                Loader.hide();
-            }
+        return Promise.all([
+            Utils.loadHandlebarsTemplates(templatesCache, [{ name: 'comment-edit', url: '/templates/comment-edit.html' }]),
+            loadComments(parentId)
+        ]).then(function (res) {
+            bindEvents();
         });
-    });
+    }
 
-    $('#comments-container').on('click', '.btn-edit-post', function (event) {
-        let $contentOld = $('.edit-post-container').prev('.panel-body');
-        if ($contentOld) {
-            textEditor.remove('edit-post-content');
-            $contentOld.prev('.panel-heading').find('.btn-edit-post').show();
-            $contentOld.show();
-            $('.edit-post-container').remove();
-        }
+    function loadComments(id, $commentsContainer) {
+        $container = $commentsContainer || $container || $('#comments-container');
+        // TODO: add inline loader
+        return Data.getJson({ url: '/sitetriks/comments/loadcomments?id=' + id }).then(function (res) {
+            if (res) {
+                $container.append(res);
+                return { success: true };
+            }
 
+            return { success: false };
+        });
+    }
 
+    function addComment(ev) {
+        Loader.show('#fff');
+        let content = textEditor.getContent(areaId);
+
+        let body = { id: parentId, content };
+        Data.postJson({ url: '/sitetriks/comments/addcomment', data: body }).then(function (res) {
+            if (res.success) {
+                $container.append(res.view);
+                textEditor.clear(areaId);
+            }
+
+            Loader.hide();
+        });
+    }
+
+    function editComment(ev) {
+        closeEdit();
         let $trigger = $(this);
         let $content = $trigger.parents('.panel-heading').next('.panel-body');
 
-        let $editContainer = $(document.createElement('div'))
-            .addClass('edit-post-container')
-            .appendTo($content.parent());
-
-        $(document.createElement('textarea'))
-            .attr('id', 'edit-post-content')
-            .text($content.html())
-            .appendTo($editContainer);
-
-        let $btncontainer = $(document.createElement('div'))
-            .addClass('buttons-edit-container')
-            .appendTo($editContainer);
-
-        $(document.createElement('a'))
-            .addClass('btn-save-edited-post btn btn-success')
-            .text('Save')
-            .appendTo($btncontainer);
-
-        $(document.createElement('a'))
-            .addClass('btn-cancel-edited-post btn btn-warning')
-            .text('Cancel')
-            .appendTo($btncontainer);
+        let html = templatesCache['comment-edit']({ content: $content.html() });
+        $content.parent().append(html);
 
         $content.hide();
         $trigger.hide();
 
         textEditor.initWithoutImages('#edit-post-content', '', 300);
-    });
+    }
 
-    $('#comments-container').on('click', '.btn-cancel-edited-post', function (event) {
-        let $trigger = $(this);
-        textEditor.remove('edit-post-content');
-        let $content = $trigger.parents('.edit-post-container').prev('.panel-body');
-        $content.prev('.panel-heading').find('.btn-edit-post').show();
-        $content.show();
-        $('.edit-post-container').remove();
-    });
+    function closeEdit(ev, content) {
+        let $content = (ev && ev.target ? $(ev.target).parents('.edit-post-container') : $container.find('.edit-post-container')).prev('.panel-body');
+        if ($content && $content.length) {
+            textEditor.remove('edit-post-content');
+            $content.prev('.panel-heading').find('.btn-edit-post').show();
+            $content.show();
+            $('.edit-post-container').remove();
+            if (content) {
+                $content.html(content);
+            }
+        }
+    }
 
-    $('#comments-container').on('click', '.btn-save-edited-post', function (event) {
+    function saveEditedComment(ev) {
         let $trigger = $(this);
-        let id = $trigger.parents('.cf_commentWrapper').attr('data-id');
+        let id = $trigger.parents('.comment-wrapper').attr('data-id');
 
         let content = textEditor.getContent('edit-post-content');
 
-        let body = {
-            id: id,
-            content: content
-        }
-
-        $.ajax({
-            url: '/sitetriks/comments/editcomment',
-            method: 'POST',
-            data: JSON.stringify(body),
-            contentType: 'application/json',
-            success: function (res) {
-                console.log(res);
-                if (res.success) {
-                    textEditor.remove('edit-post-content');
-                    let $content = $trigger.parents('.edit-post-container').prev('.panel-body');
-                    $content.prev('.panel-heading').find('.btn-edit-post').show();
-                    $content.show();
-                    $content.html(content);
-                    $('.edit-post-container').remove();
-                }
-            },
-            error: function (res) {
-                console.log(res);
+        let body = { id, content };
+        Loader.show('#fff');
+        Data.postJson({ url: '/sitetriks/comments/editcomment', data: body }).then(function (res) {
+            if (res.success) {
+                closeEdit({ target: $trigger }, content);
             }
-        })
-    });
 
-    $('#comments-container').on('click', '.btn-delete-comment', function (event) {
-        let $parent = $(this).parents('.cf_commentWrapper');
+            Loader.hide();
+        });
+    }
+
+    function deleteComment(ev) {
+        let $parent = $(this).parents('.comment-wrapper');
         let id = $parent.attr('data-id');
 
         Loader.show(true);
-
-        $.ajax({
-            method: 'POST',
-            url: '/sitetriks/comments/deletecomment',
-            contentType: 'application/json',
-            data: JSON.stringify({ id: id }),
-            success: function (res) {
-                if (res.success) {
-                    $parent.parent().remove();
-                }
-
-                Loader.hide();
+        closeEdit();
+        Data.postJson({ url: '/sitetriks/comments/deletecomment', data: { id } }).then(function (res) {
+            if (res.success) {
+                $parent.parent().remove();
             }
-        })
-    });
-}
+
+            Loader.hide();
+        });
+    }
+
+    function bindEvents() {
+        $container.parent().on('click', '.btn-add-comment', addComment);
+        $container.on('click', '.btn-edit-post', editComment);
+        $container.on('click', '.btn-save-edited-post', saveEditedComment);
+        $container.on('click', '.btn-delete-comment', deleteComment);
+        $container.on('click', '.btn-cancel-edited-post', closeEdit);
+    }
+
+    return { init, loadComments };
+})();

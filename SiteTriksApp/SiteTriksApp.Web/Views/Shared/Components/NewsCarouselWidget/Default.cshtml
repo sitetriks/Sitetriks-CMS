@@ -1,14 +1,9 @@
-﻿@model List<SiteTriks.Models.News.NewsModel>
+﻿@model SiteTriks.CoreWidgets.ViewComponents.NewsCarouselModel
 
 <section class="background-grey">
-    <div class="container">
-        <div class="text-center">
-            <h3 class="text-medium m-b-5">Latest News</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, sem quis lacinia faucibus</p>
-        </div>
-        <hr class="space">
-        <div class="carousel" data-carousel-col="3" data-carousel-dots="true" data-isotope-item="testimonial">
-            @foreach (var item in Model)
+    <div class="container-fluid carousel-wrapper">
+        <div class="carousel" data-slides-lg="@Model.Slides_Lg" data-slides-md="@Model.Slides_Md" data-slides-sm="@Model.Slides_Sm" data-slides-xs="@Model.Slides_Xs">
+            @foreach (var item in Model.News)
             {
                 @Html.DisplayFor(m => item)
             }

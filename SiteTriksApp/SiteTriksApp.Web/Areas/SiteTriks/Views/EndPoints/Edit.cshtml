@@ -88,7 +88,7 @@
                 @await Html.PartialAsync("SecondNavHeader")
 
                 <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to List</a>
-                <input type="submit" value="Save" class="btn-nav-2" />
+                <input type="submit" value="Save & Exit" class="btn-nav-2" />
             </div>
         </form>
     </div>
@@ -98,13 +98,14 @@
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/endpoints.js"></script>
     <script>
-        $(document).ready(function (ev) {
+        (function (ev) {
             var selectedType = '@Model.Type';
             var selectedJoinTable = '@Model.JoinTable';
             var selectedJoinKey = '@Model.JoinKey';
             var selectedColumn = '@Model.Column';
 
+            WarningWindow.attach();
             initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey, selectedColumn);
-        });
+        })();
     </script>
 }

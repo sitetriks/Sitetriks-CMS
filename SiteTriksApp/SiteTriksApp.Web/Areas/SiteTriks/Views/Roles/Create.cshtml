@@ -15,7 +15,7 @@
             @await Html.PartialAsync("SecondNavHeader")
 
             <a href="@Url.Action("Index", "Roles")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-            <button type="submit" id="submit" value="Create" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Role</button>
+            <button type="submit" id="submit" class="btn-nav-2">Save & Exit</button>
         </div>
 
         @Html.AntiForgeryToken()
@@ -38,6 +38,7 @@
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/roles.js"></script>
     <script>
+        WarningWindow.attach();
         createRole();
     </script>
 }

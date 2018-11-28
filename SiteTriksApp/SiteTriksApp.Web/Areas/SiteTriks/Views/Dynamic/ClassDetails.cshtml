@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = Model.DynamicClass.Title;
-    bool hasLink = Model.ClassHelper.HasProperty("LinkId");
 }
 
 @section Styles {
@@ -13,7 +12,7 @@
     @await Html.PartialAsync("SecondNavHeader")
 
     <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to assemblies</a>
-    <a href="@Url.Action("CreateItem", new { assemblyName = ViewData["assemblyName"], className = Model.DynamicClass.Name })" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Item</a>
+    <a href="@Url.Action("CreateItem", new { assemblyName = Model.AssemblyName, className = Model.DynamicClass.Name })" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Item</a>
 </div>
 
 <div class="backend-wrapper">
@@ -21,10 +20,10 @@
 </div>
 
 @section scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
 
         var grid = Grid();
-        var data = { link: "/sitetriks/dynamic/grid?assemblyName=@ViewBag.AssemblyName&className=@Model.DynamicClass.Name", serverSide: true }
+        var data = { link: "/sitetriks/dynamic/grid?assemblyName=@Model.AssemblyName&className=@Model.DynamicClass.Name", serverSide: true }
         var columns = [
             {
                 name: 'id',
@@ -42,8 +41,6 @@
                 name: "title",
                 title: "Title",
                 type: 'string',
-                filter: true,
-                sort: true,
                 size: 2,
                 headerTemplate: '<strong>#item#</strong>'
             },
@@ -92,18 +89,18 @@
                 name: 'id',
                 title: 'Action',
                 size: 1,
-                contentTemplate: '<a class="btn btn-warning" href="/sitetriks/dynamic/edititem/#item#?assemblyName=@ViewBag.AssemblyName&amp;className=@Model.DynamicClass.Name">Edit</a>'
+                contentTemplate: '<a class="btn btn-warning" href="/sitetriks/dynamic/edititem/#item#?assemblyName=@Model.AssemblyName&amp;className=@Model.DynamicClass.Name">Edit</a>'
             }
         ];
 
         let buttons = [{
             title: 'Delete',
-            postUrl: '/sitetriks/dynamic/deleteitems?assemblyName=@ViewBag.AssemblyName&className=@Model.DynamicClass.Name',
+            postUrl: '/sitetriks/dynamic/deleteitems?assemblyName=@Model.AssemblyName&className=@Model.DynamicClass.Name',
             type: 'danger',
                 @if (Model.DynamicClass.Properties.Any(p=>p.Name == "LinkId"))
                 {
                     <text>
-                    extraFields: ['LinkId'],
+                    extraFields: ['linkId'],
                     </text>
                 }
         }];
@@ -111,5 +108,5 @@
         var config = grid.build(columns, buttons, grid.defaultPager, data);
 
         let obj = grid.init('.grid', config);
-</script>
+    </script>
 }
