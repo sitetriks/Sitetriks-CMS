@@ -113,7 +113,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
     logger.log('initialazing upload module...');
     let url = `/sitetriks/files/uploadTemplate?isMultiple=${isMultiple}&libraryId=${libraryId}`;
 
-    Data.getJson({ url: url }).then(function (res) {
+    Data.getJson({ url: url, disableCache: true }).then(function (res) {
         $container.html(res);
 
         $inputFiles = $container.find('.input-files');
@@ -173,7 +173,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
                     .attr('accept', res.ext);
                 $dropArea.removeClass('disabled');
                 $notifier.text('Accepted files: ' + (res.type.displayName || res.type.extensions));
-                libraryAllowed = replaceAll(replaceAll(res.ext, '*', ''), ',', '|');
+                libraryAllowed = Utils.replaceAll(Utils.replaceAll(res.ext, '*', ''), ',', '|');
                 libraryPrefix = res.prefix;
             } else {
                 $inputFiles.attr('disabled', true);
@@ -307,7 +307,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
             if (res.success) {
 
                 mediator.dispatch('filesUploaded', { fileIds: res.ids, libraryId: libraryId, requester });
-                mediator.dispatch('uploadedFilesEvent', { fileIds: res.ids, sizeName: "Original", libraryId: libraryId, requester });
+                mediator.dispatch('uploadedFilesEvent', { fileIds: res.ids, sizeName: 'Original', libraryId: libraryId, requester });
 
                 cleanUp();
             }
@@ -390,8 +390,8 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         uploadedFiles = [];
         $inputFiles.val('');
         $filesContainer.html('');
-        $notifier.text('');
         $uploadBtn.addClass('disabled');
+        $('.file-handler-notifier').html('');
     }
 
     return {
@@ -458,6 +458,7 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         $btnPrev.on('click', prevPage);
         $container.on('change', '.thumbnailSelect', selectSize);
         $container.on('click', '.image-checkbox', checkCheckbox);
+        $container.on('click', '.checkmark', triggerCheckbox);
         $container.on('click', '.image-checkbox', toggleSelectDropdown);
         $btnSave.on('click', selectFiles);
         $btnEdit.on('click', selectFiles);
@@ -474,6 +475,7 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         $libraries.off('change', changeLibrary);
         $container.off('change', '.thumbnailSelect', selectSize);
         $container.off('click', '.image-checkbox', checkCheckbox);
+        $container.off('click', '.checkmark', triggerCheckbox);
         $container.off('click', '.image-checkbox', toggleSelectDropdown);
         $btnSave.off('click', selectFiles);
         $btnEdit.off('click', selectFiles);
@@ -567,6 +569,17 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         };
     }
 
+    function triggerCheckbox(ev) {
+        let $checkTick = $(this);
+        let $checkbox = $(this).parent().find('.image-checkbox');
+
+        $checkTick.on('click', function () {
+            $checkbox.prop('checked', false);
+        });
+
+        checkCheckbox();
+    }
+
     function checkCheckbox(ev) {
         let $checkbox = $(this);
         let id = $checkbox.attr('data-id');
@@ -611,8 +624,7 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     }
 
     function populateSelected(selected) {
-
-        selectedFiles = JSON.parse(JSON.stringify(selected));
+        selectedFiles = JSON.parse(JSON.stringify(selected)) || {};
         loadImages();
     }
 

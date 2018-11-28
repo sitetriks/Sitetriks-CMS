@@ -72,9 +72,7 @@
 <br />
 
 @section Scripts{
-    <script src="~/js/leaving-warning.js"></script>
     <script src="~/lib/custom/tinymce/tinymce.min.js"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script src="~/lib/custom/ace/ace.js" charset="utf-8"></script>
     <script src="~/lib/custom/ace/ext-language_tools.js" charset="utf-8"></script>
     <script src="~/js/dynamic-views.js"></script>
@@ -83,5 +81,6 @@
     <script>
         RazorViewsEditor.init(`@(Html.Raw(Model.Content))`, "#edit-dynamic-view-form", "#Content");
         DynamicViews.setupWidgetNameDropdown('select[name="WidgetName"]');
+        WarningWindow.attach();
     </script>
 }

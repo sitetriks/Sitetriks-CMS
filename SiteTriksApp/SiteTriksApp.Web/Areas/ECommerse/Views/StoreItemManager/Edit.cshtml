@@ -1,0 +1,174 @@
+﻿@model SiteTriks.ECommerseModule.Models.StoreItems.EditStoreItemViewModel
+
+@{
+    ViewBag.Title = "EditStoreItem";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/file-handler.css" />
+}
+<div class="backend-wrapper">
+    @using (Html.BeginForm("Edit", "StoreItemManager", FormMethod.Post, new { id = "create-store-item-form" }))
+    {
+        <div class="fixed-top-2">
+            @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/SecondNavHeader.cshtml")
+            <a href="@Url.Action("Details", "StoreManager", new { id = Model.StoreId })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
+            <button type="submit" class="btn-nav-2">Save & Exit</button>
+        </div>
+
+        <div class="page-properties">
+            <hr />
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.Title, new { htmlAttributes = new { @class = "form-control title-field inline-block validate", data_validation_type = "required length", data_min = "3" } })
+                    @Html.ValidationMessageFor(m => Model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.Price, new { htmlAttributes = new { @class = "form-control inline-block validate", data_validation_type = "number" } })
+                    @Html.ValidationMessageFor(m => Model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.IsOnSale, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.IsOnSale, new { htmlAttributes = new { @class = "form-control inline-block" } })
+                    @Html.ValidationMessageFor(m => Model.IsOnSale, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.SalePeriod, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.SalePeriod, new { htmlAttributes = new { @class = "form-control inline-block validate", data_validation_type = "int" } })
+                    @Html.ValidationMessageFor(m => Model.SalePeriod, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.SalePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.SalePrice, new { htmlAttributes = new { @class = "form-control inline-block validate", data_validation_type = "number" } })
+                    @Html.ValidationMessageFor(m => Model.SalePrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.SaleQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.SaleQuantity, new { htmlAttributes = new { @class = "form-control inline-block validate", data_validation_type = "int" } })
+                    @Html.ValidationMessageFor(m => Model.SaleQuantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.AvailableInPhysicalStore, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.AvailableInPhysicalStore, new { htmlAttributes = new { @class = "form-control inline-block" } })
+                    @Html.ValidationMessageFor(m => Model.AvailableInPhysicalStore, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.RemainingQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.RemainingQuantity, new { htmlAttributes = new { @class = "form-control inline-block validate", data_validation_type = "int" } })
+                    @Html.ValidationMessageFor(m => Model.RemainingQuantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row description-row">
+                @Html.LabelFor(m => Model.Categories, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.ListBoxFor(m => Model.CurrentCategories, Model.Categories.Select(c => new SelectListItem(c.Name, c.Id.ToString())), new { @class = "form-control inline-block", id = "categories-multiselect" })
+                    @Html.ValidationMessageFor(m => Model.RemainingQuantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="extra-fields-wrapper">
+            </div>
+
+            @Html.HiddenFor(m => m.MainImage, new { id = "main-image" })
+            @Html.HiddenFor(m => m.Images, new { id = "images" })
+
+            <div class="images-container">
+                <div class="image-buttons-container">
+                    <label>Main Image</label>
+                    <button id="btn-main-image" class="btn btn-backend" type="button" data-toggle="modal" data-target="#file-upload-modal">Main Image</button>
+                </div>
+
+                <div id="main-image-container" class="news-main-image-container">
+                    @if (!string.IsNullOrEmpty(Model.MainImage))
+                    {
+                        <div class="news-listed-main-image-container">
+                            <div class="news-listed-image-delete" data-id="@Model.MainImage" data-field="main-image"><span class="glyphicon glyphicon-remove"></span></div>
+                            <img src="/files/id/@Model.MainImage" class="display-image" />
+                        </div>
+                    }
+                </div>
+                <div class="image-buttons-container">
+                    <label>Images</label>
+                    <button id="btn-images" class="btn btn-backend" type="button" data-toggle="modal" data-target="#file-upload-modal">Images</button>
+                </div>
+                <div id="images-container" class="news-images-container">
+                    @if (!string.IsNullOrEmpty(Model.Images))
+                    {
+                        foreach (var imageId in Model.Images.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            <div class="news-listed-images-container">
+                                <div class="news-listed-image-delete" data-id="@imageId" data-field="images"><span class="glyphicon glyphicon-remove"></span></div>
+                                <img src="/files/id/@imageId" class="display-image" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="modal fade" id="file-upload-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Files</h4>
+                </div>
+                <div class="file-handler-wrapper">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/validator.js"></script>
+    <script type="text/javascript" src="~/js/modules/utils.js"></script>
+    <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
+    <script type="text/javascript" src="~/js/multiselect-setup.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/storeitemmanager.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var efc = JSON.parse('@Json.Serialize(Model.ExtraFieldsConfig)');
+            var logger = new Logger('debug');
+            var mediator = new Mediator(logger);
+            var currentExtraFields = JSON.parse('@Json.Serialize(Model.CurrentExtraFields)').reduce(function (map, obj) {
+                map[obj.id] = obj.value;
+                return map;
+            }, {});
+
+            createStoreItem(efc, '@Model.StoreId', logger, mediator, currentExtraFields);
+        })();
+    </script>
+}
+

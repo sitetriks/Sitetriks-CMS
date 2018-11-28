@@ -61,6 +61,7 @@
 @section Scripts {
     <script src="~/js/sitetriks/user-groups.js"></script>
     <script>
+        WarningWindow.attach();
         createUserGroup('@Url.Action("Create", "UserGroups")');
     </script>
 }

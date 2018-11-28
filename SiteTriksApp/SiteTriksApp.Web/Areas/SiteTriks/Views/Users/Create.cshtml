@@ -67,8 +67,9 @@
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script src="~/js/sitetriks/users.js"></script>
     <script>
-        $(document).ready(function () {
+        (function () {
+            WarningWindow.attach();
             initUserCreate();
-        });
+        })();
     </script>
 }

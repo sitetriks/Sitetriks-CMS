@@ -100,6 +100,14 @@
         padding-top: 9px;
     }
 
+    /*Images upload specific styles*/
+
+    .upload-container #drop-area .drop-info-btn {
+        padding: 0;
+    }
+
+        /**/
+
         #drop-area .drop-info-btn span.glyphicon {
             margin-right: 20px;
         }
@@ -258,6 +266,7 @@
 }
 
 #drop-area .drop-info-btn label {
+    padding: 10px 20px;
     cursor: pointer;
 }
 
@@ -279,4 +288,14 @@
 
 #drop-area.disabled div.drop-info-text {
     top: 60%;
+}
+
+
+/*Browser specific + Responsive*/
+
+/*IE 10+*/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    #drop-area.disabled .drop-info-btn label {
+        width: 270px;
+    }
 }

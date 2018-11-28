@@ -3,6 +3,15 @@
 @{
     ViewData["Title"] = "Profile";
     Layout = "/Views/Shared/_AccountLayout.cshtml";
+    string url = "/";
+
+    if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || User.IsInRole("Authorized back-end"))
+    {
+        // admin, superadmin,
+        url = "/sitetriks";
+
+    }
+
 }
 
 <div>
@@ -44,7 +53,7 @@
                     <div class="profile-form-carousel">
                         <div class="profile-form-wrapper">
                             <div class="image-wrapper">
-                                <img class="profile-form-img key" src="~/images/default-document-image.png" />
+                                <img class="profile-form-img key" src="~/images/profile/key.png" />
                             </div>
                             <div class="profile-form">
                                 <div class="form-header">
@@ -75,7 +84,7 @@
                         </div>
                         <div class="profile-form-wrapper">
                             <div class="image-wrapper">
-                                <img class="profile-form-img phone" src="~/images/default-document-image.png" />
+                                <img class="profile-form-img phone" src="~/images/profile/Mobile.png" />
                             </div>
                             <div class="profile-form">
                                 <div class="form-header">
@@ -129,61 +138,18 @@
     </content>
 </div>
 
-@await Html.PartialAsync("_AccountFooter")
+<footer class="frontend-footer profile-only-footer">
+    <div class="back-button">
+        <a href="@url">
+            <img class="" src="~/images/profile/back.png" alt="Home" /><span>Back to Dashboard</span>
+        </a>
+    </div>
+    <p class="ta-center"> SiteTriks CMS</p>
+</footer>
+
 
 @section Scripts {
+
     @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script>
-        (function () {
-            $('form').on('submit', submitForm);
-
-            function submitForm(ev) {
-                var $summary = $(this).find('.form-summary');
-                $summary.html('');
-                Data.postForm({ url: this.action, formData: new FormData(this) }).then(function (res) {
-                    if (res.message) {
-                        $summary.append(`<li>${res.message}</li>`);
-                    }
-
-                    if (res.messages && res.messages.length) {
-                        for (var i = 0; i < res.messages.length; i += 1) {
-                            $summary.append(`<li>${res.messages[i]}</li>`);
-                        }
-                    }
-                })
-
-                ev.preventDefault();
-                return false;
-            }
-        })();
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            let windowWidth = $(window).width();
-            let $imageKey = $('.profile-form-img.key');
-            let $imagePhone = $('.profile-form-img.phone');
-
-            let imageKeyFourk = '/images/profile/key-4K.png';
-            let imageKey = '/images/profile/key.png';
-            let imagePhoneFourk = '/images/profile/Mobile-4K.png';
-            let imagePhone = '/images/profile/Mobile.png';
-
-            console.log(windowWidth);
-
-            function selectLoginImage() {
-                if (windowWidth >= 2800) {
-                    $imageKey.attr('src', imageKeyFourk);
-                    $imagePhone.attr('src', imagePhoneFourk);
-
-                } else {
-                    $imageKey.attr('src', imageKey);
-                    $imagePhone.attr('src', imagePhone);
-                }
-            }
-
-            $(window).ready(selectLoginImage);
-            $(window).resize(selectLoginImage);
-        });
-    </script>
+    <script src="~/js/manage-profile-index.js"></script>
 }

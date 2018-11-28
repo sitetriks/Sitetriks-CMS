@@ -139,6 +139,7 @@
             var logger = new Logger('debug');
             var mediator = new Mediator(logger);
 
+            WarningWindow.attach();
             News.editNews(mlf, '@Url.Action("ValidateEditUrl", "News")', '@Model.NewsEN.Id', '@Url.Action("Mlf","News")', mediator, logger);
         })();
     </script>

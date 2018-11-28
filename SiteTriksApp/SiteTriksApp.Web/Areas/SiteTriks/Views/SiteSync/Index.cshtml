@@ -23,21 +23,21 @@
                                 {
                                     var currDomain = Model.Domain;
                                     var siteId = Model.SiteSyncTargets.FirstOrDefault(x => x.Url == currDomain).SiteId;
-                                <select id="site-sync-targets-list" class="site-sync-targets-holder form-control" title="SiteSync Target Website">
-                                    @foreach (var target in Model.SiteSyncTargets)
-                                    {
-                                        @if (target.Url == Model.Domain)
+                                    <select id="site-sync-targets-list" class="site-sync-targets-holder form-control" title="SiteSync Target Website">
+                                        @foreach (var target in Model.SiteSyncTargets)
                                         {
-                                            <option value="@target.Url, @target.SiteId" selected>@target.Name</option>
+                                            @if (target.Url == Model.Domain)
+                                            {
+                                                <option value="@target.Url, @target.SiteId" selected>@target.Name</option>
 
+                                            }
+                                            else
+                                            {
+                                                <option value="@target.Url, @target.SiteId">@target.Name</option>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <option value="@target.Url, @target.SiteId">@target.Name</option>
-                                        }
-                                    }
-                                </select>
-                                <input id="domain-holder" class="hide site-sync-domain-holder" value="@currDomain, @siteId" type="text" placeholder="Domain..." disabled="disabled" />
+                                    </select>
+                                    <input id="domain-holder" class="hide site-sync-domain-holder" value="@currDomain, @siteId" type="text" placeholder="Domain..." disabled="disabled" />
                                 }
 
                             }
@@ -58,9 +58,9 @@
                             <b class="danger">You havent site sync targets @Html.ActionLink("(Create)", "Index", "SiteSyncTargets")!</b>
                         }
                     </li>
-                    <li class="active"><a href="#test-connection" data-toggle="tab" class="custom-tabs-option"><b>Test connection</b></a></li>
+                    <li class="active"><a href="#test-connection" data-toggle="tab" class="custom-tabs-option"><b>Manage connections</b></a></li>
                     <li><a href="#granular" data-toggle="tab" class="custom-tabs-option"><b>Sync granular</b></a></li>
-                    <li><a href="#dynamic-config" data-toggle="tab" class="custom-tabs-option"><b>Sync dynamic configs</b></a></li>
+                    <li><a href="#dynamic-config" data-toggle="tab" class="custom-tabs-option"><b>Sync configs</b></a></li>
                     <li><a href="#history" data-toggle="tab" class="custom-tabs-option"><b>Sync history</b></a></li>
                 </ul>
             </div>
@@ -69,14 +69,12 @@
                     <div role="tabpanel" class="tab-pane fade in active" id="test-connection">
                         <div class="well site-sync-option-holder content-form-container">
                             <h4>Connection</h4>
-                          
-                                <input id="submit-connect" class="btn-sync" type="submit" value="Connect" />
-                            
-
+                            <input id="submit-connect" class="btn-sync" type="submit" value="Connect" />
+                            <input id="submit-disconnect" class="btn-sync" type="submit" value="Disconnect" />
                             <div id="connection-result"></div>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="granular">
+                    <div role="tabpanel" class="tab-pane fade in active" id="granular">
                         @if (Model.IsConnected)
                         {
                             <div class="choose-list">
@@ -158,38 +156,38 @@
                                                 }
 
                                                 @*@if (Model.BlogPosts.Count > 0)
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#blogposts">Blog posts</a>
-                    </h4>
-                </div>
-                <div id="blogposts" class="panel-collapse collapse">
-                    <ul id="blogposts-list" class="list-group checked-list-box">
-                        @foreach (var record in Model.BlogPosts)
-                        {
-                            <li class="list-group-item">
-                                <span class="model-id" hidden="hidden">@record.Id</span>
-                                <span class="model-title">@record.Title</span>
-                                @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
-                                {
-                                    <span class="float-right label label-success">Create</span>
-                                }
-                                else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
-                                {
-                                    <span class="float-right label label-warning">Edit</span>
-                                }
-                                else
-                                {
-                                    <span class="float-right label label-danger">Delete</span>
-                                }
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        }*@
+                                                    {
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                <h4 class="panel-title">
+                                                                    <a data-toggle="collapse" href="#blogposts">Blog posts</a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="blogposts" class="panel-collapse collapse">
+                                                                <ul id="blogposts-list" class="list-group checked-list-box">
+                                                                    @foreach (var record in Model.BlogPosts)
+                                                                    {
+                                                                        <li class="list-group-item">
+                                                                            <span class="model-id" hidden="hidden">@record.Id</span>
+                                                                            <span class="model-title">@record.Title</span>
+                                                                            @if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Create)
+                                                                            {
+                                                                                <span class="float-right label label-success">Create</span>
+                                                                            }
+                                                                            else if (record.Action == SiteTriks.Data.Models.Enums.SiteSyncActionType.Edit)
+                                                                            {
+                                                                                <span class="float-right label label-warning">Edit</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span class="float-right label label-danger">Delete</span>
+                                                                            }
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    }*@
 
                                                 @if (Model.News.Count > 0)
                                                 {
@@ -421,9 +419,9 @@
                         }
                         else
                         {
-                            <div class="alert-danger">
-                                <h3>Can not found connection to site for sync</h3>
-                            </div>
+                            @*<div class="alert-danger">
+                                    <h3>Can not found connection to site for sync</h3>
+                                </div>*@
                         }
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="dynamic-config">
@@ -457,8 +455,70 @@
                                         {
                                             @Html.TextBoxFor(m => m.Domain, htmlAttributes: new { hidden = "hidden", id = "history-domain-holder" })
 
-                                            <input id="submit-history" class="btn-sync" type="submit" value="Sync History" />
+                                            <input id="submit-history" class="btn-sync" type="submit" value="View other site history" />
                                         }
+
+                                        <div class="row">
+
+
+                                            <div class="col-md-12">
+                                                <h4>Site sync history</h4>
+                                                <div class="table-responsive">
+
+                                                    <table id="mytable" class="table table-bordred table-striped">
+
+                                                        <thead>
+
+                                                        <th><input type="checkbox" id="checkall" /></th>
+                                                        <th>DateCreated</th>
+                                                        <th>Origin Site</th>
+                                                        <th>TargetSite</th>
+                                                        <th>User requested sync</th>
+                                                        <th>Status</th>
+                                                        <th>View responses</th>
+                                                        <th>View site synced items</th>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <tr>
+                                                                <td><input type="checkbox" class="checkthis" /></td>
+                                                                <td>2018-11-07 16:28:24</td>
+                                                                <td>https://localhost:44327</td>
+                                                                <td>https://localhost:3777<td>
+                                                                <td>admin@mail.com</td>
+                                                                <td>Failed</td>
+                                                                <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                                                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><input type="checkbox" class="checkthis" /></td>
+                                                                <td>2018-11-07 16:28:24</td>
+                                                                <td>https://localhost:44327</td>
+                                                                <td>https://localhost:3777<td>
+                                                                <td>admin@mail.com</td>
+                                                                <td>Failed</td>
+                                                                <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                                                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td><input type="checkbox" class="checkthis" /></td>
+                                                                <td>2018-11-07 16:28:24</td>
+                                                                <td>https://localhost:44327</td>
+                                                                <td>https://localhost:3777<td>
+                                                                <td>admin@mail.com</td>
+                                                                <td>Finished</td>
+                                                                <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                                                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                                            </tr>                                                         
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -479,9 +539,9 @@
 @section scripts{
     <script src="~/js/site-sync.js"></script>
     <script>
-                        //$('#site-sync-targets-list').change(function () {
-                        //    console.log($(this).val());
-                        //    $("#domain-holder").val($(this).val());
-                        //});
+                                //$('#site-sync-targets-list').change(function () {
+                                //    console.log($(this).val());
+                                //    $("#domain-holder").val($(this).val());
+                                //});
     </script>
 }

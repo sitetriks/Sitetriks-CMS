@@ -38,7 +38,6 @@
     }
 </div>
 @section Scripts {
-    <script src="~/js/leaving-warning.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script>
         $('#edit-tag-form').on('submit', function (e) {
@@ -54,6 +53,8 @@
 
                 e.preventDefault();
             }
-        })
+        });
+
+        WarningWindow.attach();
     </script>
 }

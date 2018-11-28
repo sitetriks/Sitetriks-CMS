@@ -1,6 +1,6 @@
 function Pager($container, pager, onPageChangeHandler) {
     let sizes = pager.pageSizes || [10];
-    let pageSize = pager.default|| sizes[0];
+    let pageSize = pager.default || sizes[0];
     let currentPage = 1;
     let pagesCount = 1;
     let isLocked = false;
@@ -64,14 +64,14 @@ function Pager($container, pager, onPageChangeHandler) {
             setPageSize($pageSize.val());
             lock();
             onPageChangeHandler(currentPage, pageSize);
-        }else{
+        } else {
             setPageSize(pageSize);
         }
     }
 
     // methods
     function setPageSize(size) {
-        if (size) {
+        if (size && size !== pageSize) {
             pageSize = size;
             $pageSize.val(size);
             if (size === 'all') {
@@ -91,7 +91,7 @@ function Pager($container, pager, onPageChangeHandler) {
     }
 
     function setCurrentPage(page) {
-        if (page && pageSize !== 'all') {
+        if (page && page !== currentPage && pageSize !== 'all') {
             currentPage = page;
             $page.text(page);
             updateArrows();
@@ -134,18 +134,21 @@ function Pager($container, pager, onPageChangeHandler) {
         return this;
     }
 
+    function updateConfig(pager) {
+        sizes = pager.pageSizes || [10];
+        pageSize = pager.default || sizes[0];
+        this.setCurrentPage(1)
+            .setPagesCount(1)
+            .unlock();
+    }
+
     return {
         setCurrentPage,
         setPagesCount,
         setPageSize,
         lock,
         unlock,
+        updateConfig,
         dispose
     };
 }
-
-const defaultPager = {
-    pageSizes: [1,2,5, 10, 20, 50, 100, 'all'],
-    pageReadOnly: true,
-    default: 20
-};

@@ -98,13 +98,14 @@
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/endpoints.js"></script>
     <script>
-        $(document).ready(function (ev) {
+        (function (ev) {
             var selectedType = '@Model.Type';
             var selectedJoinTable = '@Model.JoinTable';
             var selectedJoinKey = '@Model.JoinKey';
             var selectedColumn = '@Model.Column';
 
+            WarningWindow.attach();
             initEndpointCreateEdit(selectedType, selectedJoinTable, selectedJoinKey, selectedColumn);
-        });
+        })();
     </script>
 }

@@ -148,8 +148,17 @@ function DataSource(dataSource) {
         }
     }
 
+    function updateConfig(dataSource) {
+        if (dataSource) {
+            type = dataSource.type || type;
+            sourceUrl = dataSource.url || sourceUrl;
+            defaultFilters = dataSource.defaultFilters || defaultFilters || [];
+        }
+    }
+
     return {
         getData,
-        updateDefaultFilters
+        updateDefaultFilters,
+        updateConfig
     };
 }

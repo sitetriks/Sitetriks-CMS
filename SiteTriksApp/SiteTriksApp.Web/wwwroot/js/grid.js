@@ -570,7 +570,7 @@ var Grid = function () {
         // search logic; 
         if (data.config.columns.filter(c => c.filter).length > 0) {
             $('<a></a>', {
-                text: 'Search',
+                text: 'Search by ',
                 class: 'btn btn-grid'
             }).on('click', function (ev) {
                 let $fields = $('.search-field');
@@ -767,7 +767,7 @@ var Grid = function () {
 
                 $('<input/>', {
                     type: 'text',
-                    placeholder: 'SEARCH: ' + columnConfiguration[i].title,
+                    placeholder: 'Search by ' + columnConfiguration[i].title,
                     'data-property': columnConfiguration[i].name,
                     'data-type': columnConfiguration[i].type,
                     // class: 'search-field hidden'
@@ -1029,9 +1029,10 @@ var Grid = function () {
                 }
             }
 
+            item = item || item === 0 ? item : '';
             switch (columnConfiguration[j].type) {
                 case 'checkbox':
-                    content = `<input type="checkbox" class="st-grid-checkbox" data-id="${item}"`
+                    content = `<input type="checkbox" class="st-grid-checkbox" data-id="${item}"`;
                     if (columnConfiguration[j].extraFields) {
                         for (var i = 0; i < columnConfiguration[j].extraFields.length; i++) {
                             content += ` data-${columnConfiguration[j].extraFields[i]}="${data[columnConfiguration[j].extraFields[i]]}"`;

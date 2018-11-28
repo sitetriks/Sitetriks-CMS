@@ -72,7 +72,7 @@
 
 
     $('.thumbnail-image-delete').on('click', function () {
-        var id = $(this).attr("data-id");
+        var id = $(this).attr('data-id');
         var $wrapper = $(this).parents('.thumbnail-wrapper');
 
         Data.getJson({ url: '/sitetriks/files/DeleteSingleFile?id=' + id, formData: new FormData() }).then(function (res) {
@@ -80,40 +80,42 @@
                 $wrapper.remove();
                 Notifier.createAlert({
                     containerId: $notifier,
-                    message: "Successfully deleting a thumbnail",
+                    message: 'Successfully deleting a thumbnail',
                     status: 'success'
                 });
             } else {
                 Notifier.createAlert({
                     containerId: $notifier,
-                    message: "We were unable to delete this thumbnail",
+                    message: 'We were unable to delete this thumbnail',
                     status: 'danger'
                 });
             }
-        })
-    })
+        }).then(function () {
+            location.reload();
+        });
+    });
 
     $('#generate-thumbnails').on('click', function () {
-        var id = $(this).attr("data-fileId");
+        var id = $(this).attr('data-fileId');
 
         Data.postJson({ url: '/sitetriks/files/GenerateThumbnailsForFile', data: id }).then(function (res) {
             if (res.success) {
                 Notifier.createAlert({
                     containerId: $notifier,
-                    message: "Successfully regenerated thumbnails",
+                    message: 'Successfully regenerated thumbnails',
                     status: 'success'
                 });
                 location.reload();
             } else {
                 Notifier.createAlert({
                     containerId: $notifier,
-                    message: "We were unable to generate thumbnails for the image.",
+                    message: 'We were unable to generate thumbnails for the image.',
                     status: 'danger'
                 });
             }
-        })
+        });
 
-    })
+    });
 
 
 

@@ -43,6 +43,7 @@
 @section Scripts {
 <script src="~/js/sitetriks/rss-feeds.js"></script>
 <script>
+    WarningWindow.attach();
     createRssFeed('@Url.Action("ValidateUrl", "Pages")', '@Url.Action("BuilderFields")?builderName=');   
 </script>
 }

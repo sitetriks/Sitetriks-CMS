@@ -8,14 +8,14 @@ var homepageDesktopFuncTionality = (function () {
         let scrollBottom = $(window).scrollTop() + $(window).height();
 
         if ($(this).scrollTop() >= 100) {
-            $(".header-blue").css("height", "0px")
-                .css("transition", "height 1s")
-                .css(".-webkit-transition", "height 1s");
+            $('.header-blue').css('height', '0px')
+                .css('transition', 'height 1s')
+                .css('.-webkit-transition', 'height 1s');
         }
 
         if ($(this).scrollTop() <= 80) {
-            $(".header-blue").css("height", "40px")
-                .css("transition", "height .25s");
+            $('.header-blue').css('height', '40px')
+                .css('transition', 'height .25s');
         }
     };
 
@@ -24,11 +24,11 @@ var homepageDesktopFuncTionality = (function () {
             function (e) {
                 $('.leaf-button-text').css('display', 'none');
                 $('.leaf-button-1').css('display', 'inline-block');
-                $('.close-menu').css('display', 'inline-block');
+                $('.close-menu').css('display', 'inline-block').click();            
             });
 
         $('.leaf-button-2').on('click', function () {
-            $("html").attr("class", "no-overflow");
+            $('html').attr('class', 'no-overflow');
         });
     }
 
@@ -40,14 +40,14 @@ var homepageDesktopFuncTionality = (function () {
 
         function addLine(selector, lines, customClass) {
             var parent = $(selector);
-            var lines = GetLine(3, lines, "diamondLine");
+            var lines = GetLine(3, lines, 'diamondLine');
 
             for (var i = 0; i < lines.length; i++) {
                 lines[i].addClass(customClass);
                 parent.append(lines[i]);
             }
 
-            $(".diamondLine").hover(function () {
+            $('.diamondLine').hover(function () {
                 for (var i = 0; i < lines.length; i++) {
                     lines[i].addClass('hover');
                 }
@@ -66,20 +66,20 @@ var homepageDesktopFuncTionality = (function () {
 
             var parent = $(selector);
             var angleInRad = DegreesToRad(angle);
-            var customClass = customClass || "default-icon-class";
+            var customClass = customClass || 'default-icon-class';
             var radius = maxRadius * ratioOfRadius;
             var top = maxRadius - Math.sin(angleInRad) * radius - height / 2;
             var left = maxRadius + Math.cos(angleInRad) * radius - height / 2;
 
-            var element = $("<div>").addClass("element")
+            var element = $('<div>').addClass('element')
                 .addClass(customClass)
-                .css("width", width).css("height", height).css("top", top).css("left", left).html(text);
+                .css('width', width).css('height', height).css('top', top).css('left', left).html(text);
 
-            element.attr("data-index", index);
+            element.attr('data-index', index);
 
             index++;
 
-            var lines = GetLine(3, lines, "line");
+            var lines = GetLine(3, lines, 'line');
 
             for (var i = 0; i < lines.length; i++) {
                 parent.append(lines[i]);
@@ -126,31 +126,31 @@ var homepageDesktopFuncTionality = (function () {
 
                 let shadow = "";
 
-                if ((angle == 45 || (angle > -47 && angle < -43) || angle == 315) && customClass === "line") {
-                    shadow = "0 3px 5px #c8d0d4";
+                if ((angle == 45 || (angle > -47 && angle < -43) || angle == 315) && customClass === 'line') {
+                    shadow = '0 3px 5px #c8d0d4';
                 }
-                else if ((angle >= -230 && angle < -200) && customClass === "line") { // rule for 10: 30 and 11 oclock
-                    shadow = "1px 0 5px #c8d0d4";
+                else if ((angle >= -230 && angle < -200) && customClass === 'line') { // rule for 10: 30 and 11 oclock
+                    shadow = '1px 0 5px #c8d0d4';
                 }
-                else if ((angle == 90 || (angle >= 40 && angle < 50) || angle == 0) && customClass === "line") {
-                    shadow = "3px 0 5px #c8d0d4";
+                else if ((angle == 90 || (angle >= 40 && angle < 50) || angle == 0) && customClass === 'line') {
+                    shadow = '3px 0 5px #c8d0d4';
                 }
-                else if ((angle > 90 && angle < 270) && customClass === "line") {
-                    shadow = "3px 0 5px #c8d0d4";
-                } else if ((angle <= 90 || angle >= 270) && customClass === "line") {
-                    shadow = "-3px 0 5px #c8d0d4";
+                else if ((angle > 90 && angle < 270) && customClass === 'line') {
+                    shadow = '3px 0 5px #c8d0d4';
+                } else if ((angle <= 90 || angle >= 270) && customClass === 'line') {
+                    shadow = '-3px 0 5px #c8d0d4';
                 }
 
-                var line = $("<div>")
+                var line = $('<div>')
                     .addClass(customClass)
-                    // .addClass("line" + LineIndex)            
-                    .css("height", lenght)
-                    .css("width", width)
-                    .css("top", startPoint.y)
-                    .css("left", startPoint.x)
-                    .css("transform", "rotate(" + angle + "deg)")
-                    .css("transform-origin", "50% 0%")
-                    .css("box-shadow", shadow);
+                    // .addClass('line' + LineIndex)            
+                    .css('height', lenght)
+                    .css('width', width)
+                    .css('top', startPoint.y)
+                    .css('left', startPoint.x)
+                    .css('transform', 'rotate(' + angle + 'deg)')
+                    .css('transform-origin', '50% 0%')
+                    .css('box-shadow', shadow);
                 segments.push(line)
 
                 LineIndex++;
@@ -260,22 +260,45 @@ var homepageDesktopFuncTionality = (function () {
             ];
 
 
-            addElement(0.7 * elementSizeBase, 0.8 * elementSizeBase * 3, 109, 0.65, ".dandelion-menu", "environment sync", twelveOclock, parentDevider, halfwidth, "environment_sync"); //12
-            addElement(0.9 * elementSizeBase, 0.9 * elementSizeBase * 3, 50, 0.65, ".dandelion-menu", "import tool (Sitefinity content)", one, parentDevider, halfwidth, "import_tool"); // 1
-            addElement(0.8 * elementSizeBase, 0.8 * elementSizeBase * 3, 27, 0.75, ".dandelion-menu", "version control (revision history)", oneThirty, parentDevider, halfwidth, "version_control"); // 1.5
-            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, 8, 0.9, ".dandelion-menu", "auto sitemap", two, parentDevider, halfwidth, "auto_sitemap"); // 2
-            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -3, 0.85, ".dandelion-menu", "multilingual", threeOclock, parentDevider, halfwidth, "multilingual"); // 3
-            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -18, 0.8, ".dandelion-menu", "forums", four, parentDevider, halfwidth, "forums"); // 4
-            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -40, 0.7, ".dandelion-menu", "modular", fourThirty, parentDevider, halfwidth, "modular"); // 4.5
-            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -150, 0.9, ".dandelion-menu", "blogs", sevenThirty, parentDevider, halfwidth, "blogs"); // 7.5
-            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -167, 1.1, ".dandelion-menu", "tagging", eight, parentDevider, halfwidth, "tagging"); // 8
-            addElement(0.6 * elementSizeBase, 0.7 * elementSizeBase * 3, -178, 1.25, ".dandelion-menu", "dynamic content", nineOclock, parentDevider, halfwidth, "dynamic_content"); // 9
-            addElement(0.7 * elementSizeBase, 0.9 * elementSizeBase * 3, -185, 1.3, ".dandelion-menu", "multisite management", ten, parentDevider, halfwidth, "multisite_management"); // 10
-            addElement(0.5 * elementSizeBase, 0.6 * elementSizeBase * 3, 165, 1.2, ".dandelion-menu", "personalization", tenThirty, parentDevider, halfwidth, "personalization"); // 10.5
-            addElement(0.7 * elementSizeBase, 0.9 * elementSizeBase * 3, 150, 1, ".dandelion-menu", "search " + '</br>' + "(Google integration)", eleven, parentDevider, halfwidth, "google_integration"); // 11
+            addElement(0.7 * elementSizeBase, 0.8 * elementSizeBase * 3, 109, 0.7, '.dandelion-menu', 'environment sync', twelveOclock, parentDevider, halfwidth, 'environment_sync'); //12
+            addElement(0.5 * elementSizeBase, 0.4 * elementSizeBase * 3, 100, 0.6, '.dandelion-menu', 'instance manager', twelveOclock, parentDevider, halfwidth, 'instance_manager'); //12
 
-            addLine(".dandelion-menu", sixOclock, "sixOclock"); // 6
-            addElement(80, 80, 180, 0, ".dandelion-menu", '<div class="logo-center"><img src="../../images/Sitetriks_logo.svg" alt="logo" style="width: 80px; height: 80px; padding-left:2px; margin-top:2px;"></div>', [], parentDevider, halfwidth); // 11
+            addElement(0.9 * elementSizeBase, 0.9 * elementSizeBase * 3, 45, 0.75, '.dandelion-menu', 'import tool' + '</br>' + '(Sitefinity content)', one, parentDevider, halfwidth, 'import_tool'); // 1
+            addElement(0.5 * elementSizeBase, 0.5 * elementSizeBase * 3, 70, 0.52, '.dandelion-menu', '1-click installation', one, parentDevider, halfwidth, 'click_installation'); // 1
+
+            addElement(0.8 * elementSizeBase, 0.8 * elementSizeBase * 3, 25, 0.8, '.dandelion-menu', 'version control (revision history)', oneThirty, parentDevider, halfwidth, 'version_control'); // 1.5
+            addElement(0.5 * elementSizeBase, 0.5 * elementSizeBase * 3, 35, 0.5, '.dandelion-menu', 'scheduled publishing', oneThirty, parentDevider, halfwidth, 'scheduled_publishing'); // 1.5
+
+            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, 8, 0.95, '.dandelion-menu', 'auto sitemap', two, parentDevider, halfwidth, 'auto_sitemap'); // 2
+
+            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -3, 0.94, '.dandelion-menu', 'multilingual', threeOclock, parentDevider, halfwidth, 'multilingual'); // 3
+            addElement(0.5 * elementSizeBase, 0.5 * elementSizeBase * 3, 1, 0.6, '.dandelion-menu', 'thumbnail generation', threeOclock, parentDevider, halfwidth, 'thumbnail_generation'); // 3
+
+            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -17, 0.8, '.dandelion-menu', 'forums', four, parentDevider, halfwidth, 'forums'); // 4
+            addElement(0.5 * elementSizeBase, 0.4 * elementSizeBase * 3, -21, 0.6, '.dandelion-menu', 'seo optimised', four, parentDevider, halfwidth, 'seo_optimised'); // 4
+
+            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -36, 0.8, '.dandelion-menu', 'modular', fourThirty, parentDevider, halfwidth, 'modular'); // 4.5
+            addElement(0.5 * elementSizeBase, 0.3 * elementSizeBase * 3, -51, 0.57, '.dandelion-menu', 'rtl support', fourThirty, parentDevider, halfwidth, 'rtl_support'); // 4.5
+
+            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -155, 1.1, '.dandelion-menu', 'blogs', sevenThirty, parentDevider, halfwidth, 'blogs'); // 7.5
+            addElement(0.5 * elementSizeBase, 0.5 * elementSizeBase * 3, -140, 0.7, '.dandelion-menu', 'multi-device layout builder', sevenThirty, parentDevider, halfwidth, 'layout_builder'); // 7.5
+
+            addElement(0.6 * elementSizeBase, 0.6 * elementSizeBase * 3, -167, 1.2, '.dandelion-menu', 'tagging', eight, parentDevider, halfwidth, 'tagging'); // 8
+            addElement(0.4 * elementSizeBase, 0.4 * elementSizeBase * 3, -165, 0.8, '.dandelion-menu', 'granular permissions', eight, parentDevider, halfwidth, 'granular_permissions'); // 8
+
+            addElement(0.6 * elementSizeBase, 0.7 * elementSizeBase * 3, -178, 1.3, '.dandelion-menu', 'dynamic content', nineOclock, parentDevider, halfwidth, 'dynamic_content'); // 9
+            addElement(0.5 * elementSizeBase, 0.4 * elementSizeBase * 3, -180, 0.8, '.dandelion-menu', 'image tracking', nineOclock, parentDevider, halfwidth, 'image_tracking'); // 9
+
+            addElement(0.7 * elementSizeBase, 0.9 * elementSizeBase * 3, -185, 1.4, '.dandelion-menu', 'multisite management', ten, parentDevider, halfwidth, 'multisite_management'); // 10
+
+            addElement(0.5 * elementSizeBase, 0.6 * elementSizeBase * 3, 161, 1.2, '.dandelion-menu', 'personalization', tenThirty, parentDevider, halfwidth, 'personalization'); // 10.5
+            addElement(0.5 * elementSizeBase, 0.6 * elementSizeBase * 3, 160, 0.8, '.dandelion-menu', 'cdn integrations azure-amazon', tenThirty, parentDevider, halfwidth, 'cdn_integrations'); // 10.5
+
+            addElement(0.7 * elementSizeBase, 0.9 * elementSizeBase * 3, 150, 1.1, '.dandelion-menu', 'search ' + '</br>' + '(Google integration)', eleven, parentDevider, halfwidth, 'google_integration'); // 11
+            addElement(0.5 * elementSizeBase, 0.4 * elementSizeBase * 3, 131, .62, '.dandelion-menu', 'widget tracking', eleven, parentDevider, halfwidth, 'widget_tracking'); // 11
+
+            addLine('.dandelion-menu', sixOclock, 'sixOclock'); // 6
+            addElement(80, 80, 180, 0, '.dandelion-menu', '<div class="logo-center"><img src="../../images/Sitetriks_logo.svg" alt="logo" style="width: 80px; height: 80px; padding-left:2px; margin-top:2px;"></div>', [], parentDevider, halfwidth); // 11
         }
 
         return {
@@ -292,7 +315,15 @@ var homepageDesktopFuncTionality = (function () {
             let windowWidth = $(window).width();
             let containerHalfWidth;
 
-            if ((windowWidth > 1280) && !(state == 0)) {
+            if (windowWidth >= 2880) {
+                $('.dandelion-menu').html('');
+                $('.dandelion-menu').css('height', '1225px')
+                    .css('width', '1402px');
+                drawSnowflakeGlobal.drawSnowflake(700, 175, 2);
+                state = 3;
+            }
+
+            else if ((windowWidth > 1280 && windowWidth < 2880) && !(state == 0)) {
                 $('.dandelion-menu').html('');
                 $('.dandelion-menu').css('height', '700px')
                     .css('width', '802px');
@@ -321,7 +352,6 @@ var homepageDesktopFuncTionality = (function () {
     var moveToMiddleMenuIcon = function () {
 
         var $dandelionMenu = $('.dandelion-menu');
-        console.log($dandelionMenu);
         $dandelionMenu.on('click', '.element', moveToIcon);
 
         function scrollcb(target) {
@@ -330,7 +360,7 @@ var homepageDesktopFuncTionality = (function () {
             let $targetIcon;
             //  $targetIcon = $(`#${targetclass}`);
 
-            $targetIcon = $("#" + targetclass);
+            $targetIcon = $('#' + targetclass);
             let scrollDistance = $targetIcon.offset().top - 125;
 
             // scroll to the element
@@ -370,10 +400,10 @@ var homepageDesktopFuncTionality = (function () {
 var mobileMenuFunctionality = (function () {
 
     var clicked = false;
-    const hamburgerCompress = '/images/mobile/Compress.gif';
-    const hamburgerExpand = '/images/mobile/Expand.gif';
-    const logoDark = '/images/mobile/LOGO_mob.svg';
-    const logoWhite = '/images/mobile/LOGO_mob_w.svg';
+    const hamburgerCompress = 'https://sitetriks.azureedge.net/static-files/images/mobile/Compress.gif';
+    const hamburgerExpand = 'https://sitetriks.azureedge.net/static-files/images/mobile/Expand.gif';
+    const logoDark = 'https://sitetriks.azureedge.net/static-files/images/mobile/LOGO_mob.svg';
+    const logoWhite = 'https://sitetriks.azureedge.net/static-files/images/mobile/LOGO_mob_w.svg';
     const selectedSection = "<div class=\"col col-xs-12\"><div class=\"selected-feature\" id=\"static-section\"><div class=\"feature-content\"></div></div></div>";
 
     let $detailedMenuItem = $('.wrapper-menu-items');
@@ -385,7 +415,7 @@ var mobileMenuFunctionality = (function () {
     let windowWidth = $(window).width();
 
     var closeMobileMenu = function () {
-        $('#mobile-view-top-menu').slideUp("slow");
+        $('#mobile-view-top-menu').slideUp('slow');
         $('.hamburger-image').attr('src', hamburgerExpand);
         setTimeout(function () {
             $('.logo-mobile-image').attr('src', logoDark);
@@ -395,7 +425,7 @@ var mobileMenuFunctionality = (function () {
     };
 
     var expandMobileMenu = function () {
-        $('#mobile-view-top-menu').slideDown("slow");
+        $('#mobile-view-top-menu').slideDown('slow');
         $('.hamburger-image').attr('src', hamburgerCompress);
         setTimeout(function () {
             $('.logo-mobile-image').attr('src', logoWhite);
@@ -447,7 +477,6 @@ var mobileMenuFunctionality = (function () {
         })
     }
 
-
     let technologyListToggle = function () {
         $technologyDropdown.click(function () {
             $('.technology-links').toggle();
@@ -472,7 +501,6 @@ var mobileMenuFunctionality = (function () {
     var mobileIconSelect = function () {
         $('#mobile-view-top-menu').on('click', '.menu-icon', function (event) {
             let $button = $(event.target);
-            console.log($button);
 
             if (!$button.hasClass('menu-icon')) {
                 $button = $button.parents('.menu-icon');
@@ -518,6 +546,7 @@ var mobileMenuFunctionality = (function () {
 var bottomMenuFunctionality = (function () {
     let menusChanged = false;
     let url = 'downloads';
+    var $bottomSection = $('.bottom-menu').find('.feature-content');
 
     var changeMenu = function () {
         let windowWidth = $(window).width();
@@ -531,7 +560,7 @@ var bottomMenuFunctionality = (function () {
 
         } else if (windowWidth >= 768) {
             // check state of toggle menu and close if expanded
-            if ($(".toggle-menu").attr("data-open-state") === "expanded" && windowWidth <= 768) {
+            if ($('.toggle-menu').attr('data-open-state') === 'expanded' && windowWidth <= 768) {
                 $('.shrink-menu').click();
             }
 
@@ -542,7 +571,6 @@ var bottomMenuFunctionality = (function () {
     }
 
     var loadDefaultBottomMenu = function (url) {
-        var $bottomSection = $('.toggle-bottom-menu.container');
 
         Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
             if (res.success) {
@@ -557,9 +585,72 @@ var bottomMenuFunctionality = (function () {
     }
 })();
 
+/* Request demo button */
+
+$('.demo-button').on('click', function () {
+    console.log('clicked');
+
+    $('html, body').animate({
+        scrollTop: ($('.bottom-menu').offset().top)
+    }, 500);
+
+    bottomMenuFunctionality.loadDefaultBottomMenu('contact-us');
+})
+
+/* taken from home page js widgets*/
+function attachTermsAndContidionsHandlers() {
+    var documentBody = document.body;
+    var modal = document.getElementById('myModal');
+    var btn = document.getElementById('termsDetails');
+    var closeSpan = document.getElementsByClassName('close')[0];
+
+    if (!btn || !modal || !closeSpan) {
+        return;
+    }
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+        modal.style.display = 'block';
+        documentBody.style.overflowY = 'hidden';
+    };
+
+    closeSpan.onclick = function () {
+        modal.style.display = 'none';
+        documentBody.style.overflowY = 'unset';
+    };
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            documentBody.style.overflowY = 'unset';
+        }
+    };
+}
+
+function attachReadMoreHandler() {
+    $('body').on('click', '.read-more', function () {
+        let $target = $(this);
+
+        let $textBlocks = $target.parents('.tree-row').find('.content');
+        let $readMoreText = $target.parents('.tree-row').find('.read-more');
+
+        $textBlocks.each(function () {
+            $(this).toggleClass('short-text');
+        });
+
+        $readMoreText.each(function () {
+            let $currentTarget = $(this);
+            $currentTarget.children('.more').toggle();
+            $currentTarget.children('.less').toggle();
+        });
+    });
+}
+
 $(document).ready(function () {
     homepageDesktopFuncTionality.leafImageToggle();
     homepageDesktopFuncTionality.moveToMiddleMenuIcon();
+
+    attachReadMoreHandler();
+    attachTermsAndContidionsHandlers();
 })
 $(document).ready(function () {
     mobileMenuFunctionality.toggleDetailedMenu();
@@ -572,8 +663,8 @@ $(document).ready(function () {
 
 $(window).scroll(homepageDesktopFuncTionality.resizeBlueNavbar);
 $(window).ready(homepageDesktopFuncTionality.moveToMiddleMenuIcon);
-$(window).ready(homepageDesktopFuncTionality.redrawSnowflakeGlobal.reDrawSnowflake);
-$(window).resize(homepageDesktopFuncTionality.redrawSnowflakeGlobal.reDrawSnowflake);
+//$(window).ready(homepageDesktopFuncTionality.redrawSnowflakeGlobal.reDrawSnowflake);
+//$(window).resize(homepageDesktopFuncTionality.redrawSnowflakeGlobal.reDrawSnowflake);
 
 $(window).ready(mobileMenuFunctionality.changeSlogan());
 $(window).resize(mobileMenuFunctionality.changeSlogan);
@@ -583,4 +674,3 @@ $(window).resize(mobileMenuFunctionality.removeMobileMenu);
 
 $(window).ready(bottomMenuFunctionality.changeMenu);
 $(window).resize(bottomMenuFunctionality.changeMenu);
-$(document).ready(bottomMenuFunctionality.loadDefaultBottomMenu('downloads'));

@@ -1,8 +1,14 @@
 ﻿@model SiteTriks.Services.Models.LayoutModel
 
-@if (Model.LayoutRows == null)
-{
-    return;
+@{ 
+    if (Model.LayoutRows == null)
+    {
+        return;
+    }
+
+    bool isPreview = (bool)ViewBag.IsPreview;
+    string preview = (bool)ViewBag.IsPreview ? "preview" : "";
+    string culture = (string)ViewBag.Language;
 }
 
 <div class="layout-content container-fluid">
@@ -15,11 +21,22 @@
             string cssClasses = string.Empty;
             foreach (var col in column.Resolutions)
             {
-                cssClasses += $"col-{col.Key}-{col.Value.Size} col-{col.Key}-offset-{col.Value.Offset} ";
-
-                if ((bool)ViewBag.IsPreview)
+                if (isPreview)
                 {
-                    cssClasses += $"st-col-{col.Key}-{col.Value.Size} st-col-{col.Key}-offset-{col.Value.Offset} ";
+                    cssClasses += $"layout-preview-col st-col-{col.Key}-{col.Value.Size} st-col-{col.Key}-offset-{col.Value.Offset} ";
+                }
+                else
+                {
+                    if (col.Value.Size != 0)
+                    {
+                        cssClasses += $"col-{col.Key}-{col.Value.Size}";
+                    }
+                    else
+                    {
+                        cssClasses += $"hidden-{col.Key}";
+                    }
+
+                    cssClasses += $" col-{col.Key}-offset-{col.Value.Offset} ";
                 }
             }
 
@@ -29,7 +46,7 @@
             }
 
             <div data-placeholder="@placeholder" class="@((bool)ViewBag.IsPreview ? "drop drop-layout connected-widget-container placeholder" : "") @cssClasses">
-                @await Component.InvokeAsync("RenderPlaceholder", new { innerContent = Model.InnerContent, placeholder, version = Model.Version, preview = (bool)ViewBag.IsPreview ? "preview" : "", culture = (string)ViewBag.Language })
+                @await Component.InvokeAsync("RenderPlaceholder", new { innerContent = Model.InnerContent, placeholder, preview , culture })
             </div>
         }
         @Html.Raw(string.Format("</{0}>", item.Tag))

@@ -2,29 +2,31 @@
     return {
         init: function (w) {
             $(document).ready(function () {
-                if (typeof w.makeDrop === "function") {
-                    w.makeDrop($(".drop"));
+                if (typeof w.makeDrop === 'function') {
+                    w.makeDrop($('.drop'));
                 }
 
-                $(".drop").sortable();
+                $('.drop').sortable();
 
                 $('.drag').draggable({
                     revert: 'true',
-                    helper: "clone",
+                    helper: 'clone',
                     opacity: 0.75,
-                    appendTo: 'body'
+                    start: function (event, ui) {
+                        ui.helper.css('width', '85%');
+                    }
                 });
 
-                $(".connected-widget-container").sortable({
+                $('.connected-widget-container').sortable({
                     appendTo: 'body',
                     helper: 'clone',
-                    connectWith: ".connected-widget-container",
+                    connectWith: '.connected-widget-container',
                     receive: function (event, ui) {
-                        var id = ui.item.data("identifier");
+                        var id = ui.item.data('identifier');
 
                         var widget = w.getPageContent().find(e => e.id === id);
 
-                        widget.Placeholder = $(event.target).attr("data-placeholder");
+                        widget.Placeholder = $(event.target).attr('data-placeholder');
                     },
                     stop: function (event, ui) {
                         var containers = $('.drop');
@@ -34,13 +36,13 @@
                             var children = $(this).children('.preview-placeholder');
 
                             children.each(function () {
-                                var id = $(this).data("identifier");
+                                var id = $(this).data('identifier');
 
-                                if (id == undefined) {
+                                if (!id) {
                                     return;
                                 }
 
-                                var widget = w.getPageContent().find(e => e.id == id);
+                                var widget = w.getPageContent().find(e => e.id === id);
                                 widget.order = order;
                                 order++;
                             });
@@ -55,5 +57,5 @@
                 }).disableSelection();
             });
         }
-    }
+    };
 }();

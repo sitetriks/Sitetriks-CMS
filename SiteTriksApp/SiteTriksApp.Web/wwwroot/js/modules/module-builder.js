@@ -76,9 +76,13 @@ var ModuleBuilder = (function () {
 
             for (let j = 0; j < layout[i].columns.length; j++) {
                 let col = layout[i].columns[j];
-                let cssClass = '';
+                let cssClass = 'layout-preview-col';
                 for (let key in col.resolutions) {
-                    cssClass += `col-${key}-${col.resolutions[key].size} st-col-${key}-${col.resolutions[key].size} `;
+                    cssClass += ` col-lg-1 st-col-${key}-${col.resolutions[key].size} `;
+                }
+
+                if (col.properties && col.properties.cssClass && col.properties.cssClass.trim()) {
+                    cssClass += ` ${col.properties.cssClass} `;
                 }
 
                 let $col = $container.find(`div[data-placeholder="${col.properties.placeholder}"]`);
@@ -136,56 +140,32 @@ var ModuleBuilder = (function () {
             });
         }
 
-        initFunctions['html'] = {
-            init: function () {
-                let $container = $("#html-widget-holder");
-                let $list = $("#html-options-list");
+        initFunctions['html'] = (function () {
+            function init(element) {
+                let $container = $('#html-widget-holder');
+                let $list = $('#html-options-list');
 
-                let $textarea = $("<textarea></textarea>", {
-                    id: "add-html-content"
+                SharedBlocks.init('new', $container, element);
+                $list.on('change', function (ev) {
+                    SharedBlocks.init(ev.target.value, $container, element);
                 });
-
-                $container.html($textarea);
-
-                Utils.addEditor('#add-html-content', 800, 300);
-
-                SharedBlocks.addSetup($list, $container, "shared-block-titles");
-                SharedBlocks.addShare($container, "add-html-content");
-            },
-            show: function (element) {
-                var $container = $("#html-widget-holder");
-                var $list = $("#html-options-list");
-
-                SharedBlocks.editSetup($list, $container, "shared-block-titles", element);
-
-                if (Utils.isGuid(element)) {
-                    $("#html-options-list").val("shared").change();
-                    $("#shared-block-id").val(element);
-                } else {
-                    var $textarea = $("<textarea></textarea>", {
-                        id: "add-html-content"
-                    });
-
-                    $container.html($textarea);
-
-                    $('#add-html-content').text(element);
-                    Utils.addEditor('#add-html-content', 800, 300);
-
-                    $("#html-options-list").val("new").change();
-                }
-            },
-            save: function () {
-                let state = $("#html-options-list").find(":selected").val();
-                var id = $("#shared-block-id").val();
-
-                if (state == "shared") {
-                    return $("#shared-block-id").val();
-                }
-                else {
-                    return tinymce.get('add-html-content').getContent();
-                }
             }
-        }
+
+            return {
+                init: init,
+                show: init,
+                save: function () {
+                    let state = $('#html-options-list').val();
+
+                    if (state === 'shared') {
+                        return $('#shared-block-titles').val();
+                    }
+                    else {
+                        return textEditor.getContent('add-html-content');
+                    }
+                }
+            };
+        })();
 
         initFunctions['css'] = {
             init: function () {
@@ -786,30 +766,58 @@ var ModuleBuilder = (function () {
         }
 
         initFunctions['newsCarousel'] = {
-            init: function () { },
+            init: function () {
+                $('select.carousel-count-type').on('change', function (ev) {
+                    if (ev.target.value === 'all') {
+                        $('#latest-news-count').parents('label').first().hide();
+                    } else {
+                        $('#latest-news-count').parents('label').first().show();
+                    }
+                });
+            },
             show: function (element) {
-                let elements = element.split('/');
-                $('#order-by-date').prop('checked', elements[0] === 'true');
-                $('input[type="radio"][value="' + elements[1] + '"]').prop('checked', true);
-                if ($.isNumeric(elements[2])) {
-                    $('#latest-news-count').val(elements[2]);
+                let model;
+                try {
+                    model = JSON.parse(element);
+                } catch (e) {
+                    // for backwards compatibility
+                    let elements = element.split('/');
+                    model = {
+                        isAscending: elements[0],
+                        template: elements[1],
+                        take: elements[2]
+                    };
                 }
+
+                $('#order-by-date').prop('checked', model.isAscending);
+                let $newsCount = $('#latest-news-count');
+                $newsCount.val(model.take);
+                $('select.carousel-count-type').val(model.template).on('change', function (ev) {
+                    if (ev.target.value === 'all') {
+                        $newsCount.parents('label').first().hide();
+                    } else {
+                        $newsCount.parents('label').first().show();
+                    }
+                });
+
+                $('.slides-lg').val(model.slides_lg || 3);
+                $('.slides-md').val(model.slides_md || 3);
+                $('.slides-sm').val(model.slides_sm || 2);
+                $('.slides-xs').val(model.slides_xs || 1);
             },
             save: function () {
-                let template = $('input[type="radio"][name="template"]:checked').val() || 'all';
+                let template = $('select.carousel-count-type').val();
                 let isAscending = $('#order-by-date').prop('checked');
-                let element = '';
+                let take = $('#latest-news-count').val() || 3;
 
-                element = isAscending + '/' + template;
+                let slides_lg = +$('.slides-lg').val() || 3;
+                let slides_md = +$('.slides-md').val() || 3;
+                let slides_sm = +$('.slides-sm').val() || 2;
+                let slides_xs = +$('.slides-xs').val() || 1;
 
-                if (template === 'latest') {
-                    // 3 news if it is not specified
-                    element += '/' + ($('#latest-news-count').val() || 3);
-                }
-
-                return element;
+                return JSON.stringify({ template, isAscending, take, slides_lg, slides_md, slides_sm, slides_xs });
             }
-        }
+        };
 
         initFunctions['allNews'] = {
             init: function () { },

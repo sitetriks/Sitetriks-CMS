@@ -20,16 +20,16 @@
             {
                 if (SignInManager.IsSignedIn(User))
                 {
-                    <div class="">
-                        @using (Html.BeginForm("LogOut", "Account", new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="submit" value="Logout" />
-                        }
-                    </div>
-                    <div class="">
+                <div class="logout-icon">
+                    @using (Html.BeginForm("LogOut", "Account", new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString }, FormMethod.Post, true, new { id = "logoutForm", @class = "inline-block" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="" />
+                    }
+                </div>
+                    @*<div class="">
                         @Html.ActionLink("Hello " + UserManager.GetUserName(User) + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
-                    </div>
+                    </div>*@
                 }
                 else
                 {

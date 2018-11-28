@@ -5,6 +5,7 @@
     <UserSecretsId>aspnet-SiteTriksApp.Web-F71A9A06-9896-4C70-BC66-76DAE646A823</UserSecretsId>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,28 +25,24 @@
     <PackageReference Include="Hangfire.MySql.Core" Version="2.1.5" />
     <PackageReference Include="HangFire.SqlServer" Version="1.6.17" />
     <PackageReference Include="MailKit" Version="2.0.4" />
-    <PackageReference Include="LicenseBuilder" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
-    <PackageReference Include="SiteTriks" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.BlogModule" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.Configuration" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.Data" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.DatabaseApi" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.DocumentationModule" Version="1.0.2.2" />
-    <PackageReference Include="SiteTriks.Dynamic" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.Extensions" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.ForumModule" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.Infrastructure" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.RssFeedModule" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.Services" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.SiteMapModule" Version="1.0.2.1" />
-    <PackageReference Include="SiteTriks.SiteSync" Version="1.0.2.2" />
-    <PackageReference Include="SiteTriksLicenseManager.Models" Version="1.0.2" />
+    <PackageReference Include="SiteTriks" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.BlogModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.Configuration" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.Dynamic" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.ECommerseModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.Extensions" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.ForumModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.Infrastructure" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.RssFeedModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="2.0.0" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +52,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\ECommerse\Controllers\" />
+    <Folder Include="Areas\ECommerse\Data\" />
+    <Folder Include="Areas\ECommerse\Models\" />
     <Folder Include="Areas\Forum\Controllers\" />
     <Folder Include="Areas\Forum\Data\" />
     <Folder Include="Areas\Forum\Models\" />
@@ -71,6 +71,8 @@
     <Folder Include="wwwroot\cmsUploads\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\images\contact-us\" />
+    <Folder Include="wwwroot\images\licenses-action-buttons\" />
+    <Folder Include="wwwroot\images\sprites\" />
     <Folder Include="wwwroot\lib\custom\slider-master\" />
     <Folder Include="wwwroot\lib\custom\slick\" />
   </ItemGroup>
@@ -172,10 +174,156 @@
     <None Include="wwwroot\lib\custom\code-prettify\src\run_prettify.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\css.js" />
     <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
+    <None Include="wwwroot\lib\signalr\dist\browser\signalr.js" />
+    <None Include="wwwroot\lib\signalr\dist\browser\signalr.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\browser\signalr.min.js" />
+    <None Include="wwwroot\lib\signalr\dist\browser\signalr.min.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\AbortController.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\AbortController.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\browser-index.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\browser-index.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Errors.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Errors.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HandshakeProtocol.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HandshakeProtocol.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HttpClient.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HttpClient.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HttpConnection.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HttpConnection.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnection.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnection.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnectionBuilder.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnectionBuilder.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\IConnection.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\IConnection.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\IHttpConnectionOptions.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\IHttpConnectionOptions.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\IHubProtocol.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\IHubProtocol.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\ILogger.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\ILogger.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\index.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\index.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\ITransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\ITransport.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\JsonHubProtocol.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\JsonHubProtocol.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Loggers.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Loggers.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\LongPollingTransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\LongPollingTransport.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\ServerSentEventsTransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\ServerSentEventsTransport.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Stream.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Stream.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\TextMessageFormat.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\TextMessageFormat.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Utils.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\Utils.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\WebSocketTransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\cjs\WebSocketTransport.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\AbortController.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\AbortController.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\browser-index.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\browser-index.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Errors.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Errors.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HandshakeProtocol.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HandshakeProtocol.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HttpClient.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HttpClient.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HttpConnection.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HttpConnection.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HubConnection.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HubConnection.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HubConnectionBuilder.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\HubConnectionBuilder.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\IConnection.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\IConnection.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\IHttpConnectionOptions.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\IHttpConnectionOptions.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\IHubProtocol.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\IHubProtocol.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\ILogger.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\ILogger.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\index.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\index.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\ITransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\ITransport.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\JsonHubProtocol.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\JsonHubProtocol.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Loggers.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Loggers.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\LongPollingTransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\LongPollingTransport.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\ServerSentEventsTransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\ServerSentEventsTransport.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Stream.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Stream.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\TextMessageFormat.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\TextMessageFormat.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Utils.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\Utils.js.map" />
+    <None Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.js" />
+    <None Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.js.map" />
+    <None Include="wwwroot\lib\signalr\README.md" />
+    <None Include="wwwroot\robots.txt" />
+  </ItemGroup> 
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\AbortController.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\browser-index.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Errors.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HandshakeProtocol.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HttpClient.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HttpConnection.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HubConnection.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HubConnectionBuilder.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\IConnection.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\IHttpConnectionOptions.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\IHubProtocol.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\ILogger.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\index.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\ITransport.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\JsonHubProtocol.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Loggers.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\LongPollingTransport.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\ServerSentEventsTransport.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Stream.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\TextMessageFormat.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Utils.d.ts" />
+    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.d.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\ECommerse\Views\CategoryManager\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Forum\Views\Posts\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Forum\Views\Shared\ProfileLinkPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Forum\Views\Shared\_ForumLayout2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SiteTriks\Views\Widgets\Blog.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\SiteTriks\Views\Widgets\StoreItem.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\BaseWidget\Blog\Display.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\BaseWidget\Forum\Display.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\BaseWidget\StoreItem\Display.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Components\StoreGridWidget\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

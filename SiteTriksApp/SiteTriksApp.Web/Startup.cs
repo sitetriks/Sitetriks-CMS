@@ -17,6 +17,8 @@ using SiteTriks.Extentions.DynamicViews;
 using SiteTriks.Extentions.WidgetModels;
 using SiteTriks.Helpers;
 using SiteTriks.Services.Contracts;
+using SiteTriks.SiteSync.Hubs;
+using SiteTriksApp.Web.Areas.ECommerse.Extentions.WidgetModels;
 using SiteTriksApp.Web.Data;
 using SiteTriksApp.Web.Services;
 using System;
@@ -39,9 +41,6 @@ namespace SiteTriksApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Load views from another assemblies
-            //var assembly = typeof(HtmlBlocksController).GetTypeInfo().Assembly;
-
             services.Configure<IISOptions>(options =>
             {
                 options.ForwardClientCertificate = false;
@@ -128,9 +127,9 @@ namespace SiteTriksApp.Web
 
             // -----------------------------------------------------------------------------------------------------------
             // Store widgets
-            //WidgetRegistry.RegisterWidget<StoreGridWidgetModel>("storeGrid", "Grid");
-            //WidgetRegistry.RegisterWidget<StoreFilterWidgetModel>("storeFilter", "Filter Menu");
-            //WidgetRegistry.RegisterWidget<StoreItemWidgetModel>("storeItem", "Store Item");
+            WidgetRegistry.RegisterWidget<StoreGridWidgetModel>("storeGrid", "Grid");
+            WidgetRegistry.RegisterWidget<StoreFilterWidgetModel>("storeFilter", "Filter Menu");
+            WidgetRegistry.RegisterWidget<StoreItemWidgetModel>("storeItem", "Store Item");
 
             services.AddIdentity<User, IdentityRole>(config =>
             {
@@ -154,10 +153,28 @@ namespace SiteTriksApp.Web
                 options.Level = CompressionLevel.Optimal;
             });
 
-            services.AddDataProtection()
-            .PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"))
-            .SetApplicationName("SiteTriks")
-            .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+                options.KeepAliveInterval = TimeSpan.FromMinutes(1);
+            });           
+
+            var protectionBuilder = services.AddDataProtection().SetApplicationName("SiteTriks")
+                .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
+
+            var storageProviderConfig = this.Configuration.GetSection("SiteTriks").GetSection("StorageProvider");
+            switch (storageProviderConfig.GetSection("Name").Value)
+            {
+                case "azure":
+                    string blobUri = storageProviderConfig.GetSection("BlobUri").Value;
+                    protectionBuilder.PersistKeysToAzureBlobStorage(new Uri(blobUri));
+
+                    break;
+                default:
+                    protectionBuilder.PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"));
+
+                    break;
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -207,7 +224,7 @@ namespace SiteTriksApp.Web
                     ApplicationStart.CacheStaticFiles(context, this.Configuration);
                 }
             });
-
+           
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

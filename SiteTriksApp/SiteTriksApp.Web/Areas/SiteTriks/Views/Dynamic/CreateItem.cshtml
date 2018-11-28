@@ -14,7 +14,7 @@
 
     <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to assemblies</a>
     <a href="@Url.Action("ClassDetails", new { assemblyName = Model.AssemblyName, className = Model.DynamicClass.Name })" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Return to Details</a>
-    <a class="btn-nav-2" id="btn-create-item">Save & Exit</a>
+    <a class="btn-nav-2" id="btn-create-item" data-disable-warning="true">Save & Exit</a>
 </div>
 
 <div class="backend-wrapper">
@@ -144,6 +144,7 @@
             var logger = new Logger('debug');
             var mediator = new Mediator(logger);
 
+            WarningWindow.attach();
             Dynamics.createItem(modelName, assemblyName, logger, mediator);
         })();
     </script>

@@ -27,8 +27,12 @@
     }
 }
 
+@section MetaTagsSection {
+    <meta name="description" content="@Model.Description" />
+    <meta name="keywords" content="@Model.SEOKeyword" />
+}
+
 <div class="template-content">
-    <input name="SEOKeyword" value="@Model.SEOKeyword" type="hidden" />
     @if (isPreview || isPartial)
     {
 
@@ -45,7 +49,7 @@
                 @{ var mainLayout = Model.Contents.Where(c => c.Placeholder == "main" && c.Type == "layoutBuilder" && c.Order == 0).FirstOrDefault(); }
                 @if (mainLayout != null)
                 {
-                    @await Component.InvokeAsync("RenderLayout", new { content = mainLayout, innerContent = Model.Contents, preview = isPreview ? "preview" : "", lang });
+                    @await Component.InvokeAsync("RenderWidget", new { content = mainLayout, innerContent = Model.Contents, preview = isPreview ? "preview" : "", lang });
                 }
             </div>
         </div>

@@ -17,7 +17,7 @@
         <option value="">All files</option>
         @foreach (var item in Model)
         {
-            <option value="@item.Id" data-url="@item.Prefix">@item.Name</option>
+            <option value="@item.Id" data-url="@item.Prefix" data-allowed-types="@item.AllowedTypes">@item.Name</option>
         }
     </select>
     <a id="btn-edit-lib" class="btn-nav-2" hidden>Edit</a>
@@ -120,7 +120,7 @@
             {
                 title: 'Create ThumbNails',
                 postUrl: '/sitetriks/files/generatethumbnails',
-                type: 'danger'
+                type: 'success',
             }];
 
 
@@ -173,7 +173,8 @@
                 '{{#switch type}}'+
                     '{{#case 0 4 5 break=true}}<img src="/files/{{url}}" style="height:150px" >{{/case}}'+
                     '{{#case 1 break=true}}<img src="/images/default-document-image.png" alt="document" style="height:150px" >{{/case}}'+
-                    '{{#case 3 break=true}}<img src="/images/mp4-icon.png" alt="video" style="height:150px" >{{/case}}'+
+                '{{#case 3 break=true}}<img src="/images/mp4-icon.png" alt="video" style="height:150px" >{{/case}}' +
+                '{{#case 6 break=true}}<img src="~/files.png" alt="system-file" style="height:150px" >{{/case}}' +
                     '{{#default}}not supported file type{{/default}}'+
                 '{{/switch}}'+
                 '<div class="thumbnailSelector">'+
@@ -188,7 +189,6 @@
                 type: 'grid',
                 fields: columns,
                 sourceConfig: { type: 'client', url: '/sitetriks/files/grid' },
-                pagerConfig: defaultPager,
                 customActions: buttons,
                 handlebarsTemplate: handlebarsTemplate,
             });

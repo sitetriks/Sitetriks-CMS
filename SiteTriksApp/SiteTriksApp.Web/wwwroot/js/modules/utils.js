@@ -53,6 +53,34 @@
         }
     }
 
+    // caching loading promise to avoid duplications
+    let isLoading = {};
+    function loadjscssfileAsync(filename, filetype) {
+        isLoading[filename] = isLoading[filename] || new Promise((resolve, reject) => {
+            let fileref;
+            if (filetype === 'js') { //if filename is a external JavaScript file
+                fileref = document.createElement('script');
+                fileref.setAttribute('type', 'text/javascript');
+                fileref.setAttribute('src', filename);
+            }
+            else if (filetype === 'css') { //if filename is an external CSS file
+                fileref = document.createElement('link');
+                fileref.setAttribute('rel', 'stylesheet');
+                fileref.setAttribute('type', 'text/css');
+                fileref.setAttribute('href', filename);
+            }
+            if (typeof fileref !== 'undefined') {
+                fileref.onload = resolve;
+                fileref.onerror = reject;
+                document.getElementsByTagName('head')[0].appendChild(fileref);
+            } else {
+                reject();
+            }
+        }).then(function (res) { delete isLoading[filename]; return res; });
+
+        return isLoading[filename];
+    }
+
     function removejscssfile(filename, filetype) {
         let targetelement = filetype === 'js' ? 'script' : filetype === 'css' ? 'link' : 'none'; //determine element type to create nodelist from
         let targetattr = filetype === 'js' ? 'src' : filetype === 'css' ? 'href' : 'none'; //determine corresponding attribute to test for
@@ -93,7 +121,7 @@
     function isFunction(func) {
         return func && {}.toString.call(func) === '[object Function]';
     }
-    
+
     function openInNewTab(html) {
         let newWindow = window.open('about:blank');
         if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
@@ -108,17 +136,47 @@
         }
     }
 
+    function escapeRegExp(str) {
+        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
+    }
+
+    function replaceAll(str, find, replace) {
+        return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    }
+
+    function getAllSelectors() {
+        let ret = [];
+        for (var i = 0; i < document.styleSheets.length; i++) {
+            var rules = document.styleSheets[i].rules || document.styleSheets[i].cssRules;
+            for (var x in rules) {
+                if (typeof rules[x].selectorText === 'string') ret.push(rules[x].selectorText);
+            }
+        }
+        return ret;
+    }
+
+    function cssSelectorExists(selector) {
+        let selectors = getAllSelectors();
+        for (var i = 0; i < selectors.length; i++) {
+            if (selectors[i] === selector) return true;
+        }
+        return false;
+    }
+
     return {
         s4,
         guid,
         isGuid,
         addEditor,
         loadjscssfile,
+        loadjscssfileAsync,
         removejscssfile,
         loadHandlebarsTemplates,
         updateQueryStringParameter,
         isFunction,
-        openInNewTab
+        openInNewTab,
+        replaceAll,
+        cssSelectorExists
     };
 }());
 

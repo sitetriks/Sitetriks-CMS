@@ -298,8 +298,8 @@
     function validateUniquenes(name, classToValidate) {
         var counter = 0;
         var $allNames = $('.' + classToValidate);
-        for (inputName in $allNames) {
-            if ($allNames[inputName].value === name) {
+        for (name in $allNames) {
+            if ($allNames[name].value === name) {
                 counter++;
             }
         }

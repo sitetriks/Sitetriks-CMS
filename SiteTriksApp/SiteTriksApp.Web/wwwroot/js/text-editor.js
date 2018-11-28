@@ -1,4 +1,12 @@
 ﻿var textEditor = function () {
+    function initInstaceCallback(editor) {
+        if (typeof WarningWindow !== 'undefined' && WarningWindow.force) {
+            editor.on('NodeChange', function (e) {
+                WarningWindow.force();
+            });
+        }
+    }
+
     return {
         init: function init(selector, width, height, onInitCallback) {
             tinymce.init({
@@ -91,7 +99,8 @@
                             onInitCallback();
                         }
                     });
-                }
+                },
+                init_instance_callback: initInstaceCallback
             });
         },
         initWithoutImages: function init(selector, width, height, onInitCallback) {
@@ -166,10 +175,11 @@
                             onInitCallback();
                         }
                     });
-                }
+                },
+                init_instance_callback: initInstaceCallback
             });
         },
-     
+
         // selector must be Id
         getContent: function (id) {
             return tinymce.get(id).getContent();

@@ -133,11 +133,7 @@
     height: 250px;
     width: 50px;
     /*background-color: #393939;*/
-    background-image: linear-gradient( to right,
-    rgba(81, 80, 80, 0.7),
-    rgba(81, 80, 80, 0.7) 20%,
-    #393939 1%,
-    #393939 85%);
+    background-image: linear-gradient(to right,rgba(89,89,89,.7),rgba(48,47,47,.7) 20%,#393939 1%,#393939 85%);
     box-shadow: 0 0 15px #24469d;
 }
 
@@ -262,7 +258,7 @@
     .menu-icon .icon-name.icon-fag {
         text-transform: uppercase;
         color: #cfcdce;
-        font-family: BlairMd;
+        font-family: Montserrat;
         font-size: 2.4em;
         color: #CDCCCD;
         text-align: center;

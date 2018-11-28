@@ -16,11 +16,6 @@
 }
 
 @font-face {
-    font-family: BlairMd;
-    src: url("../fonts/Blaimim.ttf")
-}
-
-@font-face {
     font-family: LucidaGrande;
     src: url("../fonts/LucidaGrande.ttf")
 }
@@ -154,15 +149,187 @@ body {
         .sitetriks-login .row .login-image-container {
             height: 90%;
             width: 97%;
+            min-height: 700px;
             background-image: url('/images/homepage/Login_Wide.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             position: absolute;
-            transform: translate(-50%, -50%);
-            left: 47%;
-            top: 50%;
+            transform: translate(-2%, 6%);
         }
 
+/* Upload license page*/
+
+#uploadLicense {
+    padding: 12% 20% 23px 20%;
+    font-size: 12px;
+    min-height: 260px;
+}
+
+.login-logo-container .upload-license-title {
+    font-size: 22px;
+}
+
+.upload-container-license #drop-area-license {
+    height: 200px;
+}
+
+    .upload-container-license #drop-area-license .drop-info-btn {
+        padding: 0;
+    }
+
+#drop-area-license .drop-info-btn {
+    cursor: pointer;
+    margin-top: 3%;
+}
+
+#drop-area-license {
+    background-color: yellowgreen;
+    height: 500px;
+    background-color: #f8f8f8;
+    border: dashed 2px #979797;
+    position: relative;
+}
+
+    #drop-area-license .drop-info-btn {
+        font-size: 20px;
+        padding: 10px;
+        padding-right: 20px;
+        display: inline-block;
+        font-weight: bold;
+        border-radius: 4px;
+        background-color: #adadad;
+        cursor: pointer;
+        top: calc(50% - 60px);
+        padding-top: 9px;
+    }
+
+    #drop-area-license > div {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        color: #a1a1a1;
+        text-align: center;
+        cursor: default;
+    }
+
+.uppercase {
+    line-height: 38px;
+}
+
+#drop-area-license .drop-info-btn a {
+    color: #fff;
+}
+
+.upload-container-license #drop-area-license #license-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#drop-area-license.disabled .drop-info-btn label {
+    cursor: no-drop;
+    font-size: 17px;
+}
+
+#drop-area-license .drop-info-btn label {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.upload-container-license #drop-area-license label {
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-right: 0px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 34px;
+}
+
+.uppercase img {
+    height: 25px;
+    margin-right: 15px;
+    margin-top: -8px;
+}
+
+#drop-area-license > div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    color: #a1a1a1;
+    text-align: center;
+    cursor: default;
+}
+
+#drop-area-license .max-size {
+    top: 80%;
+    font-weight: bold;
+}
+
+#drop-area-license .drop-info-btn a {
+    color: #fff;
+}
+
+#drop-area-license .drop-info-text {
+    top: 60%;
+    font-size: 22px;
+}
+
+.domain-container {
+    padding: 15px;
+    border: 1px solid black;
+    background-color: #f8f8f8;
+    border: solid 1px #5fb6fd;
+    position: relative;
+    font-size: 13px;
+    color: #173b6d;
+    font-weight: bold;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.btn-license {
+    display: block;
+    margin: 5% auto;
+    padding: 13px;
+    width: 65%;
+    background-color: #5fb6fd;
+    border: 1px solid #123e7a;
+    color: #ffffff;
+    font-family: Montserrat;
+    /*font-weight: bold;*/
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+    .btn-license:hover {
+        background-color: #123e7a;
+        color: white;
+    }
+
+.domain-ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#uploadLicense h3 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: normal;
+    text-align: center;
+    color: #383838;
+}
 
 /*------------------------------------------------------------------------------------*/
 /* profile page styles */
@@ -408,7 +575,7 @@ a.read-more {
     border-radius: 15px;
     color: #173b6d;
     background-color: #c9c9c9;*/
-    padding: 20% 10% 23px 10%;
+    padding: 20% 20% 23px 20%;
     /*border: solid 3px #173b6d;*/
     font-size: 12px;
     min-height: 260px;
@@ -450,7 +617,7 @@ a.read-more {
     .login-logo-container img {
         margin: 0 auto;
         display: block;
-        height: 200px;
+        height: 160px;
         width: auto;
     }
 
@@ -462,6 +629,7 @@ a.read-more {
         letter-spacing: normal;
         color: #777777;
         padding: 15px 0 20px 0;
+        line-height: 32px;
     }
 
 #loginForm label,
@@ -633,6 +801,100 @@ a.read-more {
     margin: 0 auto;
 }
 
+/* checkbox filter styles */
+
+.default-settings-checkbox {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: -20px;
+}
+
+    .default-settings-checkbox span,
+    .default-settings-checkbox label {
+        display: inline-block;
+    }
+
+    .default-settings-checkbox span {
+        font-family: Montserrat;
+        font-size: 18px;
+        text-align: center;
+        color: #777777;
+    }
+
+.search-filters .section-wrapper .filter-section .filter-type-checkbox {
+    text-align: center;
+}
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    width: 20px;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+.default-settings-checkbox .checkmark-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 28px;
+    width: 28px;
+    border: 1px solid #979797;
+    border-radius: 3px;
+}
+
+.default-settings-checkbox .checkmark {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #979797;
+    border-radius: 3px;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #68b8ff;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.default-settings-checkbox .checkbox-container .checkmark:after {
+    left: 7px;
+    top: 2px;
+    width: 9px;
+    height: 14px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    border-radius: 2px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
 /********************/
 
 .body-content {
@@ -690,6 +952,36 @@ a.read-more {
         font-family: OpenSans, Helvetica, Arial, sans-serif;
         margin-top: 5px;
     }
+
+    /* Footer - Profile page only*/
+
+    .frontend-footer.profile-only-footer {
+        min-width: 767px;
+    }
+
+        .frontend-footer.profile-only-footer .back-button {
+            margin-left: 30px;
+            width: 200px;
+            display: inline-block;
+        }
+
+            .frontend-footer.profile-only-footer .back-button img {
+                height: auto;
+                margin-top: -3px;
+            }
+
+            .frontend-footer.profile-only-footer .back-button span {
+                color: white;
+                font-size: 14px;
+                font-weight: bold;
+                margin-left: 20px;
+            }
+
+        .frontend-footer.profile-only-footer p {
+            display: inline-block;
+            width: calc(100% - 450px);
+        }
+
 /***************************************************/
 /*Navbar widjet form Front-end pages + multilevel dropdown*/
 /*Manage color-profile pages*/
@@ -850,10 +1142,21 @@ a.read-more {
     margin: 10px;
 }
 
+/*News styles*/
+
+.row.allnews-container {
+    margin: 20px;
+}
+
+/*All news styles*/
+
+.news-container {
+    margin: 20px;
+}
+
 /*============================================================*/
 /*============================  Contact us Page   ============*/
 /*============================================================*/
-
 .wrapper-contact-form {
     background-color: #6d92cd;
     /*border: solid 1px #d8d8d8;*/

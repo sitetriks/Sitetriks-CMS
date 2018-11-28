@@ -134,7 +134,7 @@ var News = (function () {
         let templates = [{ name: 'news-multilingual', url: '/templates/news-multilingual.html' }];
         Utils.loadHandlebarsTemplates(templatesCache, templates).then(function (res) {
             bindEvents();
-         
+
             common.countSEOWords.apply($('#seo-words'));
             let dateToPublish = $dateTimePicker.attr('value');
 
@@ -290,10 +290,12 @@ var News = (function () {
     function newsCommon(mediator, $urlFlied, $urlValidation, $btnSubmit, $dateTimePicker, $seoWordsCounter, $mainImageInput, $imagesInput, validateNewsLinkUrl, newsId) {
         function selectMainImage(ev) {
             mediator.dispatch('fileHandlerTypeChange', { type: 'single', requester: 'main-image' });
+            mediator.dispatch('populatedSelected');
         }
 
         function selectImages(ev) {
             mediator.dispatch('fileHandlerTypeChange', { type: 'multiple', requester: 'images' });
+            mediator.dispatch('populatedSelected');
         }
 
         function validateTitle(e) {
@@ -328,18 +330,18 @@ var News = (function () {
 
         function selectFiles(data) {
             if (data.requester === 'images') {
-                let currentImages = $imagesInput.val();
-                console.log(currentImages);
+                //let currentImages = $imagesInput.val();
+                //console.log(currentImages);
 
-                 if (currentImages) {
-                    if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
-                        currentImages += ';';
-                    }
+                //if (currentImages) {
+                //    if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
+                //        currentImages += ';';
+                //    }
 
-                    $imagesInput.val(currentImages + data.fileIds.join(';'));
-                } else {
-                    $imagesInput.val(data.fileIds.join(';'));
-                }               
+                //    $imagesInput.val(currentImages + data.fileIds.join(';'));
+                //} else {
+                $imagesInput.val(data.fileIds.join(';'));
+                //}
 
                 let imagesInputId = $imagesInput.attr('id');
                 let $mainContainer = $(`#${imagesInputId}-container`);
@@ -367,7 +369,7 @@ var News = (function () {
 
         function countSEOWords(ev) {
             let $trigger = $(this);
-            let words = $trigger.val().split(',');
+            let words = $trigger.val().split(',').filter(v => v && v.trim());
             if (words.length === 1 && words[0].trim().length === 0) {
                 $seoWordsCounter.text('');
             } else {
@@ -388,7 +390,7 @@ var News = (function () {
             }
 
             $trigger.parent().remove();
-        }      
+        }
 
         function createImageView(fieldId, imgLinkId, $mainContainer) {
             let $container = $('<div class="news-listed-images-container"></div>');

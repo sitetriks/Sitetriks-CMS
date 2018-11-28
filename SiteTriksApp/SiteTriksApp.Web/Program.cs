@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SiteTriks.Configuration.Contracts;
 using SiteTriks.Data;
 using SiteTriks.Data.Models;
 using SiteTriks.Data.Seeders;
@@ -25,6 +26,7 @@ namespace SiteTriksApp.Web
             BuildMainWebHost(args)
             .MigrateDatabase()
             .AddPermissions()
+            .CollectSiteSyncInformation()
             .Run();
         }
 
@@ -75,13 +77,27 @@ namespace SiteTriksApp.Web
             return webHost;
         }
 
+        public static IWebHost CollectSiteSyncInformation(this IWebHost webHost, IEnumerable<string> assemblyNames = null)
+        {
+            using( var scope = webHost.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var cacheService = services.GetService<ICache>();
+
+                ApplicationStart.CollectSiteSyncInformation(cacheService, assemblyNames);
+            }
+
+            return webHost;
+        }
+
         public static IWebHost AddPermissions(this IWebHost webHost, IEnumerable<string> assemblyNames = null)
         {
             using (var scope = webHost.Services.CreateScope())
             {
-                var sevices = scope.ServiceProvider;
-                var permissionService = sevices.GetService<IPermissionService>();
+                var services = scope.ServiceProvider;
+                var permissionService = services.GetService<IPermissionService>();
                 ApplicationStart.RegisterCustomPermissions(permissionService, assemblyNames);
+                ApplicationStart.RemoveClearedCustomPermission(permissionService, assemblyNames);
             }
 
             return webHost;

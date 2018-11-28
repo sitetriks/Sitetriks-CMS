@@ -1,70 +1,20 @@
-﻿function createDiscussion() {
-    textEditor.initWithoutImages('#content', 500, 300);
+﻿/* globals Data, Loader, Validator, Notifier */
 
-    $('#create-discussion').on('submit', function (evt) {
+function setupAjaxForm(formSelector, redirectUrl) {
+    let validation = Validator.createFieldsValidation();
+    $(formSelector).on('submit', function (evt) {
         evt.preventDefault();
-
-        hideError();
-
-        var areFieldsValid = validateAllFields('', '#create-discussion');
-
-        if (areFieldsValid === false) {
-            return;
+        if (!validation.apply(this)) {
+            return false;
         }
 
-        $('#content').val(tinymce.activeEditor.getContent());
-
-        var form = $(this)[0];
-        var formData = new FormData(form);
-
-        $.ajax({
-            url: this.action,
-            type: this.method,
-            data: formData,
-            processData: false, // tell jQuery not to process the data
-            contentType: false, // tell jQuery not to set contentType
-            success: function success(response) {
-                if (response.success) {
-                    window.location.replace('/forum/discussions');
-                } else {
-                    showError(response.message);
-                }
-            }
-        });
-
-        return false;
-    });
-}
-
-function editDiscussion() {
-    $('#edit-discussion').on('submit', function (evt) {
-        evt.preventDefault();
-
-        hideError();
-
-        var areFieldsValid = validateAllFields('', '#create-discussion');
-
-        if (areFieldsValid === false) {
-            return;
-        }
-
-        $('#content').val(tinymce.activeEditor.getContent());
-
-        var form = $(this)[0];
-        var formData = new FormData(form);
-
-        $.ajax({
-            url: this.action,
-            type: this.method,
-            data: formData,
-            processData: false, // tell jQuery not to process the data
-            contentType: false, // tell jQuery not to set contentType
-            success: function success(response) {
-                if (response.success) {
-                    window.location.replace('/forum/discussions');
-                } else {
-                    showError(response.message);
-                }
+        Loader.show('#fff');
+        Data.postForm({ url: this.action, formData: new FormData(this) }).then(function success(res) {
+            if (res.success) {
+                window.location.replace(redirectUrl);
+            } else {
+                Notifier.createAlert({ containerId: '#alerts', message: res.message, status: 'danger' });
+                Loader.hide();
             }
         });
 

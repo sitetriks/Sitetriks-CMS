@@ -73,9 +73,9 @@
     }
 </div>
 @section Scripts {
-    <script src="~/js/leaving-warning.js"></script>
     <script src="~/js/sitetriks/rss-feeds.js"></script>
     <script>
+        WarningWindow.attach();
         editRssFeed('@Url.Action("ValidateUrl", "Pages")', '@Url.Action("BuilderFields")')
     </script>
 }

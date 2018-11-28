@@ -1,0 +1,15 @@
+<div class='sprite RequestsCopy2'></div>
+<div class='sprite MoreIcon'></div>
+<div class='sprite Sitesyncicon'></div>
+<div class='sprite VERSIONCONTROLICON'></div>
+<div class='sprite ModularIcon'></div>
+<div class='sprite MULTILINGUALICON'></div>
+<div class='sprite IMPORTICON'></div>
+<div class='sprite Forumicon'></div>
+<div class='sprite SEARCHICON'></div>
+<div class='sprite sitemapicon'></div>
+<div class='sprite TAGICON'></div>
+<div class='sprite Dynamiccontenticon'></div>
+<div class='sprite MULTISITEICON'></div>
+<div class='sprite DDosicon'></div>
+<div class='sprite Blogicon'></div>

@@ -20,6 +20,27 @@ function removeSideMenu(e) {
     }
 }
 
+function removeSocialLinks(e) {
+
+    var offSet = $('.bottom-menu').offset();
+    var distance = offSet ? offSet.top + 400 : 0;
+    var $scrollBottom = $(window).scrollTop() + $(window).height();
+    var $socialLinks = $('.social-fixed');
+
+    if (distance && $scrollBottom >= distance && $(window).width() > 767) {
+        $socialLinks.addClass('visuallyhidden');
+        $socialLinks.one('transitionend', function (e) { });
+    }
+
+    if (distance && $scrollBottom <= distance) {
+
+        setTimeout(function () {
+            $socialLinks.removeClass('visuallyhidden');
+        }, 30);
+    }
+}
+
+
 var toggleSideMenu = (function () {
 
     var animateWidth;
@@ -29,6 +50,8 @@ var toggleSideMenu = (function () {
     var $middleSection = $('.middle-section.col-lg-10');
     var menuState = $(".toggle-menu").attr("data-open-state");
     var screenWidth = $(window).width();
+    var setFeatureWidth = "242px";
+    var setSideSectionWidth = "117px";
 
     var setShrinkIcon = function () {
         $('body').on('resize ready', '.toggle-menu', function () {
@@ -38,13 +61,19 @@ var toggleSideMenu = (function () {
         });
     }
 
+    if (screenWidth >= 2880) {
+        setFeatureWidth = "610px";
+        setSideSectionWidth = "300px";
+        
+    }
+
     var setFeatureWidth = "240px";
 
     var expandMenu = function (ev) {
         $(".shrink-menu").on("click", function () {
             animateWidth = $('.middle-section.col-lg-10').css('width') == "0px" ? "76%" : "0px";
             var featuresFullWidth = $('.toggle-menu .features-section').css('width') == setFeatureWidth ? "90%" : setFeatureWidth;
-            var sideColsWidth = $('.side-section.col.col-lg-1').css('width') == "117px" ? "12%" : "117px";
+            var sideColsWidth = $('.side-section.col.col-lg-1').css('width') == setSideSectionWidth ? "12%" : setSideSectionWidth;
             var selectedFeatureVisibility = $selectedFeature.css('display') == "block" ? "none" : "block";
 
             if ($(".toggle-menu").attr("data-open-state") === "closed") {
@@ -109,6 +138,7 @@ var toggleSideMenu = (function () {
             $(".leaf-button-1").toggle();
 
             $featuresSection.css("width", setFeatureWidth);
+            $sideCol.css("width", setSideSectionWidth);
             $sideCol.css("width", "117px");
             $middleSection.css("width", "0px");
             $selectedFeature.css("display", "none");
@@ -135,28 +165,36 @@ var toggleSideMenu = (function () {
 })();
 
 function loadSection(ev) {
+    var $featureContent = $(this).parents().parents().find('.selected-feature');
+    Loader.show('#ffff', null, $featureContent);
     var $trigger = $(this);
 
     $('.menu-icon').each(function () {
         if ($(this).hasClass('clicked')) {
             $(this).children('.icon-image').toggle();
             $(this).css('background-color', '#123e7a');
+            //$(this).css('background-color', '#123e7a');
             $(this).removeClass('clicked');
         }
     });
 
     $trigger.addClass('clicked');
-    $trigger.css('background-color', '#3876cf');
+    $trigger.css('background-color', '#5fb6fd');
     $trigger.children('.icon-image').toggle();
 
     var url = $trigger.attr('data-url') || '';
     var $section = $trigger.parents('.features-section').find('.feature-content');
-    var $bottomSection = $('.toggle-bottom-menu.container');
+    //var $bottomSection = $('.toggle-bottom-menu.container');
+
+    var $bottomSection = $('.bottom-menu').find('.feature-content');
+    var $toggleSection = $(".toggle-menu");
     var $toggleMenu = $trigger.parents('.toggle-menu');
 
     $section.html('');
     $bottomSection.html('');
     Data.getJson({ url: '/sitetriks/display/GetPageString?pageUrl=' + url }).then(function (res) {
+        $section.html('')
+        Loader.hide($featureContent);
         if (res.success) {
             if ($(".toggle-menu").attr("data-open-state") === "opened") {
                 $bottomSection.html(res.view);
@@ -165,8 +203,10 @@ function loadSection(ev) {
             }
             else if ($(".toggle-menu").attr("data-open-state") === "expanded") {
                 $section.html(res.view);
-            } else if ($(window).width() <= 767) {
+            } else if ($(window).width() <= 767 || $(window).height() <= 620) {
                 $section.html(res.view);
+            } else if ($toggleSection.hasClass('visuallyhidden')) {
+                $bottomSection.html(res.view);
             }
 
             DocumentationWidget();
@@ -214,6 +254,7 @@ function scrollToElement(targetElement) {
 }
 
 $(window).scroll(removeSideMenu);
+$(window).scroll(removeSocialLinks);
 
 $(document).ready(function () {
     toggleSideMenu.setShrinkIcon();

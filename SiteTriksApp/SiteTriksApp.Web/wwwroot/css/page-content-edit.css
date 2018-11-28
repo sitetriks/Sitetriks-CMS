@@ -1,7 +1,5 @@
 ﻿.preview-placeholder {
     border: 1px dashed black;
-    min-width: 200px;
-    min-height: 100px;
     padding: 5px;
 }
 
@@ -45,25 +43,11 @@
     }
 
 .widget-control {
-    padding-top: 50px;
-    border-left: 1px solid #B2B2B2;
-    height: 100%;
+    margin-bottom: 10px;
 }
 
-    .widget-control .row {
-        padding: 5px;
-        margin-right: 0px;
-        margin-left: 0px;
-    }
-
-        .widget-control .row div {
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-    .widget-control h1 {
-        letter-spacing: 5px;
-        font-family: OpenSans, Helvetica, Arial, sans-serif;
+    .widget-control .widget-control-actions-wrapper {
+        display: inline-block;
     }
 
 #add-widget-container {
@@ -477,9 +461,9 @@ div.ui-dialog .ui-dialog-content {
         border-radius: 0 6px 6px 0;
     }
 
-    .toggle-layout-content > diV:nth-of-type(2) .circle {
-        border-radius: 0 6px 6px 0;
-    }
+        .toggle-layout-content > diV:nth-of-type(2) .circle {
+            border-radius: 0 6px 6px 0;
+        }
 
     .toggle-layout-content div.circle {
         background-color: #bf2000;
@@ -692,6 +676,11 @@ div.ui-dialog .ui-dialog-content {
     font-size: 12px;
 }
 
+.layout-preview-col {
+    float: left;
+    padding: 5px;
+}
+
 /* ----------------------------------------------------------------
 	Images, file-handler inline
 -----------------------------------------------------------------*/
@@ -764,6 +753,83 @@ select#gallery-libs {
          News Carousel Widget styles
     ---------------------------------------------------------------*/
 
+.resolutions-control {
+    background-color: #ececec;
+    border: 1px solid #c5c5c5;
+    border-radius: 7px;
+    padding: 30px 15px;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+    .resolutions-control .resolutions-info {
+        width: 200px;
+        display: inline-block;
+        font-weight: bold;
+        padding-left: 30px;
+    }
+
+    .resolutions-control .res-wrapper {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .resolutions-control .clarification {
+        color: #959595;
+        font-size: 12px;
+    }
+
+    .resolutions-control label {
+        margin: 0;
+        text-align: center;
+    }
+
+    .resolutions-control input.form-control {
+        width: 50px;
+        margin: auto;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    .resolutions-control .resolutions-separator {
+        width: 250px;
+        float: left;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .resolutions-control .res-icon {
+        font-size: 50px;
+        color: #007EF9;
+        margin: 15px;
+        line-height: 80px;
+    }
+
+        .resolutions-control .res-icon.rs-icon-mobile {
+            font-size: 40px;
+        }
+
+        .resolutions-control .res-icon.rs-icon-desktop-hd {
+            font-size: 65px;
+        }
+
+.widget-container .widget-config-label {
+    margin-right: 0;
+}
+
+.widget-config-label > span {
+    margin-right: 20px;
+}
+
+.widget-container .carousel-count-type {
+    width: 150px;
+}
+
+#latest-news-count {
+    width: 150px;
+}
+
 /*------------------------------------------------------------
         Layout Builder Widget styles
     ---------------------------------------------------------------*/
@@ -817,9 +883,22 @@ select#gallery-libs {
     }
 
 /*------------------------------------------------------------
-        Documentation Widget styles
+        Html Widget styles
     ---------------------------------------------------------------*/
 
+.share-container input[type="text"] {
+    width: 300px;
+    max-width: inherit;
+    margin-right: 15px;
+}
+
+.share-container .btn-backend {
+    vertical-align: top;
+}
+
+#shared-block-titles {
+    margin-left: 6.7%;
+}
 
 /*------------------------------------------------------------
         Smaller resolution styles

@@ -1,4 +1,4 @@
-﻿/* globals Data, Validator, Loader, Notifier, Tags, Multiselect */
+﻿/* globals Data, Utils, Validator, Loader, Notifier, Tags, Multiselect, ModuleBuilder */
 
 function createPage(validateUrlUrl) {
     populateUrl('#title', '#url', validateUrlOnChange);
@@ -260,7 +260,7 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
                         window.location.replace('/sitetriks/pages');
                     }
 
-                    WarningWindow.reset();
+                    WarningWindow.attach();
                     mlf = res.mlf;
                     Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
                 } else {
@@ -334,7 +334,7 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
                     return;
                 }
 
-                WarningWindow.reset();
+                WarningWindow.attach();
                 Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
                 if (url !== initialUrl) {
                     // update url if
@@ -367,6 +367,7 @@ function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 
 function editPageContent(url, currentLanguage, currentVersion, currentTemplate, w) {
     // Layout handling
+    Utils.loadjscssfile(`/css/sitetriks/st-lg-preview.css`, 'css');
     $('.resolution').on('click', function (ev) {
         let active = $('.selected-option').attr('data-type');
         let $target = $(this);
@@ -407,6 +408,8 @@ function editPageContent(url, currentLanguage, currentVersion, currentTemplate, 
         $('.resolution').each(function (_, element) {
             element.classList.add('selected');
         });
+
+        WarningWindow.force();
         ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT).resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 
@@ -557,6 +560,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentTemplate, 
     });
 
     $('#btn-publish').on('click', function (ev) {
+        Loader.show('#fff');
         ev.preventDefault();
         Data.postJson({ url: '/sitetriks/Pages/PublishPageWithContent', data: prepareSave() }).then(redirectToPagesGridOnSuccess, Data.defaultError);
     });
@@ -573,6 +577,7 @@ function editPageContent(url, currentLanguage, currentVersion, currentTemplate, 
     }
 
     function saveDraft(ev) {
+        Loader.show('#fff');
         ev.preventDefault();
         return Data.postJson({ url: '/sitetriks/Pages/SaveDraft', data: prepareSave() }).then(redirectToPagesGridOnSuccess);
     }
@@ -602,6 +607,8 @@ function editPageContent(url, currentLanguage, currentVersion, currentTemplate, 
     function redirectToPagesGridOnSuccess(res) {
         if (res.success) {
             location.replace('/sitetriks/pages');
+        } else {
+            Loader.hide();
         }
     }
 }

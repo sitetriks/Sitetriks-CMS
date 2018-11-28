@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@aspnet/signalr": "^1.0.4",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0"
   },

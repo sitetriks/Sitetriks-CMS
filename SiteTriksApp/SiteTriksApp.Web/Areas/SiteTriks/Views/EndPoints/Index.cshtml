@@ -6,7 +6,7 @@
     <div class="fixed-top-2">
         @await Html.PartialAsync("SecondNavHeader")
 
-        <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create End Point</a>
+        <a href="@Url.Action("Create")" class="btn-nav-2"><span class="glyphicon glyphicon-plus"></span>Create Endpoint</a>
     </div>
 
     <div class="grid"></div>
@@ -32,7 +32,7 @@
                     type: 'string',
                     filter: true,
                     sort: true,
-                    size: 1,
+                    size: 2,
                     headerTemplate: '<strong>#item#</strong>' // #item# is the placeholder for the content
                 },
                 {
@@ -41,7 +41,7 @@
                     type: 'string',
                     filter: true,
                     sort: true,
-                    size: 1,
+                    size: 2,
                     contentTemplate: '<span class="text-danger">#item#</span>',
                     headerTemplate: '<strong>#item#</strong>'
                 },
@@ -51,7 +51,7 @@
                     type: 'string',
                     filter: true,
                     sort: true,
-                    size: 1,
+                    size: 2,
                     contentTemplate: '<span class="text-danger">#item#</span>',
                     headerTemplate: '<strong>#item#</strong>'
                 },

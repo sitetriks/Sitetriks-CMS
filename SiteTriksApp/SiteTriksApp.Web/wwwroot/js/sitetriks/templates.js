@@ -2,6 +2,7 @@
 
 function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
     // Layout handling
+    Utils.loadjscssfile(`/css/sitetriks/st-lg-preview.css`, 'css');
     $('.resolution').on('click', function (ev) {
         let active = $('.selected-option').attr('data-type');
         let $target = $(this);
@@ -39,6 +40,8 @@ function editTemplateContent(url, currentLanguage, currentVersion, currentCultur
         $('.resolution').each(function (_, element) {
             element.classList.add('selected');
         });
+
+        WarningWindow.force();
         ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT).resolutions = ['xs', 'sm', 'md', 'lg'];
     });
 

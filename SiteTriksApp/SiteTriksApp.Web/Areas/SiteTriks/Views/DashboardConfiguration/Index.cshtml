@@ -6,7 +6,7 @@
 
 <div class="fixed-top-2">
     @await Html.PartialAsync("SecondNavHeader")
-    <input id="save-dashboard-config" type="button" value="Save" class="btn btn-success" />
+    <input id="save-dashboard-config" type="button" value="Save" class="btn-nav-2" />
 </div>
 
 <div class="backend-wrapper">
@@ -41,6 +41,7 @@
     <script src="~/js/multiselect-setup.js"></script>
     <script src="~/js/sitetriks/dashboard-configuration.js"></script>
     <script>
+        WarningWindow.attach();
         initConfiguration();
     </script>
 }

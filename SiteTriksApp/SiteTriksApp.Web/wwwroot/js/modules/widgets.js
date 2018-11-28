@@ -77,7 +77,7 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
             var $templatesSelector = $('#template-selector');
 
             if ($templatesSelector.length) {
-                Data.getJson({ url: '/WidgetTemplatesController/GetTemplateNames/' + type }).then(function (data) {
+                Data.getJson({ url: '/SiteTriks/Widgets/GetTemplateNames?widgetName=' + type }).then(function (data) {
                     let templateNames = data.templateNames;
                     $templatesSelector.empty();
 
@@ -129,26 +129,25 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
 
                 $('.drop').removeClass('drag-hover');
 
-                if (!ui.draggable.hasClass("preview-placeholder")) {
+                if (!ui.draggable.hasClass('preview-placeholder')) {
+                    let $drag = ui.draggable.first();
                     ui.helper.detach();
 
                     var placeholder = $(event.target).attr('data-placeholder');
-                    var type = ui.draggable.first().data("type");
-                    let extra = ui.draggable.first().attr('data-extra');
+                    var type = $drag.data('type');
+                    let extra = $drag.attr('data-extra');
 
-                    OpenDialog(placeholder).text(ui.draggable.first().text());
+                    OpenDialog(placeholder).text($drag.text());
 
                     LoadWidget(type, extra);
-                    return;
-                }
-                else {
-                    //ui.helper.detach();
-                    //$(event.target).append(ui.draggable);
                 }
             },
             over: function (event, ui) {
                 $('.drop').removeClass('drag-hover');
                 $(event.target).addClass('drag-hover');
+            },
+            out: function () {
+                $(this).removeClass('drag-hover');
             }
         });
     }
@@ -305,6 +304,7 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
                 WidgetsDraggable.init(w);
             }
 
+            WarningWindow.force();
             if (!noAlert) {
                 createAlert('Added', { type }, 'success', '#Dialog-Box', null, true);
             } else {
@@ -318,7 +318,7 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
                 Notifier.createAlert({
                     containerId: '#alerts',
                     title: '',
-                    message:"Dynamic View can not be loaded correctly.",
+                    message: "Dynamic View can not be loaded correctly.",
                     status: 'danger',
                     isPermanent: true
                 });
@@ -493,6 +493,7 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
                 $old.remove();
             }
 
+            WarningWindow.force();
             createAlert('Edited', { type: type }, 'warning', '#Dialog-Box-Edit', null, true);
         });
     }
@@ -515,7 +516,7 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
             var $templatesSelector = $("#template-selector");
 
             if ($templatesSelector.length) {
-                Data.getJson({ url: '/WidgetTemplatesController/GetTemplateNames/' + type }).then(function (tempData) {
+                Data.getJson({ url: '/SiteTriks/Widgets/GetTemplateNames?widgetName=' + type }).then(function (tempData) {
                     let templateNames = tempData.templateNames;
                     $templatesSelector.empty();
 
@@ -568,9 +569,10 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
         removeSingleWidget(index);
 
         $element.parents('.preview-placeholder[data-identifier="' + id + '"]').remove();
+        WarningWindow.force();
         createAlert('Removed', { type }, 'danger', null, '#delete-confirm', true);
     }
-    
+
     function removeWidgetForPlaceholder(placeholder, widgets) {
         widgets = widgets || pageContent || [];
         let widgetsToDelete = widgets.filter(c => c.placeholder === placeholder);

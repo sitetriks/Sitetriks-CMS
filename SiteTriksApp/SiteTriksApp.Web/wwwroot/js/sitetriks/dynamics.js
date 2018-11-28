@@ -1,4 +1,6 @@
-﻿function createClass(assemblyName) {
+﻿/* globals Data, Loader, Validator, Notifier, FileHandler */
+
+function createClass(assemblyName) {
     let $fieldsContainer = $('#fields-container');
     let $inputTitle = $('#input-class-title');
     let $form = $('#form-create-class');
@@ -386,7 +388,9 @@ var Dynamics = (function () {
             let requester = $target.attr('data-name');
 
             mediator.dispatch('fileHandlerTypeChange', { type: 'multiple', requester });
-        }
+            //let $imagesInput = $(`.dynamic-images[data-name='${requester}']`);
+            //mediator.dispatch('populatedSelected', $imagesInput.val());
+        };
     }
 
     function createDisplayImagesHandler($modal) {
@@ -395,23 +399,25 @@ var Dynamics = (function () {
             let $imagesInput = $(inputSelector);
             let $imgContainer = $imagesInput.next('.dynamic-images-container');
 
-            let currentImages = $imagesInput.val();
-            if (currentImages) {
-                if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
-                    currentImages += ';';
-                }
+            //let currentImages = $imagesInput.val();
+            //if (currentImages) {
+            //    if (currentImages.length > 0 && currentImages[currentImages.length - 1] !== ';') {
+            //        currentImages += ';';
+            //    }
 
-                $imagesInput.val(currentImages + data.fileIds.join(';'));
-            } else {
-                $imagesInput.val(data.fileIds.join(';'));
-            }
+            //    $imagesInput.val(currentImages + data.fileIds.join(';'));
+            //} else {
+            $imagesInput.val(data.fileIds.join(';'));
+            //}
+            $imgContainer.html('');
+            console.log(data);
 
             for (let i = 0; i < data.fileIds.length; i += 1) {
                 createImageView(inputSelector, data.fileIds[i], $imgContainer);
             }
 
             $modal.modal('hide');
-        }
+        };
     }
 
     return {

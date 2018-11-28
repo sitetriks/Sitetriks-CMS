@@ -15,7 +15,7 @@ var WarningWindow = (function (logger) {
         return confirmationMessage;
     }
 
-    window.onbeforeunload = onUnload;
+    //window.onbeforeunload = onUnload;
     //var lastClickOnElement;
     //$(document).click(function (event) {
     //    lastClickOnElement= $(event.target);
@@ -97,7 +97,7 @@ var WarningWindow = (function (logger) {
             return false;
         }
 
-        return true;
+        return !element.attr('data-disable-warning');
     }
 
     function hasChanges() {
@@ -147,17 +147,21 @@ var WarningWindow = (function (logger) {
         return confirmationMessage;
     }
 
-    window.onbeforeunload = defaultStopLeave;
+    //window.onbeforeunload = defaultStopLeave;
 
     return {
-        detatch: function () {
-            window.onbeforeunload = null;
-            return this;
-        },
-        reset: function () {
+        attach: function () {
             inputChanged = false;
             lastClickedElement = null;
             window.onbeforeunload = defaultStopLeave;
+            return this;
+        },
+        detach: function () {
+            window.onbeforeunload = null;
+            return this;
+        }, 
+        force: function () {
+            inputChanged = true;
             return this;
         }
     };

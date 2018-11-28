@@ -1,181 +1,91 @@
-﻿var SharedBlocks = function () {
-    function addShare ($container, editorSelector) {
-        let $input = $("<input></input>", {
-            placeholder: "Title of shared block",
-            type: "text"
-        }).appendTo($container);
+﻿/* globals Data, Utils, Notifier, textEditor */
 
-        let $button = $("<input></input>", {
-            value: "Share",
-            type: "button"
-        }).appendTo($container);
+var SharedBlocks = function () {
+    function addShare(editorSelector) {
+        let $shareContainer = $('<div></div>', {
+            class: 'share-container inline-block'
+        });
 
-        $button.on("click", function () {
+        let $input = $('<input/>', {
+            placeholder: 'Title of shared block',
+            class: 'form-control inline-block',
+            type: 'text'
+        }).appendTo($shareContainer);
+
+        let $button = $('<input/>', {
+            value: 'Share',
+            class: 'btn btn-backend',
+            type: 'button'
+        }).appendTo($shareContainer);
+
+        $shareContainer.appendTo('.html-widget-config');
+
+        $button.on('click', function () {
+            let title = $input.val();
+            if (!title || title.length < 3) {
+                Notifier.createAlert({ containerId: '.html-widget-notifier', status: 'danger', message: 'Shared block title must be atleast 3 characters long!' });
+                return;
+            }
+
             let body = {
-                Title: $input.val(),
-                content: tinymce.get(editorSelector).getContent()
+                title,
+                content: textEditor.getContent(editorSelector)
             };
 
-            console.log(body);
-
-            $.ajax({
-                url: "/sitetriks/HtmlBlocks/Share",
-                type: "post",
-                data: JSON.stringify(body),
-                cors: true,
-                contentType: "application/json",
-                success: function (block) {
-                    let id = block.id;
-                    let placeholder = $('#Dialog-Box').data('placeholder');
-                    let cssClass = $('#css-class').val();
-                    w.addWidgetLocal("html", block.content, placeholder, cssClass);
+            Data.postJson({ url: '/sitetriks/HtmlBlocks/Share', data: body }).then(function (res) {
+                console.log(res);
+                if (res && res.success) {
+                    Notifier.createAlert({ containerId: '.html-widget-notifier', status: 'success', message: 'Shared block created successfuly!' });
                 }
             });
         });
     }
 
+    function loadSharedBlocks($container, selected) {
+        Data.getJson({ url: '/sitetriks/HtmlBlocks/GetAllSharedBlocks' }).then(function (res) {
+            let items = JSON.parse(res);
+            $('<label></label>', {
+                text: 'Shared Block: '
+            }).appendTo($container);
+
+            let $select = $('<select></select>', {
+                id: 'shared-block-titles',
+                class: 'form-control inline-block'
+            });
+
+            for (let i = 0; i < items.length; i++) {
+                $('<option></option>', {
+                    class: 'shared-block-options',
+                    value: items[i].Id,
+                    text: items[i].Title
+                }).appendTo($select);
+            }
+
+            $container.append($select);
+            if (selected && Utils.isGuid(selected)) {
+                $select.val(selected);
+            }
+        });
+    }
+
     return {
-        addShare: addShare,
-        addSetup: function ($list, $container, multiselectSelector) {
-            $list.change(function () {
-                if ($(this).val() === 'new') {
-                    let $textarea = $("<textarea></textarea>", {
-                        id: "add-html-content"
-                    });
+        init: function (type, $container, element) {
+            $('.share-container').remove();
+            $container.html('');
+            textEditor.remove('add-html-content');
 
-                    $container.html($textarea);
+            if (type === 'new') {
+                $('<textarea></textarea>', {
+                    id: 'add-html-content',
+                    text: element && !Utils.isGuid(element) ? element : ''
+                }).appendTo($container);
 
-                    Utils.addEditor('#add-html-content', 800, 300);
+                textEditor.init('#add-html-content', 800, 300);
+                addShare('add-html-content');
+            } else if (type === 'shared') {
 
-                    addShare($container, "add-html-content");
-                }
-
-                if ($(this).val() === 'shared') {
-                    let $label = $("<label></label>", {
-                        for: "shared-block-id",
-                        text: "Shared Block"
-                    });
-
-                    let $input = $("<input></input>", {
-                        id: "shared-block-id",
-                        type: "text",
-                        class: "form-control",
-                        style: "display:none;"
-                    });
-
-                    $container.html($label);
-                    $container.append($input);
-
-                    let $select = $("<select></select>", {
-                        id: "shared-block-titles",
-                        //multiple: true
-                    });
-
-                    $.ajax({
-                        url: "/sitetriks/HtmlBlocks/GetAllSharedBlocks",
-                        type: "get",
-                        cors: true,
-                        contentType: "application/json",
-                        success: function (data) {
-                            let items = JSON.parse(data);
-
-                            if (items.length > 0) {
-                                $input.val(items[0].Id);
-                            }
-                            
-                            for (let i = 0; i < items.length; i++) {
-                                $("<option></option>", {
-                                    class: 'shared-block-options',
-                                    value: items[i].Id,
-                                    text: items[i].Title
-                                }).appendTo($select);
-                            }
-
-                            $container.append($select);     
-
-                            $($select).on('change', function () {
-                                var optionSelected = $("option:selected", this);
-                                var valueSelected = this.value;
-
-                                $input.val(valueSelected);
-                            });
-                        }
-                    });
-                }
-            });
-        },
-        editSetup: function ($list, $container, multiselectSelector, element) {
-            $list.change(function () {
-                if ($(this).val() === 'new') {
-                    let $textarea = $("<textarea></textarea>", {
-                        id: "add-html-content"
-                    });
-
-                    $container.html($textarea);
-
-                    if (!Utils.isGuid(element)) {
-                        $('#add-html-content').text(element);
-                    }
-
-                    Utils.addEditor('#add-html-content', 800, 300);
-                }
-
-                if ($(this).val() === 'shared') {
-                    let $label = $("<label></label>", {
-                        for: "shared-block-id",
-                        text: "SharedBlockId"
-                    });
-
-                    let $input = $("<input></input>", {
-                        id: "shared-block-id",
-                        type: "text",
-                        class: "form-control",
-                        style: "display:none"
-                    });
-
-                    if (Utils.isGuid(element)) {
-                        $input.val(element);
-                    }
-
-                    $container.html($label);
-                    $container.append($input);
-
-                    let $select = $("<select></select>", {
-                        id: "shared-block-titles"
-                    });
-
-                    $.ajax({
-                        url: "/sitetriks/HtmlBlocks/GetAllSharedBlocks",
-                        type: "get",
-                        cors: true,
-                        contentType: "application/json",
-                        success: function (data) {
-                            let items = JSON.parse(data);
-
-                            for (let i = 0; i < items.length; i++) {
-                                $("<option></option>", {
-                                    class: 'shared-block-options',
-                                    value: items[i].Id,
-                                    text: items[i].Title
-                                }).appendTo($select);
-                            }
-
-                            $container.append($select);
-
-                            if (Utils.isGuid(element)) {
-                                $select.val(element).change();
-                            }
-
-                            $($select).on('change', function () {
-                                var optionSelected = $("option:selected", this);
-                                var valueSelected = this.value;
-
-                                $input.val(valueSelected);
-                            });
-                        }
-                    });
-                }
-            });
+                loadSharedBlocks($container, element);
+            }
         }
     };
 }();

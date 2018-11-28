@@ -8,18 +8,18 @@
     padding-bottom: 20px;
 }
 
-	.first-header-row .search-field {
-		border-radius: 3px;
-		width: 70%;
-		border: 2px solid #d4d4d4;
-		background-color: #f2f2f2;
-		text-align: left;
-		/*color: #cccccc;*/
-		font-size: 14px;
-		text-align: left;
-		padding-top: 4px;
-		padding-bottom: 4px;
-	}
+    .first-header-row .search-field {
+        border-radius: 3px;
+        width: 70%;
+        border: 2px solid #d4d4d4;
+        background-color: #f2f2f2;
+        text-align: left;
+        font-size: 14px;
+        text-align: left;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        margin-top: 2px;
+    }
 
         .first-header-row .search-field::-moz-placeholder { /* Firefox 19+ */
             color: #cccccc;
@@ -45,6 +45,29 @@
             padding-left: 10px;
         }
 
+    .first-header-row .searh-background {
+        background-color: #d8d8d8;
+        height: 40px;
+    }
+
+        .first-header-row .searh-background.last {
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+    .first-header-row .search-icon-wrapper {
+        display: inline-block;
+        height: 100%;
+        border-left: 2px solid #fff;
+        float: right;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+.grid .first-header-row .btn {
+    margin-bottom: 9px;
+}
+
 .second-header-row li {
     padding-left: 20px;
 }
@@ -55,17 +78,17 @@
     padding-bottom: 3px;
 }
 
-.bodyRow .col-1,
-.bodyRow .col-2,
-.bodyRow .col-3 {
-    /*max-height: 100px;*/
-    overflow: hidden;
-}
+    .bodyRow .col-1,
+    .bodyRow .col-2,
+    .bodyRow .col-3 {
+        /*max-height: 100px;*/
+        overflow: hidden;
+    }
 
-.bodyRow .glyphicon.glyphicon-star,
-.bodyRow .glyphicon.glyphicon-star-empty {
-    padding-left: 1.4px;
-}
+    .bodyRow .glyphicon.glyphicon-star,
+    .bodyRow .glyphicon.glyphicon-star-empty {
+        padding-left: 1.4px;
+    }
 
 tbody {
     margin-bottom: 50px;
@@ -113,12 +136,12 @@ tbody {
     border-left: none;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
-    padding-left:0;
+    padding-left: 0;
 }
 
-#pagesCount::before {
-    content: '/';
-}
+    #pagesCount::before {
+        content: '/';
+    }
 
     #pageSize:focus, #pageNumber:focus, #pagesCount:focus {
         outline: none;
@@ -180,7 +203,7 @@ tbody {
 
 .grid .btn {
     margin: 5px;
-    padding: 5px 12px 5px;
+    padding: 5px 12px;
     font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
@@ -196,10 +219,17 @@ tbody {
     background-color: #529ce4;
     color: #ffffff;
     border: 1px solid #758fa8;
+    position: relative;
 }
 
     .grid .btn-grid .glyphicon {
         margin-right: 10px;
+        top: 2px;
+        position: relative;
+    }
+
+    .grid .btn-grid.icon-only .glyphicon {
+        margin-right: 0;
     }
 
 .buttons-row .btn:focus, #tableHeader .btn:focus, .child-expand:focus {
@@ -213,8 +243,8 @@ tbody {
     color: #ffffff;
     border-color: #6a6a6a;
     border-radius: 5px;
-    height: 16px;
-    width: 17px;
+    height: 18px;
+    width: 18px;
     text-align: center;
     padding-left: 3px;
     padding-top: 0;
@@ -222,7 +252,7 @@ tbody {
     font-size: 8px;
     display: inline-block;
     margin-right: -20px;
-    margin-top: 3px;
+    margin-top: 2px;
     position: absolute;
     /*margin-top: -30px;*/
 }
@@ -288,10 +318,6 @@ tbody {
         color: #383838;
     }
 
-.bodyRow, .second-header-row {
-	/*padding-right: 10px;*/
-}
-
 .bodyRow li {
     padding-left: 20px;
 }
@@ -303,16 +329,6 @@ tbody {
 .bodyRow.darkColor {
     padding-right: 0;
 }
-
-    /*.bodyRow.darkColor:nth-of-type(even) {
-        background-color: transparent;
-        background-color: #f9f9f9;
-    }
-
-    .bodyRow.darkColor:nth-of-type(odd) {
-        background-color: transparent;
-        background-color: white !important;
-    }*/
 
 .vertical-line {
     width: 3px;
@@ -389,6 +405,7 @@ tbody {
 
     .sitetriks-grid.grid-view .first-header-row .grid-filter {
         float: left;
+        width: 320px;
     }
 
     .sitetriks-grid .grid-body > .grid-item:nth-child(2n + 1) {
@@ -399,12 +416,13 @@ tbody {
         line-height: normal;
         padding-top: 3px;
         padding-bottom: 3px;
+        min-height: 30px;
     }
 
-        .sitetriks-grid.grid-view .grid-body .grid-item {
-            float: left;
-            margin: 10px;
-        }
+    .sitetriks-grid.grid-view .grid-body .grid-item {
+        float: left;
+        margin: 10px;
+    }
 
     .sitetriks-grid .grid-pager {
         height: 60px;
@@ -415,7 +433,8 @@ tbody {
         margin-top: 30px;
         font-size: 16px;
     }
-        .sitetriks-grid .grid-pager .pageControl{
+
+        .sitetriks-grid .grid-pager .pageControl {
             display: inline-block;
             border: 2px solid #878787;
             border-radius: 15%;
@@ -424,10 +443,10 @@ tbody {
             padding: 2px;
         }
 
-        .sitetriks-grid .grid-pager .pageControl.pageSize {
-            margin-right: 10px;
-            padding: 2px 5px;
-        }
+            .sitetriks-grid .grid-pager .pageControl.pageSize {
+                margin-right: 10px;
+                padding: 2px 5px;
+            }
 
         .sitetriks-grid .grid-pager .pager-arrow {
             display: inline-block;
@@ -461,7 +480,7 @@ tbody {
         .sitetriks-grid .grid-pager .pageControl.pagesCount {
             margin-right: 5px;
             padding-right: 15px;
-            padding-left:0;
+            padding-left: 0;
             border-radius: 20%;
             border-bottom-left-radius: 0;
             border-top-left-radius: 0;
@@ -472,13 +491,13 @@ tbody {
                 content: '/';
             }
 
-/*-----------------------------------------------------------------------------------------------------*/
-
-@media screen and (max-width: 1358px) {
-	.search-field {
-        /*width: 100px;*/
+    .sitetriks-grid .btn-grid-add {
+        cursor: pointer;
+        color: #fff;
+        font-size: 17px;
     }
-}
+
+/*-----------------------------------------------------------------------------------------------------*/
 
 @media (max-width: 1200px) and (min-width: 961px) {
     .second-header-row .col-1,
@@ -498,9 +517,9 @@ tbody {
 }
 
 @media screen and (max-width: 1150px) {
-	.search-container .search-btn {
-		display: block;
-	}
+    .search-container .search-btn {
+        display: block;
+    }
 
     .search-container .search-field {
         display: none;

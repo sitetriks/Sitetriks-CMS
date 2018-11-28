@@ -1,86 +1,84 @@
-﻿$(function () {
+﻿/* globals Data, HashRouter */
 
-    $(".accordion").accordion({
-        active: false,
-        collapsible: true,
-        animate: false
-    });
+$(function () {
+    if (!document.getElementsByClassName('allnews-container').length) {
+        return;
+    }
 
-    $('.accordion-nested').accordion({
-        autoHeight: false,
-        active: false,
-        collapsible: true,
-        animate: false
-    });
+    let $window = $(window);
+    let $accordion = $('.accordion');
+    let $nestedAccordion = $('.accordion-nested');
+    let $detailedNewsContainer = $('#news-view-container');
+    let windowWidth = $window.width();
 
-    $(".accordion").accordion("option", "active", activateAccordion('data-year', 'accordion-item'));
-    var newsYear = $('#detailed-news-date-created').attr('data-year');
-    $('.accordion-nested').each(function (_, el) {
-        $(el).accordion("option", "active", activateAccordion('data-month', 'accordion-item-nested-' + newsYear));
-    });
+    init();
+    bindEvents();
 
-    $('.detailed-news').on('click', function (e) {
-        var id = $(this).attr('data-id');
-        var url = $(this).attr('data-url');
+    function init() {
+        HashRouter.onChange('news', loadDetailedNews, 'loadDetailedNews');
+        let selectedNews = HashRouter.get('news');
+        loadDetailedNews(selectedNews);
+        let active = 0;
+        let activeNested = 0;
 
-        getNewsDetails(id, url);
+        if (windowWidth <= 768) {
+            active = false;
+            activeNested = false;
+        } else if (selectedNews) {
+            let $parent = $(`.detailed-news[data-url="${selectedNews}"]`).parent().parent();
+            let year = $parent.attr('data-year');
+            let month = $parent.attr('data-month');
+            active = activateAccordion(year, 'data-year', '.accordion-item');
+            activeNested = activateAccordion(month, 'data-month', '.accordion-item-nested-' + year);
+        }
+
+        $accordion.accordion({ collapsible: true, active: active });
+        $nestedAccordion.accordion({ heightStyle: 'content', collapsible: true, active: activeNested });
+    }
+
+    function onSelectNews(e) {
+        let url = this.getAttribute('data-url');
+        url ? HashRouter.set('news', [url]) : HashRouter.set('news');
+        if (windowWidth <= 768) {
+            $accordion.accordion('option', { active: false });
+            $nestedAccordion.accordion('option', { active: false });
+        }
 
         return false;
-    });
-
-    if ($(window).width() < 992) {
-        $('.accordion').accordion('option', { active: false });
-    } else {
-        $("#accordion").accordion("activate", 0)
     }
 
-    let newsUrl = getParameterByName("news-url");
+    function loadDetailedNews(data) {
+        let url = data && data.length ? data[0] : '';
+        $detailedNewsContainer.html('Loading...');
+        Data.getJson({ url: '/widget/newswidget/DetailedNews/' + url }).then(function (res) {
+            $detailedNewsContainer.html(res);
+        });
+    }
 
-    if (newsUrl != undefined && newsUrl != null && newsUrl != "") {
-        getNewsDetails(null, newsUrl);
+    function activateAccordion(data, attribute, selector) {
+        var result = 0;
+
+        $(selector).each(function (index, el) {
+            if (el.getAttribute(attribute) === data) {
+                result = index;
+                return;
+            }
+        });
+
+        return result;
+    }
+
+    function handleResize(ev) {
+        if ($window.width() <= 768 && windowWidth > 768) {
+            $accordion.accordion('option', { active: false });
+            $nestedAccordion.accordion('option', { active: false });
+        }
+
+        windowWidth = $window.width();
+    }
+
+    function bindEvents() {
+        $window.on('resize', handleResize);
+        $('.detailed-news').on('click', onSelectNews);
     }
 });
-
-// ADJUST WHEN HTML IS CHANGED!
-function activateAccordion(data, className) {
-    var year = $('#detailed-news-date-created').attr(data);
-    var result = 0;
-
-    $('.' + className).each(function (index, el) {
-        if ($(el).text() === year) {
-            result = index;
-            return;
-        }
-    });
-
-    return result;
-}
-
-
-function getNewsDetails(id, url) {
-    $('#news-view-container').html('Loading...');
-    $.get('/widget/newswidget/DetailedNews/' + url, function (result) {
-        $('#news-view-container').html(result);
-        //changeUrl(url)
-    });
-}
-
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-function changeUrl(url) {
-    console.log('DEPRECATED: delete this function call!');
-}
-
-function collapseAccordion() {
-    if ($(window).width() < 992) {
-        $('.accordion').accordion('option', { active: false });
-    }
-}

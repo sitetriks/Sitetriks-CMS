@@ -113,7 +113,7 @@
 
 .file-handler-wrapper,
 .gallery-widget #upload-modal {
-    position: unset;
+    position: static;
 }
 
 .file-handler-nav {
@@ -172,7 +172,7 @@
         width: 20px;
         height: 20px;
         position: absolute;
-        top: -5px;
+        top: -2px;
     }
 
 

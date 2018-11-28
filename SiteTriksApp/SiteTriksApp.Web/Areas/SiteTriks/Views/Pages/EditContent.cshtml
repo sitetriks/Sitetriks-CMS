@@ -175,13 +175,14 @@
 
         //===================================================================================================
 
-        $(document).ready(function (ev) {
+        (function (ev) {
             var currentLanguage = '@Model.Culture';
             var currentVersion = '@Model.Version';
             var currentTemplate = '@Model.Template';
 
+            WarningWindow.attach();
             editPageContent(url, currentLanguage, currentVersion, currentTemplate, w);
-        });
+        })();
     </script>
 }
 

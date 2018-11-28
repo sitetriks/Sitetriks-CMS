@@ -63,13 +63,13 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/leaving-warning.js"></script>
     <script src="~/js/multiselect-setup.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script src="~/js/sitetriks/users.js"></script>
     <script>
-        $(document).ready(function () {
+        (function () {
+            WarningWindow.attach();
             initUserEdit();
-        });
+        })();
     </script>
 }

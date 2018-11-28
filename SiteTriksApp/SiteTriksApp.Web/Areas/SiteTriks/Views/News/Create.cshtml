@@ -111,6 +111,7 @@
             var logger = new Logger('debug');
             var mediator = new Mediator(logger);
 
+            WarningWindow.attach();
             News.createNews('@Url.Action("ValidateUrl", "News")', mediator, logger);
         })();
     </script>

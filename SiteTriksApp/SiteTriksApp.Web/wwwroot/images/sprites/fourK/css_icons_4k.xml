@@ -1,0 +1,6 @@
+.sprite { background: url('sprite.png') no-repeat top left; height: 117px;  } 
+.sprite.Expandwindow { background-position: 0 0; width: 85px; height: 76px; } 
+.sprite.Decresewindow { background-position: -95px 0; width: 93px; height: 108px; } 
+.sprite.Group10 { background-position: -198px 0; width: 86px; height: 77px; } 
+.sprite.Group3 { background-position: -294px 0; width: 50px; } 
+.sprite.Shrinkmenu { background-position: -354px 0; width: 48px; } 

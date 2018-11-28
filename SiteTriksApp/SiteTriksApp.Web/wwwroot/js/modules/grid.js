@@ -22,16 +22,15 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
     }
 
     const $headerRow = $('<div></div>', { class: 'container-fluid grid-header' });
-    $headerRow.append(createButtons()).append(createHeader());
     const $bodyRow = $('<div></div>', { class: 'container-fluid grid-body' });
     const $pagerRow = $('<div></div>', { class: 'container-fluid grid-pager' });
-
-    $wrapper.append($headerRow).append($bodyRow).append($pagerRow);
-    $wrapper.addClass('sitetriks-grid');
+    render();
+    bindEvents();
 
     const dataSource = new DataSource(sourceConfig);
+    pagerConfig = pagerConfig || { pageSizes: [1, 2, 5, 10, 20, 50, 100, 'all'], pageReadOnly: true, default: 20 };
     const pager = new Pager($pagerRow, pagerConfig, onPageChange);
-    const paging = { page: 1, size: pagerConfig.default || 10 };
+    const paging = { page: 1, size: pagerConfig.default || 10, default: pagerConfig.default };
     const sorting = {};
     const filters = [];
     const dateFormatOptions = {
@@ -41,6 +40,12 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
         hour: '2-digit',
         minute: '2-digit'
     };
+
+    function render() {
+        $headerRow.append(createButtons()).append(createHeader());
+        $wrapper.append($headerRow).append($bodyRow).append($pagerRow);
+        $wrapper.addClass('sitetriks-grid');
+    }
 
     // data loading
     function loadData(isForced) {
@@ -91,7 +96,6 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
         loadData();
     }
 
-    $bodyRow.on('click', '.child-expand', showChildren);
     function showChildren(ev) {
         let $target = $(this);
         let $icon = $target.children('.glyphicon');
@@ -104,14 +108,14 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
         }
     }
 
-    $headerRow.on('keypress', '.search-field', function (ev) {
+    function searchOnEnter(ev) {
         if (ev.keyCode !== 13) {
             return;
         }
 
         this.blur();
         onSearch();
-    });
+    }
 
     function onSearch(ev) {
         filters.length = 0;
@@ -168,7 +172,13 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             }
         });
 
-        if (collection[collectionName].length < 1) { return; }
+        if (!collection[collectionName].length || action.postUrl) {
+            if (action.callback && {}.toString.call(action.callback) === '[object Function]') {
+                action.callback();
+            }
+
+            return;
+        }
 
         //Loader.show(true);
         Data.postJson({ url: action.postUrl, data: collection }).then(function (res) {
@@ -214,17 +224,19 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             if (config.fields[i].filter) {
                 $('<input/>', {
                     type: 'text',
-                    placeholder: 'SEARCH: ' + config.fields[i].title,
+                    placeholder: 'Search by ' + config.fields[i].title || config.fields[i].type,
                     'data-property': config.fields[i].name,
                     'data-type': config.fields[i].type,
                     class: 'search-field'
                 }).appendTo($cell);
             }
 
-            $cell.appendTo($filterHeader);
+            if (!config.isGrid || $cell.children().length) {
+                $cell.appendTo($filterHeader);
+            }
 
             if (!config.isGrid) {
-                let content = config.fields[i].headerTemplate ? replaceAll(config.fields[i].headerTemplate, '#item#', config.fields[i].title) : config.fields[i].title;
+                let content = config.fields[i].headerTemplate ? replaceAll(config.fields[i].headerTemplate, '#item#', config.fields[i].title || '') : config.fields[i].title || '';
 
                 $('<div></div>', {
                     class: config.isGrid ? 'grid-filter' : 'col-xs-' + config.fields[i].size || 2,
@@ -233,27 +245,51 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             }
         }
 
+        //attaching search button
+        let $lastSearchCell = $filterHeader.find('.search-field').last().parent();
+        if ($lastSearchCell.length) {
+            $('<div></div>', {
+                class: 'search-icon-wrapper'
+            }).append($('<img/>', {
+                src: '/images/search-icon.svg'
+            })).on('click', onSearch).appendTo($lastSearchCell);
+            $lastSearchCell.addClass('searh-background last').prevAll().addClass('searh-background');
+        }
+
         return [$filterHeader, $titleHeader];
     }
 
     function createButtons() {
         let $buttonsRow = $('<div></div>', { class: 'row buttons-header' });
-
-        if (config.fields.filter(c => c.filter).length > 0) {
-            $('<a></a>', {
-                text: 'Search',
-                class: 'btn btn-grid'
-            }).on('click', onSearch).appendTo($buttonsRow);
-        }
-
         for (const key in config.customActions) {
             if (!config.customActions.hasOwnProperty(key)) continue;
 
             let $btn = $('<a></a>', {
-                text: config.customActions[key].title || key,
-                'data-action': key,
                 class: 'btn btn-grid'
-            }).on('click', onCustomAction);
+            });
+
+            if (config.customActions[key].iconOnly) {
+                $btn.addClass('icon-only');
+            } else {
+                $btn.text(config.customActions[key].title || key);
+            }
+
+            if (config.customActions[key].redirectUrl) {
+                $btn.attr('href', config.customActions[key].redirectUrl);
+            } else {
+                $btn.attr('data-action', key)
+                    .on('click', onCustomAction);
+            }
+
+            if (config.customActions[key].attributes) {
+                for (var attribute in config.customActions[key].attributes) {
+                    $btn.attr(attribute, config.customActions[key].attributes[attribute]);
+                }
+            }
+
+            if (config.customActions[key].class) {
+                $btn.addClass(config.customActions[key].class);
+            }
 
             switch (config.customActions[key].type) {
                 case 'success':
@@ -271,6 +307,11 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
                         class: 'glyphicon glyphicon-remove'
                     }).css('color', 'red').prependTo($btn);
                     break;
+                case 'add':
+                    $('<span></span>', {
+                        class: 'glyphicon glyphicon-plus'
+                    }).prependTo($btn);
+                    $btn.removeClass('btn-grid').removeClass('btn').addClass('btn-grid-add');
 
                 default:
                     break;
@@ -295,7 +336,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
                 } else {
                     $row = createItemRow(items[i]);
                 }
-                
+
                 if (config.cellWidth) {
                     $row.css('width', config.cellWidth);
                 }
@@ -336,6 +377,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
                 }
             }
 
+            value = value || value === 0 ? value : '';
             switch (columnConfig.type) {
                 case 'checkbox':
                     content = `<input type="checkbox" class="st-grid-checkbox" data-id="${value}"`;
@@ -383,6 +425,15 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
                     break;
 
+                case 'compare':
+                    if (columnConfig.comparer && {}.toString.call(columnConfig.comparer) === '[object Function]' && columnConfig.comparer(value)) {
+                        content = columnConfig.trueTemplate || '';
+                    } else {
+                        content = columnConfig.falseTemplate || '';
+                    }
+
+                    break;
+
                 case 'list':
                     let list = value;
                     if (list instanceof Array) {
@@ -421,8 +472,54 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
         return $bodyRow;
     }
 
+    function updateConfig({ fields, customActions, sourceConfig, pagerConfig }) {
+        if (sourceConfig) {
+            dataSource.updateConfig(sourceConfig);
+        }
+
+        if (pagerConfig) {
+            pager.updateConfig(pagerConfig);
+        }
+
+        let rebuildHeader = false;
+        if (customActions) {
+            config.customActions = customActions;
+            rebuildHeader = true;
+        }
+
+        if (fields) {
+            config.fields = fields;
+            rebuildHeader = true;
+        }
+
+        if (rebuildHeader) {
+            $headerRow.html('').append(createButtons()).append(createHeader());
+            paging.page = 1;
+            paging.size = pager.default || 10;
+            pager.setPageSize(paging.size);
+            pager.setCurrentPage(paging.page);
+        }
+
+        return this;
+    }
+
+    function bindEvents() {
+        $headerRow.on('keypress', '.search-field', searchOnEnter);
+        $bodyRow.on('click', '.child-expand', showChildren);
+    }
+
+    function dispose() {
+        $headerRow.off('keypress', '.search-field', searchOnEnter);
+        $bodyRow.off('click', '.child-expand', showChildren);
+
+        //dataSource.dispose();
+        pager.dispose();
+    }
+
     return {
         load: function (isForced) { loadData(isForced); return this; },
-        updateDefaultFilters: function (filters, clear) { dataSource.updateDefaultFilters(filters, clear); return this; }
+        updateDefaultFilters: function (filters, clear) { dataSource.updateDefaultFilters(filters, clear); return this; },
+        updateConfig,
+        dispose
     };
 }

@@ -13,13 +13,20 @@
                             <img src="~/images/homepage/Login.svg" />
                             <div>Welcome to SiteTriks CMS Initialization</div>
                         </div>
-                        <a class="btn" asp-action="RegisterUser">Create your site</a>
+                        <a class="btn" id="create-site-btn">Create site</a>
 
                         @if (hostingEnv.EnvironmentName == "Development")
                         {
-                            <a class="btn" id="dev-button" asp-action="DefaultDeveloperSetup">Create default site</a>
-                            <p class="centered">Email: admin@mail.com</p>
-                            <p class="centered">Password: 12345qQ!</p>
+                            <div class="default-settings-checkbox">
+                                <label class="checkbox-container">
+                                    &nbsp;
+                                    <span class="checkmark-border">
+                                        <input class="filter" data-type="checkbox" id="default-site-checkbox" data-identifier="AvailableInPhysicalStore" data-field="base" type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </span>
+                                </label>
+                                <span>Use default settings</span>
+                            </div>
                         }
                     </div>
                 </div>
@@ -37,7 +44,7 @@
     @*<script type="text/javascript" src="~/js/login-image-select.js"></script>*@
 
     <script>
-        $('#dev-button').on('click', (e) => {
+        @*$('#dev-button').on('click', (e) => {
             Loader.show('#fff');
             e.preventDefault();
             let formData = new FormData();
@@ -53,6 +60,28 @@
                     Loader.hide();
                 }
             }, (res) => { console.log(res); });
+        });*@
+
+        $('#create-site-btn').on('click', (e) => {
+            if ($("#default-site-checkbox").is(':checked')) {
+                e.preventDefault();
+                Loader.show('#fff');
+                let formData = new FormData();
+
+                let url = '@Url.Action("DefaultDeveloperSetup", "Setup")';
+
+                Data.postForm({ url: url, formData: formData }).then((res) => {
+                    if (res.success) {
+                        handleAppRestart({ url: '/Account/Login?ReturnUrl=%2Fsitetriks' });
+                    }
+                    else {
+                        Notifier.createAlert({ containerId: '#alerts', message: res.message, status: 'danger' });
+                        Loader.hide();
+                    }
+                }, (res) => { console.log(res); });
+            } else {
+                $('#create-site-btn').attr('href', '/setup/registeruser');
+            }
         });
     </script>
 }

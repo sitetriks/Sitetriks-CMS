@@ -15,7 +15,7 @@ namespace SiteTriksApp.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -1104,6 +1104,36 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_siteConfigs");
                 });
 
+            modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncResponse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<Guid>("ItemId");
+
+                    b.Property<string>("ItemType");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<string>("Message");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.Property<Guid>("SiteSyncStatusId");
+
+                    b.Property<bool>("Successful");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SiteSyncStatusId");
+
+                    b.ToTable("st_sitesyncResponses");
+                });
+
             modelBuilder.Entity("SiteTriks.Data.Models.SiteSyncHistory", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1127,7 +1157,7 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<Guid>("SiteProviderId");
 
-                    b.Property<Guid>("SyncTarget");
+                    b.Property<Guid>("TargetSiteId");
 
                     b.HasKey("Id");
 
@@ -1145,9 +1175,15 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<string>("LastUserId");
 
+                    b.Property<string>("OriginSite");
+
+                    b.Property<string>("OriginUserId");
+
                     b.Property<Guid>("SiteProviderId");
 
                     b.Property<int>("Status");
+
+                    b.Property<string>("TargetSite");
 
                     b.HasKey("Id");
 
@@ -1853,7 +1889,7 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_errorPages");
                 });
 
-            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Discussion", b =>
+            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -1876,7 +1912,7 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("st_discussions");
+                    b.ToTable("forum_categories");
                 });
 
             modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Post", b =>
@@ -1886,8 +1922,6 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<string>("Creator");
-
                     b.Property<DateTime?>("DateCreated");
 
                     b.Property<DateTime?>("DateModified");
@@ -1896,33 +1930,33 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<Guid>("SiteProviderId");
 
-                    b.Property<Guid>("ThreadId");
+                    b.Property<Guid>("ThemeId");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ThreadId");
+                    b.HasIndex("ThemeId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("st_posts");
+                    b.ToTable("forum_posts");
                 });
 
-            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Thread", b =>
+            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Theme", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content");
+                    b.Property<Guid>("CategoryId");
 
-                    b.Property<string>("Creator");
+                    b.Property<string>("Content");
 
                     b.Property<DateTime?>("DateCreated");
 
                     b.Property<DateTime?>("DateModified");
-
-                    b.Property<Guid>("DiscussionId");
 
                     b.Property<string>("LastUserId");
 
@@ -1934,11 +1968,11 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiscussionId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("st_threads");
+                    b.ToTable("forum_themes");
                 });
 
             modelBuilder.Entity("SiteTriks.MarketingEmailModule.Data.Models.MarketingEmailSubscriber", b =>
@@ -2068,6 +2102,10 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<Guid>("SiteId");
 
                     b.Property<Guid>("SiteProviderId");
+
+                    b.Property<Guid>("TargetIdentifier");
+
+                    b.Property<int>("Type");
 
                     b.Property<string>("Url");
 
@@ -2302,6 +2340,14 @@ namespace SiteTriksApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncResponse", b =>
+                {
+                    b.HasOne("SiteTriks.Data.Models.SiteSyncStatus", "SiteSyncStatus")
+                        .WithMany("CommunicationModels")
+                        .HasForeignKey("SiteSyncStatusId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("SiteTriks.DocumentationModule.Data.Models.Topic", b =>
                 {
                     b.HasOne("SiteTriks.DocumentationModule.Data.Models.Topic", "Parent")
@@ -2368,7 +2414,7 @@ namespace SiteTriksApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SiteTriks.ECommerseModule.Data.Models.StoreItemExtraFieldsConfig", "GetStoreItemExtraFieldsConfig")
-                        .WithMany()
+                        .WithMany("CategoryExtraFieldConfigs")
                         .HasForeignKey("StoreItemExtraFieldsConfigId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
@@ -2460,7 +2506,7 @@ namespace SiteTriksApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Discussion", b =>
+            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Category", b =>
                 {
                     b.HasOne("SiteTriks.Data.Models.User", "User")
                         .WithMany()
@@ -2470,9 +2516,9 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Post", b =>
                 {
-                    b.HasOne("SiteTriks.ForumModule.Data.Models.Thread", "Thread")
-                        .WithMany("Comments")
-                        .HasForeignKey("ThreadId")
+                    b.HasOne("SiteTriks.ForumModule.Data.Models.Theme", "Theme")
+                        .WithMany("Posts")
+                        .HasForeignKey("ThemeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SiteTriks.Data.Models.User", "User")
@@ -2481,11 +2527,11 @@ namespace SiteTriksApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Thread", b =>
+            modelBuilder.Entity("SiteTriks.ForumModule.Data.Models.Theme", b =>
                 {
-                    b.HasOne("SiteTriks.ForumModule.Data.Models.Discussion", "Discussion")
-                        .WithMany("Threads")
-                        .HasForeignKey("DiscussionId")
+                    b.HasOne("SiteTriks.ForumModule.Data.Models.Category", "Category")
+                        .WithMany("Themes")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SiteTriks.Data.Models.User", "User")

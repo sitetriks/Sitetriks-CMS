@@ -57,6 +57,7 @@
             var mlfUrl = '@Url.Action("Mlf","Pages")';
             var initialUrl = '@Model.PageViewModel.Url';
 
+            WarningWindow.attach();
             editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl);
         })();
     </script>

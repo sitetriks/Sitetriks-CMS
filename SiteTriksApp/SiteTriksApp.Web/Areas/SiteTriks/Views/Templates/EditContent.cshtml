@@ -16,8 +16,8 @@
     @await Html.PartialAsync("SecondNavHeader")
 
     <a href="@Url.Action("Index")" class="btn-nav-2"><span class="st-icon-return-to-list"></span>Cancel</a>
-    <a id="btn-save-draft" class="btn-nav-2"><span class="st-icon-save-draft"></span>Save Draft</a>
-    <a id="btn-publish" class="btn-nav-2" data-toggle="modal" data-target="#warning-modal"><span class="st-icon-publish"></span>Publish</a>
+    <a id="btn-save-draft" class="btn-nav-2" data-disable-warning="true"><span class="st-icon-save-draft"></span>Save Draft</a>
+    <a id="btn-publish" class="btn-nav-2" data-disable-warning="true" data-toggle="modal" data-target="#warning-modal"><span class="st-icon-publish"></span>Save & Publish</a>
     <div class="nav-2-right">
         @*<a id="btn-preview-page" class="btn-nav-2"><span class="st-icon-preview"></span>Preview</a>*@
         <a id="btn-preview-page" class="btn-nav-2">
@@ -204,6 +204,7 @@
             var currentVersion = '@Model.Version';
             var currentTemplate = '@Model.Template';
 
+            WarningWindow.attach();
             editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w);
         });
     </script>

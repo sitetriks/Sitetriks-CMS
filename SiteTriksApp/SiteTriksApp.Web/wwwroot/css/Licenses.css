@@ -105,6 +105,7 @@
 
         .categories td img {
             float: left;
+            margin-right: 30px;
         }
 
         .categories td p {
@@ -135,7 +136,7 @@
 }
 
 .availability {
-    margin-right: 35%;
+    margin-right: 45%;
 }
 
 .information {
@@ -182,7 +183,7 @@
 
 .licenses-table-content .details .row {
     display: table;
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
     width: 100%;
 }
 
@@ -223,7 +224,7 @@
 .licenses-table-content .row .col-lg-10 {
     background-color: rgba(255, 255, 255, 0.9);
     /*border: solid 2px #7199d2;*/
-    width: auto;
+    width: 100%;
     padding: 2%;
     font-family: LucidaGrande;
     font-size: 14px;

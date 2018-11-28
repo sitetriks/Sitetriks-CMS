@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Areas/SiteTriks/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" type="text/css" href="~/css/forum.css" />
+    @RenderSection("Styles", required: false)
+}
+
+@RenderBody()
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

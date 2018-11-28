@@ -118,6 +118,15 @@ function initUserEdit() {
         }
     });
 
+    $('.multiselect-container label:has(input:checked)').each(function (index) {
+        if ($(this)[index].innerText.trimStart() === 'SuperAdmin') {
+            $('#email').attr('readonly', 'readonly');
+            $('.multiselect-native-select .btn-group').html('<div>SuperAdmin</div>');
+            $('.multiselect-native-select .dropdown-toggle').attr('disabled', 'disabled');
+
+        }
+    });
+
     $('input[type=submit]').on('click', function (e) {
         Loader.show(true);
         let flag = true;

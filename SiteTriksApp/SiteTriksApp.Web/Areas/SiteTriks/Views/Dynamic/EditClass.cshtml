@@ -82,11 +82,12 @@ new SelectListItem(){Text = "Images", Value = "images"}
     <script type="text/javascript" src="~/js/validator.js"></script>
     <script type="text/javascript" src="~/js/sitetriks/dynamics.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        (function () {
             var modelName = '@Model.Name';
             var assemblyName = '@ViewBag.AssemblyName';
 
+            WarningWindow.attach();
             editClass(modelName, assemblyName);
-        });
+        })();
     </script>
 }

@@ -19,33 +19,36 @@
             <div class="row" id="dashbpard-widgets">
                 @foreach (var dashboardConfig in Model)
                 {
-                    <div class="dashboard-conten-column dashboard-widget" data-type="@dashboardConfig.DisplayName">
+                    bool flag = @dashboardConfig.DisplayName == "Google analytics";
+
+                    <div class="dashboard-conten-column dashboard-widget @if (flag) { <text>google-analytics</text> }" data-type="@dashboardConfig.DisplayName">
                         @await Component.InvokeAsync(dashboardConfig.ClassName)
                     </div>
                 }
 
-                <div class=" google-analytics  dashboard-conten-column dashboard-widget" data-type="Google Analytics">
+                @*<div class=" google-analytics  dashboard-conten-column dashboard-widget" data-type="Google Analytics">
 
-                    <div class="text-center">
-                        <div>
-                            <div class="dashboard-table">
-                                <div class="panel panel-primary" style="border: none;">
-                                    <div class="controle-header panel-heading panel-heading-landing">
-                                        <img src="/images/dragable.svg">
-                                        <h1 class="panel-title panel-title-landing">
-                                            Google Analytics
-                                        </h1>
-                                    </div>
-                                    <div class="panel-body panel-body-landing">
-                      
-                                    </div>
-                                    <div class="panel-footer panel-footer-landing">
+                        <div class="text-center">
+                            <div>
+                                <div class="dashboard-table">
+                                    <div class="panel panel-primary" style="border: none;">
+                                        <div class="controle-header panel-heading panel-heading-landing">
+                                            <img src="/images/dragable.svg">
+                                            <h1 class="panel-title panel-title-landing">
+                                                Google Analytics
+                                            </h1>
+                                        </div>
+                                        <div class="panel-body panel-body-landing">
+
+
+                                        </div>
+                                        <div class="panel-footer panel-footer-landing">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>*@
 
                 @*<div class="google-analytics col-lg-8 col-md-3 col-sm-9 col-xs-9">
                         <div class="row">
@@ -79,6 +82,21 @@
 </div>
 
 @section scripts{
+    <script src="~/js/sitetriks/google-analytics-dashboard.js"></script>
+    <script>
+        $(document).ready(function () {
+            if ($('.google-analytics-widget').length != 0) {
+                (function (w, d, s, g, js, fs) {
+                    g = w.gapi || (w.gapi = {}); g.analytics = { q: [], ready: function (f) { this.q.push(f); } };
+                    js = d.createElement(s); fs = d.getElementsByTagName(s)[0];
+                    js.src = 'https://apis.google.com/js/platform.js';
+                    fs.parentNode.insertBefore(js, fs); js.onload = function () { g.load('analytics'); };
+                }(window, document, 'script'));
+
+                InitGAAnlitycs();
+            }
+        });
+    </script>
     <script>
         $(document).ready(function (ev) {
             $('#dashbpard-widgets').sortable({
@@ -106,6 +124,6 @@
 
 
 
-                    //$('.side-nav-collapse').hide();
+                                //$('.side-nav-collapse').hide();
     </script>
 }
