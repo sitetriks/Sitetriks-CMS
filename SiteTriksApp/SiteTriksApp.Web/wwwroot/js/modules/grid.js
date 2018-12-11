@@ -172,7 +172,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             }
         });
 
-        if (!collection[collectionName].length || action.postUrl) {
+        if (!collection[collectionName].length || !action.postUrl) {
             if (action.callback && {}.toString.call(action.callback) === '[object Function]') {
                 action.callback();
             }
