@@ -8,1000 +8,140 @@
     @await Html.PartialAsync("SecondNavHeader")
 </div>
 
-<style>
+<link href="~/css/site-sync.css" rel="stylesheet" type="text/css">
 
-    .sitesync-items-section {
-    }
-
-        .site-sync-target-section h2,
-        .sitesync-items-section h2,
-        .revision-history-wrapper h2 {
-            font-family: OpenSans;
-            font-size: 22px;
-            font-weight: bold;
-            color: #a4a4a4;
-        }
-
-    .buttons-container {
-        height: 40px;
-        cursor: pointer;
-    }
-
-    .source, .destination {
-        padding: 0;
-    }
-
-
-    .items {
-        padding-left: 4%;
-        padding-right: 4%;
-    }
-
-    #source-container {
-        padding: 1px;
-        border: 2px solid #048cff;
-        overflow-y: auto;
-    }
-
-    #staged-container {
-        padding: 1px;
-        border: 2px solid #383838;
-        overflow-y: auto;
-    }
-
-    #destination-container {
-        padding: 1px;
-        border: 2px solid #113d7a;
-        color: #113d7a;
-        overflow-y: auto;
-    }
-
-    .sitesync-items-section .buttons-container div {
-        width: 100%;
-        display: inline-block;
-        height: 100%;
-        border: 1px solid white;
-        text-align: center;
-        font-weight: bold;
-        line-height: 38px;
-        font-size: 16px;
-        color: white;
-    }
-
-    #source-container .buttons-container {
-        background-color: #048cff;
-    }
-
-    #staged-container .buttons-container {
-        background-color: #383838;
-    }
-
-    #staged-container .glyphicon-remove {
-        color: #fa0017;
-        margin-right: 10px;
-        margin-left: 10px;
-    }
-
-    #source-container .source-items {
-        float: right;
-        margin-bottom: 0;
-        margin-right: 10px;
-    }
-
-    .sitesync-items-section hr {
-        height: 1px;
-        background: #979797;
-    }
-
-    .section-title {
-        color: #525252;
-        text-align: center;
-        font-weight: bold;
-        padding: 10px;
-    }
-
-    .source .site-sync-container-titles {
-        color: #048cff;
-    }
-
-    .items .site-sync-container-titles {
-        color: black;
-    }
-
-    .destination .site-sync-container-titles {
-        color: #113d7a;
-    }
-
-    .box {
-        height: 100px;
-        width: 200px;
-        margin: 0 auto;
-        border: 1px solid #048cff;
-        border-radius: 10px 10px 0 0;
-        color: #048cff;
-    }
-
-        .box .blue-filled {
-            height: 70px;
-            width: 100%;
-            background-color: #048cff;
-            border: none;
-            border-radius: 8px 8px 0 0;
-            border: 1px solid #048cff;
-        }
-
-        .box .centered-title {
-            padding-left: 15px;
-            line-height: 28px;
-            height: 30px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-    .targets .target-box {
-        position: relative;
-        height: 100px;
-        width: 200px;
-        margin-left: 220px;
-        border-radius: 10px 10px 0 0;
-        color: #048cff;
-        background-color: #fa0017;
-    }
-
-    .target-box #connect-target {
-        position: absolute;
-        width: 180px;
-        height: 70px;
-        border: none;
-        font-size: 36px;
-        border-radius: 8px 0 0 0;
-        background-color: #113d7a;
-        color: white;
-    }
-
-    .target-box select {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        height: 30px;
-    }
-
-
-    /*form styles*/
-
-    .add-target-form {
-        margin-left: 155px;
-        margin-top: 50px;
-        width: 265px;
-    }
-
-        .add-target-form .control-label {
-            display: inline-block;
-            width: 75px;
-            text-align: left;
-        }
-
-        .add-target-form .control-inputs {
-            display: inline-block;
-            width: 200px;
-            max-width: 200px;
-        }
-
-    .btn-add-target {
-        width: 107px;
-        float: right;
-        border-radius: 6px;
-        border: 1px solid #979797;
-        background-color: #02d500;
-        font-weight: bold;
-        color: white;
-    }
-
-    /*arrow styles*/
-    .arrow-container {
-        padding-top: 90px;
-    }
-
-        .arrow-container > div {
-            margin: 0 auto;
-            width: 40%;
-        }
-
-    .sitesync-arrow {
-        float: left;
-        width: 80%;
-        height: 2px;
-        background-color: #979797;
-    }
-
-    .sitesync-arrow-triangle {
-        float: left;
-        height: 0;
-        width: 0;
-        border-left: 16px solid #979797;
-        border-bottom: 7px solid transparent;
-        border-top: 7px solid transparent;
-        margin-top: -6px;
-    }
-
-    .main-element {
-        padding: 4px;
-        padding-left: 10px;
-        cursor: pointer;
-        font-weight: normal;
-        border: 1px solid black;
-    }
-
-        .main-element .glyphicon {
-            margin-left: 5px;
-            font-size: 12px;
-        }
-
-    #source-container .main-element {
-        color: #048cff;
-        border-color: #048cff;
-        border-collapse: collapse;
-        font-weight: normal;
-    }
-
-    .content-element {
-        display: none;
-    }
-
-    .inner-items-container {
-        border: 1px solid black;
-        height: 500px;
-    }
-
-    .site-sync-container-titles {
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 25px;
-    }
-
-
-    .create-action,
-    .edit-action,
-    .delete-action {
-        color: #2ebf16;
-        border-bottom: 1px solid #048cff;
-        line-height: 30px;
-        vertical-align: middle;
-    }
-
-        .create-action label,
-        .edit-action label,
-        .delete-action label {
-            font-weight: normal;
-            margin-bottom: 2px;
-        }
-
-    .create-action {
-        color: #2ebf16;
-    }
-
-    .edit-action {
-        color: #3fa6ff;
-    }
-
-    .delete-action {
-        color: #fa0017;
-    }
-
-        .create-action input,
-        .edit-action input,
-        .delete-action input {
-            visibility: hidden;
-        }
-
-    /*Dependencies*/
-
-    .dependencies.row {
-        text-align: center;
-        padding: 30px;
-        color: #a4a4a4;
-        font-family: OpenSans;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .question-mark {
-        position: relative;
-        margin-right: 20px;
-        display: inline-block;
-        width: 25px;
-        height: 23px;
-        justify-content: center;
-        line-height: 21px;
-        font-weight: bold;
-        background: #048cff;
-        text-align: center;
-        color: white;
-        border: 1px solid #979797;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    .dependencies-tooltip {
-        display: none;
-        position: absolute;
-        top: -165px;
-        left: -160px;
-        width: 350px;
-        height: 150px;
-        padding: 15px;
-        z-index: 1;
-        border: 2px solid #3fa6ff;
-        border-radius: 15px;
-        background: white;
-        color: #3fa6ff;
-        font-weight: normal;
-        text-align: justify;
-        font-size: 15px;
-    }
-
-        .dependencies-tooltip:after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 163px;
-            margin-left: -5px;
-            border-width: 10px;
-            border-style: solid;
-            border-color: #3fa6ff transparent transparent transparent;
-        }
-
-    .question-mark:hover .dependencies-tooltip {
-        display: block;
-    }
-
-
-    .dependencies label {
-        margin-left: 10px;
-        width: 60px;
-        height: 30px;
-        border-radius: 7px;
-        border: 1px solid #979797;
-        border-radius: 7px;
-        color: #979797;
-        font-weight: bold;
-        line-height: 26px;
-    }
-
-        .dependencies label.checked {
-            background-color: #3fa6ff;
-            color: white;
-        }
-
-    .dependencies input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-    }
-
-        .dependencies input:checked {
-            opacity: 1;
-        }
-
-    /*Revision history*/
-
-    .revision-history-wrapper {
-    }
-
-        .revision-history-wrapper h2 {
-            display: inline-block;
-        }
-
-    .history-data {
-        height: 500px;
-        border: 2px solid #1f98ff;
-        border-radius: 9px;
-        color: #1f98ff;
-        font-weight: bold;
-    }
-
-    .revision-history-wrapper #history-button {
-        float: right;
-        width: 170px;
-        height: 37px;
-        font-family: OpenSans;
-        font-size: 20px;
-        font-weight: bold;
-        border-radius: 8px;
-        line-height: 20px;
-        color: white;
-        background-color: #3fa6ff;
-    }
-
-    .sync-button-wrapper {
-        text-align: center;
-        margin-top: -70px;
-        margin-bottom: 36px;
-    }
-
-        .sync-button-wrapper #site-sync-button {
-            margin-left: 170px;
-            width: 170px;
-            height: 37px;
-            background-color: #2ebf16;
-            color: #fff;
-            font-family: OpenSans;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 8px;
-            line-height: 20px;
-            color: white;
-            background-color: #2ebf16;
-        }
-</style>
 <div class="backend-wrapper">
     <div class="site-sync-target-section">
-        <h2>1.Select destination instance</h2>
+        <h2>1.Select destination instance and click on the connect button  <i class="fa fa-power-off" aria-hidden="true"></i> </h2>
         <div class="row">
-            <div class="current col col-lg-5">
+            <div class="current col col-lg-5 col-xs-5">
                 <div class="section-title">Source</div>
                 <div class="box">
-                    <div class="blue-filled"></div>
                     <div class="centered-title">@Model.CurrentDomain</div>
                 </div>
             </div>
-            <div class="col col-lg-2 arrow-container">
-                <div>
-                    <div class="sitesync-arrow"></div>
-                    <div class="sitesync-arrow-triangle"></div>
-                </div>
+            <div class="col col-lg-2 col-xs-2 arrow-container">
+                <div class="sitesync-arrow"></div>
+                <div class="sitesync-arrow-triangle"></div>
             </div>
-            <div class="targets col col-lg-5">
-                <div class="section-title"> &nbsp;</div>
+            <div class="targets col col-lg-5 col-xs-5">
                 <div class="target-box">
-                    <button id="connect-target" class="btn btn-default"><i class="fa fa-power-off" aria-hidden="true"></i></button>
+                    <div class="section-title">Destination</div>
                     <select id="targets-select">
-                        <option value="0">+ Add new destination</option>
+                        <option value="0">Select a target</option>
                         @foreach (var item in Model.SiteSyncTargets)
                         {
-                            <option value="@item.Url">@item.Url</option>
+                            <option data-id="@item.Id" value="@item.Url">@item.Url</option>
                         }
                     </select>
-                </div>
-                <form action="/sitetriks/sitesynctargets/create" method="post" class="add-target-form">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label" for="Name">Name</label>
-                            <div class="control-inputs">
-                                <input class="form-control text-box single-line" id="Name" name="Name" required="required" type="text"
-                                       value="">
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label" for="Url">Url</label>
-                            <div class="control-inputs">
-                                <input class="form-control text-box single-line" id="Url" name="Url" placeholder="https://example.com"
-                                       required="required" type="text" value="">
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label" for="Email">Email</label>
-                            <div class="control-inputs">
-                                <input class="form-control text-box single-line" id="Email" name="Email" required="required" type="text"
-                                       value="">
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label" for="Password">Password</label>
-                            <div class="control-inputs">
-                                <input class="form-control text-box single-line" id="Password" name="Password" required="required" type="password"
-                                       value="">
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
+                    <button id="connect-target" class="btn btn-default"><i class="fa fa-power-off" aria-hidden="true"></i></button>
+                    <div class="target-action-buttons">
+                        <div class="target-button add"><span class="glyphicon glyphicon-plus"></span></div>
+                        <div class="target-button edit" data-edit-url=""><span class="glyphicon glyphicon-pencil"></span></></div>
+                        <div class="target-button delete"><span class="glyphicon glyphicon-remove"></span></div>
                     </div>
-                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Np5L7AzKihJryczlG_40OZGTB2d7P674v2epRvvQkmLKzIaimAhZc3glJ0dinGAoGOtL5feDMr-V3LclI5b_PEaxIXFidloak-_JdWVNLK2vR6JgAq6fAyFTbAMm5pRzbmTG1rS3twFCsW_rVv_O2ZNsHTodu7VQQbSizSX6CkOuxrXqofEJpAg00KvjuZSmA">
-                    <button type="submit" id="submit" class="btn btn-add-target">Add</button>
-                </form>
-            </div>
-        </div>
+                    <div class="delete-popup">
+                        <div>Are you sure you want to delete the sitesync target along with the history?</div>
+                        <div class="btn btn-yes">Yes</div>
+                        <div class="btn btn-no">No</div>
+                    </div>
+                    <div class="create-target-form" style="display: none;">
+                        @await Html.PartialAsync("CreateTargetPartial")
+                    </div>
+                    <div class="edit-target-form" style="display: none;">
+                        @await Html.PartialAsync("EditTargetPartial")
+                    </div>
 
-    </div>
-    <div class="sitesync-items-section row">
-        <hr>
-        <h2>2.SiteSync</h2>
-        <div class="col-md-4 col-md site-sync-items-container source">
-            <h4 class="centered site-sync-container-titles">Source</h4>
-            <div id="source-container" class="inner-items-container">
-            </div>
-        </div>
-        <div class="col-md-4 site-sync-items-container items">
-            <h4 class="centered site-sync-container-titles">Items to be pushed</h4>
-            <div id="staged-container" class="inner-items-container">
-
-            </div>
-        </div>
-        <div class="col-md-4 site-sync-items-container destination">
-            <h4 class="centered site-sync-container-titles">Destination</h4>
-            <div id="destination-container" class="inner-items-container">
-
-            </div>
-        </div>
-    </div>
-    <div class="row dependencies">
-        <div>
-            <div class="question-mark">
-                ?<div class="dependencies-tooltip">
-                    If you would like to maintain the same visual and functional presentation as on the source environment, please, make sure that you select "Yes" and sync the dependencies.
-                    Selecting "No" will copy only the selected files.
                 </div>
-            </div>Copy dependencies
+            </div>
 
-            @*<a href="#" class="btn">Yes</a> <a href="#" class="btn">No</a>*@
+        </div>
+        <div class="sitesync-items-section row">
+            <hr>
+            <h2>2.SiteSync</h2>
+            <div class="col-md-4 col-md site-sync-items-container source">
+                <h4 class="centered site-sync-container-titles">Source</h4>
+                <div id="source-container" class="inner-items-container">
+                </div>
+            </div>
+            <div class="col-md-4 site-sync-items-container items">
+                <h4 class="site-sync-container-titles">Items to be pushed</h4>
+                <div id="staged-container" class="inner-items-container">
+
+                </div>
+            </div>
+            <div class="col-md-4 site-sync-items-container destination">
+                <h4 class="centered site-sync-container-titles">Destination</h4>
+                <div id="destination-container" class="inner-items-container">
+
+                </div>
+            </div>
+        </div>
+        <div class="row dependencies">
+            <div>
+                <div class="question-mark">
+                    ?<div class="dependencies-tooltip">
+                        If you would like to maintain the same visual and functional presentation as on the source environment, please, make sure that you select "Yes" and sync the dependencies.
+                        Selecting "No" will copy only the selected files.
+                    </div>
+                </div>Copy dependencies
+
+                @*<a href="#" class="btn">Yes</a> <a href="#" class="btn">No</a>*@
 
 
-            <label><input type="radio" name="dependencies" class="btn-dependencies">Yes</label>
+                <label><input type="radio" name="dependencies" class="btn-dependencies">Yes</label>
 
-            <label><input type="radio" name="dependencies" class="btn-dependencies">No</label>
+                <label><input type="radio" name="dependencies" class="btn-dependencies">No</label>
+
+
+
+            </div>
+        </div>
+        <div class="row revision-history-wrapper">
+            <h2>3. Click the sync button to start syncing.</h2>
+            <button id="history-button" class="btn btn-default">History</button>
+        </div>
+        <div class="sync-button-wrapper">
+            <button id="site-sync-button" class="btn btn-default">Sync</button>
+        </div>
+        <div class="row history-data">
+            <div class="row category-titles">
+                <div class="col col-lg-2"> Status </div>
+                <div class="col col-lg-2"> Origin Site </div>
+                <div class="col col-lg-2"> Target Site </div>
+                <div class="col col-lg-2"> Origin User Id </div>
+                <div class="col col-lg-2"> Date Created </div>
+                <div class="col col-lg-2"></div>
+            </div>
+            <div class="history-content-results"></div>
         </div>
     </div>
-    <div class="row revision-history-wrapper">
-        <h2>3. Click the sync button to start syncing.</h2>
-        <button id="history-button" class="btn btn-default">History</button>
-    </div>
-    <div class="sync-button-wrapper">
-        <button id="site-sync-button" class="btn btn-default">Sync</button>
-    </div>
-    <div id="site-sync-alert" class="alert alert-danger"></div>
-    <div class="row">
-        <div class="col col-lg-12 history-data">
-            <span>History Data</span>
-        </div>
-    </div>
+<div id="site-sync-alert" class=""></div>
 </div>
 
+
 @section Scripts {
+    <script src="~/js/modules/utils.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/sitetriks/sitesync.js"></script>
+    <script src="~/js/sitetriks/sitesync-model.js"></script>
+    <script src="~/js/sitetriks/sitesync-core.js"></script>
     <script>
-        var currSelectedSite = $('#targets-select option:selected').val();
-        var $targetBox = $('.target-box');
-        var $targetSelect = $targetBox.find('#targets-select');
+        (function() {
+            var a = siteSyncModel;
+            let connectToTargetUrl = '@Url.Action("ConnectToTarget", "SiteSync")';
+            let getDisplayNamesUrl = '@Url.Action("GetDisplayNames", "SiteSync")';
+            let postSyncUrl = '@Url.Action("SyncWithDependencies","SiteSync")';
+            let getByDisplayNameUrl = '@Url.Action("GetByDisplayName", "SiteSync")';
+            let getByDisplayNameTargetUrl = '@Url.Action("GetByDisplayNameDestinationSite", "SiteSync")';
 
-        $("#connect-target").on('click', (e) => {
+            siteSyncCore.init(getDisplayNamesUrl,
+            getByDisplayNameUrl,
+             getByDisplayNameTargetUrl);
 
-            currSelectedSite = getCurrentSelectedSite();
-            var url = '@Url.Action("ConnectToTarget", "SiteSync")?targetDomain=' + currSelectedSite;
-            console.log(url);
+            siteSyncModule.init(siteSyncModel, siteSyncCore, connectToTargetUrl, postSyncUrl);
 
-            Data.getJson({ url: url }).then((res) => {
-                console.log(res);
-                if (res.success) {
-                    console.log(res.message);
-                }
-            });
-        });
 
-        $targetSelect.on('change', function() {
-            $('#source-container').html("");
-            $('#staged-container').html("");
-            $('#destination-container').html("");
-            var $targetForm = $(this).parent().parent().find('.add-target-form');
-
-            if ($(this).val() == '') {
-                return;
-            }
-
-            if ($(this).val() == 0) {
-                console.log('buu');
-                $targetForm.css('display', 'block');
-            } else {
-                $targetForm.css('display', 'none');
-            }
-            currSelectedSite = $(this).val();
-            var displayNamesUrl = '@Url.Action("GetDisplayNames", "SiteSync")?targetDomain=' + $(this).val();
-            console.log(displayNamesUrl)
-            let displayNamesArray;
-            Data.getJson({ url: displayNamesUrl }).then((res) => {
-                    if (res.success) {
-                        displayNamesArray = res.displayNames;
-                        fillSourceContainer(displayNamesArray);
-                        fillStagedItemsContainer(displayNamesArray);
-                        fillDestinationItemsContainer(displayNamesArray);
-                }
-              });
-        });
-
-        /* Fill containers */
-        function fillSourceContainer(displayNames) {
-            var $sourceContainer = $('#source-container');
-
-            var $buttonsContainer = $('<div>').html('<div class="select-all">Select All</div>');
-            $buttonsContainer.addClass('buttons-container');
-
-            $sourceContainer.prepend($buttonsContainer);
-
-            for (let a = 0; a < displayNames.length; a++) {
-                let element = $('<div>').html(displayNames[a] + '<span class="glyphicon glyphicon-menu-right"></span><span class="glyphicon glyphicon-menu-down" style="display:none"></span><input type="checkbox" class="source-items">');
-                element.attr('id', 'source-' + displayNames[a]);
-                element.addClass('main-element');
-                element.data('display-name', displayNames[a]);
-                let contentElement = $('<div>').attr('id', 'source-' + displayNames[a] + '-content');
-                contentElement.addClass('content-element');
-
-                $sourceContainer.append(element);
-                $sourceContainer.append(contentElement);
-            }
-        }
-
-        function fillStagedItemsContainer(displayNames) {
-            var $stagedContainer = $('#staged-container');
-
-            var $buttonsContainer = $('<div>').html('<div class="deselect-all">Deselect All</div>');
-            $buttonsContainer.addClass('buttons-container');
-
-            $stagedContainer.prepend($buttonsContainer);
-
-            for (let a = 0; a < displayNames.length; a++) {
-                let element = $('<div>').html(displayNames[a] + '<span class="glyphicon glyphicon-menu-right"></span><span class="glyphicon glyphicon-menu-down" style="display:none"></span>');
-                element.attr('id', 'staged-' + displayNames[a]);
-                element.addClass('main-element');
-                element.data('display-name', displayNames[a]);
-                let contentElement = $('<div>').attr('id', 'staged-' + displayNames[a] + '-content');
-                contentElement.addClass('content-element');
-
-                $stagedContainer.append(element);
-                $stagedContainer.append(contentElement);
-            }
-        }
-
-        function fillDestinationItemsContainer(displayNames) {
-            $destinationContainer = $('#destination-container');
-
-            for (let a = 0; a < displayNames.length; a++) {
-                let element = $('<div>').html(displayNames[a] + '<span class="glyphicon glyphicon-menu-right"></span><span class="glyphicon glyphicon-menu-down" style="display:none"></span>');
-                element.attr('id', 'destination-' + displayNames[a]);
-                element.addClass('main-element');
-                element.data('display-name', displayNames[a]);
-                let contentElement = $('<div>').attr('id', 'destination-' + displayNames[a] + '-content');
-                contentElement.addClass('content-element');
-
-                $destinationContainer.append(element);
-                $destinationContainer.append(contentElement);
-            }
-        }
-        /* End fill containers */
-
-
-        let makeSiteSyncModel = function() {
-            var syncModel = {
-                'includeDependencies': true,
-                'targetDomain': 'https://localhost:3777',
-                'itemsForSync': []
-            };
-
-            console.log(syncModel.includeDependencies);
-
-            function addItem(displayName, id) {
-                console.log(syncModel);
-
-                if(syncModel.itemsForSync.length == 0) {
-                    syncModel.itemsForSync.push({
-                        'displayName': displayName,
-                        'ids': [id]
-                    });
-
-                    return;
-                }
-
-                let currentObj = syncModel.itemsForSync.find(obj => obj.displayName == displayName);
-
-                if(!currentObj) {
-                     syncModel.itemsForSync.push({
-                        'displayName': displayName,
-                        'ids': [id]
-                    });
-
-                    return;
-                }
-
-                syncModel.itemsForSync.find(obj => obj.displayName == displayName).ids.push(id);
-
-            }
-
-            function removeItem() {
-
-            }
-
-            return {
-                addItem: function(displayName, id) {
-                    addItem(displayName, id);
-                },
-                getCurrentModel: function() {
-                    return syncModel;
-                }
-            }
-        }
-
-        var siteSyncModel = makeSiteSyncModel();
-
-        //Select
-        function selectItemsForPublish() {
-            let $target = $(this);
-            var $stagedContainer = $('#staged-container');
-            let parentId = $target.attr('data-parent-id');
-            let itemName = $target.attr('data-paragraph-title');
-            let element = '<div class="' + itemName + '"><span class="glyphicon glyphicon-remove"></span> ' + itemName +'</div>';
-
-            if (!($target.is(':checked'))) {
-                return;
-            }
-
-
-            //sitesynmodel
-            let id = $target.attr('data-id');
-            let displayName = $target.attr('data-display-name');
-
-            siteSyncModel.addItem(displayName, id);
-            console.log(siteSyncModel.getCurrentModel())
-            console.log("Item type: "+ displayName.toString() + " Item id: " + id.toString() )
-
-            let $parent = $stagedContainer.find('#' + parentId + '-content');
-
-            if ($parent.find('.' + itemName).length > 0) {
-                return;
-            }
-            $parent.append(element);
-        }
-
-        function selectItemsForPublishByParentDisplayName(displayName, itemName) {
-            console.log('in items to publish');
-            var $stagedContainer = $('#staged-container');
-            let element = '<div class="' + itemName + '"><span class="glyphicon glyphicon-remove"></span> ' + itemName + '</div>';
-
-            let $parent = $stagedContainer.find('#staged-' + displayName + '-content');
-
-            if ($parent.find('.' + itemName).length > 0) {
-                return;
-            }
-            $parent.append(element);
-        }
-
-         function selectAllByDisplayName () {
-            var displayName = $(this).parent().data('displayName');
-
-            getItemsByDisplayName(displayName);
-        };
-
-
-        /* Slide events */
-        $('#source-container').on('click', '.main-element', function () {
-            let mainContainer = $(this);
-            var displayName = $(this).data('displayName');
-
-            var $glyphicons = mainContainer.find('.glyphicon');
-            $glyphicons.toggle();
-
-            getDataByDisplayName(displayName);
-
-            let content = mainContainer.next();
-
-            content.slideToggle(500, function () {
-
-            });
-        });
-
-        $('#staged-container').on('click', '.main-element', function () {
-            let mainContainer = $(this);
-            var displayName = $(this).data('displayName');
-            let content = mainContainer.next();
-
-            var $glyphicons = mainContainer.find('.glyphicon');
-            $glyphicons.toggle();
-
-            content.slideToggle(500, function () {
-
-
-            });
-        });
-
-        $('#destination-container').on('click', '.main-element', function () {
-            let mainContainer = $(this);
-            var displayName = $(this).data('displayName');
-            var $glyphicons = mainContainer.find('.glyphicon');
-            $glyphicons.toggle();
-
-            getDataFromDestinationSite(displayName);
-            let content = mainContainer.next();
-
-            content.slideToggle(500, function () {
-            });
-        });
-        /*End slide events*/
-
-        function checkIfDependencyIsChecked() {
-            let $dependencies = $('.btn-dependencies');
-
-            if ($dependencies.prop('checked') != true) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        $('#site-sync-button').on('click', function(ev) {
-            //if is selected yes for dependencies -
-            var selction = checkIfDependencyIsChecked();
-
-            var url = `@Url.Action("SyncWithDependencies","SiteSync")`;
-            var $alertBox = $('#site-sync-alert');
-            var data = siteSyncModel.getCurrentModel();
-
-            if (selction == true) {
-                console.log(data);
-                Data.postJson({ url: url, data: data }).then(function (res) {
-                    console.log(res);
-                    console.log(res.success);
-
-                    $alertBox.html(res.message);
-
-                });
-            } else {
-                $alertBox.html('In order to proceed you need to select if the dependencies need to be synced.');
-            }
-
-
-        });
-
-        //Items stuff
-        function getDataByDisplayName(displayName){
-            var currDomain = getCurrentSelectedSite();
-
-            var url = `@Url.Action("GetByDisplayName", "SiteSync")?displayName=${displayName}&domain=${currDomain}`;
-
-            let items;
-            Data.getJson({ url: url }).then((res) => {
-                if (res.success) {
-                    items = res.siteSyncItems;
-
-                    nestedItems = res.siteSyncItems;
-
-                    let contentElement = $("#source-" + displayName + "-content");
-                    contentElement.html("");
-
-                    items.forEach((el) => {
-                       // var paragraph = $('<div>').html(el["title"]);
-
-                        var paragraph = $('<div>')
-                        .html('<label><input type="checkbox" class="source-checkbox" data-display-name='+ displayName +' data-id='+ el["id"] +' data-paragraph-title=' + el["title"] + ' data-parent-id="staged-' + displayName + '">' + el["title"] + '</label>');
-
-                        //var $input = $(('<input type="checkbox" class="source-checkbox">').attr('data-paragraph-title', el["title"]));
-
-                       // paragraph.prepend('<input type="checkbox" class="source-checkbox" data-paragraph-title=' + el["title"] + ' data-parent-id="staged-' + displayName + '">');
-
-                        paragraph.data("itemId", el["id"]);
-
-                        if (el["action"] == 0) {
-                            paragraph.addClass("create-action");
-                        }
-
-                        if (el["action"] == 1) {
-                            paragraph.addClass("edit-action");
-                        }
-
-                        if (el["action"] == 2) {
-                            paragraph.addClass("delete-action");
-                        }
-
-                        contentElement.append(paragraph);
-                    });
-                }
-            })
-            return items;
-        }
-
-        function getDataFromDestinationSite(displayName) {
-            var currDomain = getCurrentSelectedSite();
-
-            var url = `@Url.Action("GetByDisplayNameSourceSite", "SiteSync")?displayName=${displayName}&domain=${currDomain}`;
-
-            let items;
-            Data.getJson({ url: url }).then((res) => {
-                console.log(res);
-                if (res.success) {
-                    items = res.siteSyncItems;
-
-                    let contentElement = $("#destination-" + displayName + "-content");
-                    contentElement.html("");
-
-                    items.forEach((el) => {
-                        var paragraph = $('<p>').html(el["title"]);
-
-                        paragraph.data("itemId", el["id"]);
-
-                        contentElement.append(paragraph);
-                    });
-                }
-            })
-
-            return items;
-        }
-
-       function getItemsByDisplayName(displayName){
-            var currDomain = getCurrentSelectedSite();
-
-            var url = `@Url.Action("GetByDisplayName", "SiteSync")?displayName=${displayName}&domain=${currDomain}`;
-
-            let items;
-            return Data.getJson({ url: url }).then((res) => {
-                if (res.success) {
-                    items = res.siteSyncItems;
-                }
-
-                if (items.length > 0) {
-                    items.forEach((item) => {
-                        selectItemsForPublishByParentDisplayName(displayName, item.title)
-                    })
-                }
-                return res.siteSyncItems;
-            })
-        };
-
-        function getCurrentSelectedSite() {
-            let currSelectedSite = $('#targets-select option:selected').val();
-
-            return currSelectedSite;
-        }
-
-        function getAllDisplayNames() {
-            let $container = $('#source-container');
-            let $displayNames = $container.children('.main-element');
-            let $checkboxes = $container.find('.source-items');
-
-            $checkboxes.prop('checked', true);
-
-            console.log($checkboxes);
-
-            for (var i = 0; i < $displayNames.length; i += 1) {
-                var displayName = $displayNames[i].id.split('source-')[1];
-                getItemsByDisplayName(displayName).then(function (res) {
-
-                    for (var j = 0; j < res.length; j += 1) {
-                        selectItemsForPublishByParentDisplayName(displayName, res[j]);
-                    }
-                });
-
-            }
-        }
-
-        function deselectAllItems() {
-            $('.content-element').html('');
-            uncheckItems();
-        };
-
-        function uncheckItems() {
-            $('.source-items').prop('checked', false);
-        };
-
-        function removeSingleStagedItem() {
-            let $target = $(this);
-            $target.parent().remove();
-        }
-
-        /*Bind events*/
-
-        $('#source-container').on('click', '.source-checkbox', selectItemsForPublish);
-
-        $('#source-container').on('click', '.select-all', getAllDisplayNames);
-
-        $('#source-container').on('click', '.source-items', selectAllByDisplayName);
-
-        $('#staged-container').on('click', '.deselect-all', deselectAllItems);
-
-        $('#staged-container').on('click', '.glyphicon-remove', removeSingleStagedItem);
-
+        })();
     </script>
 }

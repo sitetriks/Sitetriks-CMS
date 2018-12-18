@@ -1,57 +1,176 @@
-﻿function InitGAAnlitycs() {
-    gapi.analytics.ready(function () {
+﻿var googleAnalyticsWidgets = (function () {
+    let viewId = 'ga:175953132';
+    let clientId = '878677551693-jbqirg4cgnhu9dfr1c40rbno1t6a2tpb.apps.googleusercontent.com';
 
-        /**
-         * Authorize the user immediately if the user has already granted access.
-         * If no access has been created, render an authorize button inside the
-         * element with the ID "embed-api-auth-container".
-         */
-        gapi.analytics.auth.authorize({
-            container: 'embed-api-auth-container',
-            clientid: '684140722090-mksi6fja8887bjl28l41dg0r05cjc869.apps.googleusercontent.com'
+    function initGAOverview() {
+        handleLogin();
+
+        $('#ga-select').on('change', (e) => {
+            $('#chart-container').html('');
+            var selected = $('#ga-select option:selected').val();
+
+            if (selected == 0) {
+                let currSessionChart = new gapi.analytics.googleCharts.DataChart(sessionChartInfo);
+                currSessionChart.set({ query: { ids: viewId } }).execute();
+            } else {
+                let currUserChart = new gapi.analytics.googleCharts.DataChart(usersChartInfo);
+                currUserChart.set({ query: { ids: viewId } }).execute();
+            }
         });
 
 
-        /**
-         * Create a new ViewSelector instance to be rendered inside of an
-         * element with the id "view-selector-container".
-         */
-        var viewSelector = new gapi.analytics.ViewSelector({
-            container: 'view-selector-container'
-        });
-
-        // Render the view selector to the page.
-        viewSelector.execute();
-
-
-        /**
-         * Create a new DataChart instance with the given query parameters
-         * and Google chart options. It will be rendered inside an element
-         * with the id "chart-container".
-         */
-        var dataChart = new gapi.analytics.googleCharts.DataChart({
+        let sessionChartInfo = {
             query: {
                 metrics: 'ga:sessions',
-                dimensions: 'ga:date',
+                dimensions: 'ga:day',
                 'start-date': '30daysAgo',
                 'end-date': 'yesterday'
             },
             chart: {
-                container: 'chart-container',
+                container: 'chart-container-overview-widget',
                 type: 'LINE',
                 options: {
                     width: '100%'
                 }
             }
+        };
+
+        let usersChartInfo = {
+            query: {
+                metrics: 'ga:users',
+                dimensions: 'ga:day',
+                'start-date': '30daysAgo',
+                'end-date': 'yesterday',
+            },
+            chart: {
+                container: 'chart-container-overview-widget',
+                type: 'LINE',
+                options: {
+                    width: '100%'
+                }
+            }
+        };
+
+
+        new gapi.analytics.googleCharts.DataChart(sessionChartInfo).set({ query: { ids: viewId } }).execute();
+    }
+
+    function initGACountry() {
+        handleLogin();
+        let sessionChartInfo = {
+            query: {
+                metrics: 'ga:sessions',
+                dimensions: 'ga:country',
+                'start-date': '30daysAgo',
+                'end-date': 'yesterday',
+                'max-results': 6,
+                sort: '-ga:sessions'
+            },
+            chart: {
+                container: 'chart-container-countries-widget',
+                type: 'PIE',
+                options: {
+                    width: '100%',
+                    pieHole: 4 / 9
+                }
+            }
+
+        };
+        new gapi.analytics.googleCharts.DataChart(sessionChartInfo).set({ query: { ids: viewId } }).execute();
+    }
+
+    function initGABrowsers() {
+        handleLogin();
+
+        let browsersChartInfo = {
+            query: {
+                metrics: 'ga:users',
+                dimensions: 'ga:browser',
+                'start-date': '30daysAgo',
+                'end-date': 'yesterday',
+                'max-results': 6,
+                sort: '-ga:users'
+            },
+            chart: {
+                container: 'chart-container-browsers-widget',
+                type: 'PIE',
+                options: {
+                    width: '100%',
+                    pieHole: 4 / 9
+                }
+            }
+        };
+
+        let osChartInfo = {
+            query: {
+                metrics: 'ga:users',
+                dimensions: 'ga:operatingSystem',
+                'start-date': '30daysAgo',
+                'end-date': 'yesterday',
+                'max-results': 6,
+                sort: '-ga:users'
+            },
+            chart: {
+                container: 'chart-container-browsers-widget',
+                type: 'PIE',
+                options: {
+                    width: '100%',
+                    pieHole: 4 / 9
+                }
+            }
+        };
+
+        $('#ga-browsers-select').on('change', (e) => {
+            $('#chart-container-browsers-widget').html('');
+            var selected = $('#ga-browsers-select option:selected').val();
+
+            if (selected == 0) {
+                let currSessionChart = new gapi.analytics.googleCharts.DataChart(browsersChartInfo);
+                currSessionChart.set({ query: { ids: viewId } }).execute();
+            } else {
+                let currUserChart = new gapi.analytics.googleCharts.DataChart(osChartInfo);
+                currUserChart.set({ query: { ids: viewId } }).execute();
+            }
         });
 
 
-        /**
-         * Render the dataChart on the page whenever a new view is selected.
-         */
-        viewSelector.on('change', function (ids) {
-            dataChart.set({ query: { ids: ids } }).execute();
-        });
+        new gapi.analytics.googleCharts.DataChart(browsersChartInfo).set({ query: { ids: viewId } }).execute();
+    }
 
-    });
-}
+    function initGASiteSpeed() {
+        handleLogin();
+
+        let siteSpeedChartInfo = {
+            query: {
+                metrics: 'ga:speedMetricsSample',
+                dimensions: 'ga:day',
+                'start-date': '30daysAgo',
+                'end-date': 'yesterday'
+            },
+            chart: {
+                container: 'chart-container-site-speed-widget',
+                type: 'LINE',
+                options: {
+                    width: '100%'
+                }
+            }
+        };
+
+        new gapi.analytics.googleCharts.DataChart(siteSpeedChartInfo).set({ query: { ids: viewId } }).execute();
+    }
+
+    function handleLogin() {
+        gapi.analytics.auth.authorize({
+            container: 'embed-api-auth-container',
+            clientid: clientId
+        });
+    }
+
+    return {
+        initGAOverview,
+        initGACountry,
+        initGABrowsers,
+        initGASiteSpeed
+    };
+})();
+

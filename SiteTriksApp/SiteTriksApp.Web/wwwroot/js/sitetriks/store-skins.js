@@ -1,4 +1,5 @@
-﻿'use strict';
+﻿/* globals Data, Utils, Loader, Validator, ModuleBuilder, WidgetsDraggable, CodeMirror, Multiselect, Handlebars, Notifier */
+'use strict';
 
 var StoreSkins = (function () {
     function gridSkin(widgets, pageWidgets, logger, mediator, skinId, storeId, postUrl) {
@@ -83,14 +84,18 @@ var StoreSkins = (function () {
             resolutionPreview.apply($defaultResolution[0]);
         }
 
-        function saveAndRenderLayout(ev) {
+        function saveLayout() {
             let l = ModuleBuilder.getInstance(previewLayoutSelector, ModuleBuilder.LAYOUT);
-            let layout = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
             let layoutWidget = w.getPageContent().find(c => c.placeholder === 'store-skin' && c.type === 'layoutBuilder' && c.order === 0);
             let element = JSON.parse(layoutWidget.element);
             element.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
             layoutWidget.element = JSON.stringify(element);
 
+            return element.layoutRows;
+        }
+
+        function saveAndRenderLayout(ev) {
+            let layout = saveLayout();
             ModuleBuilder.renderLayout(layout, $mainPlaceholder, l.deletedPlaceholders);
             WidgetsDraggable.init(w);
         }
@@ -101,6 +106,7 @@ var StoreSkins = (function () {
 
         function saveLayoutAndWidgets(ev) {
             Loader.show('#fff');
+            saveLayout();
             compileSkinTemplate(w.getPageContent()).then(function (res) {
                 let formData = new FormData();
                 if (Validator.isFunction(formData.set)) {
@@ -517,14 +523,18 @@ var StoreSkins = (function () {
 
             let $wrapper = $('<div></div>');
             for (let i = 0; i < items.length; i++) {
-
+                items[i].price = items[i].price.toFixed(2);
                 let html = template(items[i]);
                 $('<div></div>', {
                     width: size,
                     class: 'inline-block store-item-preview',
                     html: html
                 }).prepend($('<a></a>', {
-                    class: 'view-details',
+                    class: 'btn btn-success add-to-cart',
+                    'data-id': items[i].id,
+                    text: 'Add to Cart'
+                })).prepend($('<a></a>', {
+                    class: 'btn btn-default view-details',
                     'data-id': items[i].id,
                     text: 'details'
                 })).appendTo($wrapper);
@@ -744,11 +754,14 @@ var StoreSkins = (function () {
 
         let $gridView = $('#store-grid');
         let $fullPageView = $('#store-item');
+        let $cartView = $('#store-cart');
         let $itemContainer = $fullPageView.find('.item-container');
         let $mainPlaceholder = $gridView.find('div[data-placeholder="store-skin"]');
 
         let applyFiltersHandler;
         let viewDetailsHandler;
+
+        let cart = new Cart();
 
         ModuleBuilder.renderLayout(layout.layoutRows, $mainPlaceholder);
         renderWidgets(widgets, $mainPlaceholder).then(function (res) {
@@ -761,6 +774,15 @@ var StoreSkins = (function () {
             applyFiltersHandler = storeGrid.applyFilters;
             viewDetailsHandler = createDisplayFullPageEventHandler(fullPageTemplate);
             filter(mediator, storeId);
+
+            $('body').on('click', '.add-to-cart', function () {
+                let id = this.getAttribute('data-id');
+                cart.add(id);
+            });
+
+            $('.view-cart').on('click', function () {
+                createCartView();
+            });
 
             bindEvents();
         }, Data.defaultError());
@@ -785,6 +807,11 @@ var StoreSkins = (function () {
                         $fullPageView.show();
                         $gridView.hide();
                         $itemContainer.html(template(res.item));
+                        $itemContainer.prepend($('<a></a>', {
+                            class: 'btn btn-success add-to-cart',
+                            'data-id': res.item.id,
+                            text: 'Add to Cart'
+                        }));
                     }
                 });
             };
@@ -792,8 +819,21 @@ var StoreSkins = (function () {
 
         function backToGrid(ev) {
             $fullPageView.hide();
+            $cartView.hide();
             $gridView.show();
             $itemContainer.html('');
+        }
+
+        //-------------------------------------------------------------------------------------------------------
+        // cart view
+        function createCartView() {
+            $gridView.hide();
+            $fullPageView.hide();
+            $cartView.show();
+            let $container = $cartView.find('.item-container');
+            $container.html('');
+            Loader.show('#fff');
+            cart.loadItemsInfo($container).then(Loader.hide);
         }
 
         function bindEvents() {
@@ -814,6 +854,146 @@ var StoreSkins = (function () {
 
         return {
             dispose
+        };
+    }
+
+    // just setup code, will change when moved to separate widget
+    function Cart() {
+        let userId;
+        let items = {};
+        // TODO: bind events after load.
+        Data.getJson({ url: '/ecommerse/storeitemmanager/loadcart' }).then(function (res) {
+            items = res.items;
+            userId = res.userId;
+            if (!items) {
+                items = loadCart();
+            } else {
+                syncCart();
+            }
+        });
+
+        function add(itemId) {
+            if (items[itemId]) {
+                items[itemId].count += 1;
+            } else {
+                items[itemId] = { count: 1 };
+            }
+
+            Notifier.createAlert({ containerId: '#alerts', message: 'Item added to cart!', status: 'success' });
+            syncCart();
+            if (userId) {
+                Data.getJson({ url: `/ecommerse/storeitemmanager/additemtocart?id=${itemId}&number=${items[itemId].count}` }).then(function (res) {
+                    console.log(res);
+                });
+            }
+        }
+
+        function remove(itemId) {
+            if (items[itemId]) {
+                delete items[itemId];
+                Notifier.createAlert({ containerId: '#alerts', message: 'Item removed from cart!', status: 'danger' });
+                syncCart();
+                if (userId) {
+                    Data.getJson({ url: `/ecommerse/storeitemmanager/RemoveFromCart?id=${itemId}` }).then(function (res) {
+                        console.log(res);
+                    });
+                }
+            }
+        }
+
+        function loadItemsInfo($container) {
+            let promises = [];
+            for (var id in items) {
+                promises.push(Data.getJson({ url: `/ecommerse/storeitemmanager/getiteminfo?id=${id}` }).then(function (res) {
+                    items[res.item.id].info = res.item;
+                }));
+            }
+
+            return Promise.all(promises).then(function (res) {
+                for (var key in items) {
+                    if (!items[key].info) {
+                        console.error('No Information for item - ' + key);
+                        continue;
+                    }
+
+                    let html =
+                        `<div class="cart-item">
+                            ${items[key].info.title} - <input class="count-change" value="${items[key].count}" data-id="${key}" type="number"/> x ${items[key].info.price.toFixed(2)} lv 
+                            <span class="btn btn-danger glyphicon glyphicon-remove remove-from-cart" data-id="${key}"></span>
+                        </div> `;
+
+                    $container.append(html);
+                }
+
+                Loader.hide();
+            });
+        }
+
+        function syncCart() {
+            let key = 'store-cart' + (userId || '');
+            sessionStorage.setItem(key, JSON.stringify(items));
+        }
+
+        function loadCart() {
+            let key = 'store-cart' + (userId || '');
+            let savedItems = sessionStorage.getItem(key);
+            return savedItems ? JSON.parse(savedItems) : {};
+        }
+
+        $('body').on('click', '.remove-from-cart', function () {
+            let id = this.getAttribute('data-id');
+            remove(id);
+            if (this.parentElement.classList.contains('cart-item')) {
+                this.parentElement.remove();
+            }
+        });
+
+        $('body').on('input', '.count-change', function (ev) {
+            let $target = $(this);
+            let id = $target.attr('data-id');
+            let value = +$target.val();
+            if (items[id]) {
+                if (value && value !== NaN && value > 0) {
+                    items[id].count = value;
+                } else {
+                    items[id].count = 1;
+                    $target.val(1);
+                }
+
+                syncCart();
+                if (userId) {
+                    Data.getJson({ url: `/ecommerse/storeitemmanager/additemtocart?id=${id}&number=${items[id].count}` }).then(function (res) {
+                        console.log(res);
+                    });
+                }
+            }
+        });
+
+        $('body').on('click', '.checkout', function () {
+            let body = { storeItems: {} };
+            for (var id in items) {
+                body.storeItems[id] = items[id].count;
+            }
+
+            Data.postJson({ url: '/ecommerse/storeitemmanager/checkout', data: body }).then(function (res) {
+                if (res.success) {
+                    for (var id in items) {
+                        delete items[id];
+                    }
+
+                    $('#store-cart').find('.item-container').html('');
+                    syncCart();
+                    Notifier.createAlert({ containerId: '#alerts', title: 'Тhe order was made!', message: res.message, status: 'success' });
+                } else {
+                    Notifier.createAlert({ containerId: '#alerts', message: res.message, status: 'danger' });
+                }
+            });
+        });
+
+        return {
+            add,
+            remove,
+            loadItemsInfo
         };
     }
 

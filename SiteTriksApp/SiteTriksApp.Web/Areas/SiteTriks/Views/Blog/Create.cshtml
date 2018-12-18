@@ -9,7 +9,7 @@
 }
 
 <div class="backend-wrapper">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(FormMethod.Post, new { id = "create-blog-form" }))
     {
         @Html.AntiForgeryToken()
 
@@ -25,7 +25,7 @@
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", id = "title" } })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control validate", data_validation_type = "required length", data_min = "3" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
 
@@ -50,12 +50,17 @@
 </div>
 
 @section scripts{
-    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+    <script type="text/javascript" src="~/lib/custom/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="~/js/validator.js"></script>
-    <script src="~/js/text-editor.js"></script>
-    <script src="~/js/sitetriks/blog.js"></script>
+    <script type="text/javascript" src="~/js/text-editor.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/discussions.js"></script>
     <script type="text/javascript">
-        createEditBlog();
-        WarningWindow.attach();
+        (function () {
+            textEditor.init('#summary-area', 500, 150);
+            textEditor.init('#content-area', 500, 300);
+
+            setupAjaxForm('#create-blog-form', '/sitetriks/blog');
+            WarningWindow.attach();
+        })();
     </script>
 }

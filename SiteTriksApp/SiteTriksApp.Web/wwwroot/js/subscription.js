@@ -44,13 +44,13 @@
 
         if (flag) {
 
-            var emailGroups = $featuresReleases.val().toString() + $promotionalMaterials.val().toString();
+            var emailGroups = $featuresReleases.val().toString() + $promotionalMaterials.val().toString() + '0';
             console.log(emailGroups);
 
             var subscriberData = {
                 Name: $name.val(),
                 Email: $email.val(),
-                Groups: emailGroups
+                MarketingEmailGroups: emailGroups
             };
             
             Data.postJson({ url: '/sitetriks/marketingEmails/subscribe', data: subscriberData }).then(function (res) {

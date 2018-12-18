@@ -29,20 +29,20 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
-    <PackageReference Include="SiteTriks" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.BlogModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.Configuration" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.DocumentationModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.Dynamic" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.ECommerseModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.Extensions" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.ForumModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.Infrastructure" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.RssFeedModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.SiteMapModule" Version="2.0.0" />
-    <PackageReference Include="SiteTriks.SiteSync" Version="2.0.0" />
+    <PackageReference Include="SiteTriks" Version="2.0.2" />
+    <PackageReference Include="SiteTriks.BlogModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.Configuration" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.Dynamic" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.ECommerseModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.Extensions" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.ForumModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.Infrastructure" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.RssFeedModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="2.0.1" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>

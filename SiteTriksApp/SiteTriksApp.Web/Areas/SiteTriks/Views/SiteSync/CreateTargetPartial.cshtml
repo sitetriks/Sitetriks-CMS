@@ -1,0 +1,42 @@
+﻿<form method="post" class="add-target-form" id="create-target-form">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label" for="Name">Name</label>
+            <div class="control-inputs">
+                <input class="form-control text-box single-line" id="name" name="Name" required="required" type="text"
+                       value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="Url">Url</label>
+            <div class="control-inputs">
+                <input class="form-control text-box single-line" id="url" name="Url" placeholder="https://example.com"
+                       required="required" type="text" value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="Email">Email</label>
+            <div class="control-inputs">
+                <input class="form-control text-box single-line" id="email" name="Email" required="required" type="text"
+                       value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="Password">Password</label>
+            <div class="control-inputs">
+                <input class="form-control text-box single-line" id="password" name="Password" required="required" type="password"
+                       value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+    </div>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Np5L7AzKihJryczlG_40OZGTB2d7P674v2epRvvQkmLKzIaimAhZc3glJ0dinGAoGOtL5feDMr-V3LclI5b_PEaxIXFidloak-_JdWVNLK2vR6JgAq6fAyFTbAMm5pRzbmTG1rS3twFCsW_rVv_O2ZNsHTodu7VQQbSizSX6CkOuxrXqofEJpAg00KvjuZSmA">
+    <button type="submit" id="submit" class="btn btn-add-target">Add</button>
+</form>

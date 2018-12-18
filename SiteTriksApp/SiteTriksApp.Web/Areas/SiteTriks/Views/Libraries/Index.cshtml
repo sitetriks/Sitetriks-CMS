@@ -171,7 +171,7 @@
                     '<input class="st-grid-checkbox" type="checkbox" data-id="{{id}}" style="margin-left: 5px;" >'+
                 '</div>'+
                 '{{#switch type}}'+
-                    '{{#case 0 4 5 break=true}}<img src="/files/{{url}}" style="height:150px" >{{/case}}'+
+                    '{{#case 0 4 5 break=true}}<img src="/download/{{url}}" style="height:150px" onerror="onImgError(event)" >{{/case}}'+ // using download link instead of view as temp fix for image/tiff files in firefox
                     '{{#case 1 break=true}}<img src="/images/default-document-image.png" alt="document" style="height:150px" >{{/case}}'+
                 '{{#case 3 break=true}}<img src="/images/mp4-icon.png" alt="video" style="height:150px" >{{/case}}' +
                 '{{#case 6 break=true}}<img src="~/files.png" alt="system-file" style="height:150px" >{{/case}}' +
@@ -191,6 +191,7 @@
                 sourceConfig: { type: 'client', url: '/sitetriks/files/grid' },
                 customActions: buttons,
                 handlebarsTemplate: handlebarsTemplate,
+                selectAllButton: true
             });
 
             var logger = new Logger('debug');

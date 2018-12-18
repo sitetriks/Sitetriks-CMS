@@ -1,286 +1,324 @@
 ﻿@inject SiteTriks.Configuration.LicenseManager LicenseManager
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    @*<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://cdnjs.cloudflare.com https://www.google.com https://ajax.googleapis.com data:font/woff">*@
-    <title>@ViewData["Title"] - SiteTriksApp.Web</title>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        @*<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://cdnjs.cloudflare.com https://www.google.com https://ajax.googleapis.com data:font/woff">*@
+        <title>@ViewData["Title"] - SiteTriksApp.Web</title>
 
-    @await Html.PartialAsync("_Favicons")
+        @await Html.PartialAsync("_Favicons")
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    </environment>
+        <environment include="Development">
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+        </environment>
+        <environment exclude="Development">
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        </environment>
 
-    <link type="text/css" rel="stylesheet" href="~/css/back-end.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/grid.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/st-grid.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/resolutions-icons.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/Glyphter.css" />
-    <link type="text/css" rel="stylesheet" href="~/css/extensions.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/back-end.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/grid.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/st-grid.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/resolutions-icons.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/Glyphter.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/extensions.css" />
 
-    @* Manually added librarires. TODO: use package manager *@
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/slick/slick.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/slick/slick-theme.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/codemirror/codemirror.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/bootstrap-multiselect/bootstrap-multiselect.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/jquery-ui/jquery-ui.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicer.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/font-awesome/font-awesome.min.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/custom/tinymce/plugins/codesample/css/prism.css" />
-    @await Html.PartialAsync("Polyfills")
+        @* Manually added librarires. TODO: use package manager *@
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/slick/slick.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/slick/slick-theme.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/codemirror/codemirror.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/bootstrap-multiselect/bootstrap-multiselect.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/jquery-ui/jquery-ui.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicer.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/font-awesome/font-awesome.min.css" />
+        <link type="text/css" rel="stylesheet" href="~/lib/custom/tinymce/plugins/codesample/css/prism.css" />
+        @await Html.PartialAsync("Polyfills")
+        <script>
+            function onImgError(ev) {
+                ev.target.src = '/images/no_image.png';
+                ev.target.classList -= 'display-image';
+                ev.target.title = ev.target.alt = 'Image could not load or format is not supported by this browser!';
+            }
+        </script>
 
-    @RenderSection("Styles", required: false)
-</head>
-<body class="sitetriks-body">
-    <div class="navigation">
-        <div class="navigation-bar sitetriks-wrapper">
-            <div class="row">
-                <div class="col col-md-2 col-sm-2 col-xs-2 nav-col">
-                    <div class="nav-logo">
-                        <a href="/sitetriks">
-                            <img src="~/images/LOGOBE.svg" />
-                        </a>
-                    </div>
-                </div>
-                <div class="col col-md-7 col-sm-7 nav-col">
-                    <nav class="navbar navbar-default" role="navigation">
-                        <div class="container">
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                    <div id="hamburger-menu">
-                                        <img src="~/images/mobile-backend/1.png" class="hamburger-image" alt="menu">
-                                    </div>
-                                </button>
-                                <div class="logo-mobile">
-                                    <a href="/sitetriks">
-                                        <img src="~/images/mobile/LOGO_mob_w.svg" class="logo-mobile-image" alt="Sitetriks logo">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
-                                <div class="col-md-offset-1 col-sm-offset-1 nav-col">
-                                    <ul class="nav navbar-nav">
-                                        @{
-                                            if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.BackEnd))
-                                            {
-                                                <li>@Html.ActionLink("Pages", "Index", "Pages", new { Area = "SiteTriks" }, new { })</li>
-                                            }
-                                            <li role="separator" class="divider"></li>
-                                        }
-                                        @{
-                                            if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin))
-                                            {
-                                                <li class="with-dd">
-                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                                        Content
-                                                        <span class="caret"></span>
-                                                        <span class="caret-mobile"></span>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li class="nav-section-separator"><span>Static Content</span></li>
-                                                        <li>@Html.ActionLink("Files", "Index", "Libraries", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("News", "Index", "News", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Shared Blocks", "Index", "HtmlBlocks", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li class="nav-section-separator"><span>Content Modules</span></li>
-                                                        @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Content" })
-                                                        <li class="nav-section-separator"><span>Dynamic Content</span></li>
-                                                        @await Component.InvokeAsync("DynamicClassesDropdown", new { Area = "SiteTriks" })
-                                                    </ul>
-                                                </li>
-                                            }
-
-                                            if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin))
-                                            {
-                                                <li class="with-dd">
-                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                                        Tools
-                                                        <span class="caret"></span>
-                                                        <span class="caret-mobile"></span>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li class="nav-section-separator"><span>Site</span></li>
-                                                        @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Site" })
-                                                        <li>@Html.ActionLink("Endpoints", "Index", "EndPoints", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li class="nav-section-separator"><span>Marketing</span></li>
-                                                        @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Marketing" })
-                                                        <li class="nav-section-separator"><span>Design</span></li>
-                                                        <li>@Html.ActionLink("Templates", "Index", "Templates", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Dynamic Views", "Index", "DynamicViews", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li class="nav-section-separator"><span>E-commerse</span></li>
-                                                        <li>@Html.ActionLink("E-commerce", "Index", "ECommerce", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("E-commerce Orders", "Index", "ECommerceOrders", new { Area = "SiteTriks" }, new { })</li>
-                                                        @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "ECommerse" })
-                                                    </ul>
-                                                </li>
-                                            }
-
-                                            if (User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.SuperAdmin))
-                                            {
-                                                <li class="with-dd">
-                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                                        Administration
-                                                        <span class="caret"></span>
-                                                        <span class="caret-mobile"></span>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li class="nav-section-separator"><span>User Management</span></li>
-                                                        <li>@Html.ActionLink("Users", "Index", "Users", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("User Groups", "Index", "UserGroups", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Roles", "Index", "Roles", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Permissions", "Index", "Permission", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li class="nav-section-separator"><span>Content Management</span></li>
-                                                        <li>@Html.ActionLink("Tags", "Index", "Tags", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li class="nav-section-separator"><span>Settings & Configurations</span></li>
-                                                        @if (LicenseManager.MultiSites > 1)
-                                                        {
-                                                            <li>@Html.ActionLink("Multisite", "Index", "Sites", new { Area = "SiteTriks" }, new { })</li>
-                                                        }
-                                                        <li>@Html.ActionLink("Languages", "Index", "Languages", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Dynamic Content Config.", "Index", "Dynamic", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Extensions & Modules", "Index", "Extensions", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Dashboard Config.", "Index", "DashboardConfiguration", new { Area = "SiteTriks" }, new { })</li>
-                                                        <li>@Html.ActionLink("Thumbnails Config.", "Index", "ThumbnailsSizes", new { Area = "SiteTriks" }, new { })</li>
-                                                        @if (LicenseManager.WidgetConfigAccess)
-                                                        {
-                                                            <li>@Html.ActionLink("Widgets Config.", "Index", "WidgetConfiguration", new { Area = "SiteTriks" }, new { })</li>
-                                                        }
-                                                        <li>@Html.ActionLink("Smtp Config", "SmtpConfiguration", "Emails", new { Area = "SiteTriks" }, new { })</li>
-                                                        @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Administration" })
-                                                    </ul>
-                                                </li>
-                                            }
-                                        }
-                                    </ul>
-                                </div>
-
+        @RenderSection("Styles", required: false)
+    </head>
+    <body class="sitetriks-body">
+        <div class="navigation">
+            <div class="navigation-bar sitetriks-wrapper">
+                <div class="row">
+                    <div class="col col-md-2 col-sm-2 col-xs-2 nav-col">
+                        <div class="nav-logo">
+                            <a href="/sitetriks">
+                                <img src="~/images/LOGOBE.svg" />
+                            </a>
+                            <div class="selected-site">
+                                @await Component.InvokeAsync("SelectedMultisite")
+                                <span class="caret"></span>
                             </div>
                         </div>
-                    </nav>
-                </div>
-                <div class="col col-md-3 col-sm-3 nav-col">
-                    <a href="/" class="live-site" target="_blank">Live Site</a>
-                    <div class="form">
-                        @Html.Partial("_Login")
+                        <div class="multisite-select-wrapper" style="display: none">
+                            <span class="glyphicon glyphicon-remove"></span>
+                            @await Component.InvokeAsync("ShowMultisiteInfoWidget")
+                        </div>
                     </div>
-                    <div class="nav-logo-secondary">
-                        <a>
-                            <img src="~/images/Sitetriks_logo2.png" />
-                        </a>
+                    <div class="col col-md-7 col-sm-7 nav-col">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="container">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <div id="hamburger-menu">
+                                            <img src="~/images/mobile-backend/1.png" class="hamburger-image" alt="menu">
+                                        </div>
+                                    </button>
+                                    <div class="logo-mobile">
+                                        <a href="/sitetriks">
+                                            <img src="~/images/mobile/LOGO_mob_w.svg" class="logo-mobile-image" alt="Sitetriks logo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+                                    <div class="col-md-offset-1 col-sm-offset-1 nav-col">
+                                        <ul class="nav navbar-nav">
+                                            @{
+                                                if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.BackEnd))
+                                                {
+                                                    <li>@Html.ActionLink("Pages", "Index", "Pages", new { Area = "SiteTriks" }, new { })</li>
+                                                }
+                                                <li role="separator" class="divider"></li>
+                                            }
+                                            @{
+                                                if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin))
+                                                {
+                                                    <li class="with-dd">
+                                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                            Content
+                                                            <span class="caret"></span>
+                                                            <span class="caret-mobile"></span>
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            <li class="nav-section-separator"><span>Static Content</span></li>
+                                                            <li>@Html.ActionLink("Files", "Index", "Libraries", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("News", "Index", "News", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Shared Blocks", "Index", "HtmlBlocks", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li class="nav-section-separator"><span>Content Modules</span></li>
+                                                            @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Content" })
+                                                            <li class="nav-section-separator"><span>Dynamic Content</span></li>
+                                                            @await Component.InvokeAsync("DynamicClassesDropdown", new { Area = "SiteTriks" })
+                                                        </ul>
+                                                    </li>
+                                                }
+
+                                                if (User.IsInRole(UserRoles.SuperAdmin) || User.IsInRole(UserRoles.Admin))
+                                                {
+                                                    <li class="with-dd">
+                                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                            Tools
+                                                            <span class="caret"></span>
+                                                            <span class="caret-mobile"></span>
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            <li class="nav-section-separator"><span>Site</span></li>
+                                                            @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Site" })
+                                                            <li>@Html.ActionLink("Endpoints", "Index", "EndPoints", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li class="nav-section-separator"><span>Marketing</span></li>
+                                                            @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Marketing" })
+                                                            <li class="nav-section-separator"><span>Design</span></li>
+                                                            <li>@Html.ActionLink("Templates", "Index", "Templates", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Dynamic Views", "Index", "DynamicViews", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li class="nav-section-separator"><span>E-commerse</span></li>
+                                                            <li>@Html.ActionLink("E-commerce", "Index", "ECommerce", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("E-commerce Orders", "Index", "ECommerceOrders", new { Area = "SiteTriks" }, new { })</li>
+                                                            @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "ECommerse" })
+                                                        </ul>
+                                                    </li>
+                                                }
+
+                                                if (User.IsInRole(UserRoles.Admin) || User.IsInRole(UserRoles.SuperAdmin))
+                                                {
+                                                    <li class="with-dd">
+                                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                            Administration
+                                                            <span class="caret"></span>
+                                                            <span class="caret-mobile"></span>
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            <li class="nav-section-separator"><span>User Management</span></li>
+                                                            <li>@Html.ActionLink("Users", "Index", "Users", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("User Groups", "Index", "UserGroups", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Roles", "Index", "Roles", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Permissions", "Index", "Permission", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li class="nav-section-separator"><span>Content Management</span></li>
+                                                            <li>@Html.ActionLink("Tags", "Index", "Tags", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li class="nav-section-separator"><span>Settings & Configurations</span></li>
+                                                            @if (LicenseManager.MultiSites > 1)
+                                                            {
+                                                                <li>@Html.ActionLink("Multisite", "Index", "Sites", new { Area = "SiteTriks" }, new { })</li>
+                                                            }
+                                                            <li>@Html.ActionLink("Languages", "Index", "Languages", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Dynamic Content Config.", "Index", "Dynamic", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Extensions & Modules", "Index", "Extensions", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Dashboard Config.", "Index", "DashboardConfiguration", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Thumbnails Config.", "Index", "ThumbnailsSizes", new { Area = "SiteTriks" }, new { })</li>
+                                                            @if (LicenseManager.WidgetConfigAccess)
+                                                            {
+                                                                <li>@Html.ActionLink("Widgets Config.", "Index", "WidgetConfiguration", new { Area = "SiteTriks" }, new { })</li>
+                                                            }
+                                                            <li>@Html.ActionLink("Smtp Config", "SmtpConfiguration", "Emails", new { Area = "SiteTriks" }, new { })</li>
+                                                            @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Administration" })
+                                                        </ul>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col col-md-3 col-sm-3 nav-col">
+                        <a href="/" class="live-site" target="_blank">Live Site</a>
+                        <div class="form">
+                            @Html.Partial("_Login")
+                        </div>
+                        <div class="nav-logo-secondary">
+                            <a>
+                                <img src="~/images/Sitetriks_logo2.png" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="body-content">
-        <div class="side-nav-collapse">
-            <div class="side-nav-control">
-                @*<a class="close-side-nav btn-side-nav"><img src="~/images/hide.svg" /></a>*@
-                <a class="open-side-nav btn-side-nav"><img src="~/images/show.svg" /></a>
+        <div class="body-content">
+            <div class="side-nav-collapse">
+                <div class="side-nav-control">
+                    @*<a class="close-side-nav btn-side-nav"><img src="~/images/hide.svg" /></a>*@
+                    <a class="open-side-nav btn-side-nav"><img src="~/images/show.svg" /></a>
+                </div>
+
+                @await Html.PartialAsync("SideNavigation")
             </div>
 
-            @await Html.PartialAsync("SideNavigation")
+            @RenderBody()
+            @*<hr />*@
+            <div id="alerts"></div>
+            <footer class="backend-footer">
+                <div class="footer-profile">@await Html.PartialAsync("ProfileLinkPartial")</div>
+                <p class="ta-center">@*&copy; @DateTime.Now.Year -*@ SiteTriks CMS</p>
+            </footer>
         </div>
 
-        @RenderBody()
-        @*<hr />*@
-        <div id="alerts"></div>
-        <footer class="backend-footer">
-            <div class="footer-profile">@await Html.PartialAsync("ProfileLinkPartial")</div>
-            <p class="ta-center">@*&copy; @DateTime.Now.Year -*@ SiteTriks CMS</p>
-        </footer>
-    </div>
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+            </script>
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+        <script type="text/javascript" src="~/js/data.js"></script>
+        <script type="text/javascript" src="~/js/loader.js"></script>
+        <script type="text/javascript" src="~/js/modules/hash-router.js"></script>
+        <script type="text/javascript" src="~/js/notifier.js"></script>
+        <script type="text/javascript" src="~/js/validation.js"></script>
+        <script type="text/javascript" src="~/js/populate-url.js"></script>
+        <script type="text/javascript" src="~/js/grid.js"></script>
+        <script type="text/javascript" src="~/js/all-news.js"></script>
+        <script type="text/javascript" src="~/js/carousel.js"></script>
+        <script type="text/javascript" src="~/js/modules/mediator.js"></script>
+        <script type="text/javascript" src="~/js/modules/logger.js"></script>
+        <script type="text/javascript" src="~/js/modules/warning-window.js"></script>
 
-    <script type="text/javascript" src="~/js/data.js"></script>
-    <script type="text/javascript" src="~/js/loader.js"></script>
-    <script type="text/javascript" src="~/js/modules/hash-router.js"></script>
-    <script type="text/javascript" src="~/js/notifier.js"></script>
-    <script type="text/javascript" src="~/js/validation.js"></script>
-    <script type="text/javascript" src="~/js/populate-url.js"></script>
-    <script type="text/javascript" src="~/js/grid.js"></script>
-    <script type="text/javascript" src="~/js/all-news.js"></script>
-    <script type="text/javascript" src="~/js/carousel.js"></script>
-    <script type="text/javascript" src="~/js/modules/mediator.js"></script>
-    <script type="text/javascript" src="~/js/modules/logger.js"></script>
-    <script type="text/javascript" src="~/js/modules/warning-window.js"></script>
-
-    @* Manually added librarires. TODO: use package manager *@
-    <script type="text/javascript" src="~/lib/custom/slick/slick.min.js"></script>
-    <script type="text/javascript" src="~/lib/custom/codemirror/codemirror.js"></script>
-    <script type="text/javascript" src="~/lib/custom/codemirror/mode/css.js"></script>
-    <script type="text/javascript" src="~/lib/custom/codemirror/mode/javascript.js"></script>
-    <script type="text/javascript" src="~/lib/custom/handlebars/handlebars-v4.0.11.js"></script>
-    <script type="text/javascript" src="~/lib/custom/bootstrap-multiselect/bootstrap-multiselect.js"></script>
-    <script type="text/javascript" src="~/lib/custom/jquery-ui/jquery-ui-1.10.4.js"></script>
-    <script type="text/javascript" src="~/lib/custom/moment/moment.min.js"></script>
-    <script type="text/javascript" src="~/lib/custom/moment/moment-with-locales.min.js"></script>
-    <script type="text/javascript" src="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
-    @*@if (!LicenseManager.PersonalizationWithGroups)
-        {*@
-    <script>
-        $("#allowed-roles").parent().hide();
-    </script>
-
-    @*}*@
-
-    @if (!LicenseManager.PersonalizationWithRoles)
-    {
+        @* Manually added librarires. TODO: use package manager *@
+        <script type="text/javascript" src="~/lib/custom/slick/slick.min.js"></script>
+        <script type="text/javascript" src="~/lib/custom/codemirror/codemirror.js"></script>
+        <script type="text/javascript" src="~/lib/custom/codemirror/mode/css.js"></script>
+        <script type="text/javascript" src="~/lib/custom/codemirror/mode/javascript.js"></script>
+        <script type="text/javascript" src="~/lib/custom/handlebars/handlebars-v4.0.11.js"></script>
+        <script type="text/javascript" src="~/lib/custom/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+        <script type="text/javascript" src="~/lib/custom/jquery-ui/jquery-ui-1.10.4.js"></script>
+        <script type="text/javascript" src="~/lib/custom/moment/moment.min.js"></script>
+        <script type="text/javascript" src="~/lib/custom/moment/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="~/lib/custom/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript" src="~/lib/custom/tinymce/plugins/codesample/prism.js"></script>
+        @*@if (!LicenseManager.PersonalizationWithGroups)
+            {*@
         <script>
-            $("#allowed-groups").parent().hide();
+            $("#allowed-roles").parent().hide();
         </script>
 
-    }
+        @*}*@
 
-    @RenderSection("Scripts", required: false)
+        @if (!LicenseManager.PersonalizationWithRoles)
+        {
+            <script>
+                $("#allowed-groups").parent().hide();
+            </script>
 
-    <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
-    <script src="~/js/sitetriks/layout.js"></script>
-    <script>
-        $(window).load(function () {
-            if ($('.prettyprint').length > 0) {
-                prettify();
-            }
-        });
-        
+        }
 
-        loadMainLayout();
+        @RenderSection("Scripts", required: false)
 
-        //Mobile menu logic
-        mobileMenu();
+        <script src="~/lib/custom/code-prettify/src/run_prettify.js"></script>
+        <script src="~/js/sitetriks/layout.js"></script>
+        <script>
+            $(window).load(function () {
+                if ($('.prettyprint').length > 0) {
+                    prettify();
+                }
+            });
 
-        /* Hamburger menu */
-        hamburgerMenu();
-    </script>
-</body>
+
+            loadMainLayout();
+
+            //Mobile menu logic
+            mobileMenu();
+
+            /* Hamburger menu */
+            hamburgerMenu();
+
+            $('document').ready(function () {
+                var $container = $('.sitetriks-body');
+                var $multisiteButton = $container.find('.selected-site');
+                var $multisiteSelect = $container.find('.multisite-select-wrapper');
+
+
+                function displayMultiSite() {
+                    $multisiteSelect.css('display', 'block');
+                    //Blur.add({
+                    //    hideOnClick: true,
+                    //    color: '#ffffff'
+                    //});
+                };
+
+                function hideMultisite() {
+                    $multisiteSelect.css('display', 'none');
+                }
+
+                $container.on('click', '.selected-site', displayMultiSite);
+                $multisiteSelect.on('click', '.glyphicon-remove', hideMultisite);
+
+            })
+        </script>
+    </body>
 </html>

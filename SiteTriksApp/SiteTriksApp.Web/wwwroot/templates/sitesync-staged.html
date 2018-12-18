@@ -1,0 +1,19 @@
+﻿{{#if items}}
+    <div class="buttons-container">
+        <div class="deselect-all">Deselect All</div>
+    </div>
+
+    {{#each items as |value key|}}
+
+    <div id="staged-{{key}}" class="main-element" data-displayName="{{value}}">
+        {{key}}<span class="glyphicon glyphicon-menu-right" style="display: none;"></span><span class="glyphicon glyphicon-menu-down"></span>
+    </div>
+    <div id="staged-{{key}}-content" class="content-element">
+        {{#each value}}
+        <div class="{{title}}" data-id="{{id}}"><span class="glyphicon glyphicon-remove"></span> {{title}}</div>
+        {{/each}}
+    </div>
+    {{/each}}
+{{/if}}
+
+
