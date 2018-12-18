@@ -1,6 +1,5 @@
 ﻿var Data = (function () {
-    //let makeRequest = typeof fetch !== 'undefined' && isFunction(fetch) ? makeFetchRequest : makeAjaxRequest; // fallback to ajax if older browser
-    let makeRequest = makeAjaxRequest;
+    let makeRequest = typeof fetch !== 'undefined' && isFunction(fetch) ? makeFetchRequest : makeAjaxRequest; // fallback to ajax if older browser
 
     function makeAjaxRequest({ url, method, body, headers, isForm }) {
         return new Promise((resolve, reject) => {
@@ -33,7 +32,8 @@
         return fetch(url, {
             method,
             body,
-            headers
+            headers,
+            credentials: 'include'
         }).then(res => {
             if (res.status >= 200 && res.status < 300) {
                 if (res.headers.get('Content-Type') && res.headers.get('Content-Type').indexOf('application/json') > -1) {

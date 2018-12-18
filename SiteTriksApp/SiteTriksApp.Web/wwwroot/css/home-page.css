@@ -270,10 +270,6 @@ body {
     z-index: 1;
 }
 
-    .element:hover {
-        color: #2579cc;
-    }
-
 /*Logo styles*/
 
 [data-index="13"] {
@@ -329,6 +325,12 @@ body {
     text-shadow: unset;
     line-height: normal;
 }
+
+
+.wrapper-center .element:hover {
+    color: #0057a0;
+}
+
 /*[data-index="1"] {
     color: #7494c1;
 }
@@ -1449,18 +1451,6 @@ body {
             width: 100%;
         }
 
-        .toggle-button .shrink-menu .leaf-button-text {
-            word-break: break-all;
-            width: 10px;
-            display: block;
-            font-weight: bolder;
-            font-size: 16px;
-            color: #296cf2;
-            margin-left: 10px;
-            /*animation-name: example;
-            animation-duration: 4s;*/
-        }
-
     .toggle-button .leaf-button-1 {
         background: url(https://sitetriks.azureedge.net/static-files/images/sprites/Menu_icons.png) no-repeat top left;
         background-position: -129px 0;
@@ -1493,30 +1483,6 @@ body {
         background-position: 0 0;
         width: 16px;
         height: 39px;
-    }
-
-    .toggle-button .shrink-menu .leaf-button-text .letter-1 {
-        color: #296cf2;
-        animation-name: displaybutton;
-        animation-duration: 1s;
-    }
-
-    .toggle-button .shrink-menu .leaf-button-text .letter-2 {
-        color: #296cf2;
-        animation-name: displaybutton;
-        animation-duration: 2s;
-    }
-
-    .toggle-button .shrink-menu .leaf-button-text .letter-3 {
-        color: #296cf2;
-        animation-name: displaybutton;
-        animation-duration: 4s;
-    }
-
-    .toggle-button .shrink-menu .leaf-button-text .letter-4 {
-        color: #296cf2;
-        animation-name: displaybutton;
-        animation-duration: 5s;
     }
 
     /*Animate other elements*/
@@ -1817,10 +1783,6 @@ body {
             width: 30px;
         }
 
-            .toggle-button .shrink-menu .leaf-button-text {
-                font-size: 12px;
-            }
-
         .toggle-button .close-menu {
             margin-top: 10px;
             width: 22px;
@@ -1936,10 +1898,6 @@ body {
             margin-left: 3px;
             width: 25px;
         }
-
-            .toggle-button .shrink-menu .leaf-button-text {
-                font-size: 12px;
-            }
 
         .toggle-button .close-menu {
             margin-top: 10px;
@@ -2759,7 +2717,8 @@ body {
     text-transform: uppercase;
 }
 /*Modal styles */
-.tnc-modal {
+.tnc-modal,
+#downloadsModal {
     display: none;
     position: fixed;
     z-index: 3;
@@ -2790,7 +2749,8 @@ body {
 }
 
 /* The Close Button */
-.close {
+.close,
+.close-downloads {
     color: #000;
     float: right;
     font-size: 28px;
@@ -2798,10 +2758,32 @@ body {
 }
 
     .close:hover,
-    .close:focus {
+    .close:focus,
+    .close-downloads:hover,
+    .close-downloads :focus {
         color: black;
         text-decoration: none;
         cursor: pointer;
+    }
+
+/*Downloads modal*/
+
+.downloads-modal-content {
+    width: 50%;
+    margin: auto;
+    margin-top: 5%;
+    padding: 25px;
+    background-color: #a0d4fe;
+    border-radius: 15px;
+    text-align: center;
+}
+
+    .downloads-modal-content input {
+        width: 50%;
+        display: block;
+        margin: auto;
+        margin-bottom: 35px;
+        border-radius: 5px;
     }
 
 /*Bottom menu*/
@@ -4609,11 +4591,6 @@ body {
 
 
     /*Top menu*/
-
-    .toggle-button .shrink-menu .leaf-button-text {
-        font-size: 36px;
-        line-height: 46px;
-    }
 
     .toggle-button .leaf-button-1 {
         background: url(/images/sprites/fourK/icons_4k.PNG) no-repeat top left;

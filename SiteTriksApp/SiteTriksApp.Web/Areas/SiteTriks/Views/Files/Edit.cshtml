@@ -36,7 +36,7 @@
                             <div class="images-title">
                                 <span>Main Image</span>
                             </div>
-                            <img src="/files/@Model.Url" class="display-image" />
+                            <img src="/download/@Model.Url" class="display-image" onerror="onImgError(event)" /> @* using download link instead of view as temp fix for image/tiff files in firefox *@
                         }
                         else if (Model.Type == SiteTriks.Data.Models.Helpers.FileType.Video)
                         {

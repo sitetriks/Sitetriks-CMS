@@ -48,6 +48,12 @@
     </div>
 
     <div class="form-group row">
+        @Html.LabelFor(model => Model.PageViewModel.IsAMPPage, "AMP Page", htmlAttributes: new { @class = "control-label col-xs-2" })
+        @Html.EditorFor(model => Model.PageViewModel.IsAMPPage, new { htmlAttributes = new { @class = "custom-checkbox" } })
+        @Html.ValidationMessageFor(model => Model.PageViewModel.IsAMPPage, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group row">
         @Html.LabelFor(model => Model.PageViewModel.ParentId, "Parent page", htmlAttributes: new { @class = "control-label col-xs-2" })
         @Html.DropDownListFor(model => Model.PageViewModel.ParentId, new SelectList(Model.ParentList, "Id", "Title"), new { @class = "form-control" })
     </div>

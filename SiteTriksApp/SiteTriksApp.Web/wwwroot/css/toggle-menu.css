@@ -149,42 +149,6 @@
             width: 100%;
         }
 
-        .toggle-button .shrink-menu .leaf-button-text {
-            word-break: break-all;
-            width: 10px;
-            display: block;
-            font-weight: bolder;
-            font-size: 16px;
-            color: #296cf2;
-            margin-left: 10px;
-            /*animation-name: example;
-            animation-duration: 4s;*/
-        }
-
-            .toggle-button .shrink-menu .leaf-button-text .letter-1 {
-                color: #296cf2;
-                animation-name: displaybutton;
-                animation-duration: 1s;
-            }
-
-            .toggle-button .shrink-menu .leaf-button-text .letter-2 {
-                color: #296cf2;
-                animation-name: displaybutton;
-                animation-duration: 2s;
-            }
-
-            .toggle-button .shrink-menu .leaf-button-text .letter-3 {
-                color: #296cf2;
-                animation-name: displaybutton;
-                animation-duration: 4s;
-            }
-
-            .toggle-button .shrink-menu .leaf-button-text .letter-4 {
-                color: #296cf2;
-                animation-name: displaybutton;
-                animation-duration: 5s;
-            }
-
         /*Animate other elements*/
 
         .toggle-button .shrink-menu .leaf-button-1 {

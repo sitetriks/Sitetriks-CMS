@@ -1,7 +1,7 @@
 /* globals Data, Handlebars, Pager, DataSource */
 'use strict';
 
-function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fields, nestingProperty, cellWidth, handlebarsTemplate }) {
+function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fields, nestingProperty, cellWidth, handlebarsTemplate, selectAllButton }) {
     const $wrapper = $(wrapperId);
     const config = {
         wrapperId,
@@ -172,7 +172,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             }
         });
 
-        if (!collection[collectionName].length || action.postUrl) {
+        if (!collection[collectionName].length || !action.postUrl) {
             if (action.callback && {}.toString.call(action.callback) === '[object Function]') {
                 action.callback();
             }
@@ -236,7 +236,8 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             }
 
             if (!config.isGrid) {
-                let content = config.fields[i].headerTemplate ? replaceAll(config.fields[i].headerTemplate, '#item#', config.fields[i].title || '') : config.fields[i].title || '';
+                let content = config.fields[i].type === 'checkbox' ? '<input type="checkbox" class="st-select-all-checkbox" />' :
+                    config.fields[i].headerTemplate ? replaceAll(config.fields[i].headerTemplate, '#item#', config.fields[i].title || '') : config.fields[i].title || '';
 
                 $('<div></div>', {
                     class: config.isGrid ? 'grid-filter' : 'col-xs-' + config.fields[i].size || 2,
@@ -256,7 +257,24 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             $lastSearchCell.addClass('searh-background last').prevAll().addClass('searh-background');
         }
 
+        if (selectAllButton && config.isGrid) {
+            $('<div></div>', {
+                class: 'grid-filter searh-background'
+            }).css('width', 'auto').append($('<a></a>', {
+                class: 'btn',
+                text: 'Select All'
+            }).on('click', selectAllRows)).prependTo($filterHeader);
+        }
+
         return [$filterHeader, $titleHeader];
+    }
+
+    function selectAllRows(ev) {
+        let $target = $(this);
+        let value = $target.is('input[type="checkbox"]') ? $target[0].checked : true;
+        $bodyRow.find('.st-grid-checkbox').each(function (_, element) {
+            element.checked = value;
+        });
     }
 
     function createButtons() {
@@ -505,12 +523,14 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
     function bindEvents() {
         $headerRow.on('keypress', '.search-field', searchOnEnter);
+        $headerRow.on('click', '.st-select-all-checkbox', selectAllRows);
         $bodyRow.on('click', '.child-expand', showChildren);
     }
 
     function dispose() {
         $headerRow.off('keypress', '.search-field', searchOnEnter);
         $bodyRow.off('click', '.child-expand', showChildren);
+        $headerRow.off('click', '.st-select-all-checkbox', selectAllRows);
 
         //dataSource.dispose();
         pager.dispose();

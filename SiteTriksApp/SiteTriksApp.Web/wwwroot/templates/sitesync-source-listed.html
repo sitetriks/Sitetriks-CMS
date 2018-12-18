@@ -1,0 +1,12 @@
+﻿{{#if items}}
+{{#each items }}
+<div class="action" data-action="{{action}}">
+    <label>
+        <input type="checkbox" class="source-checkbox" data-display-name="{{this}}" data-id="{{id}}"
+               data-paragraph-title="{{title}}" data-parent-id="staged-Files">{{title}}
+    </label>
+</div>
+{{/each}}
+{{else}}
+<div class="empty-list">No Items found</div>
+{{/if}}

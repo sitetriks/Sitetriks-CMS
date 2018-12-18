@@ -24,58 +24,7 @@
                     <div class="dashboard-conten-column dashboard-widget @if (flag) { <text>google-analytics</text> }" data-type="@dashboardConfig.DisplayName">
                         @await Component.InvokeAsync(dashboardConfig.ClassName)
                     </div>
-                }
-
-                @*<div class=" google-analytics  dashboard-conten-column dashboard-widget" data-type="Google Analytics">
-
-                        <div class="text-center">
-                            <div>
-                                <div class="dashboard-table">
-                                    <div class="panel panel-primary" style="border: none;">
-                                        <div class="controle-header panel-heading panel-heading-landing">
-                                            <img src="/images/dragable.svg">
-                                            <h1 class="panel-title panel-title-landing">
-                                                Google Analytics
-                                            </h1>
-                                        </div>
-                                        <div class="panel-body panel-body-landing">
-
-
-                                        </div>
-                                        <div class="panel-footer panel-footer-landing">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
-
-                @*<div class="google-analytics col-lg-8 col-md-3 col-sm-9 col-xs-9">
-                        <div class="row">
-                            <div class="dashboard-table">
-                                <div class="panel panel-primary" style="border: none;">
-                                    <div class="controle-header panel-heading panel-heading-landing">
-                                        <img src="~/images/dragable.svg">
-                                        <h1 class="panel-title panel-title-landing">
-                                            Google Analytics
-                                        </h1>
-                                    </div>
-
-                                    <div class="panel-body panel-body-landing">
-                                        <div class="col-lg-6 col-md-6 col-xs-6">
-                                            Page
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-xs-6">
-                                            Active Users
-                                        </div>
-                                        <table class="table"></table>
-                                    </div>
-                                    <div class="panel-footer panel-footer-landing">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
+                }              
             </div>
         </div>
     </div>
@@ -85,16 +34,33 @@
     <script src="~/js/sitetriks/google-analytics-dashboard.js"></script>
     <script>
         $(document).ready(function () {
-            if ($('.google-analytics-widget').length != 0) {
                 (function (w, d, s, g, js, fs) {
                     g = w.gapi || (w.gapi = {}); g.analytics = { q: [], ready: function (f) { this.q.push(f); } };
                     js = d.createElement(s); fs = d.getElementsByTagName(s)[0];
                     js.src = 'https://apis.google.com/js/platform.js';
                     fs.parentNode.insertBefore(js, fs); js.onload = function () { g.load('analytics'); };
-                }(window, document, 'script'));
+            }(window, document, 'script'));
 
-                InitGAAnlitycs();
-            }
+
+            gapi.analytics.ready(function () {
+                if ($('.google-analytics-widget').length != 0) {
+                    googleAnalyticsWidgets.initGAOverview();
+                }
+
+                if ($('.google-analytics-countries').length != 0) {
+                    googleAnalyticsWidgets.initGACountry();
+                }
+
+                if ($('.google-analytics-browsers').length != 0) {
+                    googleAnalyticsWidgets.initGABrowsers();
+                }
+
+                if ($('.google-analytics-site-speed').length != 0) {
+                    googleAnalyticsWidgets.initGASiteSpeed();
+                }
+            });
+
+            
         });
     </script>
     <script>

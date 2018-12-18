@@ -78,11 +78,11 @@ var ModuleBuilder = (function () {
                 let col = layout[i].columns[j];
                 let cssClass = 'layout-preview-col';
                 for (let key in col.resolutions) {
-                    cssClass += ` col-lg-1 st-col-${key}-${col.resolutions[key].size} `;
+                    cssClass += ` col-${key}-${col.resolutions[key].size} st-col-${key}-${col.resolutions[key].size} `;
                 }
 
                 if (col.properties && col.properties.cssClass && col.properties.cssClass.trim()) {
-                    cssClass += ` ${col.properties.cssClass} `;
+                    cssClass += ' ' + (col.properties.cssClass || '') + ' ';
                 }
 
                 let $col = $container.find(`div[data-placeholder="${col.properties.placeholder}"]`);

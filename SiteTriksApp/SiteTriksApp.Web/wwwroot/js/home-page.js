@@ -22,15 +22,14 @@ var homepageDesktopFuncTionality = (function () {
     var leafImageToggle = function () {
         $('.letter-2').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
             function (e) {
-                $('.leaf-button-text').css('display', 'none');
                 $('.leaf-button-1').css('display', 'inline-block');
-                $('.close-menu').css('display', 'inline-block').click();            
+                $('.close-menu').css('display', 'inline-block').click();
             });
 
         $('.leaf-button-2').on('click', function () {
             $('html').attr('class', 'no-overflow');
         });
-    }
+    };
 
     var drawSnowflakeGlobal = (function () {
 
@@ -588,7 +587,6 @@ var bottomMenuFunctionality = (function () {
 /* Request demo button */
 
 $('.demo-button').on('click', function () {
-    console.log('clicked');
 
     $('html, body').animate({
         scrollTop: ($('.bottom-menu').offset().top)
@@ -596,35 +594,6 @@ $('.demo-button').on('click', function () {
 
     bottomMenuFunctionality.loadDefaultBottomMenu('contact-us');
 })
-
-/* taken from home page js widgets*/
-function attachTermsAndContidionsHandlers() {
-    var documentBody = document.body;
-    var modal = document.getElementById('myModal');
-    var btn = document.getElementById('termsDetails');
-    var closeSpan = document.getElementsByClassName('close')[0];
-
-    if (!btn || !modal || !closeSpan) {
-        return;
-    }
-    // When the user clicks the button, open the modal 
-    btn.onclick = function () {
-        modal.style.display = 'block';
-        documentBody.style.overflowY = 'hidden';
-    };
-
-    closeSpan.onclick = function () {
-        modal.style.display = 'none';
-        documentBody.style.overflowY = 'unset';
-    };
-
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-            documentBody.style.overflowY = 'unset';
-        }
-    };
-}
 
 function attachReadMoreHandler() {
     $('body').on('click', '.read-more', function () {
@@ -650,7 +619,7 @@ $(document).ready(function () {
     homepageDesktopFuncTionality.moveToMiddleMenuIcon();
 
     attachReadMoreHandler();
-    attachTermsAndContidionsHandlers();
+ //   attachTermsAndContidionsHandlers();
 })
 $(document).ready(function () {
     mobileMenuFunctionality.toggleDetailedMenu();

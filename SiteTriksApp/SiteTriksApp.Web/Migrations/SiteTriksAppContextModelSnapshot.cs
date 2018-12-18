@@ -813,6 +813,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(5000);
 
+                    b.Property<bool>("IsAMPPage");
+
                     b.Property<bool>("IsHomePage");
 
                     b.Property<bool>("IsInNavigation");
@@ -1126,6 +1128,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<Guid>("SiteSyncStatusId");
 
                     b.Property<bool>("Successful");
+
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -1484,6 +1488,23 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_topicVersions");
                 });
 
+            modelBuilder.Entity("SiteTriks.ECommerseModule.Data.Models.Cart", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_ec_carts");
+                });
+
             modelBuilder.Entity("SiteTriks.ECommerseModule.Data.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1652,6 +1673,21 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("st_ec_stores_categories");
+                });
+
+            modelBuilder.Entity("SiteTriks.ECommerseModule.Data.Models.Relationships.StoreItemCart", b =>
+                {
+                    b.Property<string>("CartId");
+
+                    b.Property<Guid>("StoreItemId");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("CartId", "StoreItemId");
+
+                    b.HasIndex("StoreItemId");
+
+                    b.ToTable("st_ec_storeItems_carts");
                 });
 
             modelBuilder.Entity("SiteTriks.ECommerseModule.Data.Models.Relationships.StoreItemCategory", b =>
@@ -1980,6 +2016,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("CompanyName");
+
                     b.Property<DateTime?>("DateCreated");
 
                     b.Property<DateTime?>("DateModified");
@@ -1993,6 +2031,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<string>("Name");
 
                     b.Property<Guid>("SiteProviderId");
+
+                    b.Property<bool>("WantRecieveUpdates");
 
                     b.HasKey("Id");
 
@@ -2369,6 +2409,14 @@ namespace SiteTriksApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("SiteTriks.ECommerseModule.Data.Models.Cart", b =>
+                {
+                    b.HasOne("SiteTriks.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("SiteTriks.ECommerseModule.Data.Models.DeliveryOption", b =>
                 {
                     b.HasOne("SiteTriks.ECommerseModule.Data.Models.Store")
@@ -2429,6 +2477,19 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.ECommerseModule.Data.Models.Store", "Store")
                         .WithMany("StoreCategories")
                         .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("SiteTriks.ECommerseModule.Data.Models.Relationships.StoreItemCart", b =>
+                {
+                    b.HasOne("SiteTriks.ECommerseModule.Data.Models.Cart", "Cart")
+                        .WithMany("StoreItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SiteTriks.ECommerseModule.Data.Models.StoreItem", "StoreItem")
+                        .WithMany()
+                        .HasForeignKey("StoreItemId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
