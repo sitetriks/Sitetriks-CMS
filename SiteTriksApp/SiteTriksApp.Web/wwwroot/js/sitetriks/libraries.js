@@ -27,6 +27,7 @@ function initLibraries(grid, mediator, logger) {
 
     // --------------------------------------------------------
     // event handlers   
+
     function fileUploadedHandler(data) {
         if (data) {
             let id = data.libraryId.toLowerCase();
@@ -160,9 +161,29 @@ function editLibraries(isNameAvailableLink, libraryId) {
         }
     }
 
+    //function getSelectedThumbnails() {
+    //    let $resultInput = $('#thumnails-result');
+    //    let $thumbnailSizes = $('#multiselect-thumbnails');
+    //    let $thumbnailsCheckbxes = $('.checkbox input');
+
+    //    let result = [];
+    //    for (var i = 0; i < $thumbnailsCheckbxes.length; i += 1) {
+    //        console.log($thumbnailsCheckbxes[i]);
+    //        if ($($thumbnailsCheckbxes[i]).prop('checked') == true) {
+    //            result.push($($thumbnailsCheckbxes[i]).val());
+    //        }
+    //    }
+
+    //    $resultInput.val(result);
+    //    console.log($thumbnailSizes.val());
+
+    //}
+
     function submitEditForm(ev) {
         let flag = false;
         let _this = this;
+
+      //  getSelectedThumbnails();
 
         if (!Validator.validate($inputName, 'Title must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
             flag = true;
@@ -172,6 +193,7 @@ function editLibraries(isNameAvailableLink, libraryId) {
             Loader.show('#fff');
             Data.postJson({ url: isNameAvailableLink, data: { name: $inputName.val(), id: libraryId } }).then(function (res) {
                 if (res.success) {
+
                     return Data.postForm({ formData: new FormData(_this) });
                 } else {
                     Validator.validate($inputName, res.message || 'Name is already taken!', function (val) { return res.success; });
@@ -208,7 +230,7 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
     let $allowedTypes = $('#allowed-types');
     let $createForm = $('#create-library-form');
 
-    Multiselect.SetupElement($('.multiselect-thumbnails'));
+    //Multiselect.SetupElement($('.multiselect-thumbnails'));
     populateUrl($inputName, $inputPrefix, validateUrlOnChange);
     displayAllowedTypes.apply($libraryType[0]);
     var timer = 0;
@@ -226,6 +248,23 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
             Loader.hide();
         });
     }
+
+    //function getSelectedThumbnails() {
+    //    let $resultInput = $('#thumnails-result');
+    //    let $thumbnailSizes = $('#multiselect-thumbnails');
+    //    let $thumbnailsCheckbxes = $('.checkbox input');
+
+    //    let result = [];
+    //    for (var i = 0; i < $thumbnailsCheckbxes.length; i += 1) {
+    //        if ($($thumbnailsCheckbxes[i]).is(':checked')) {
+    //            result.push($($thumbnailsCheckbxes[i]).val());
+    //            console.log($($thumbnailsCheckbxes[i]).val());
+    //        }
+    //    }
+
+    //    $resultInput.val(result);
+
+   // }
 
     function validateUrlOnChange(e) {
         if (timer) {
@@ -264,6 +303,7 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
     function submitCreateForm(ev) {
         let flag = false;
         let _this = this;
+     //   getSelectedThumbnails();
 
         if (!Validator.validate($inputName, 'Title must be atleast 3 characters long!', function (val) { return Validator.hasMinimumLength(val, 3); })) {
             flag = true;
@@ -322,3 +362,85 @@ function createLibrary(validateUrlLink, isNameAvailableLink) {
         $inputName.on('input', validateName);
     }
 }
+
+
+//$(document).ready(function () {
+
+//    let $btnSubmitThumbnailSize = $('#create-thumbnail-size');
+//    var createThumbnailSize = (function () {
+//        // bindEvents();
+
+//        //function submitCreateSizeForm(ev) {
+//        //    console.log('in module');
+//        //    let url = '/sitetriks/thumbnailssizes/createedit';
+//        //    let $name = $('#size-name');
+//        //    let $type = $('#size-type option:selected');
+//        //    let $width = $('#size-width');
+//        //    let $height = $('#size-height');
+//        //    let $multiplierX = $('#multiplierX');
+//        //    let $multiplierY = $('#multiplierY');
+
+//        //    let data = {
+//        //        name: $name.val(),
+//        //        type: $type.val(),
+//        //        width: $width.val(),
+//        //        height: $height.val(),
+//        //        multiplierX : $multiplierX.val(),
+//        //        multiplierY : $multiplierY.val()
+//        //    };
+
+//        //    Data.postForm({ url: url, data: { name: 'myName' } }).then(function (res) {
+//        //        //Validator.validate($target, res.message || 'Name is already taken!', function (val) { return res.success; });
+//        //        console.log(res);
+
+//        //    }, Data.defaultError);
+
+
+//        //}
+
+
+//        $('#form-create-edit').on('submit', function (ev) {
+//            var _this = this;
+//            ev.preventDefault();
+
+//            let flag = true;
+
+//           // flag = checkInputCombination();
+
+//            if (flag) {
+//                Loader.show(true);
+//                Data.postForm({ url: '/sitetriks/thumbnailssizes/createedit', formData: new FormData(_this) }).then(function (res) {
+//                    if (!res.success) {
+//                        Loader.hide();
+//                    }
+//                    return res;
+//                }).then(function (res) {
+//                    if (res.success) {
+//                        window.location.replace('/sitetriks/thumbnailssizes');
+//                    } else {
+//                        Loader.hide();
+//                    }
+//                })
+//            }
+
+//            return false;
+
+//        });
+
+//        //function bindEvents() {
+//        //    $btnSubmitThumbnailSize.on('click', submitCreateSizeForm);
+//        //}
+
+//        //function dispose() {
+//        //    $btnSubmitThumbnailSize.on('click', submitCreateSizeForm);
+//        //}
+
+//        //return {
+//        //    submitCreateSizeForm: submitCreateSizeForm
+//        //};
+
+//    })();
+
+//    //
+//  //  $btnSubmitThumbnailSize.on('click', createThumbnailSize.submitCreateSizeForm);
+//});

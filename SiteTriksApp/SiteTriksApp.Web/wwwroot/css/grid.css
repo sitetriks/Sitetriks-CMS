@@ -72,6 +72,13 @@
     padding-left: 20px;
 }
 
+/*Specific for Dynamics*/
+
+.grid.dynamics .second-header-row {
+    display: flex;
+    justify-content: space-between;
+}
+
 .bodyRow {
     line-height: normal;
     padding-top: 3px;
@@ -417,6 +424,27 @@ tbody {
         padding-top: 3px;
         padding-bottom: 3px;
         min-height: 30px;
+    }
+
+    /*Specidically for the dynamics with too many items*/
+    .dynamics.sitetriks-grid .title-header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+.dynamics.sitetriks-grid .grid-body .grid-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+    /***************************************************/
+
+
+    .sitetriks-grid .grid-body .grid-item span {
+        margin-left: 10px;
     }
 
     .sitetriks-grid.grid-view .grid-body .grid-item {

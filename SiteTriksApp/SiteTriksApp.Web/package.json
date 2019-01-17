@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel --presets es2015,stage-0 -d scripts_babel wwwroot/js",
+    "build": "npm install && babel --presets es2015,stage-0 -d scripts_babel wwwroot/js",
     "build-watch": "babel --presets es2015,stage-0 -d scripts_babel wwwroot/js --watch"
   },
   "author": "",

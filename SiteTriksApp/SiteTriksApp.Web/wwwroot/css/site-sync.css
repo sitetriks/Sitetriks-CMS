@@ -505,6 +505,8 @@
     color: #1f98ff;
     font-weight: bold;
     /*overflow-y: auto;*/
+    margin-left: 0;
+    margin-right: 0;
 }
 
     .history-data .category-titles {
@@ -660,5 +662,16 @@
 
     .revision-history-wrapper h2 {
         display: block;
+    }
+}
+
+
+/*Safari only*/
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    /* Safari and Chrome */
+
+    .history-data .category-titles {
+        padding-right: 0;
     }
 }

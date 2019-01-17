@@ -74,7 +74,9 @@
       "wwwroot/lib/custom/code-prettify/src/run_prettify.js",
       "scripts_babel/frontend-layout-scripts.js",
       "scripts_babel/home-page.js",
-      "scripts_babel/forum-widget.js"
+      "scripts_babel/forum-widget.js",
+      "scripts_babel/downloads-data.js"
+
     ],
     // Optionally specify minification options
     "minify": {

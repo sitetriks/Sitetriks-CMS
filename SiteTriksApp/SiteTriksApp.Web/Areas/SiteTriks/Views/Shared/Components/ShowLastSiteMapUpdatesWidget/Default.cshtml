@@ -22,7 +22,7 @@
                         <div>
                             Next sitemap update:
                             <br>
-                            @String.Format("{0:dd/MMM - H}h", Model.ScheduledTime.Value)
+                            @String.Format("{0:dd MMM - H:mm}", Model.ScheduledTime.Value)
                         </div>
                     }
                     <table class="table">
@@ -31,11 +31,11 @@
                             foreach (var file in Model.Files)
                             {
                                 <tr>
-                                    <td width="90px">
-                                        <b>@(file.Title + file.Extension)</b>
+                                    <td>
+                                        @(file.Title + file.Extension)
                                     </td>
                                     <td>
-                                        <b>@String.Format("{0:dd/MMM - H}h", file.DateModified)</b>
+                                        @String.Format("{0:dd MMM - H:mm}", file.DateModified)
                                     </td>
                                 </tr>
                             }

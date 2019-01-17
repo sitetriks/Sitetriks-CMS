@@ -1,8 +1,11 @@
 ﻿<!DOCTYPE html>
 @{
     string lang = ViewData.ContainsKey("Lang") ? ViewData["Lang"].ToString() : "en";
+    bool isAmp = ViewData.ContainsKey("IsAmp") ? (bool)ViewData["IsAmp"] : false;
 }
-<html amp lang="@lang">
+
+<html @if (isAmp == true) { @Html.Encode("amp")} lang="@lang">
+
 <head>
 
     <meta charset="utf-8" />

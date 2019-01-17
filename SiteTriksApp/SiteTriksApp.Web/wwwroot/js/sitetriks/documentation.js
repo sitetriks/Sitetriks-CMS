@@ -168,8 +168,11 @@ function editDocumentation(ev) {
         let $modal = $('<div></div>', {
             class: 'blur-content',
             width: 400,
-            height: 400
-        }).css('background-color', '#fff').append($('<input/>', {
+            height: 200
+        }).css('background-color', '#fff')
+            .css('padding-top', '40px')
+            .css('border-radius' , '3px')
+            .append($('<input/>', {
             id: 'input-version'
         }))
             .append($('<span></span>', {
@@ -242,7 +245,9 @@ function editDocumentation(ev) {
             class: 'blur-content',
             width: 800,
             height: '90%'
-        }).css('background-color', '#fff').css('padding', '45px').append($('<textarea/>', {
+        }).css('background-color', '#fff')
+            .css('padding', '45px')              
+            .append($('<textarea/>', {
             id: 'area-edit',
             val: $(contentField).html()
         })).append($('<a></a>', {
@@ -261,7 +266,6 @@ function editDocumentation(ev) {
             textEditor.remove('area-edit');
             Blur.remove();
         })).appendTo($parent);
-
         textEditor.init('#area-edit', 700, 300);
     })
 

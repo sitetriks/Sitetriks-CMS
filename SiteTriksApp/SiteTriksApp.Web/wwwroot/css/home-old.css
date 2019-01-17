@@ -2,17 +2,20 @@
     font-family: Montserrat;
     src: url("../../fonts/Montserrat-Bold.ttf");
     font-weight: bold;
+    font-display: swap;
 }
 
 @font-face {
     font-family: Montserrat;
     src: url("../../fonts/Montserrat-Regular.ttf");
     font-weight: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: DashDigital;
-    src: url("../../fonts/Dash_Digital-7.ttf")
+    src: url("../../fonts/Dash_Digital-7.ttf");
+    font-display: swap;
 }
 
 html {
@@ -24,7 +27,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
 
 .sitetriks-wrapper {
     margin: 0;
@@ -91,7 +93,6 @@ body {
 /*#mobile-view-top-menu .login-button:hover {
         border: 2px solid #0086fb;
     }*/
-
 
 #hamburger-menu {
     display: none
