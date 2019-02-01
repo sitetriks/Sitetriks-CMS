@@ -1,2 +1,1 @@
-﻿User-agent: *
-Disallow: /
+Sitemap: https://localhost:44327/sitemap

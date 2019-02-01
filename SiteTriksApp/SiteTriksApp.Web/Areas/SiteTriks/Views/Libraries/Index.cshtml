@@ -27,6 +27,18 @@
 </div>
 
 <div class="backend-wrapper">
+
+    <div class="delete-popup-wrapper" style="display: none;">
+        <span class="glyphicon glyphicon-remove"></span>
+
+        <div class="delete-message">Are you sure you want to delete all of the files</div>
+        <div class="delete-message">from the <span class="library-name"></span> library?</div>
+
+        <div id="delete-library" class="btn btn-danger">Delete</div>
+    </div>
+
+
+
     <div class="grid library-grid">
     </div>
 </div>
@@ -165,7 +177,7 @@
              * Svg = 4,
              * ImageTmb = 5
              */
-            var handlebarsTemplate = 
+            var handlebarsTemplate =
             '<div style="width:auto; position:relative; border: 1px solid #979797; border-radius: 3px; margin: 1px;">'+
                 '<div style="position: absolute;top: 7px;left: 5px;">'+
                     '<input class="st-grid-checkbox" type="checkbox" data-id="{{id}}" style="margin-left: 5px;" >'+

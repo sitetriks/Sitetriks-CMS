@@ -1,6 +1,13 @@
-﻿@model SiteTriks.Extentions.WidgetModels.MultyModel
+﻿@model SiteTriks.Extensions.WidgetModels.MultyModel
 
 @foreach (var widget in Model.Models)
 {
-    @await Html.PartialAsync($"/Views/BaseWidget/{widget.Key}/Display.cshtml", widget.Value)
+    if (widget.Value.HasBaseView)
+    {
+        @await Html.PartialAsync($"/Views/BaseWidget/{widget.Key}/Display.cshtml", widget.Value)
+    }
+    else
+    {
+        @await Html.PartialAsync($"/Views/BaseWidget/Display.cshtml", widget.Value)
+    }
 }

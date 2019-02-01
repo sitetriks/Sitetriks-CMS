@@ -20,10 +20,16 @@
 </div>
 
 @section scripts{
+    <script type="text/javascript" src="~/js/modules/file-handler.js"></script>
+    <script type="text/javascript" src="~/js/modules/utils.js"></script>
+    <script type="text/javascript" src="~/js/modules/pager.js"></script>
+    <script type="text/javascript" src="~/js/modules/data-source.js"></script>
+    <script type="text/javascript" src="~/js/modules/grid.js"></script>
+    <script src="~/js/sitetriks/libraries.js"></script>
     <script type="text/javascript">
 
-        var grid = Grid();
-        var data = { link: "/sitetriks/dynamic/grid?assemblyName=@Model.AssemblyName&className=@Model.DynamicClass.Name", serverSide: true }
+        @*var grid = Grid();
+        var data = { link: "/sitetriks/dynamic/grid?assemblyName=@Model.AssemblyName&className=@Model.DynamicClass.Name", serverSide: true }*@
         var columns = [
             {
                 name: 'id',
@@ -41,49 +47,99 @@
                 name: "title",
                 title: "Title",
                 type: 'string',
-                size: 2,
+                size: 1,
                 headerTemplate: '<strong>#item#</strong>'
             },
 
-            @foreach (var prop in Model.DynamicClass.Properties)
-            {
-                string template = string.Empty;
-                string type = "string";
+            @{
+                var count = Model.DynamicClass.Properties.ToArray().Length;
 
-                switch (prop.Name)
+                if(@count <= 10)
                 {
-                    case "Title":
-                        continue;
-                    case "LinkId":
-                            @*<span>  |  @Html.Action("GetLinkValue", new { id = value })</span>*@
-                    template = "<b>#item#</b>";
 
-                    break;
-                case "Images":
-                    template = "<img src=\"/files/id/#item#\" class=\"display-image img-small\" />";
-                    type = "list";
-                    break;
-                default:
-                    template = "#item#";
-
-                    break;
-                }
-
-                if(prop.Type == "string-html")
-                {
-                    template = "<i>HTML</i>";
-                }
-
-                <text>
+                    @foreach (var prop in Model.DynamicClass.Properties)
                     {
-                        name: '@(Char.ToLowerInvariant(prop.Name[0]) + prop.Name.Substring(1))',
-                        title: '@prop.Name',
-                        type: '@type',
-                        headerTemplate:'<b>#item#</b>',
-                        contentTemplate: '@Html.Raw(template)',
-                        size: 1
-                    },
-                </text>
+                        string template = string.Empty;
+                        string type = "string";
+
+                        switch (prop.Name)
+                        {
+                            case "Title":
+                                continue;
+                            case "LinkId":
+                                    @*<span>  |  @Html.Action("GetLinkValue", new { id = value })</span>*@
+                            template = "<b>#item#</b>";
+
+                            break;
+                        case "Images":
+                            template = "<img src=\"/files/id/#item#\" class=\"display-image img-small\" />";
+                            type = "list";
+                            break;
+                        default:
+                            template = "#item#";
+
+                            break;
+                        }
+
+                        if(prop.Type == "string-html")
+                        {
+                            template = "<i>HTML</i>";
+                        }
+
+                        <text>
+                            {
+                                name: '@(Char.ToLowerInvariant(prop.Name[0]) + prop.Name.Substring(1))',
+                                title: '@prop.Name',
+                                type: '@type',
+                                headerTemplate:'<b>#item#</b>',
+                                contentTemplate: '@Html.Raw(template)',
+                                size: 1
+                            },
+                        </text>
+                    }
+                } else
+                {
+                       @foreach (var prop in Model.DynamicClass.Properties)
+                    {
+                        string template = string.Empty;
+                        string type = "string";
+
+                        switch (prop.Name)
+                        {
+                            case "Title":
+                                continue;
+                            case "LinkId":
+                                    @*<span>  |  @Html.Action("GetLinkValue", new { id = value })</span>*@
+                            template = "<b>#item#</b>";
+
+                            break;
+                        case "Images":
+                            template = "<img src=\"/files/id/#item#\" class=\"display-image img-small\" />";
+                            type = "list";
+                            break;
+                        default:
+                            template = "#item#";
+
+                            break;
+                        }
+
+                        if(prop.Type == "string-html")
+                        {
+                            template = "<i>HTML</i>";
+                        }
+
+                        <text>
+                            {
+                                name: '@(Char.ToLowerInvariant(prop.Name[0]) + prop.Name.Substring(1))',
+                                title: '@prop.Name',
+                                type: '@type',
+                                headerTemplate:'<b>#item#</b>',
+                                contentTemplate: '@Html.Raw(template)',
+                                size: 'small-dynamic'
+                            },
+                        </text>
+                    }
+                }
             }
             {
                 name: 'id',
@@ -105,8 +161,26 @@
                 }
         }];
 
-        var config = grid.build(columns, buttons, grid.defaultPager, data);
+        var filesGrid = new _Grid({
+            wrapperId: '.grid',
+            type: 'table',
+            fields: columns,
+            sourceConfig: { type: 'client', url:  '/sitetriks/dynamic/grid?assemblyName=@Model.AssemblyName&className=@Model.DynamicClass.Name' },
+            customActions: buttons,
+            selectAllButton: true
+        });
 
-        let obj = grid.init('.grid', config);
+        var logger = new Logger('debug');
+        var mediator = new Mediator(logger);
+
+        initLibraries(filesGrid, mediator, logger);
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.grid').addClass('dynamics');
+        })
+
     </script>
 }

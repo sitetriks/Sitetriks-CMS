@@ -6,8 +6,12 @@
     let downloadsModal = document.getElementById('downloadsModal');
     let downloadsClose = document.getElementsByClassName('close-downloads')[0];
     let downloadsBtn = document.getElementById('downloadsDetails');
-
-
+    let $versionsButtons = $('.downloads-button');
+    let $thirtyTwoBitsButton = $('.thirtytwo-bits a');
+    let thirtyTwoLink = '/download/installers/SiteTriksManagerInstaller-x86.exe';
+    let $sixtyFourBitsButton = $('.sixtyfour-bits a');
+    let sixtyFourLink = '/download/installers/SiteTriksManagerInstaller-x64.exe';
+    let $tryNowButton = document.getElementsByClassName('try-now')[0];
 
     /*Downloads modal*/
 
@@ -19,6 +23,7 @@
     function attachDownloadsModalHandlers() {
 
         modalHandler(documentBody, downloadsModal, downloadsBtn, downloadsClose);
+        modalHandler(documentBody, downloadsModal, $tryNowButton, downloadsClose);
     }
 
     function modalHandler(documentBody, modal, btn, closeSpan) {
@@ -46,11 +51,12 @@
     }
 
     function activateDownloadsLinks() {
+        $versionsButtons.removeClass('isDisabled');
+        $('#downloads-submit').addClass('isDisabled');
 
-    }
 
-    function ac() {
-
+        $thirtyTwoBitsButton.attr('href', thirtyTwoLink);
+        $sixtyFourBitsButton.attr('href', sixtyFourLink);
     }
 
     $('#downloads-submit').on('click', function (e) {
@@ -111,13 +117,14 @@
             };
 
             Data.postJson({ url: '/sitetriks/marketingEmails/subscribe', data: subscriberData }).then(function (res) {
-                Notifier.createAlert({ containerId: '#subscription-form-container', message: res.message, status: (res.success ? 'info' : 'warning'), seconds: 5 });
+                Notifier.createAlert({ containerId: '#downloadsForm', message: res.message, status: (res.success ? 'info' : 'warning'), seconds: 5 });
 
                 $name.val('');
                 $email.val('');
+                $companyName.val('');
                 $promotionalMaterials.attr('checked', false);
                 $featuresReleases.attr('checked', false);
-                $('.subscription-button').click();
+                activateDownloadsLinks();
             }, Data.defaultError);
         }
     });
@@ -134,4 +141,6 @@
 $(document).ready(function () {
     downloadsSubscription.attachTermsAndContidionsHandlers();
     downloadsSubscription.attachDownloadsModalHandlers();
-})
+
+    $('.try-now').on('click', downloadsSubscription.attachDownloadsModalHandlers());
+});

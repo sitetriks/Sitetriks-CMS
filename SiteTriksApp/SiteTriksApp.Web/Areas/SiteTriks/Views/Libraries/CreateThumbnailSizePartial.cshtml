@@ -1,0 +1,73 @@
+﻿<div class="create-thumbnail-size-form" style="display: none;">
+    <form>
+
+        <div class="form-horizontal">
+            <input data-val="true" data-val-required="The Id field is required." id="thumbSizeId" name="Id" type="hidden" value="">
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Name">Name</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" id="size-name" name="Name" type="text" value="">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Type">Type</label>
+                <select class="form-control inline-block" data-val="true" data-val-required="The Type field is required." id="size-type" name="Type">
+                    <option value="0">Resize</option>
+                    <option value="1">Crop</option>
+                </select>
+                <span class="field-validation-valid text-danger" data-valmsg-for="Type" data-valmsg-replace="true"></span>
+                <span id="allowed-types"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Width">Width</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="The Width field is required." id="size-width" name="Width" type="number">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Height">Height</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="The Height field is required." id="size-height" name="Height" type="number">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="offsets" style="display: none;">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="OffsetX">OffsetX</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-val="true" data-val-required="The OffsetX field is required." id="offsetx" name="OffsetX" type="number">
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="OffsetY">OffsetY</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-val="true" data-val-required="The OffsetY field is required." id="offsety" name="OffsetY" type="number">
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="MultiplyerX">MultiplyerX</label>
+                <div class="col-md-10">
+                    <input class="form-control ratio text-box single-line" data-val="true" data-val-number="The field MultiplyerX must be a number." data-val-required="The MultiplyerX field is required." id="multiplierx" name="MultiplyerX" step="0.01" type="number">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="MultiplyerY">MultiplyerY</label>
+                <div class="col-md-10">
+                    <input class="form-control ratio text-box single-line" data-val="true" data-val-number="The field MultiplyerY must be a number." data-val-required="The MultiplyerY field is required." id="multipliery" name="MultiplyerY" step="0.01" type="number">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="">
+                <div id="create-thumbnail-size" class="btn btn-add-size">Submit</div>
+            </div>
+        </div>
+    </form>
+</div>

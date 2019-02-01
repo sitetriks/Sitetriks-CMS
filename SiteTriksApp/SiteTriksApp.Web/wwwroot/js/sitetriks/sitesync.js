@@ -176,6 +176,7 @@ var siteSyncModule = (function () {
         }
 
         function onTargetSelect() {
+
             resetHistoryContainer();
             $('#source-container').html('');
             $('#staged-container').html('');
@@ -188,13 +189,14 @@ var siteSyncModule = (function () {
             $connectTargetButton.removeClass('grayed-out');
             $siteSyncButton.removeClass('grayed-out');
 
+            if ($(this).val() == 0) {
+                return;
+            }
+
             let targetDomain = $targetSelect.val();
 
             siteSyncModel.updateTargetDomain(targetDomain);
 
-            if ($(this).val() === '') {
-                return;
-            }
 
             currSelectedSite = $(this).val();
             siteSyncCore.fillContainers(currSelectedSite);

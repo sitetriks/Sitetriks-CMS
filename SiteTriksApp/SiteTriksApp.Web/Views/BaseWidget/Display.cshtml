@@ -1,0 +1,18 @@
+﻿@model SiteTriks.Extensions.WidgetModels.WidgetModel
+
+@if (Model.IsPreview)
+{
+    <div class="preview-placeholder" data-identifier="@Model.Id">
+        @await Html.PartialAsync("~/Areas/SiteTriks/Views/Shared/WidgetControl.cshtml", model: Model)
+
+        <div class="@Model.CssClass">
+            @await Component.InvokeAsync(Model.Type.FirstCharToUpper() + "Widget", new { area = "", element = Model.Element, isPreview = Model.IsPreview, language = Model.Language, lang = Model.Language, templateName = Model.TemplateName })
+        </div>
+    </div>
+}
+else if (Model.CanViewByRole && Model.CanViewByGroup)
+{
+    <div class="@Model.CssClass">
+        @await Component.InvokeAsync(Model.Type.FirstCharToUpper() + "Widget", new { area = "", element = Model.Element, isPreview = Model.IsPreview, language = Model.Language, lang = Model.Language, templateName = Model.TemplateName })
+    </div>
+}

@@ -66,10 +66,12 @@ function DataSource(dataSource) {
     function loadData({ filters, paging, sorting }) {
         Loader.show('#fff');
         let body = { filters: [] };
-        if (type === 'server' && paging.size !== 'all') {
+        if (type === 'server') {
             body.filters = filters || [];
-            body.skip = (paging.page - 1) * paging.size;
-            body.take = paging.size;
+            if (paging.size !== 'all') {
+                body.skip = (paging.page - 1) * paging.size;
+                body.take = paging.size;
+            }
 
             if (defaultFilters && defaultFilters.length > 0) {
                 body.filters = body.filters.concat(defaultFilters);

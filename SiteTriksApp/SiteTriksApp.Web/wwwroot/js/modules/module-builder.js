@@ -663,16 +663,16 @@ var ModuleBuilder = (function () {
         };
 
         function initNavigation(element) {
-            Data.getJson({ url: '/sitetriks/Display/GetAllParentPages' }).then(function (data) {
-                var pages = JSON.parse(data);
+            Data.getJson({ url: '/sitetriks/Display/GetAllParentPages' }).then(function (res) {
+                var pages = res.pages;
                 let $order = $('#pages-order');
                 let $multiselect = $('#multiselect-pages');
                 let $allPages = $('#input-all-pages');
 
                 for (var i = 0; i < pages.length; i++) {
                     $('<option>', {
-                        value: pages[i].Id,
-                        text: pages[i].Title
+                        value: pages[i].id,
+                        text: pages[i].title
                     }).appendTo($multiselect);
                 }
 

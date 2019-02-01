@@ -53,18 +53,15 @@ var siteSyncModel = (function () {
     }
 
     function updateTargetDomain(url) {
-        console.log(url);
         syncModel.targetDomain = url;
     }
 
     function setDependenciesUseToTrue() {
         syncModel.includeDependencies = true;
-        console.log(syncModel);
     }
 
     function setDependenciesUseToFalse() {
         syncModel.includeDependencies = false;
-        console.log(syncModel);
 
     }
 

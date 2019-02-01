@@ -4,7 +4,7 @@
 //         for widgets AllowedRoles, AllowedGroups 
 //===================================================================================================
 
-/* globals Data, Loader, Utils, Notifier, Multiselect, WidgetsDraggable, ModuleBuilder */
+/* globals Data, Loader, Utils, Notifier, Multiselect, WidgetsDraggable, ModuleBuilder, WarningWindow */
 
 function widgetsModule($widgetContainer, initFunctions, pageContent) {
     function getRoles(selectedRoles) {
@@ -210,7 +210,6 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
     });
 
     $('.ui-dialog').on('click', '.btn-add-widget', function () {
-        var pathnames = window.location.pathname.split('/');
         var placeholder = $('#Dialog-Box').data('placeholder');
         var type = $(this).attr('data-type');
         if (type === 'css') {
@@ -221,9 +220,9 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
         }
 
         var cssClass = $('#css-class').val();
-        var templateName = $("#template-selector").val();
-        var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
-        var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
+        var templateName = $('#template-selector').val();
+        var allowedRoles = ($('#allowed-roles').val() || []).join(';');
+        var allowedGroups = ($('#allowed-groups').val() || []).join(';');
 
         var element;
         if (initFunctions[type] && Utils.isFunction(initFunctions[type].save)) {
@@ -299,8 +298,10 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
 
             if (type === 'layoutBuilder') {
                 console.log('init layout');
-                //makeDrop($(".drop-layout"));
-                //$(".drop-layout").sortable();
+                let l = ModuleBuilder.getInstance('#layout-widget-wrapper', ModuleBuilder.LAYOUT);
+                let layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
+                ModuleBuilder.renderLayout(layoutRows, $(`div.preview-placeholder[data-identifier="${id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
+
                 WidgetsDraggable.init(w);
             }
 
@@ -314,21 +315,20 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
             $(document).trigger('removeCarousel');
 
             //Move to create alert
-            if (type == 'dynamic') {
+            if (type === 'dynamic') {
                 Notifier.createAlert({
                     containerId: '#alerts',
                     title: '',
-                    message: "Dynamic View can not be loaded correctly.",
+                    message: 'Dynamic View can not be loaded correctly.',
                     status: 'danger',
                     isPermanent: true
                 });
-
-                $('#Dialog-Box').dialog('close');
-
-                $(document).trigger('initCarousel');
-                $widgetContainer.html('');
-                Loader.hide();
             }
+
+            $('#Dialog-Box').dialog('close');
+            $(document).trigger('initCarousel');
+            $widgetContainer.html('');
+            Loader.hide();
         });
     }
 
@@ -352,9 +352,8 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
 
         $widgetContainer.html('');
 
-        $('#Dialog-Box-Edit').dialog('option', 'position', ["20%", "10%"]);
-        $('#Dialog-Box-Edit').parent().css({ position: "fixed" })
-            .css({ top: "10%" });
+        $('#Dialog-Box-Edit').dialog('option', 'position', ['20%', '10%']);
+        $('#Dialog-Box-Edit').parent().css({ position: 'fixed', top: '10%' });
 
         $('.btn-add-widget').remove();
         $('.btn-edit-widget').remove();
@@ -377,7 +376,7 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
             text: displayName || type
         }).appendTo('.ui-dialog-titlebar');
 
-        editWidget(type, id)
+        editWidget(type, id);
     }
 
     function editWidget(type, id) {
@@ -406,9 +405,9 @@ function widgetsModule($widgetContainer, initFunctions, pageContent) {
         }
 
         var cssClass = $('#css-class').val();
-        var templateName = $("#template-selector").val();
-        var allowedRoles = $('#allowed-roles').val() == null ? '' : $('#allowed-roles').val().join(';');
-        var allowedGroups = $('#allowed-groups').val() == null ? '' : $('#allowed-groups').val().join(';');
+        var templateName = $('#template-selector').val();
+        var allowedRoles = ($('#allowed-roles').val() || [] ).join(';');
+        var allowedGroups = ($('#allowed-groups').val() || []).join(';');
         let element;
         if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
             element = initFunctions[type].save(id);

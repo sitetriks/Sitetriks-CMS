@@ -30,9 +30,17 @@
             type: 'string',
             filter: true,
             sort: true,
-            size: 6,
+            size: 5,
             headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
-        }, {
+            }, {
+                name: "order",
+                title: "Order",
+                type: 'string',
+                filter: true,
+                sort: true,
+                size: 1,
+                headerTemplate: '<b>#item#</b>' // #item# is the placeholder for the content
+            }, {
             name: 'id',
             title: 'Action',
             type: 'string',

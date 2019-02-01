@@ -12,13 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using SiteTriks.Data.Models;
 using SiteTriks.DatabaseApi.Contracts;
-using SiteTriks.Extentions;
-using SiteTriks.Extentions.DynamicViews;
-using SiteTriks.Extentions.WidgetModels;
+using SiteTriks.Extensions.DynamicViews;
 using SiteTriks.Helpers;
 using SiteTriks.Services.Contracts;
-using SiteTriks.SiteSync.Hubs;
-using SiteTriksApp.Web.Areas.ECommerse.Extentions.WidgetModels;
 using SiteTriksApp.Web.Data;
 using SiteTriksApp.Web.Services;
 using System;
@@ -99,38 +95,7 @@ namespace SiteTriksApp.Web
                 options.AreaViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
                 options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
             });
-
-            // -----------------------------------------------------------------------------------------------------------
-            // Widgets registration. Should be moved
-            WidgetRegistry.RegisterWidget<HtmlWidgetModel>("html", "HTML");
-            WidgetRegistry.RegisterWidget<NavigationWidgetModel>("navigation", "Navigation");
-            WidgetRegistry.RegisterWidget<NewsWidgetModel>("allNews", "All News");
-            WidgetRegistry.RegisterWidget<NewsWidgetModel>("detailedNews", "Detailed News");
-            WidgetRegistry.RegisterWidget<NewsWidgetModel>("newsCarousel", "News Carousel");
-            WidgetRegistry.RegisterWidget<VideoWidgetModel>("video", "Video");
-            WidgetRegistry.RegisterWidget<PresentationWidgetModel>("presentation", "Presentation");
-            WidgetRegistry.RegisterWidget<CssWidgetModel>("css", "CSS");
-            WidgetRegistry.RegisterWidget<JavaScriptWidgetModel>("javascript", "JavaScript");
-            WidgetRegistry.RegisterWidget<EmbeddedScriptWidgetModel>("embeddedscript", "Embedded Script");
-            WidgetRegistry.RegisterWidget<LayoutBuilderWidgetModel>("layoutBuilder", "Layout Builder");
-            WidgetRegistry.RegisterWidget<SearchWidgetModel>("search", "Google Search");
-            WidgetRegistry.RegisterWidget<ImageWidgetModel>("image", "Image");
-            WidgetRegistry.RegisterWidget<DynamicWidgetModel>("dynamic", "Dynamic Content");
-            WidgetRegistry.RegisterWidget<DocumentationWidgetModel>("documentation", "Documentation");
-            WidgetRegistry.RegisterWidget<GalleryWidgetModel>("gallery", "Gallery");
-            WidgetRegistry.RegisterWidget<ContactUsWidgetModel>("contactUs", "Contact Us");
-            WidgetRegistry.RegisterWidget<ContactUsWidgetModel>("contactUsAlternative", "Contact Us Alternative");
-            WidgetRegistry.RegisterWidget<MarketWidgetModel>("market", "Market");
-            WidgetRegistry.RegisterWidget<UserOrdersWidgetModel>("userOrders", "User Orders");
-            WidgetRegistry.RegisterWidget<SubscriptionWidgetModel>("subscription", "Subscription");
-            WidgetRegistry.RegisterWidget<LicenseGenerationWidgetModel>("licenseGeneration", "License Form");
-
-            // -----------------------------------------------------------------------------------------------------------
-            // Store widgets
-            WidgetRegistry.RegisterWidget<StoreGridWidgetModel>("storeGrid", "Grid");
-            WidgetRegistry.RegisterWidget<StoreFilterWidgetModel>("storeFilter", "Filter Menu");
-            WidgetRegistry.RegisterWidget<StoreItemWidgetModel>("storeItem", "Store Item");
-
+            
             services.AddIdentity<User, IdentityRole>(config =>
             {
                 config.SignIn.RequireConfirmedEmail = true;
@@ -159,20 +124,17 @@ namespace SiteTriksApp.Web
                 options.KeepAliveInterval = TimeSpan.FromMinutes(1);
             });           
 
-            var protectionBuilder = services.AddDataProtection().SetApplicationName("SiteTriks")
-                .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
-
             var storageProviderConfig = this.Configuration.GetSection("SiteTriks").GetSection("StorageProvider");
             switch (storageProviderConfig.GetSection("Name").Value)
             {
                 case "azure":
+                    var protectionBuilder = services.AddDataProtection().SetApplicationName("SiteTriks")
+                        .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
                     string blobUri = storageProviderConfig.GetSection("BlobUri").Value;
                     protectionBuilder.PersistKeysToAzureBlobStorage(new Uri(blobUri));
 
                     break;
                 default:
-                    protectionBuilder.PersistKeysToFileSystem(new DirectoryInfo("\\KeysData\\keys\\"));
-
                     break;
             }
         }
@@ -238,7 +200,7 @@ namespace SiteTriksApp.Web
 
             app.UseMvc(routes =>
             {
-                ApplicationStart.BuildRoutes(routes);
+                ApplicationStart.BuildRoutes(routes, app);
             });
         }
     }

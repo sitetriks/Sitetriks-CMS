@@ -2,84 +2,161 @@
   "MaxMegaEventYearAheadFromThisYear": 5,
   "Initialized": false,
   "WidgetConfigurations": {
-    "html": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "navigation": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "video": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "presentation": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "allNews": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "detailedNews": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "newsCarousel": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "changeUserInfo": [
-      "Admin"
-    ],
-    "css": [
-      "Admin"
-    ],
-    "embeddedscript": [
-      "Admin"
-    ],
-    "javascript": [
-      "Admin"
-    ],
-    "layoutBuilder": [
-      "Admin"
-    ],
-    "search": [
-      "Admin"
-    ],
-    "image": [
-      "Admin"
-    ],
-    "documentation": [
-      "Admin"
-    ],
-    "gallery": [
-      "Admin"
-    ],
-    "contactUs": [
-      "Admin"
-    ],
-    "contactUsAlternative": [
-      "Admin"
-    ],
-    "market": [
-      "Admin"
-    ],
-    "userOrders": [
-      "Admin"
-    ],
-    "subscription": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "licenseGeneration": [
-      "Admin",
-      "Authorized back-end"
-    ],
-    "dynamic": [
-      "Admin",
-      "Authorized back-end"
-    ]
+    "allNews": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "dynamic": {
+      "AllowedRoles": [
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "css": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "blog": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "contactUs": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "contactUsAlternative": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "detailedNews": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "documentation": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "embeddedscript": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "forum": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "gallery": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "search": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "html": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "javascript": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "image": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "layoutBuilder": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "licenseGeneration": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "market": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "navigation": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "newsCarousel": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "presentation": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "subscription": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    },
+    "userOrders": {
+      "AllowedRoles": [
+        "Admin"
+      ],
+      "IsTrackable": true
+    },
+    "video": {
+      "AllowedRoles": [
+        "Admin",
+        "Authorized back-end"
+      ],
+      "IsTrackable": true
+    }
   }
 }

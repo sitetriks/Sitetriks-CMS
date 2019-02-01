@@ -9,40 +9,44 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\WidgetModels\**" />
     <Compile Remove="logs\**" />
     <Compile Remove="wwwroot\csmUploads\**" />
+    <Content Remove="Extensions\WidgetModels\**" />
     <Content Remove="logs\**" />
     <Content Remove="wwwroot\csmUploads\**" />
+    <EmbeddedResource Remove="Extensions\WidgetModels\**" />
     <EmbeddedResource Remove="logs\**" />
     <EmbeddedResource Remove="wwwroot\csmUploads\**" />
+    <None Remove="Extensions\WidgetModels\**" />
     <None Remove="logs\**" />
     <None Remove="wwwroot\csmUploads\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
-    <PackageReference Include="Hangfire.AspNetCore" Version="1.6.17" />
-    <PackageReference Include="Hangfire.MySql.Core" Version="2.1.5" />
-    <PackageReference Include="HangFire.SqlServer" Version="1.6.17" />
-    <PackageReference Include="MailKit" Version="2.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
-    <PackageReference Include="SiteTriks" Version="2.0.2" />
-    <PackageReference Include="SiteTriks.BlogModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.Configuration" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.DocumentationModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.Dynamic" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.ECommerseModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.Extensions" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.ForumModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.Infrastructure" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.RssFeedModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.SiteMapModule" Version="2.0.1" />
-    <PackageReference Include="SiteTriks.SiteSync" Version="2.0.1" />
+    <Compile Remove="Migrations\20181112114222_ForumUpdate.cs" />
+    <Compile Remove="Migrations\20181112114222_ForumUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20181206144425_ECommerseCart.cs" />
+    <Compile Remove="Migrations\20181206144425_ECommerseCart.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
+    <PackageReference Include="MailKit" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="SiteTriks" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.BlogModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.ECommerseModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.ForumModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.RssFeedModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="2.0.4" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="2.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +58,7 @@
   <ItemGroup>
     <Folder Include="Areas\ECommerse\Controllers\" />
     <Folder Include="Areas\ECommerse\Data\" />
+    <Folder Include="Areas\ECommerse\Extentions\" />
     <Folder Include="Areas\ECommerse\Models\" />
     <Folder Include="Areas\Forum\Controllers\" />
     <Folder Include="Areas\Forum\Data\" />
@@ -65,7 +70,6 @@
     <Folder Include="Areas\SiteTriks\Controllers\ViewComponents\" />
     <Folder Include="Areas\SiteTriks\Data\" />
     <Folder Include="Areas\SiteTriks\Helpers\" />
-    <Folder Include="Extensions\WidgetModels\" />
     <Folder Include="Views\Shared\Components\DocumentationWidget\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
     <Folder Include="wwwroot\cmsUploads\" />
@@ -268,7 +272,7 @@
     <None Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.js.map" />
     <None Include="wwwroot\lib\signalr\README.md" />
     <None Include="wwwroot\robots.txt" />
-  </ItemGroup> 
+  </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\AbortController.d.ts" />
@@ -299,6 +303,12 @@
     <Content Update="Areas\ECommerse\Views\CategoryManager\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\ECommerse\Views\Shared\Components\SelectedMultisite\Default.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\ECommerse\Views\Shared\Components\ShowMultisiteInfoWidget\Default.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Forum\Views\Posts\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -308,16 +318,7 @@
     <Content Update="Areas\Forum\Views\Shared\_ForumLayout2.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\SiteTriks\Views\Widgets\Blog.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Areas\SiteTriks\Views\Widgets\StoreItem.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\BaseWidget\Blog\Display.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\BaseWidget\Forum\Display.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\BaseWidget\StoreItem\Display.cshtml">
@@ -326,6 +327,10 @@
     <Content Update="Views\Shared\Components\StoreGridWidget\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.7" />
   </ItemGroup>
 
  <!-- <Target Name="IncludePrecompiledViewsInPublishOutput" DependsOnTargets="_MvcRazorPrecompileOnBuild" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
