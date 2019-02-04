@@ -32,11 +32,11 @@ var siteSyncCore = (function () {
             let containsItem = false;
 
             for (var i = 0; i < siteSyncContainersData.stagedItems[`${displayName}`].length; i++) {
-                if (siteSyncContainersData.stagedItems[`${displayName}`][i].id == id) {
+                if (siteSyncContainersData.stagedItems[`${displayName}`][i].id === id) {
                     containsItem = true;
                 }
             }
-            if (containsItem == false) {
+            if (containsItem === false) {
                 siteSyncContainersData.stagedItems[`${displayName}`].push({ id: id, title: title });
             }
         }
@@ -48,7 +48,7 @@ var siteSyncCore = (function () {
             siteSyncContainersData.stagedItems[`${displayName}`] = siteSyncContainersData.stagedItems[`${displayName}`].filter(el => el.id !== id);
         }
 
-        if ([`${displayName}`] in siteSyncContainersData.stagedItems && siteSyncContainersData.stagedItems[`${displayName}`] == 0) {
+        if ([`${displayName}`] in siteSyncContainersData.stagedItems && siteSyncContainersData.stagedItems[`${displayName}`] === 0) {
             delete siteSyncContainersData.stagedItems[`${displayName}`];
         }
         renderStagedContainer();
@@ -331,7 +331,7 @@ var siteSyncCore = (function () {
 
                     $(itemsArray).each(function (index, syncedFile) {
                         let status = 'yes';
-                        if (syncedFile.successful == false) {
+                        if (syncedFile.successful === false) {
                             status = 'no';
                         }
 

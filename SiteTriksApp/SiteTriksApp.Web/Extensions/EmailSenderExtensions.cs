@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SiteTriksApp.Web.Services;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using SiteTriks.Services.Contracts;
-using SiteTriksApp.Web.Services;
 
-namespace SiteTriksApp.Web.Extentions
+namespace SiteTriksApp.Web.Extensions
 {
     public static class EmailSenderExtensions
     {

@@ -1,0 +1,54 @@
+﻿@model SiteTriks.Services.Models.LayoutModel
+
+@{ 
+    if (Model.LayoutRows == null)
+    {
+        return;
+    }
+
+    bool isPreview = (bool)ViewBag.IsPreview;
+    string preview = (bool)ViewBag.IsPreview ? "preview" : "";
+    string lang = (string)ViewBag.Language;
+}
+
+<div class="layout-content container-fluid">
+    @foreach (var item in Model.LayoutRows)
+    {
+        @Html.Raw(string.Format("<{0} class='row {1}'>", item.Tag, item.CssClass))
+        @foreach (var column in item.Columns)
+        {
+            string placeholder = column.Properties.Placeholder;
+            string cssClasses = string.Empty;
+            foreach (var col in column.Resolutions)
+            {
+                if (isPreview)
+                {
+                    cssClasses += $"layout-preview-col st-col-{col.Key}-{col.Value.Size} st-col-{col.Key}-offset-{col.Value.Offset} ";
+                }
+                else
+                {
+                    if (col.Value.Size != 0)
+                    {
+                        cssClasses += $"col-{col.Key}-{col.Value.Size}";
+                    }
+                    else
+                    {
+                        cssClasses += $"hidden-{col.Key}";
+                    }
+
+                    cssClasses += $" col-{col.Key}-offset-{col.Value.Offset} ";
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(column.Properties.CssClass))
+            {
+                cssClasses += " " + column.Properties.CssClass + " ";
+            }
+
+            <div data-placeholder="@placeholder" class="@((bool)ViewBag.IsPreview ? "drop drop-layout connected-widget-container placeholder" : "") @cssClasses">
+                @await Component.InvokeAsync("RenderPlaceholder", new { innerContent = Model.InnerContent, Model.IsAMPPage, placeholder, preview , lang })
+            </div>
+        }
+        @Html.Raw(string.Format("</{0}>", item.Tag))
+    }
+</div>

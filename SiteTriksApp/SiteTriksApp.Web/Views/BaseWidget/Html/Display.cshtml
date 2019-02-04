@@ -1,9 +1,7 @@
-﻿@model SiteTriks.Extentions.WidgetModels.HtmlWidgetModel
+﻿@model SiteTriks.Extensions.WidgetModels.WidgetModel
 
 @{
-    //Layout = null;
-    Guid blockId;
-    bool isId = Guid.TryParse(Model.Element, out blockId);
+    bool isId = Guid.TryParse(Model.Element, out Guid blockId);
 }
 
 @if (Model.IsPreview)

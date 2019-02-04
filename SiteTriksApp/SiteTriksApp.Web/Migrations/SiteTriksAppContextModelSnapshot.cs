@@ -1419,6 +1419,9 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(150);
 
+                    b.Property<decimal>("Order")
+                        .HasColumnType("decimal(18, 6)");
+
                     b.Property<Guid?>("ParentId");
 
                     b.Property<Guid>("SiteProviderId");
@@ -1466,6 +1469,9 @@ namespace SiteTriksApp.Web.Migrations
                     b.Property<DateTime?>("DateModified");
 
                     b.Property<string>("LastUserId");
+
+                    b.Property<decimal>("Order")
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<Guid>("SiteProviderId");
 

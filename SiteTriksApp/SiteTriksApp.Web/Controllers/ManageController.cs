@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SiteTriks.Data.Models;
-using SiteTriksApp.Web.Extentions;
+using SiteTriksApp.Web.Extensions;
 using SiteTriksApp.Web.Models.ManageViewModels;
 using SiteTriksApp.Web.Services;
 using System;

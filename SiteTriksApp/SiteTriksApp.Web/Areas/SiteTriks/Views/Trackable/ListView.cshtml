@@ -12,7 +12,8 @@
 @section scripts{
 	<script type="text/javascript">
 		var grid = Grid();
-		var data = { link: "/sitetriks/trackable/grid", serverSide: false }
+        var data = { link: "/sitetriks/trackable/grid", serverSide: false }
+        console.log(data);
 		var columns = [
 			{
 				name: 'typeName',
@@ -20,16 +21,16 @@
 				type: 'string',
 				filter: true,
 				sort: true,
-				size: 5,
+				size: 3,
 				headerTemplate: '<strong>#item#</strong>'
 			},
 			{
-				name: 'pageName',
+				name: 'pageNames',
 				title: 'Page',
 				type: 'string',
 				filter: true,
 				sort: true,
-				size: 2,
+				size: 7,
 				headerTemplate: '<strong>#item#</strong>'
 			}
 		];
@@ -37,7 +38,7 @@
 		let buttons = [];
 
 		var config = grid.build(columns, buttons, grid.defaultPager, data);
-
+        console.log(config);
 		let obj = grid.init('.grid', config);
 	</script>
 }

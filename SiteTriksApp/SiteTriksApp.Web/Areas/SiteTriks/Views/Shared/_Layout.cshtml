@@ -103,7 +103,7 @@
                                                         </a>
                                                         <ul class="dropdown-menu">
                                                             <li class="nav-section-separator"><span>Static Content</span></li>
-                                                            <li>@Html.ActionLink("Files", "Index", "Libraries", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Libraries and Files", "Index", "Libraries", new { Area = "SiteTriks" }, new { })</li>
                                                             <li>@Html.ActionLink("News", "Index", "News", new { Area = "SiteTriks" }, new { })</li>
                                                             <li>@Html.ActionLink("Shared Blocks", "Index", "HtmlBlocks", new { Area = "SiteTriks" }, new { })</li>
                                                             <li class="nav-section-separator"><span>Content Modules</span></li>
@@ -126,6 +126,7 @@
                                                             <li class="nav-section-separator"><span>Site</span></li>
                                                             @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Site" })
                                                             <li>@Html.ActionLink("Endpoints", "Index", "EndPoints", new { Area = "SiteTriks" }, new { })</li>
+                                                            <li>@Html.ActionLink("Widget Tracking", "Index", "Trackable/listView", new { Area = "SiteTriks" }, new { })</li>
                                                             <li class="nav-section-separator"><span>Marketing</span></li>
                                                             @await Component.InvokeAsync("ModulesNavigation", new { Area = "SiteTriks", section = "Marketing" })
                                                             <li class="nav-section-separator"><span>Design</span></li>

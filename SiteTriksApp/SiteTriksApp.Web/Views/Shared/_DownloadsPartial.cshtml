@@ -2,6 +2,9 @@
     <p style="text-align: center;"></p>
     <p style="text-align: center;"></p>
     <p style="text-align: center;"></p>
+    <div class="supported-os" style="text-align: center;">
+        <span style="color: #393838; font-size: 1.2em">Supported OS: </span><span style="color: #c9c9c9; font-size: 1.2em">Windows 7,8,8.1,10</span>
+    </div>
     <p style="text-align: center;"><strong><span style="font-size: 2.4em"></span></strong></p>
     <p style="text-align: center;"><strong><span style="font-size: 2.4em"><br /><span>Congrats, you can start using the free version of SiteTriks at will :).</span></span></strong></p>
     <p style="text-align: center;"><strong><span style="font-size: 2.4em"><br /></span></strong><span style="font-size: 2.4em;"></span><span style="font-size: 2.4em"><strong>For the Business and Enterprise licenses, please, contact our sales representatives.&nbsp;</strong></span><strong><span style="font-size: 2.4em;"><br /><br /></span></strong><span style="font-size: 2.2em;">By clicking the download button you confirm that you</span><span style="font-size: 2.2em;">&nbsp;have read and understood the usage terms and you will use the SOFTWARE in accordance with these terms and conditions"</span><br /><br /></p>
@@ -164,13 +167,9 @@
     </div>
     <div style="text-align: center;"><span style="color: #ffffff; font-size: 1.6em;">DOWNLOAD SITETRIKS INSTALLER:</span></div>
     <div class="btns-container">
-        <span id="downloadsDetails" class="" style="font-size: 18px;"><a style="font-size: 28px;" title="">Download</a></span>
+        <span id="downloadsDetails" class="" style="font-size: 18px;"><a title="">Download</a></span>
 
     </div>
-    <div class="supported-os" style="text-align: center;">
-        <span style="color: #393838; font-size: 1.2em">Supported OS: </span><span style="color: #c9c9c9; font-size: 1.2em">Windows 7,8,10</span>
-    </div>
-    <div style="text-align: center;"><span style="color: #ffffff; font-size: 1.6em;">For a manual installation, visit our </span><span class="link-button" style="font-size: 18px;"><a id="donwload" href="https://github.com/sitetriks/Sitetriks-CMS" target="_blank" rel="noopener" title="Github Sitetriks ">GitHub</a></span></div>
 </div>
 
 <div id="downloadsModal">
@@ -181,29 +180,33 @@
             <span class="validation-output"></span>
             <input type="text" name="email" placeholder="Email">
             <span class="validation-output"></span>
-            <input type="text" name="company-email" placeholder="Company Name">
+            <input type="text" name="company-name" placeholder="Company Name">
             <span class="validation-output"></span>
 
-            <div>I want to receive news from SiteTriks regarding new features and releases.</div>
-            <div id="features-releases-group" class="subscription-radio-group">
-                <label class="radio-inline"><input type="radio" name="features-releases" value="1">Yes</label>
-                <label class="radio-inline"><input type="radio" name="features-releases" value="0">No</label>
-                <span class="validation-output"></span>
+            <div class="subscription-news">
+                <span>I want to receive news from SiteTriks regarding new features and releases.</span>
+                <div id="features-releases-group" class="subscription-radio-group">
+                    <label class="radio-inline"><input type="radio" name="features-releases" value="1">Yes</label>
+                    <label class="radio-inline"><input type="radio" name="features-releases" value="0">No</label>
+                    <span class="validation-output"></span>
+                </div>
             </div>
 
-            <div>I want to receive promotional materials regarding SiteTriks.</div>
-            <div id="promotional-materials-group" class="subscription-radio-group">
-                <label class="radio-inline"><input type="radio" name="promotional-materials" value="1">Yes</label>
-                <label class="radio-inline"><input type="radio" name="promotional-materials" value="0">No</label>
-                <span class="validation-output"></span>
+            <div class="subscription-materials">
+                <span>I want to receive promotional materials regarding SiteTriks.</span>
+                <div id="promotional-materials-group" class="subscription-radio-group">
+                    <label class="radio-inline"><input type="radio" name="promotional-materials" value="1">Yes</label>
+                    <label class="radio-inline"><input type="radio" name="promotional-materials" value="0">No</label>
+                    <span class="validation-output"></span>
+                </div>
             </div>
 
             <input type="button" id="downloads-submit" value="Submit" class="btn">
         </div>
         <div class="btns-container">
 
-            <span class="downloads-button thirtytwo-bits" style="font-size: 18px;"><a style="font-size: 28px;" href="~/download/installers/SiteTriksManagerInstaller-x86.exe" })" title="Download Sitetriks Installer">x32</a></span>
-            <span class="downloads-button sixtyfour-bits" style="font-size: 18px;"><a style="font-size: 28px;" href="~/download/installers/SiteTriksManagerInstaller-x64.exe" title="Download Sitetriks Installer">x64</a></span>
+            <span class="downloads-button isDisabled thirtytwo-bits" style="font-size: 18px;"><a style="font-size: 28px;" href="" title="Download Sitetriks Installer">x32</a></span>
+            <span class="downloads-button isDisabled sixtyfour-bits" style="font-size: 18px;"><a style="font-size: 28px;" href="" title="Download Sitetriks Installer">x64</a></span>
         </div>
     </div>
 </div>

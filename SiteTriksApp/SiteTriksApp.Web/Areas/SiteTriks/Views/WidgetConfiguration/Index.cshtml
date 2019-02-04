@@ -22,9 +22,13 @@
                         <option value="@UserRoles.Admin">@UserRoles.Admin</option>
                         <option value="@UserRoles.BackEnd">@UserRoles.BackEnd</option>
                     </select>
-                    <span class="btn btn-success" id="btn-save">Save</span>
+                </div>
+                <div class="track-widget-wrapper" data-widget-name="">
+                    <span>Track widget</span>
+                    <input class="track-widget-checkbox" type="checkbox" />
                 </div>
                 <div class="modal-footer">
+                    <span class="btn btn-success" id="btn-save">Save</span>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -36,41 +40,49 @@
 
 @section scripts{
     <script src="~/js/multiselect-setup.js"></script>
+    <script type="text/javascript" src="~/js/modules/utils.js"></script>
+    <script type="text/javascript" src="~/js/modules/pager.js"></script>
+    <script type="text/javascript" src="~/js/modules/data-source.js"></script>
+    <script type="text/javascript" src="~/js/modules/grid.js"></script>
     <script>
-        function editWidgetRoles(element, roles) {
-            let widget = $(element).data("widget");
-            Multiselect.Setup("roles-listbox");
+        const $modal = $('#edit-widget-roles');
+        const $btnSave = $('#btn-save');
+        const $rolesListBox = $('#roles-listbox');
+        Multiselect.Setup('roles-listbox');
 
-            $('#roles-listbox').val('');
-            $.each(roles.split(";"), function (i, e) {
-                $("#roles-listbox option[value='" + e.trim() + "']").prop("selected", true);
+        function editWidgetRoles(widget, roles, trackable) {
+            $modal.find('.track-widget-checkbox').prop('checked', trackable === 'true');
+            $rolesListBox.val('');
+            $.each(roles.split(','), function (_, e) {
+                $rolesListBox.find('option[value="' + e.trim() + '"]').prop('selected', true);
             });
 
-            Multiselect.Refresh("roles-listbox");
-
-            $('#btn-save').attr('data-widget', widget);
-
-            $("#edit-widget-roles").modal("show");
+            Multiselect.Refresh('roles-listbox');
+            $btnSave.attr('data-widget', widget);
+            $modal.modal('show');
         }
 
-        $(document).ready(function () {
-            $('#btn-save').on('click', function () {
-                let widget = $('#btn-save').attr('data-widget');
-                let roles = $('#roles-listbox').val();
+        $btnSave.on('click', function () {
+            let widget = this.getAttribute('data-widget');
+            let roles = $rolesListBox.val();
+            let isTrackable = $modal.find('.track-widget-checkbox').prop('checked') == true
 
-                $.ajax({
-                    method: 'POST',
-                    url: '/sitetriks/widgetconfiguration/edit',
-                    data: { widget: widget, roles: roles },
-                    success: function (res) {
-                        if (res.success) {
-                            obj.update(true);
-                            $("#edit-widget-roles").modal("hide");
-                        }
+            $.ajax({
+                method: 'POST',
+                url: '/sitetriks/widgetconfiguration/edit',
+                data: { widget, roles, isTrackable },
+                success: function (res) {
+                    if (res.success) {
+                        widgetsGrid.load(true);
+                        $modal.modal('hide');
                     }
-                })
+                }
             })
         })
+
+        $('body').on('click', '.edit-widget-config', function (ev) {
+            editWidgetRoles(this.getAttribute('data-widget'), this.getAttribute('data-roles'), this.getAttribute('data-trackable'));
+        });
 
         var grid = Grid();
         var data = { link: "/sitetriks/widgetconfiguration/grid", serverSide: false }
@@ -79,33 +91,42 @@
                 name: "name",
                 title: "Name",
                 type: 'string',
-                filter: true,
-                sort: true,
-                size: 4,
+                size: 3,
                 headerTemplate: '<strong>#item#</strong>'
             },
             {
                 name: 'allowedRoles',
                 title: 'Allowed Roles',
                 type: 'list',
-                size: 4,
+                size: 5,
                 headerTemplate: '<b>#item#</b>'
             },
             {
-                name: 'allowedRoles',
+                name: 'type',
                 title: '',
-                type: 'list',
-                size: 2,
-                extraFields: ["name"],
+                type: 'string',
+                size: 3,
+                extraFields: ["isTrackable", 'allowedRoles'],
                 headerTemplate: '<b>#item#</b>',
-                contentTemplate: '<span class="btn btn-warning" data-widget="#item0#" onclick="editWidgetRoles(this, \'#item#\')">Edit</span>'
+                contentTemplate: '<span class="btn btn-warning edit-widget-config" data-widget="#item#" data-trackable="#item0#" data-roles="#item1#">Edit</span>'
+            },
+            {
+                name: 'isTrackable',
+                title: 'Is Tracked',
+                type: 'bool',
+                size: 1,
+                headerTemplate: '<b>#item#</b>',
+                trueTemplate: '<span data-widget="#item0#" ><img class="tick-success" src="../../images/static-homepage-pages/license-menu-page/tick green_header.svg" /> </span>'
             }
         ];
 
-        let buttons = [];
+        var widgetsGrid = new _Grid({
+            wrapperId: '.grid',
+            type: 'table',
+            fields: columns,
+            sourceConfig: { type: 'client', url: '/sitetriks/widgetconfiguration/grid' }
+        });
 
-        var config = grid.build(columns, buttons, grid.defaultPager, data);
-
-        let obj = grid.init('.grid', config);
+        widgetsGrid.load(true);
     </script>
 }

@@ -437,10 +437,10 @@ var mobileMenuFunctionality = (function () {
 
     var changeSlogan = function () {
         if (windowWidth < 768) {
-            $('.entreprice-description').text('(Free basic license available)');
+            $('.entreprice-description').text('(Basic license available)');
             $('#middle-box .arrows').css('display', 'inline-block');
         } else if (windowWidth >= 768) {
-            $('.entreprice-description').text('Available with SiteTriks\'s free basic license.');
+            $('.entreprice-description').text('Available with SiteTriks\'s basic license.');
             $('#middle-box .arrows').css('display', 'none');
         }
     };

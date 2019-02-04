@@ -7,15 +7,17 @@
 	@await Html.PartialAsync("SecondNavHeader")
 </div>
 <div class="backend-wrapper">
-	@using (Html.BeginForm("AddTrackable", "Trackable", FormMethod.Post, new { }))
-	{
-		<div>
-			@Html.DropDownList("name", Model, new { @class = "form-control inline-block" })
+    @using (Html.BeginForm("AddTrackable", "Trackable", FormMethod.Post, new { }))
+    {
+        <div>
+            @Html.DropDownList("name", Model, new { @class = "form-control inline-block" })
 
-			<input type="submit" id="submit" value="Add tracking" class="btn btn-success" style="margin-left: 20px;" />
-		</div>
-	}
-	<div class="trackables-grid"></div>
+            <input type="submit" id="submit" value="Add tracking" class="btn btn-success" style="margin-left: 20px;" />
+        </div>
+    }
+    <div class="trackables-grid"></div>
+
+    <div class=""><a href="/sitetriks/trackable/listView">Go to Trackable List</a></div>
 </div>
 
 @section Scripts{
@@ -30,8 +32,8 @@
 				type: 'string',
 				filter: true,
 				sort: true,
-				size: 5,
-				headerTemplate: '<strong>#item#</strong>'
+                size: 5,
+                headerTemplate: '<strong>#item#</strong>'
 			},
 			{
 				name: 'typeName',

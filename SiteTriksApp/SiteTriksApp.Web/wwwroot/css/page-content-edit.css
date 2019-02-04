@@ -3,6 +3,12 @@
     padding: 5px;
 }
 
+    .preview-placeholder img,
+    .preview-placeholder svg {
+        max-width: 50vw;
+        max-height: 50vh;
+    }
+
     .preview-placeholder > .preview-placeholder {
         border: 1px dotted #706b6b;
     }
@@ -15,10 +21,10 @@
     padding-top: 50px;
 }
 
-
 /* ----------------------------------------------------------------
 	BackEnd
 -----------------------------------------------------------------*/
+
 .btn-widget {
     width: 100%;
     border: 1px solid grey;
@@ -597,6 +603,11 @@ div.ui-dialog .ui-dialog-content {
 	General
 -----------------------------------------------------------------*/
 
+.widget-preview-holder {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 .display-image {
     /*border-radius: 5px;
     width: auto;
@@ -633,6 +644,8 @@ div.ui-dialog .ui-dialog-content {
 .drop-layout {
     min-height: 100px;
     overflow: hidden;
+    overflow-y: auto;
+    max-height: 300px;
 }
 
 .drag {

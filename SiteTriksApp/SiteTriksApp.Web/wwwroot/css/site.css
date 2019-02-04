@@ -1444,6 +1444,8 @@ ul.docs-menu {
 
     .preview-container .preview-item-container .blur-content #input-version {
         margin-bottom: 15px;
+        margin-right: 15px;
+        margin-top: 5px;
     }
 
     .preview-container .preview-item-container .blur-content .btn-success {

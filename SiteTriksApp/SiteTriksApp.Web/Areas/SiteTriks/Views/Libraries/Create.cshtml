@@ -20,48 +20,87 @@
         </div>
         @Html.AntiForgeryToken()
 
-        <div class="page-properties">
+        <div class="page-properties row">
             <hr />
-            <span>@ViewBag.Message</span>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group row">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-name" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
+            <div class="col col-lg-6 col-md-6 -col-xs-12">
+                <span>@ViewBag.Message</span>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="form-group row">
-                @Html.LabelFor(model => model.Prefix, "Url Prefix", htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-prefix" } })
-                @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
-            </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Prefix, "Url Prefix", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control inline-block", id = "input-prefix" } })
+                    @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="form-group row">
-                @Html.LabelFor(model => model.StorageProviderName, "Storage Provider Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.DropDownListFor(model => model.StorageProviderName, Model.StorageProviders.Select(sp => new SelectListItem() { Text = sp, Value = sp }), new { @class = "form-control inline-block" })
-                @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
-                <strong><span id="validation-prefix" class="text-danger"></span></strong>
-            </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.StorageProviderName, "Storage Provider Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.DropDownListFor(model => model.StorageProviderName, Model.StorageProviders.Select(sp => new SelectListItem() { Text = sp, Value = sp }), new { @class = "form-control inline-block" })
+                    @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                    <strong><span id="validation-prefix" class="text-danger"></span></strong>
+                </div>
 
-            <div class="form-group row">
-                @Html.LabelFor(model => model.AllowedTypes, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.DropDownListFor(model => model.AllowedTypes, Model.FileTypes, new { @class = "form-control inline-block", id = "library-type" })
-                @Html.ValidationMessageFor(model => model.AllowedTypes, "", new { @class = "text-danger" })
-                <span id="allowed-types"></span>
-            </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.AllowedTypes, "Allowed Types", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.DropDownListFor(model => model.AllowedTypes, Model.FileTypes, new { @class = "form-control inline-block", id = "library-type" })
+                    @Html.ValidationMessageFor(model => model.AllowedTypes, "", new { @class = "text-danger" })
+                    <span id="allowed-types"></span>
+                </div>
 
-            <div class="form-group row">
-                @Html.LabelFor(model => model.SelectedThumbailSizes, new { @class = "control-label col-xs-2" })
-                <div class="clearme"></div>
-                @Html.ListBoxFor(model => Model.SelectedThumbailSizes, Model.ThumbnailsSizes.Select((item) => new SelectListItem { Text = item.Name, Value = item.Id.ToString() }), new { @class = "form-control multiselect-thumbnails", id = "multiselect-roles" })
-                @Html.ValidationMessageFor(model => model.SelectedThumbailSizes, "", new { @class = "text-warning" })
-            </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => Model.Tags, htmlAttributes: new { @class = "control-label col-xs-2" })
+                    @Html.EditorFor(model => Model.Tags, new { htmlAttributes = new { @class = "form-control inline-block", id = "tags" } })
+                </div>
 
-            <div class="form-group row">
-                @Html.LabelFor(model => Model.Tags, htmlAttributes: new { @class = "control-label col-xs-2" })
-                @Html.EditorFor(model => Model.Tags, new { htmlAttributes = new { @class = "form-control inline-block", id = "tags" } })
+                <div class="form-group row" style="visibility:hidden;">
+                    <select class="col col-lg-10 thumbnail-sizes-multiselect glyphicon" id="multiselect-thumbnails" multiple="multiple" name="SelectedThumbailSizes">
+                        @{
+                            foreach (var element in Model.ThumbnailsSizes)
+                            {
+                                var elementId = element.Id.ToString();
+
+                                <option value=@elementId>@Html.DisplayFor(m => element.Name) </option>
+
+                            }
+                        }
+                    </select>
+
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-xs-2" for="SelectedThumbailSizes">Selected ThumbailSizes</label>
+                    <div class="controls span2 col col-lg-10 thumbnail-sizes-multiselect glyphicon" id="multiselect-sizes" multiple="multiple">
+                        @{
+                            foreach (var element in Model.ThumbnailsSizes)
+                            {
+                                var elementId = element.Id.ToString();
+                                <div class="thumbnails-label-container">
+                                    <label class="checkbox checkbox-container">                                   
+                                            <input type="checkbox" value=@elementId id=""> @Html.DisplayFor(m => element.Name)
+                                            <span class="checkmark"></span>                                       
+                                    </label><span class="glyphicon glyphicon-remove"></span><span class="glyphicon glyphicon-pencil"></span>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-lg-2"></div>
+                    <div class="col col-lg-10">
+                        <div class="display-add-form">Add Thumbnail size</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-lg-6 col-md-6 -col-xs-12">
+                @await Html.PartialAsync("CreateThumbnailSizePartial")
+
             </div>
         </div>
+
     }
 </div>
 
@@ -69,8 +108,11 @@
     <script src="~/js/tags.js"></script>
     <script src="~/js/multiselect-setup.js"></script>
     <script src="~/js/sitetriks/libraries.js"></script>
+    <script type="text/javascript" src="~/js/sitetriks/thumbnailSizes.js"></script>
     <script src="~/js/validator.js"></script>
     <script>
+       // let $thumbSizeId = $('#Id').val();
+        createEditThumbnailSize();
         (function () {
             WarningWindow.attach();
             Tags.init();
@@ -84,6 +126,7 @@
 
             let $libraryTypeSelect = $('#library-type');
 
+
             $libraryTypeSelect.on('change', function () {
 
                 let $target = $(this);
@@ -96,6 +139,7 @@
                 }
             })
         }
+
         );
 
     </script>

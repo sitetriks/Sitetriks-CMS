@@ -66,9 +66,9 @@ body {
     left: 50%;
 }
 
-.partner-logo img {
-    width: 100%;
-}
+    .partner-logo img {
+        width: 100%;
+    }
 
 /*Top hamburger menu*/
 
@@ -1133,6 +1133,7 @@ body {
             justify-content: center;
             background-color: #123e7a;
             /*padding: 10%;*/
+            cursor: pointer;
         }
 
         .features-section .row .icon-title {
@@ -2055,6 +2056,10 @@ body {
         transform: translate(-50%, -50%)*/
     }
 
+    .partner-logo {
+        display: none;
+    }
+
     img.logo-mobile {
         height: 100%;
         width: 180px;
@@ -2661,8 +2666,9 @@ body {
 }
 
 .thirtytwo-bits {
-    background-color: #123d7b;
-    margin-right: 36px;
+    /*background-color: #123d7b;*/
+    /*margin-right: 36px;*/
+    color: #123d7b
 }
 
     .thirtytwo-bits a {
@@ -2675,29 +2681,29 @@ body {
         text-align: center;
     }
 
-    .thirtytwo-bits:hover {
+/*.thirtytwo-bits:hover {
         border-color: #048cfe;
-    }
+    }*/
 
-        .thirtytwo-bits:hover a {
+/*.thirtytwo-bits:hover a {
             color: #ffffff;
-        }
+        }*/
 
 .sixtyfour-bits {
-    background-color: #048cfe;
+    color: #048cfe;
 }
 
-    .sixtyfour-bits:hover {
+    /*.sixtyfour-bits:hover {
         border-color: #123d7b;
-    }
+    }*/
 
-    .sixtyfour-bits:hover a {
-        color: #123d7b;
-    }
+    /*.sixtyfour-bits:hover a {
+            color: #123d7b;
+        }*/
 
     .sixtyfour-bits a {
         vertical-align: central;
-        color: #ffffff;
+        color: #123d7b;
         width: 58px;
         height: 39px;
         font-size: 25px;
@@ -2706,7 +2712,9 @@ body {
     }
 
 .supported-os {
-    margin-bottom: 2%;
+    margin-bottom: 1%;
+    margin-top: 5%;
+    font-size: 14px;
 }
 
 .link-button a {
@@ -2757,6 +2765,16 @@ body {
     font-weight: bold;
 }
 
+.close-downloads {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    color: #000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
     .close:hover,
     .close:focus,
     .close-downloads:hover,
@@ -2767,24 +2785,149 @@ body {
     }
 
 /*Downloads modal*/
+#downloadsForm {
+    font-size: 12px;
+    line-height: 24px;
+}
+
+
+#downloadsDetails {
+    cursor: pointer;
+    padding: 10px 25px 8px 25px;
+    background: #123d7b;
+    border-radius: 5px;
+}
+
+    #downloadsDetails:hover {
+        background: white;
+    }
+
+    #downloadsDetails a {
+        text-decoration: none;
+        color: white;
+        font-size: 22px;
+    }
+
+    #downloadsDetails:hover a {
+        color: #123d7b;
+    }
+
 
 .downloads-modal-content {
+    position: relative;
     width: 50%;
     margin: auto;
     margin-top: 5%;
     padding: 25px;
-    background-color: #a0d4fe;
+    background-color: white;
     border-radius: 15px;
     text-align: center;
+    border: 2px solid #264a80;
+    padding-top: 40px;
 }
 
-    .downloads-modal-content input {
+    .downloads-modal-content .subscription-materials,
+    .downloads-modal-content .subscription-news {
+        position: relative;
+        font-size: 13px;
+        font-weight: bold;
+        color: #6f6f6f;
+    }
+
+        .downloads-modal-content .subscription-materials .validation-output,
+        .downloads-modal-content .subscription-news .validation-output {
+            color: red;
+            position: absolute;
+            top: 50px;
+            font-weight: normal;
+        }
+
+
+    .downloads-modal-content input[type=text] {
         width: 50%;
         display: block;
         margin: auto;
-        margin-bottom: 35px;
+        margin-top: auto;
+        margin-top: 25px;
         border-radius: 5px;
+        font-size: 16px;
+        box-shadow: none;
+        border: 2px solid #979797;
+        color: #b4b4b4;
+        height: 40px;
+        padding-left: 20px;
     }
+
+    .downloads-modal-content ::-moz-placeholder {
+        text-align: left;
+    }
+
+    .downloads-modal-content ::-webkit-input-placeholder {
+        text-align: left;
+    }
+
+    .downloads-modal-content :-ms-input-placeholder {
+        text-align: left;
+    }
+
+    .downloads-modal-content #downloads-submit {
+        width: 23%;
+        margin-bottom: 15px;
+        margin-top: 20px;
+        font-weight: bold;
+        background-color: #559336;
+        color: white;
+    }
+
+        .downloads-modal-content #downloads-submit.isDisabled {
+            opacity: 0.5;
+        }
+
+    /*.downloads-modal-content #downloads-submit:hover {
+            color: white;
+            background-color: #048cfe;
+        }*/
+
+    .downloads-modal-content .validation-output {
+        color: red;
+    }
+
+    .downloads-modal-content .subscription-news {
+        margin-top: 40px;
+        margin-bottom: 12px;
+    }
+
+    .downloads-modal-content #promotional-materials-group, #features-releases-group {
+        margin-bottom: 0;
+    }
+
+    .downloads-modal-content .subscription-radio-group {
+        line-height: 22px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .downloads-modal-content .radio-inline input[type="radio"] {
+        position: absolute;
+        margin-left: -20px;
+        top: 2px;
+    }
+
+    .downloads-modal-content .radio-inline span {
+    }
+
+
+    .downloads-modal-content .downloads-button.isDisabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+        .downloads-modal-content .downloads-button.isDisabled > a {
+            display: inline-block; /* For IE11/ MS Edge bug */
+            pointer-events: none;
+            text-decoration: none;
+            opacity: 0.5;
+        }
 
 /*Bottom menu*/
 
@@ -2913,6 +3056,7 @@ body {
         .net-core-wrapper .st-component.net-core-second-row {
             top: 56%;
         }
+
 /*Hexagon*/
 
 .st-component.net-core-second-row .hexagon.outer {
