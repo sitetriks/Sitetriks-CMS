@@ -259,7 +259,7 @@ tbody {
     font-size: 8px;
     display: inline-block;
     margin-right: -20px;
-    margin-top: 2px;
+    margin-top: 9px;
     position: absolute;
     /*margin-top: -30px;*/
 }
@@ -267,6 +267,35 @@ tbody {
 .tableBody .bodyRow.child .btn-xs.child-expand {
     display: inline-block;
     /*margin-left: 15px;*/
+}
+
+.grid-item .btn-xs.child-expand {
+    border: none;
+    border: 2px solid #6a6a6a;
+    background-color: #529ce4;
+    color: #ffffff;
+    border-color: #6a6a6a;
+    border-radius: 5px;
+    height: 18px;
+    width: 18px;
+    text-align: center;
+    padding-left: 3px;
+    padding-top: 0;
+    box-shadow: unset !important;
+    font-size: 8px;
+    display: inline-block;
+    margin-right: -20px;
+    margin-top: 2px;
+    position: absolute;
+}
+
+.nested-grid-items .grid-item .btn-xs.child-expand {
+    display: inline-block;
+}
+
+.nested-grid-items {
+    padding-left: 30px;
+    padding-right: 15px;
 }
 
 
@@ -420,7 +449,7 @@ tbody {
     }
 
     .sitetriks-grid .grid-body .grid-item {
-        line-height: normal;
+        line-height: 36px;
         padding-top: 3px;
         padding-bottom: 3px;
         min-height: 30px;
@@ -444,7 +473,7 @@ tbody {
 
 
     .sitetriks-grid .grid-body .grid-item span {
-        margin-left: 10px;
+        /*margin-left: 10px;*/
     }
 
     .sitetriks-grid.grid-view .grid-body .grid-item {

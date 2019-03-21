@@ -47,15 +47,20 @@ div.ui-widget-content a.btn-backend {
         color: white;
     }
 
-    .sitetriks-wrapper .nav .dropdown-menu li a {
-        color: #3e61c9;
-        font-size: 12px;
-    }
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
 
-    .sitetriks-wrapper .row {
-        margin-left: 0;
-        margin-right: 0;
-    }
+.sitetriks-wrapper .nav .dropdown-menu li a {
+    color: #3e61c9;
+    font-size: 12px;
+}
+
+.sitetriks-wrapper .row {
+    margin-left: 0;
+    margin-right: 0;
+}
 
 .hidden-nested-divs {
     background-color: inherit;
@@ -235,7 +240,7 @@ div.ui-widget-content a.btn-backend {
     font-size: 16px;
 }
 
-.body-content {
+.st-body-content {
     margin: 0;
     padding: 0;
 }
@@ -380,6 +385,7 @@ a.profile-link {
 
     .delete-popup-wrapper #delete-library {
         margin-top: 25px;
+        margin-right: 30px;
     }
 
     .delete-popup-wrapper .glyphicon-remove {
@@ -389,6 +395,28 @@ a.profile-link {
     .delete-popup-wrapper .library-name {
         font-weight: bold;
     }
+
+    /*********************************************************************
+    Delete thumbnail sizes popup
+**********************************************************************/
+    .delete-popup-wrapper.delete-thumbnail-size {
+        padding: 20px;
+        position: absolute;
+        top: 150px;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .delete-popup-wrapper #delete-thumbnail-size {
+        margin-top: 25px;
+        margin-right: 30px;
+    }
+
+    .delete-popup-wrapper #cancel-delete {
+        margin-top: 25px;
+    }
+
 /*--------------------------------------------------------------------
  Backend buttons navbar2
 --------------------------------------------------------------------*/
@@ -1442,9 +1470,9 @@ a.profile-link {
     background-color: #ffd9a1;
 }
 
-.alert-danger {
+/*.alert-danger {
     border: 1px solid;
-}
+}*/
 
 /*Widget config styles*/
 

@@ -1,0 +1,36 @@
+﻿/* Notifier */
+
+#alerts {
+    position: fixed;
+    bottom: 35px;
+    /* padding-bottom should be same as fixed footer */
+    width: 100%;
+    z-index: 10;
+}
+
+.alert {
+    padding: 10px;
+    text-align: center;
+    border-radius: 0;
+    font-weight: bolder;
+    font-size: 16px;
+    margin-bottom: 0px;
+
+    .close {
+        color: #fff;
+        opacity: 1;
+        font-size: 30px;
+        margin-top: -3px;
+        margin-right: 20px;
+    }
+}
+
+.alert-info {
+    border-color: #979797;
+    background-color: #87AC83;
+    color: #eee;
+}
+
+.alert-warning {
+    background-color: #ffd9a1;
+}

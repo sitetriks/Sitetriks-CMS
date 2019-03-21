@@ -1,0 +1,118 @@
+﻿
+/*Video Widget Styles*/
+#customVideoInstructions {
+    display: block;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+
+/* Gallery Widget preview Mode styles*/
+
+.gallery-main-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    #css-class {
+        margin-bottom: 30px;
+    }
+}
+
+.type-of-gallery {
+    padding: 0;
+}
+
+.gallery-image-container {
+    margin: 10px;
+}
+
+.widget-form {
+    margin-top: 30px;
+}
+
+/*Dashboard widget configuration*/
+
+.dashboard-config-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.checkboxes {
+    .category-title {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        width: 200px;
+        height: 70px;
+        text-align: center;
+        color: #242424;
+        font-size: 14px;
+        background: linear-gradient(#eeeeee, #d8d8d8);
+        border-bottom: 2px solid #a4a4a4;
+        margin-bottom: 20px;
+        padding-bottom: 0;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+    ul {
+        padding-left: 5px;
+        line-height: 36px;
+    }
+
+    li {
+        input {
+            margin-right: 10px;
+        }
+    }
+}
+
+#editor {
+    min-width: 500px;
+    max-width: 1000px;
+    min-height: 300px;
+}
+
+/* Track widget*/
+
+.track-widget-wrapper {
+    padding: 15px;
+}
+
+/*Toggle-menu specific styles*/
+div.toggle-blur-content {
+    z-index: 1053;
+    /*margin: auto;*/
+    position: fixed;
+    margin-left: 10%;
+    margin-top: 10%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/*styles for error messages*/
+.input-error {
+    border: 1px solid red;
+}
+
+/*Forum edit post styles*/
+
+.edit-post-container {
+    padding: 20px;
+
+    > div {
+        width: 40% !important;
+        margin-bottom: 20px;
+    }
+}

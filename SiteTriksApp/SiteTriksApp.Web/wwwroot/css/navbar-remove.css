@@ -1,4 +1,4 @@
-﻿.body-content .fixed-top-2 {
+﻿.st-body-content .fixed-top-2 {
     top: 0;
 }
 
@@ -6,7 +6,7 @@
     display: none;
 }
 
-.body-content .backend-wrapper {
+.st-body-content .backend-wrapper {
     margin: 150px 50px 50px 50px;
     padding-top: 10px;
 }

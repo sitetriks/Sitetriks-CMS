@@ -1,278 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>aspnet-SiteTriksApp.Web-F71A9A06-9896-4C70-BC66-76DAE646A823</UserSecretsId>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Extensions\WidgetModels\**" />
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="Extensions\**" />
     <Compile Remove="logs\**" />
-    <Compile Remove="wwwroot\csmUploads\**" />
-    <Content Remove="Extensions\WidgetModels\**" />
+    <Content Remove="Controllers\**" />
+    <Content Remove="Extensions\**" />
     <Content Remove="logs\**" />
-    <Content Remove="wwwroot\csmUploads\**" />
-    <EmbeddedResource Remove="Extensions\WidgetModels\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="logs\**" />
-    <EmbeddedResource Remove="wwwroot\csmUploads\**" />
-    <None Remove="Extensions\WidgetModels\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="Extensions\**" />
     <None Remove="logs\**" />
-    <None Remove="wwwroot\csmUploads\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20181112114222_ForumUpdate.cs" />
-    <Compile Remove="Migrations\20181112114222_ForumUpdate.Designer.cs" />
-    <Compile Remove="Migrations\20181206144425_ECommerseCart.cs" />
-    <Compile Remove="Migrations\20181206144425_ECommerseCart.Designer.cs" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="SiteTriks" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
-    <PackageReference Include="MailKit" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
-    <PackageReference Include="SiteTriks" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.BlogModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.DocumentationModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.ECommerseModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.ForumModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.RssFeedModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.SiteMapModule" Version="2.0.4" />
-    <PackageReference Include="SiteTriks.SiteSync" Version="2.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.1" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\ECommerse\Controllers\" />
-    <Folder Include="Areas\ECommerse\Data\" />
-    <Folder Include="Areas\ECommerse\Extentions\" />
-    <Folder Include="Areas\ECommerse\Models\" />
-    <Folder Include="Areas\Forum\Controllers\" />
-    <Folder Include="Areas\Forum\Data\" />
-    <Folder Include="Areas\Forum\Models\" />
-    <Folder Include="Areas\Setup\Controllers\" />
-    <Folder Include="Areas\Setup\Data\" />
-    <Folder Include="Areas\Setup\Models\" />
-    <Folder Include="Areas\SiteTriks\Controllers\DashboardWidgets\ViewComponents\" />
-    <Folder Include="Areas\SiteTriks\Controllers\ViewComponents\" />
-    <Folder Include="Areas\SiteTriks\Data\" />
-    <Folder Include="Areas\SiteTriks\Helpers\" />
-    <Folder Include="Views\Shared\Components\DocumentationWidget\" />
-    <Folder Include="Views\Shared\EditorTemplates\" />
-    <Folder Include="wwwroot\cmsUploads\" />
-    <Folder Include="wwwroot\fonts\" />
-    <Folder Include="wwwroot\images\contact-us\" />
-    <Folder Include="wwwroot\images\licenses-action-buttons\" />
-    <Folder Include="wwwroot\images\sprites\" />
-    <Folder Include="wwwroot\lib\custom\slider-master\" />
-    <Folder Include="wwwroot\lib\custom\slick\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\js\modules\module-builder.js" />
-    <None Include="wwwroot\js\modules\scroll-control.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\COPYING" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-aea.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-agc.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-apollo.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-basic.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-cbm.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-cl.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-clj.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-css.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-dart.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-el.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-erl.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-erlang.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-fs.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-go.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-hs.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lasso.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lassoscript.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-latex.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lgt.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lisp.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ll.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-llvm.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-logtalk.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ls.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lsp.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-lua.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-matlab.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ml.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-mumps.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-n.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-nemerle.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-pascal.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-proto.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-r.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-rd.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-rkt.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-rust.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-s.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-scala.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-scm.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-Splus.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-sql.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-ss.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-swift.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-tcl.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-tex.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vb.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vbs.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vhd.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-vhdl.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-wiki.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-xq.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-xquery.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-yaml.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\lang-yml.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\prettify.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\loader\run_prettify.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-apollo.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-basic.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-clj.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-css.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-dart.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-erlang.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-go.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-hs.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-lasso.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-lisp.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-llvm.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-logtalk.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-lua.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-matlab.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-ml.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-mumps.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-n.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-pascal.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-proto.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-r.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-rd.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-rust.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-scala.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-sql.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-swift.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-tcl.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-tex.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-vb.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-vhdl.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-wiki.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-xq.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\lang-yaml.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\prettify.js" />
-    <None Include="wwwroot\lib\custom\code-prettify\src\run_prettify.js" />
-    <None Include="wwwroot\lib\custom\codemirror\mode\css.js" />
-    <None Include="wwwroot\lib\custom\codemirror\mode\javascript.js" />
-    <None Include="wwwroot\lib\signalr\dist\browser\signalr.js" />
-    <None Include="wwwroot\lib\signalr\dist\browser\signalr.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\browser\signalr.min.js" />
-    <None Include="wwwroot\lib\signalr\dist\browser\signalr.min.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\AbortController.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\AbortController.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\browser-index.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\browser-index.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Errors.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Errors.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HandshakeProtocol.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HandshakeProtocol.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HttpClient.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HttpClient.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HttpConnection.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HttpConnection.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnection.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnection.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnectionBuilder.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\HubConnectionBuilder.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\IConnection.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\IConnection.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\IHttpConnectionOptions.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\IHttpConnectionOptions.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\IHubProtocol.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\IHubProtocol.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\ILogger.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\ILogger.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\index.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\index.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\ITransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\ITransport.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\JsonHubProtocol.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\JsonHubProtocol.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Loggers.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Loggers.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\LongPollingTransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\LongPollingTransport.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\ServerSentEventsTransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\ServerSentEventsTransport.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Stream.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Stream.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\TextMessageFormat.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\TextMessageFormat.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Utils.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\Utils.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\WebSocketTransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\cjs\WebSocketTransport.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\AbortController.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\AbortController.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\browser-index.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\browser-index.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Errors.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Errors.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HandshakeProtocol.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HandshakeProtocol.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HttpClient.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HttpClient.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HttpConnection.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HttpConnection.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HubConnection.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HubConnection.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HubConnectionBuilder.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\HubConnectionBuilder.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\IConnection.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\IConnection.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\IHttpConnectionOptions.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\IHttpConnectionOptions.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\IHubProtocol.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\IHubProtocol.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\ILogger.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\ILogger.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\index.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\index.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\ITransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\ITransport.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\JsonHubProtocol.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\JsonHubProtocol.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Loggers.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Loggers.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\LongPollingTransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\LongPollingTransport.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\ServerSentEventsTransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\ServerSentEventsTransport.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Stream.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Stream.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\TextMessageFormat.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\TextMessageFormat.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Utils.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\Utils.js.map" />
-    <None Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.js" />
-    <None Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.js.map" />
-    <None Include="wwwroot\lib\signalr\README.md" />
-    <None Include="wwwroot\robots.txt" />
-  </ItemGroup>
+  </ItemGroup>  
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\AbortController.d.ts" />
@@ -299,45 +73,11 @@
     <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.d.ts" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Areas\ECommerse\Views\CategoryManager\Edit.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\ECommerse\Views\Shared\Components\SelectedMultisite\Default.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\ECommerse\Views\Shared\Components\ShowMultisiteInfoWidget\Default.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Forum\Views\Posts\Edit.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Forum\Views\Shared\ProfileLinkPartial.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Forum\Views\Shared\_ForumLayout2.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\SiteTriks\Views\Widgets\StoreItem.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\BaseWidget\StoreItem\Display.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Shared\Components\StoreGridWidget\Default.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="echo &quot;App Offline&quot; /a &gt; $(ProjectDir)app_offline.htm" />
+  </Target>
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.7" />
-  </ItemGroup>
-
- <!-- <Target Name="IncludePrecompiledViewsInPublishOutput" DependsOnTargets="_MvcRazorPrecompileOnBuild" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
-    <ItemGroup>
-      <_PrecompiledViewsOutput Include="$(MvcRazorOutputPath)$(MSBuildProjectName).PrecompiledViews.DLL" />
-      <_PrecompiledViewsOutput Include="$(MvcRazorOutputPath)$(MSBuildProjectName).PrecompiledViews.pdb" />
-      <ContentWithTargetPath Include="@(_PrecompiledViewsOutput->'%(FullPath)')" RelativePath="%(_PrecompiledViewsOutput.Identity)" TargetPath="%(_PrecompiledViewsOutput.Filename)%(_PrecompiledViewsOutput.Extension)" CopyToPublishDirectory="PreserveNewest" />
-    </ItemGroup>
-  </Target>  -->
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="del $(ProjectDir)app_offline.htm" />
+  </Target>
 </Project>

@@ -1,0 +1,80 @@
+﻿/*Backend footer*/
+
+.backend-footer {
+    padding-top: 5px;
+    position: fixed;
+    z-index: 90;
+    bottom: 0;
+    width: 100%;
+    background-color: #313131;
+    color: #eee;
+    border-top: 1px solid #008CFF;
+    font-family: OpenSans, Helvetica, Arial, sans-serif;
+    line-height: 24px;
+
+    > p {
+        margin-bottom: 5px;
+    }
+
+    .footer-profile {
+        position: absolute;
+        right: 40px;
+        top: 4px;
+
+        > span {
+            color: #b8b8b8;
+            margin-right: 10px;
+        }
+
+        > a {
+            color: #fff;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    /*Footer*/
+
+    .backend-footer {
+        background-color: #123e7a;
+        border-top: none;
+        height: 35px;
+
+        span, p {
+            display: none;
+        }
+
+        .footer-profile {
+            opacity: 1 !important;
+            position: initial;
+            text-align: center;
+
+            a {
+                color: #5fb6fd;
+            }
+        }
+    }
+}
+
+/*--------------------------------------------------------------------
+  Profile link partial
+--------------------------------------------------------------------*/
+.profile-shortcut {
+    text-align: center;
+    margin-bottom: -10px;
+
+    a {
+        color: #0089fa;
+        text-decoration: none;
+    }
+}
+
+a.profile-link {
+    color: #2c84fa;
+    text-decoration: none;
+    text-transform: none;
+}
+
+.profile-link:hover {
+    color: #4bacfc;
+}

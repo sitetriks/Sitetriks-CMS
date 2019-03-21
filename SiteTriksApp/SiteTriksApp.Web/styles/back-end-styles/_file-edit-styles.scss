@@ -1,0 +1,25 @@
+﻿/*--------------------------------------------------------------------*/
+/*File use track*/
+
+.used-in-files {
+    p {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 20px;
+        height: 200px;
+        border: solid 2px #4a90e2;
+        padding: 10px;
+        overflow-y: auto;
+
+        li {
+            font-size: 16px;
+            font-weight: normal;
+            color: #4a4a4a;
+        }
+    }
+}

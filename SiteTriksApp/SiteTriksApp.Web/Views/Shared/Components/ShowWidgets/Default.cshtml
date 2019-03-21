@@ -1,8 +1,0 @@
-﻿@model IDictionary<string, string>
-
-<div id="widgets-holder" class="clearfix">
-    @foreach (var item in Model.Keys.OrderBy(w => w))
-    {
-        <div data-type="@item" class="drag">@Model[item]</div>
-    }
-</div>

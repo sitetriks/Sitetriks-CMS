@@ -1,0 +1,14 @@
+/node_modules
+/wwwroot/*
+/Views
+/SiteTriks
+/scripts_babel
+/Properties
+/obj
+/Models
+/Migrations
+/logs
+/Extensions
+/Data
+/Controllers
+/bin

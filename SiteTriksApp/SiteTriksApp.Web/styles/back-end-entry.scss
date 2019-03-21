@@ -1,0 +1,103 @@
+﻿@import 'helpers/fonts-backend';
+
+/****************************Original for edit*/
+
+body, html {
+    background-color: white;
+}
+
+.sitetriks-body {
+    padding-top: 0;
+    min-width: 768px;
+}
+
+.sitetriks-wrapper {
+    border-bottom: 2px solid #0089fa;
+    padding-left: 2.5%;
+}
+/**********************From Site.css***********************/
+/**********************************************************/
+
+.backend-wrapper {
+    margin: 200px 50px 50px 50px;
+    padding-top: 10px;
+    /*Cleanfix for UI button*/
+    a.btn-backend {
+        color: white;
+    }
+    /*Private case*/
+    .library-grid {
+        margin-top: 20px;
+    }
+}
+
+@import 'back-end-styles/dynamics-styles';
+
+@import 'back-end-styles/sitemap-styles';
+
+@import 'back-end-styles/navigation-backend';
+
+@import 'back-end-styles//multisite-select';
+
+@import 'back-end-styles/delete-popup';
+
+@import 'back-end-styles/second-navigation';
+
+@import 'back-end-styles/pages';
+
+@import 'back-end-styles/file-edit-styles';
+
+/***/
+@import 'commоn/widget-styles';
+
+@import 'commоn/notifier';
+/***/
+
+@import 'back-end-styles/news';
+
+@import 'back-end-styles/thumbnails';
+
+@import 'back-end-styles/custom-checkbox';
+
+@import 'back-end-styles/dashboard';
+
+@import 'back-end-styles/footer';
+
+
+@import 'back-end-styles/file-upload-modal';
+
+/*--------------------------------------------------------------------*/
+
+/* Responsive styles */
+
+@media (max-width: 1400px) {
+
+    .backend-wrapper {
+        .form-horizontal {
+            padding-top: 10px;
+        }
+    }
+}
+
+@media (max-width: 1110px) {
+
+    .backend-wrapper {
+        margin: 250px 50px 50px 50px;
+    }
+
+    .form {
+        font-size: 9px;
+    }
+
+    a.live-site {
+        font-size: 12px;
+        margin-left: 5px;
+        width: 45px;
+    }
+}
+
+@media (max-width: 1091px) {
+    .form {
+        font-size: 12px;
+    }
+}
