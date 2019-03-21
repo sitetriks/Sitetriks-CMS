@@ -35,10 +35,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && npm run build:prod",
-    "build:dev": "npm rebuild node-sass && webpack --display-error-details --mode=\"development\"",
+    "build": "npm install && npm rebuild node-sass && npm run build:prod",
+    "build:dev": "webpack --display-error-details --mode=\"development\"",
     "watch:dev": "webpack --display-error-details --mode=\"development\" --watch",
-    "build:prod": "npm rebuild node-sass && webpack --display-error-details --mode=\"production\" --config webpack.config.Production.js",
+    "build:prod": "webpack --display-error-details --mode=\"production\" --config webpack.config.Production.js",
     "watch:prod": "webpack --display-error-details --mode=\"production\" --config webpack.config.Production.js --watch",
     "eslint": ".\\node_modules\\.bin\\eslint ."
   },

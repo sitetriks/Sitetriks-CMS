@@ -4,5 +4,5 @@
   "Username": "root",
   "Password": "123456",
   "EnableSsl": false,
-  "DefaultSender": "support@sitetriks.com"
+  "DefaultSender": "test@test.com"
 }
