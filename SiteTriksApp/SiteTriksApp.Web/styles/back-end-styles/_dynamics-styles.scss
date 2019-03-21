@@ -1,0 +1,37 @@
+﻿/*Dynamic assemblies styles*/
+
+.dynamic-table {
+    padding: 10px;
+
+    > .row {
+        border-bottom: 1px solid black;
+        padding: 10px;
+    }
+
+    .col-xs-6:nth-child(2) .btn {
+        float: right;
+        margin-right: 10px;
+    }
+}
+
+
+#WidgetName {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: 200;
+}
+
+#location {
+    width: 700px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: 200;
+}
+
+#custom-location-info {
+    color: deepskyblue;
+}

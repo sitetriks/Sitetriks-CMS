@@ -1,6 +1,0 @@
-﻿@model IDictionary<string, string>
-
-@foreach (var item in Model.Keys.OrderByDescending(k=>k))
-{
-    <li><a href="@Model[item]">@item</a></li>
-}

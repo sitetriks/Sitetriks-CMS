@@ -1,0 +1,31 @@
+﻿/*********************************************************************
+    Delete library popup
+**********************************************************************/
+
+.delete-popup-wrapper {
+    margin-top: 20px;
+    padding: 20px;
+    position: absolute;
+    top: 70px;
+    z-index: 95;
+    left: 140px;
+    width: 450px;
+    height: 150px;
+    background: white;
+    border-radius: 15px;
+    border: 1px solid gray;
+    text-align: center;
+
+    #delete-library {
+        margin-top: 25px;
+        margin-right: 30px;
+    }
+
+    .glyphicon-remove {
+        float: right;
+    }
+
+    .library-name {
+        font-weight: bold;
+    }
+}

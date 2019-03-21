@@ -1,0 +1,67 @@
+﻿
+/*Page edit checkbox line-height fix*/
+
+/* create edit page */
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.page-properties {
+
+    .form-group {
+        line-height: 34px;
+    }
+
+    div[class*='col-'] {
+        padding: 0;
+    }
+
+    .form-control, .multiselect {
+        width: 500px;
+        max-width: inherit;
+        z-index: 1;
+    }
+
+    .description-row > div[class*='col-'] {
+        padding: 0;
+    }
+
+    .content-field {
+        height: 350px;
+    }
+
+    .date-picker-group {
+        width: 500px;
+
+        > input {
+            width: 450px;
+        }
+
+        > span {
+            width: 50px;
+
+            :hover {
+                border-color: #66afe9;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+                -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+                cursor: pointer;
+            }
+        }
+    }
+    /*Hints special styles*/
+    .st-hint:after {
+        font-size: 12px;
+        background-color: #96BAC8;
+    }
+}
+
+#mlf-info .form-control {
+    width: 500px;
+    max-width: unset;
+}
+
+#seo-words {
+    margin-right: 10px;
+}

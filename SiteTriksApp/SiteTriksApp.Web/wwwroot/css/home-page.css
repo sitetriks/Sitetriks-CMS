@@ -147,6 +147,7 @@ body {
         font-size: 45px;
         line-height: 3px;
         color: #0892ff;
+        cursor: pointer;
     }
 
 .homepage-login {
@@ -1354,6 +1355,10 @@ body {
     background-color: #3876cf;
 }
 
+    .toggle-bottom-menu.container .st-documentation-wrapper .col-md-9 {
+        height: auto;
+    }
+
 /*Toggle menu*/
 /*NB - Removing the scroll functionality of the top menu*/
 /*#floating-section {
@@ -2239,8 +2244,8 @@ body {
     }
 
     .main-description-mobile-wrapper {
-        margin-left: -25px;
-        margin-right: -25px;
+        margin-left: -10px;
+        margin-right: -10px;
         padding-right: 20px;
         padding-left: 20px;
         padding-bottom: 10px;

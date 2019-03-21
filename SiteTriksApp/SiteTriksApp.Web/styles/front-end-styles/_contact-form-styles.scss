@@ -1,0 +1,41 @@
+﻿.contact-form-wrapper {
+    position: relative;
+
+    .contact-form {
+        width: 50%;
+        margin: auto;
+        margin-top: 100px;
+        line-height: 24px;
+        font-size: 15px;
+
+        input, textarea {
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            height: 200px;
+        }
+    }
+
+    .popup-redirect {
+        position: absolute;
+        width: 400px;
+        height: 150px;
+        background-color: white;
+        z-index: 1;
+        text-align: center;
+        border: 2px solid gray;
+        border-radius: 10px;
+        font-size: 16px;
+        line-height: 28px;
+        color: #114382;
+        padding-top: 30px;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        #homepageRedirect {
+            margin-right: 20px;
+        }
+    }
+}

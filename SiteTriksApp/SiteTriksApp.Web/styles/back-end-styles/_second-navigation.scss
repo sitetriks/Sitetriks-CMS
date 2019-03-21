@@ -1,0 +1,226 @@
+﻿/*--------------------------------------------------------------------
+ Backend buttons navbar2
+--------------------------------------------------------------------*/
+.fixed-top-2 {
+    min-width: 768px;
+    padding: 25px 25px 23px 25px;
+    background-color: #383838;
+    z-index: 90;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 84px;
+    border-bottom: 2px solid #828282;
+    transition: padding 0.3s linear;
+
+    > p {
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        font-family: OpenSans;
+        text-transform: uppercase;
+        color: #EAEAEA;
+        font-size: 16px;
+        text-align: center;
+        line-height: 24px;
+        transition: line-height 0.3s, font-size 0.3s linear;
+
+        :first-child:nth-last-child(1) {
+            position: relative;
+            text-align: center;
+            transform: translate(0%, 0%);
+            margin-right: 0;
+            left: 0;
+            /*margin: -8px;*/
+        }
+    }
+}
+
+
+/* hardcoded as hell */
+
+.fixed-top-2 {
+    > p:first-child:nth-last-child(1) {
+        > span:only-child {
+            height: 48px;
+            display: inline-block;
+            padding: 12px;
+        }
+    }
+
+    > .nav-2-right {
+        float: right;
+    }
+
+    .btn-nav-2 {
+        font-weight: 700;
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-size: 15px;
+        cursor: pointer;
+        text-align: center;
+        margin: 0 3px;
+        line-height: 20px;
+        height: 32px;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    #btn-preview-page {
+        margin-left: 20px;
+    }
+
+    button,
+    input {
+        border: none;
+        background: transparent;
+        font-size: 16px;
+    }
+
+    button.btn-nav-2 {
+        vertical-align: bottom;
+        line-height: 18px;
+    }
+
+    button:hover,
+    input:hover {
+        border: none;
+        background: transparent;
+    }
+
+    .btn-nav-2 {
+        > span {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        > span.single {
+            font-size: 30px;
+            transition: font-size 0.3s, margin 0.3s, top 0.3s ease;
+            margin: -10px 0;
+            display: block;
+            top: 7px;
+        }
+
+        > span.single.st-icon-preview {
+            font-size: 40px;
+            margin: -20px 0;
+            top: 11px;
+        }
+    }
+
+    input.btn-nav-2 {
+        background-color: transparent;
+        border: none;
+        height: 30px;
+    }
+
+    button.btn-nav-2 {
+        background-color: transparent;
+        border: none;
+    }
+
+    > select.form-control {
+        height: 30px;
+        width: 200px;
+        padding-top: 3px;
+    }
+
+    .page-title {
+        position: absolute;
+        bottom: -32px;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, 0);
+
+        > span {
+            font-weight: bolder;
+            background-color: #96BAC8;
+            padding: 11px 80px 10px;
+            border: 1px solid #979797;
+            color: #fff;
+            transition: unset;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            font-size: 14px;
+        }
+    }
+}
+
+.fixed-top-2.small {
+    padding-bottom: 8px;
+    padding-top: 8px;
+    transition: padding 0.3s linear;
+
+    > p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .btn-nav-2 {
+        > span.single {
+            font-size: 18px;
+            margin: 0;
+            top: 2px;
+        }
+
+        > span.single.st-icon-preview {
+            font-size: 24px;
+            margin: -6px 0;
+            top: 5px;
+        }
+    }
+
+   > p:first-child:nth-last-child(1) {
+        position: relative;
+        text-align: center;
+        transform: translate(0%, 0%);
+        margin-right: 0;
+        left: 0;
+        margin: -8px;
+    }
+}
+
+.st-uppercase {
+    text-transform: uppercase;
+}
+
+.uppercase {
+    @extend .st-uppercase;
+}
+
+@media(max-width: 991px) {
+    .fixed-top-2 {
+        .btn-nav-2 {
+            padding: 10px 0px;
+
+            > span.single {
+                font-size: 24px;
+                top: 0;
+            }
+
+            > span.single.st-icon-preview {
+                font-size: 34px;
+                margin: -20px 0;
+                top: 6px;
+            }
+        }
+
+        #btn-preview-page {
+            margin-left: 10px;
+        }
+    }
+
+    .select-page-language {
+        padding-left: 4px;
+    }
+}

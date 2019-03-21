@@ -1,0 +1,83 @@
+﻿/*Upload files modal styles*/
+
+.modal-dialog .modal-content {
+    /*padding: 5px;*/
+}
+
+#input-files {
+    line-height: normal;
+    font-size: unset;
+}
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    background: #D8D8D8;
+    border-radius: 5px;
+
+    h4 {
+        text-align: center;
+    }
+}
+
+#file-upload-modal {
+
+    .file-handler-wrapper {
+        padding: 10% 3%;
+        position: relative;
+
+        .library-select {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #D8D8D8;
+            border-radius: 5px;
+
+            h4 {
+                text-align: center;
+            }
+        }
+
+        .file-handler-container {
+
+            .library-select select {
+                background-color: #535353;
+                color: #ffffff;
+                display: block;
+                margin: 0 auto;
+                width: 30%;
+                font-weight: bold;
+                text-align: center;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+            }
+
+            .library-arrow-down {
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 9px solid #ffffff;
+                position: absolute;
+                top: 14px;
+                left: 60%;
+            }
+
+            span.accepted-formats {
+                padding-left: 3%;
+            }
+        }
+
+        input {
+            max-width: 250px;
+        }
+    }
+}

@@ -3,6 +3,14 @@
     padding: 5px;
 }
 
+    .preview-placeholder > div:nth-of-type(2) {
+        min-height: 100px;
+        overflow: hidden;
+        overflow-y: hidden;
+        overflow-y: auto;
+        max-height: 500px;
+    }
+
     .preview-placeholder img,
     .preview-placeholder svg {
         max-width: 50vw;
@@ -541,8 +549,8 @@ div.ui-dialog .ui-dialog-content {
 
 
 /* Way too hardcoded... */
-#btn-save-widget,
-#btn-edit-widget {
+.btn-add-widget,
+.btn-edit-widget {
     padding-left: 60px;
     padding-right: 60px;
 }
@@ -643,9 +651,9 @@ div.ui-dialog .ui-dialog-content {
 
 .drop-layout {
     min-height: 100px;
-    overflow: hidden;
+    /*overflow: hidden;
     overflow-y: auto;
-    max-height: 300px;
+    max-height: 300px;*/
 }
 
 .drag {
