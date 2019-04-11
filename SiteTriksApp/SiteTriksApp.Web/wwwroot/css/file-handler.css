@@ -82,7 +82,9 @@
 }
 
 .image-widget .btn-select,
-.gallery-widget .btn-select {
+.gallery-widget .btn-select,
+.video-widget .btn-select,
+.presentation-widget .btn-select {
     display: none;
 }
 
@@ -183,6 +185,18 @@
     height: 0px;
     width: 0px;
     background-color: #eee;
+}
+
+ .checkmark-cover {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.files-container .image-checkbox-wrapper .checkmark {
+    border: none;
 }
 
 .image-checkbox-wrapper:hover input ~ .checkmark {

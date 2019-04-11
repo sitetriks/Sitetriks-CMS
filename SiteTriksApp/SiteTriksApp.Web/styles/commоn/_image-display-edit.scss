@@ -1,0 +1,140 @@
+﻿/*Edit image*/
+
+.images-title {
+    span {
+        display: block;
+        text-align: center;
+        font-family: OpenSans;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        color: #525252;
+        margin-bottom: 30px;
+    }
+}
+
+/*Thumbnails section in image edit*/
+
+#generate-thumbnails-disabled {
+    .btn-grayed-out {
+        background-color: #cecece;
+        color: white;
+        font-weight: bold;
+    }
+}
+
+.thumb-list {
+    max-height: 300px;
+    background-color: #ececec;
+    border: solid 2px gray;
+    margin-top: 20px;
+    overflow-x: scroll;
+    display: flex;
+}
+
+.advanced-features {
+    .btn-grayed-out {
+        background-color: #cecece;
+        color: white;
+        font-weight: bold;
+    }
+
+    .toggle-button {
+        span:nth-of-type(1) {
+            margin-right: 10px;
+        }
+    }
+}
+
+.date-picker-group {
+    width: 280px;
+}
+
+.img-small {
+    height: 50px;
+}
+
+.listed-image {
+    max-width: 170px;
+    max-height: 150px;
+}
+
+.news-images-container {
+    height: 100px;
+}
+
+.news-listed-image {
+    position: relative;
+}
+
+.news-listed-image-container {
+    position: relative;
+    margin: 10px;
+    float: left;
+}
+
+.image-container {
+    width: 162px;
+    height: 180px;
+    margin: 5px;
+    padding: 0px;
+    display: inline-block;
+
+    > span {
+        display: inline-block;
+        width: 149px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: normal;
+    }
+}
+
+.files-handler-pager {
+    text-align: right;
+    margin: 20px;
+}
+
+#upload-container {
+    padding: 10px;
+}
+
+.img-upload-wrapper {
+    padding: 10px;
+
+    > hr {
+        margin-top: 0px;
+    }
+}
+
+.img-upload-wrapper * {
+    margin-bottom: 5px;
+
+    img {
+        width: 100px;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    z-index: 1000;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: red;
+    font-size: 20px;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.modal-container {
+    z-index: 300;
+    position: absolute;
+    width: 750px;
+    height: 500px;
+    left: 30%;
+    top: 20%;
+    background-color: white;
+    border-radius: 5px;
+}

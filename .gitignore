@@ -137,7 +137,6 @@ DocProjectHelpHtml2
 DocProjectHelphtml
 
 # Click-Once directory
-publish
 
 # Publish Web Output
 .[Pp]ublish.xml
@@ -255,9 +254,17 @@ paket-files
 
 *.csproj.user
 # Ignore babel output files
+**/wwwroot/js/**/*
 **/wwwroot/scripts/**/*
 **/scripts_babel/**/*
 *.lic
-/SiteTriksApp/SiteTriksApp.Web/Data/Migrations/20180419103117_bloglimitations.cs
-/SiteTriksApp/SiteTriksApp.Web/Data/Migrations/20180419103117_bloglimitations.Designer.cs
-/SiteTriksApp/SiteTriksApp.Web/package-lock.json
+*.min.js
+*.min.css
+**/wwwroot/cmsUploads/**/*
+**/SiteTriks/Configurations/config.aes
+**/wwwroot/css/scss/**/*.css
+**/wwwroot/css/scss/**/*.sitetriks.css
+**/wwwroot/css/scss/**/*.map
+
+# css bundle ignore
+/SiteTriksApp/SiteTriksApp.Web/wwwroot/css/bundle.css

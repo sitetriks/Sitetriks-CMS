@@ -217,15 +217,19 @@
         border-radius: 4px;
     }
 
-        .col-control .add-remove-column-wrapper span {
+        .col-control .add-remove-column-wrapper > span {
             height: 50%;
             width: 100%;
             padding-top: 8px;
             cursor: pointer;
         }
 
-            .col-control .add-remove-column-wrapper span:nth-of-type(1) {
+            .col-control .add-remove-column-wrapper > span:nth-of-type(1) {
                 border-bottom: 1px solid black;
+            }
+
+            .col-control .add-remove-column-wrapper > span * {
+                -webkit-text-stroke: 0;
             }
 
     .row-control > span,

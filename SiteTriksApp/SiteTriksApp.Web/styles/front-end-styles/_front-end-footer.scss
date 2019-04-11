@@ -1,0 +1,52 @@
+﻿/* To fix footer position with 1 main wrapper*/
+.frontend-footer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 35px;
+    width: 100%;
+    background: #313131;
+    margin-top: 30px;
+    border-top: solid 2px #008cff;
+
+    img {
+        height: 55px;
+    }
+
+    .ta-center {
+        color: #eee;
+        font-size: 14px;
+        line-height: 24px;
+        font-family: OpenSans, Helvetica, Arial, sans-serif;
+        margin-top: 5px;
+    }
+}
+
+/* Footer - Profile page only*/
+
+.frontend-footer.profile-only-footer {
+    min-width: 767px;
+
+    .back-button {
+        margin-left: 30px;
+        width: 200px;
+        display: inline-block;
+
+        img {
+            height: auto;
+            margin-top: -3px;
+        }
+
+        span {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+    }
+
+    p {
+        display: inline-block;
+        width: calc(100% - 450px);
+    }
+}

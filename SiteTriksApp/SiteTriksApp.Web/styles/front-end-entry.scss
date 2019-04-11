@@ -1,0 +1,30 @@
+﻿
+body {
+    font-size: 10px;
+}
+
+.st-layout-content {
+    padding: 0;
+}
+
+.layout-content {
+    @extend .st-layout-content;
+}
+
+@import 'helpers/fonts-frontend';
+
+@import 'front-end-styles/profile-login';
+
+@import 'front-end-styles/news-carousel';
+
+@import 'front-end-styles/front-end-footer';
+
+@import 'front-end-styles/widget-styles';
+
+@import 'front-end-styles/contact-us-widget';
+
+@import 'front-end-styles/contact-form-styles';
+
+@import 'commоn/notifier';
+
+@import 'commоn/smtp-form';

@@ -1,0 +1,65 @@
+﻿/* pager css */
+.sitetriks-pager {
+    height: 60px;
+    padding: 12px;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 16px;
+
+    .pageControl {
+        display: inline-block;
+        border: 2px solid #878787;
+        border-radius: 15%;
+        color: #878787;
+        background-color: $background-plain;
+        padding: 2px;
+    }
+
+    .btn-disabled {
+        opacity: 0;
+    }
+
+    .pageControl.pageSize {
+        margin-right: 10px;
+        padding: 2px 5px;
+    }
+
+    .pager-arrow {
+        display: inline-block;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        margin-bottom: -2px;
+    }
+
+    .previousPageArrow {
+        border-right: 12px solid #959595;
+    }
+
+    .nextPageArrow {
+        border-left: 12px solid #959595;
+    }
+
+    .pageControl.pageNumber {
+        margin-left: 5px;
+        padding-left: 15px;
+        padding-right: 0;
+        border-radius: 20%;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-right: none;
+    }
+
+    .pageControl.pagesCount {
+        margin-right: 5px;
+        padding-right: 15px;
+        padding-left: 0;
+        border-radius: 20%;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border-left: none;
+    }
+
+    .pageControl.pagesCount::before {
+        content: '/';
+    }
+}

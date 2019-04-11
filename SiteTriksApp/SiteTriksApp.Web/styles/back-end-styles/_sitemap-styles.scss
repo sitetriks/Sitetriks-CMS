@@ -1,0 +1,48 @@
+﻿/*Sitemap*/
+
+form.btn-group + form.btn-group {
+    margin-left: -5px;
+}
+
+.panel-body {
+    .btn-group button {
+        border-radius: unset;
+        display: inline;
+        width: 33.3%;
+    }
+}
+
+#schedule-form-wrapper {
+    button {
+        width: 10%;
+        display: inline;
+        float: none;
+    }
+
+    select {
+        display: inline;
+        border-radius: 0px;
+    }
+}
+
+/*Sitemap Dashboard fixes*/
+
+.panel-body {
+    .container .row li {
+        width: 70%;
+    }
+
+    .sitemap-inner-container {
+        .row li a {
+            word-wrap: break-word;
+        }
+    }
+}
+ 
+.btn-dashboard-widget-header {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-left: 1px solid #ccc;
+    border-radius: 0;
+}

@@ -72,6 +72,13 @@
     padding-left: 20px;
 }
 
+/*Specific for Dynamics*/
+
+.grid.dynamics .second-header-row {
+    display: flex;
+    justify-content: space-between;
+}
+
 .bodyRow {
     line-height: normal;
     padding-top: 3px;
@@ -252,7 +259,7 @@ tbody {
     font-size: 8px;
     display: inline-block;
     margin-right: -20px;
-    margin-top: 2px;
+    margin-top: 9px;
     position: absolute;
     /*margin-top: -30px;*/
 }
@@ -261,6 +268,46 @@ tbody {
     display: inline-block;
     /*margin-left: 15px;*/
 }
+
+.grid-item .btn-xs.child-expand {
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    margin-right: -20px;
+    padding-left: 3px;
+    padding-top: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    border: none;
+    border: 2px solid #6a6a6a;
+    background-color: #529ce4;
+    color: #ffffff;
+    border-color: #6a6a6a;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: unset !important;
+    font-size: 8px;
+    display: inline-block;
+}
+
+.nested-grid-items .grid-item .btn-xs.child-expand {
+    display: inline-block;
+}
+
+.nested-grid-items {
+    padding-left: 30px;
+    padding-right: 15px;
+    background-color: inherit;
+    border-top: 2px solid #f9f9f9;
+}
+
+/*.nested-grid-items > div:nth-last-of-type(odd) {
+        background-color: #ffffff;
+    }
+
+    .nested-grid-items > div:nth-last-of-type(even) {
+        background-color: #f9f9f9;
+    }*/
 
 
 
@@ -322,9 +369,9 @@ tbody {
     padding-left: 20px;
 }
 
-.bodyRow:nth-child(even) {
+/*.bodyRow:nth-child(even) {
     background-color: #f9f9f9;
-}
+}*/
 
 .bodyRow.darkColor {
     padding-right: 0;
@@ -390,7 +437,16 @@ tbody {
 .sitetriks-grid {
     border: 2px solid #b0b0b0;
     border-radius: 3px;
+    background-color: #ffffff;
 }
+
+    .sitetriks-grid div.full-row:nth-of-type(even) {
+        background-color: #f9f9f9;
+    }
+
+    .sitetriks-grid div.full-row:nth-of-type(odd) {
+        background-color: #ffffff;
+    }
 
     .sitetriks-grid .buttons-header {
         color: #ffffff;
@@ -408,94 +464,113 @@ tbody {
         width: 320px;
     }
 
-    .sitetriks-grid .grid-body > .grid-item:nth-child(2n + 1) {
+    /*.sitetriks-grid .grid-body > .grid-item:nth-child(2n + 1) {
         background-color: #f9f9f9;
-    }
+    }*/
 
     .sitetriks-grid .grid-body .grid-item {
-        line-height: normal;
+        line-height: 36px;
         padding-top: 3px;
         padding-bottom: 3px;
         min-height: 30px;
     }
 
-    .sitetriks-grid.grid-view .grid-body .grid-item {
-        float: left;
-        margin: 10px;
+/*Specidically for the dynamics with too many items*/
+.dynamics.sitetriks-grid .title-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dynamics.sitetriks-grid .grid-body .grid-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/***************************************************/
+
+
+.sitetriks-grid .grid-body .grid-item span {
+    /*margin-left: 10px;*/
+}
+
+.sitetriks-grid.grid-view .grid-body .grid-item {
+    float: left;
+    margin: 10px;
+}
+
+.sitetriks-grid .grid-pager {
+    height: 60px;
+    padding: 12px;
+    background-color: #eeeeee;
+    border-top: 2px solid #b3b3b3;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+    .sitetriks-grid .grid-pager .pageControl {
+        display: inline-block;
+        border: 2px solid #878787;
+        border-radius: 15%;
+        color: #878787;
+        background-color: #ffffff;
+        padding: 2px;
     }
 
-    .sitetriks-grid .grid-pager {
-        height: 60px;
-        padding: 12px;
-        background-color: #eeeeee;
-        border-top: 2px solid #b3b3b3;
-        text-align: center;
-        margin-top: 30px;
-        font-size: 16px;
+        .sitetriks-grid .grid-pager .pageControl.pageSize {
+            margin-right: 10px;
+            padding: 2px 5px;
+        }
+
+    .sitetriks-grid .grid-pager .pager-arrow {
+        display: inline-block;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        margin-bottom: -2px;
     }
 
-        .sitetriks-grid .grid-pager .pageControl {
-            display: inline-block;
-            border: 2px solid #878787;
-            border-radius: 15%;
-            color: #878787;
-            background-color: #ffffff;
-            padding: 2px;
-        }
-
-            .sitetriks-grid .grid-pager .pageControl.pageSize {
-                margin-right: 10px;
-                padding: 2px 5px;
-            }
-
-        .sitetriks-grid .grid-pager .pager-arrow {
-            display: inline-block;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            margin-bottom: -2px;
-        }
-
-        .sitetriks-grid .grid-pager .btn-disabled {
-            opacity: 0;
-        }
-
-        .sitetriks-grid .grid-pager .previousPageArrow {
-            border-right: 12px solid #959595;
-        }
-
-        .sitetriks-grid .grid-pager .nextPageArrow {
-            border-left: 12px solid #959595;
-        }
-
-        .sitetriks-grid .grid-pager .pageControl.pageNumber {
-            margin-left: 5px;
-            padding-left: 15px;
-            padding-right: 0;
-            border-radius: 20%;
-            border-bottom-right-radius: 0;
-            border-top-right-radius: 0;
-            border-right: none;
-        }
-
-        .sitetriks-grid .grid-pager .pageControl.pagesCount {
-            margin-right: 5px;
-            padding-right: 15px;
-            padding-left: 0;
-            border-radius: 20%;
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0;
-            border-left: none;
-        }
-
-            .sitetriks-grid .grid-pager .pageControl.pagesCount::before {
-                content: '/';
-            }
-
-    .sitetriks-grid .btn-grid-add {
-        cursor: pointer;
-        color: #fff;
-        font-size: 17px;
+    .sitetriks-grid .grid-pager .btn-disabled {
+        opacity: 0;
     }
+
+    .sitetriks-grid .grid-pager .previousPageArrow {
+        border-right: 12px solid #959595;
+    }
+
+    .sitetriks-grid .grid-pager .nextPageArrow {
+        border-left: 12px solid #959595;
+    }
+
+    .sitetriks-grid .grid-pager .pageControl.pageNumber {
+        margin-left: 5px;
+        padding-left: 15px;
+        padding-right: 0;
+        border-radius: 20%;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-right: none;
+    }
+
+    .sitetriks-grid .grid-pager .pageControl.pagesCount {
+        margin-right: 5px;
+        padding-right: 15px;
+        padding-left: 0;
+        border-radius: 20%;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border-left: none;
+    }
+
+        .sitetriks-grid .grid-pager .pageControl.pagesCount::before {
+            content: '/';
+        }
+
+.sitetriks-grid .btn-grid-add {
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+}
 
 /*-----------------------------------------------------------------------------------------------------*/
 

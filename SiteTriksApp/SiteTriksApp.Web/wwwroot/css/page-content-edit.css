@@ -3,6 +3,20 @@
     padding: 5px;
 }
 
+    .preview-placeholder > div:nth-of-type(2) {
+        min-height: 100px;
+        overflow: hidden;
+        overflow-y: hidden;
+        overflow-y: auto;
+        max-height: 500px;
+    }
+
+    .preview-placeholder img,
+    .preview-placeholder svg {
+        max-width: 50vw;
+        max-height: 50vh;
+    }
+
     .preview-placeholder > .preview-placeholder {
         border: 1px dotted #706b6b;
     }
@@ -15,10 +29,10 @@
     padding-top: 50px;
 }
 
-
 /* ----------------------------------------------------------------
 	BackEnd
 -----------------------------------------------------------------*/
+
 .btn-widget {
     width: 100%;
     border: 1px solid grey;
@@ -50,8 +64,12 @@
         display: inline-block;
     }
 
+#widget-info {
+    min-height: 50px;
+    padding: 0 2%;
+}
+
 #add-widget-container {
-    padding-top: 50px;
     padding-left: 2%;
     padding-right: 2%;
 }
@@ -69,6 +87,16 @@
 
 .widget-container {
     font-family: OpenSans, Helvetica, Arial, sans-serif;
+}
+
+/*Override css/js/embedded script modal styles
+
+*/
+    .widget-container .CodeMirror {
+        border: 1px solid gray;
+        height: 400px;
+        margin-bottom: 50px;
+    }
 }
 
     .widget-container label {
@@ -496,7 +524,7 @@ div.ui-dialog .ui-dialog-content {
 
 
 .widgets-list {
-    height: calc(100vh - (260px));
+    height: calc(100vh - (300px));
     transition: height 0.5s ease;
 }
 
@@ -504,7 +532,7 @@ div.ui-dialog .ui-dialog-content {
         position: fixed;
         right: 40px;
         top: 80px;
-        height: calc(100vh - (180px));
+        height: calc(100vh - (220px));
         max-width: 16%;
     }
 
@@ -512,13 +540,21 @@ div.ui-dialog .ui-dialog-content {
     overflow-y: inherit;
 }
 
-#widgets-holder {
+#widgets-wrapper {
+    height: 100%;
+}
+
+.widget-search {
+    margin-bottom: 10px;
+}
+
+.widgets-holder {
     overflow-y: scroll;
     height: 100%;
     min-width: 130px;
 }
 
-    #widgets-holder .drag {
+    .widgets-holder .drag {
         margin-left: 0;
     }
 
@@ -535,20 +571,17 @@ div.ui-dialog .ui-dialog-content {
 
 
 /* Way too hardcoded... */
-#btn-save-widget,
-#btn-edit-widget {
+.btn-save-widget {
     padding-left: 60px;
     padding-right: 60px;
 }
 
-.add-widget-dialog.ui-dialog,
-.edit-widget-dialog.ui-dialog {
+.widget-dialog.ui-dialog {
     padding: 0px;
     border-radius: 10px;
 }
 
-    .add-widget-dialog.ui-dialog .ui-dialog-titlebar,
-    .edit-widget-dialog.ui-dialog .ui-dialog-titlebar {
+    .widget-dialog.ui-dialog .ui-dialog-titlebar {
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
         padding-left: 50px;
@@ -558,13 +591,11 @@ div.ui-dialog .ui-dialog-content {
         border-bottom: 1px solid #B2B2B2;
     }
 
-    .add-widget-dialog.ui-dialog .ui-dialog-title,
-    .edit-widget-dialog.ui-dialog .ui-dialog-title {
+    .widget-dialog.ui-dialog .ui-dialog-title {
         width: auto;
     }
 
-    .add-widget-dialog.ui-dialog .ui-dialog-titlebar-close,
-    .edit-widget-dialog.ui-dialog .ui-dialog-titlebar-close {
+    .widget-dialog.ui-dialog .ui-dialog-titlebar-close {
         right: 2em;
         background-image: url("/images/close.png");
         background-position: center;
@@ -578,8 +609,7 @@ div.ui-dialog .ui-dialog-content {
     }
 
 
-        .add-widget-dialog.ui-dialog .ui-dialog-titlebar-close > span,
-        .edit-widget-dialog.ui-dialog .ui-dialog-titlebar-close > span {
+        .widget-dialog.ui-dialog .ui-dialog-titlebar-close > span {
             /* remove default icon coming from jquery-ui */
             background-image: none;
         }
@@ -596,6 +626,11 @@ div.ui-dialog .ui-dialog-content {
 /* ----------------------------------------------------------------
 	General
 -----------------------------------------------------------------*/
+
+.widget-preview-holder {
+    max-height: 300px;
+    overflow-y: auto;
+}
 
 .display-image {
     /*border-radius: 5px;
@@ -632,7 +667,9 @@ div.ui-dialog .ui-dialog-content {
 
 .drop-layout {
     min-height: 100px;
-    overflow: hidden;
+    /*overflow: hidden;
+    overflow-y: auto;
+    max-height: 300px;*/
 }
 
 .drag {
@@ -728,6 +765,23 @@ select#gallery-libs {
 
 #video-name {
     margin-bottom: 15px
+}
+
+.video-selection {
+    margin-bottom: 15px;
+}
+
+.selected-videos {
+    width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 30px;
+    padding: 5px
+}
+
+.btn-add-video {
+    background-color: #8B8B8B;
+    color: #fff;
 }
 
 /*------------------------------------------------------------
@@ -874,6 +928,7 @@ select#gallery-libs {
 #dynamic-container {
     height: 30px;
     margin-bottom: 10px;
+    padding-left: 15px;
 }
 
     #dynamic-container select {

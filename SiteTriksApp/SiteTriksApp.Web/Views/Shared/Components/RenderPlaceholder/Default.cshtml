@@ -1,6 +1,0 @@
-﻿@model SiteTriks.Extentions.WidgetModels.MultyModel
-
-@foreach (var widget in Model.Models)
-{
-    @await Html.PartialAsync($"/Views/BaseWidget/{widget.Key}/Display.cshtml", widget.Value)
-}

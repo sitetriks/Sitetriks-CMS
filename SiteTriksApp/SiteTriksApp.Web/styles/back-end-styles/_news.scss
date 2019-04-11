@@ -1,0 +1,64 @@
+﻿/*--------------------------------------------------------------------*/
+
+/* create edit news */
+
+.images-container {
+    margin-top: 50px;
+}
+
+.image-buttons-container {
+    padding: 20px 0px;
+    border-top: 1px solid black;
+
+    > button {
+        float: right;
+    }
+}
+
+.news-main-image-container,
+.news-images-container {
+    vertical-align: top;
+    height: auto;
+}
+
+.news-listed-images-container {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+
+.news-listed-image-delete {
+    position: absolute;
+    cursor: pointer;
+    background-color: #008CFF;
+    width: 17px;
+    height: 17px;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+    line-height: 20px;
+    padding-left: 2px;
+    color: white;
+
+    > span:hover {
+        color: darkred;
+    }
+}
+
+.btn-backend {
+    background-color: #008CFF;
+    color: white;
+    border: 1px solid #000;
+}
+
+.btn-backend.btn.update-row,
+.btn-backend.btn.remove-row {
+    margin-bottom: 10px;
+}
+
+.btn-backend-light {
+    background-color: #529ce4;
+    color: #fff;
+    border: 1px solid #758fa8;
+    font-weight: bold;
+}

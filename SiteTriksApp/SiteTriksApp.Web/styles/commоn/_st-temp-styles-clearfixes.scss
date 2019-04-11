@@ -1,0 +1,158 @@
+﻿
+/*Bootstrap styles Clearfixes*/
+.st-body-content .st-row-clear-margin {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.backend-wrapper .title-field {
+    /*width: 400px;*/
+    max-width: unset;
+}
+
+.backend-wrapper .content-field {
+    height: 180px;
+    /*width: 400px;*/
+    max-width: unset;
+}
+
+.backend-wrapper .input-group .input-group-addon {
+    background-color: #fff;
+}
+
+.backend-wrapper {
+    ::-webkit-input-placeholder,
+    :-moz-placeholder,
+    ::-moz-placeholder,
+    :-ms-input-placeholder {
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+/*Sitetriks specific styles/ custom classes*/
+
+.st-body-content input[disabled] {
+    cursor: not-allowed;
+}
+
+.st-no-overflow {
+    overflow: hidden;
+}
+
+/*Nice to have clearfix classes*/
+
+.st-link:hover {
+    text-decoration: none;
+}
+
+.st-pointer {
+    cursor: pointer;
+}
+
+.st-relative {
+    position: relative;
+}
+
+.st-inline-block {
+    display: inline-block;
+}
+
+/*Fallback as we cannot replace all classes to st-inline-block*/
+.inline-block {
+    display: inline-block;
+}
+
+#Version.inline-block {
+    margin-bottom: 10px;
+}
+
+.st-inline {
+    display: inline;
+}
+
+.inline {
+    @extend .st-inline;
+}
+
+.st-block {
+    display: block;
+}
+
+.st-text-centered {
+    text-align: center;
+}
+
+.ta-center {
+    @extend .st-text-centered;
+}
+
+.st-unselectable {
+    user-select: none; /* CSS3 (little to no support) */
+    -ms-user-select: none; /* IE 10+ */
+    -moz-user-select: none; /* Gecko (Firefox) */
+    -webkit-user-select: none; /* Webkit (Safari, Chrome) */
+}
+
+.unselectable {
+    @extend .st-unselectable;
+}
+
+.disabled {
+    cursor: not-allowed;
+    background-color: $background-disabled;
+}
+
+/* Hints/ Tooltips */
+
+.st-info {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+        content: '?';
+        background: #008CFF;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0 7px 0 6px;
+        font-weight: bold;
+        color: #fff;
+        display: inline-block;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    &:hover::after {
+        color: #000;
+    }
+}
+
+.st-hint {
+    position: relative;
+
+    > span.st-tooltip {
+        display: none;
+        position: absolute;
+        border: 1px solid black;
+        padding: 10px;
+        background: #eee;
+        bottom: 100%;
+        left: 10px;
+        width: 100%;
+        min-width: 250px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
+        z-index: 1;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    &:hover > span.st-tooltip {
+        display: block;
+    }
+}
+
+.page-even {
+    background-color: $table-darker-row-background;
+}

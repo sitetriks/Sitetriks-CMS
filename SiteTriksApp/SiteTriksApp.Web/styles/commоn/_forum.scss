@@ -1,0 +1,70 @@
+﻿
+/*------------------------------------------------------------
+       Forum  styles
+    ---------------------------------------------------------------*/
+
+.forum-wrapper {
+    margin: 150px 50px 50px 50px;
+    padding-top: 10px;
+    min-width: 768px;
+}
+
+.forum-navigation {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+
+    #hamburger-menu {
+        display: none;
+    }
+
+    .header-blue {
+        display: block;
+    }
+    /*Forum navigation icons*/
+    .logout-icon input {
+        display: block;
+        background-image: url("../../images/homepage/Log_out.svg");
+        margin-top: 35px;
+        height: 40px;
+        width: 50px;
+        background-repeat: no-repeat;
+        border: none;
+        background-color: transparent;
+    }
+}
+
+.fixed-top-3 {
+    top: 150px;
+    position: relative;
+    margin-left: 50px;
+
+    .btn-nav-2 {
+        background-color: $background-backend;
+        color: $font-plain;
+        border: 1px solid #758fa8;
+        padding: 8px 10px;
+        font-size: 12px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    input.btn-nav-2 {
+        padding: 2px 10px;
+    }
+}
+
+#create-discussion .fixed-top-3,
+#edit-discussion .fixed-top-3,
+#create-thread .fixed-top-3,
+#edit-thread .fixed-top-3 {
+    top: 0;
+    margin-bottom: 30px;
+    margin-left: 0;
+}
+
+#create-post {
+    margin-left: 50px;
+}
