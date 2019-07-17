@@ -2,6 +2,10 @@
     top: 0;
 }
 
+    .st-body-content .fixed-top-2.layout-builder-nav {
+        z-index: 1;
+    }
+
 .sitetriks-body .navigation {
     display: none;
 }

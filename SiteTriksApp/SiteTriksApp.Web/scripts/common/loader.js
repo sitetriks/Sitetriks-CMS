@@ -33,6 +33,8 @@ var Loader = (function () {
             Blur.remove();
         }
     };
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
+=======
 })();
 
 export { Loader };
@@ -49,7 +51,10 @@ export { Loader };
             src: src
         }).appendTo($container);
     });
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
 })();
+
+export { Loader };
 
 // Helper class for loader and gallery
 var Blur = (function () {
@@ -57,11 +62,15 @@ var Blur = (function () {
     const PREVIEW_ITEM_CONTAINER_CLASS = 'preview-item-container';
     const BLUR_ELEMENT_CLASS = 'blur';
 
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
+    function addBlur({ hideOnClick, color, opacity, hideOnBlurClick }) {
+=======
     function addBlur({ hideOnClick, color, opacity }) {
         if (hideOnClick !== true) {
             hideOnClick = false;
         }
 
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
         $('html').addClass('st-no-overflow');
 
         let $blurElement = $('<div></div>', {
@@ -76,9 +85,13 @@ var Blur = (function () {
             class: PREVIEW_CONTAINER_CLASS
         });
 
-        if (hideOnClick) {
+        if (hideOnClick === true) {
             $previewContainer.on('click', removeBlur);
             $blurElement.on('click', removeBlur);
+        }
+
+        if (hideOnBlurClick === true) {
+            $previewContainer.on('click', removeBlurOnNonContentTarget);
         }
 
         if (color) {
@@ -100,6 +113,18 @@ var Blur = (function () {
         $('body').find('.' + BLUR_ELEMENT_CLASS).remove();
         $('body').find('.' + PREVIEW_CONTAINER_CLASS).remove();
         $('html').removeClass('st-no-overflow');
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
+    }
+
+    function removeBlurOnNonContentTarget(ev) {
+        let $target = $(this || ev.target);
+        if ($target.hasClass('blur-content') || $target.parents('.blur-content').length > 0) {
+            return;
+        }
+
+        removeBlur();
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
     }
 
     return {

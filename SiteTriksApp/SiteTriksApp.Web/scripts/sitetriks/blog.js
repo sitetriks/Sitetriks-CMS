@@ -1,11 +1,26 @@
+<<<<<<< HEAD
+﻿import './layout.js';
+
+import { WarningWindow } from '../modules/warning-window.js';
+import { Comments } from '../comments.js';
+import { textEditor } from '../text-editor.js';
+import { setupAjaxForm } from './helpers.js';
+import { DateConversion } from '../common/date-conversion.js';
+=======
 ﻿import { WarningWindow } from '../modules/warning-window.js';
 import { Comments } from '../comments.js';
 import { textEditor } from '../text-editor.js';
 import { setupAjaxForm } from './helpers.js';
+>>>>>>> origin/master
 
 function blogDetails(id) {
     Comments.init(id, $('#comments-container'), 'blog-comment-area');
     WarningWindow.attach();
+<<<<<<< HEAD
+	let element = document.querySelector('.comment-date');
+	element.textContent = DateConversion.convertUtcToLocal(element.getAttribute('data-original-date'));
+=======
+>>>>>>> origin/master
 }
 
 function blogForm() {

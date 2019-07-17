@@ -1,0 +1,61 @@
+﻿.permissions-wrapper {
+    .category {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    select {
+        font-size: 14px;
+        font-weight: 600;
+        padding: 15px 15px;
+        margin-bottom: 20px;
+
+        option {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+
+.arrows-wrap {
+    padding-top: 50px;
+
+    .center-block {
+        display: flex;
+        justify-content: center;
+    }
+
+    .st-arrow.right {
+        float: left;
+        width: 20px;
+        height: 2px;
+        background-color: #979797;
+    }
+
+    .st-arrow-triangle.right {
+        float: left;
+        height: 0;
+        width: 16px;
+        border-left: 16px solid #979797;
+        border-bottom: 7px solid transparent;
+        border-top: 7px solid transparent;
+        margin-top: -6px;
+    }
+
+    .st-arrow.left {
+        float: left;
+        width: 20px;
+        height: 2px;
+        background-color: #979797;
+    }
+
+    .st-arrow-triangle.left {
+        float: right;
+        height: 0;
+        width: 16px;
+        border-right: 16px solid #979797;
+        border-bottom: 7px solid transparent;
+        border-top: 7px solid transparent;
+        margin-top: -6px;
+    }
+}

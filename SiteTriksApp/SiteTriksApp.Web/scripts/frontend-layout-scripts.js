@@ -1,5 +1,9 @@
 ﻿/* globals SkypeWebControl, Prism, prettify */
 import { Data } from './common/data.js';
+<<<<<<< HEAD
+import { Blur } from './common/loader.js';
+=======
+>>>>>>> origin/master
 import { documentationModule } from './documentation-widget.js';
 import { initCarousel } from './carousel.js';
 import { blogWidget } from './blog-widget.js';
@@ -8,7 +12,11 @@ import { forumWidget } from './forum-widget.js';
 import { allNewsWidget } from './all-news.js';
 import { licenseWidget } from './licenses-widgets.js';
 import { subscriptionWidget } from './subscription.js';
+<<<<<<< HEAD
+import { socialShare } from './social-share.js';
+=======
 
+>>>>>>> origin/master
 
 function treeItemsSlide() {
     $('body').on('click', '.more-items', function (event, callback, target) {
@@ -261,9 +269,41 @@ $(document).ready(function () {
     allNewsWidget();
     licenseWidget();
     subscriptionWidget();
+<<<<<<< HEAD
+	contactFormWidget();
+	socialShare();
+
+    $(document).trigger('initCarousel');
+    prettyPrintInit();
+    
+    //gallery
+    $('body').on('click', 'img.display-image, img.gallery-image', function (ev) {
+        let $target = $(ev.target);
+        let src = $target.attr('src');
+
+        let $container = Blur.add({ hideOnBlurClick: true });
+        $('<img />', {
+            class: 'blur-content preview-image',
+            src: src
+        }).appendTo($container);
+    });
+
+    $('body').on('click', 'img.display-video', function (ev) {
+        let src = ev.target.getAttribute('data-url');
+        let $container = Blur.add({ hideOnBlurClick: true });
+        $('<video></video>', {
+            class: 'blur-content',
+            width: '560',
+            height: '315',
+            controls: true
+        }).append($('<source/>', { type: 'video/mp4', src })).appendTo($container);
+    });
+});
+=======
     contactFormWidget();
 
     $(document).trigger('initCarousel');
 });
 $(window).load(prettyPrintInit());
+>>>>>>> origin/master
 window.Data = Data;

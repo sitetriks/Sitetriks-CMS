@@ -1,4 +1,10 @@
+<<<<<<< HEAD
+﻿import './layout.js';
+
+import { Data } from '../common/data.js';
+=======
 ﻿import { Data } from '../common/data.js';
+>>>>>>> origin/master
 import { Loader } from '../common/loader.js';
 import { Utils } from '../common/utils.js';
 import { Validator } from '../common/validator.js';
@@ -13,7 +19,11 @@ export function initLibraries(grid, mediator, logger) {
     let $btnEditLibrary = $('#btn-edit-lib');
     let $btnDeleteLibrary = $('#btn-delete-lib');
     let $deletePopup = $('.delete-popup-wrapper');
+<<<<<<< HEAD
+    let $removePopup = $('.delete-popup-wrapper .fa-times');
+=======
     let $removePopup = $('.delete-popup-wrapper .glyphicon-remove');
+>>>>>>> origin/master
     let $cancelDeleteButton = $('#cancel-delete');
     let $deleteLibraryButton = $('#delete-library');
 
@@ -58,6 +68,11 @@ export function initLibraries(grid, mediator, logger) {
 
             grid.load(true);
             $modal.modal('hide');
+<<<<<<< HEAD
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+=======
+>>>>>>> origin/master
         }
     }
 
@@ -275,6 +290,24 @@ export function createLibrary(validateUrlLink, isNameAvailableLink) {
     var timer = 0;
     bindEvents();
 
+<<<<<<< HEAD
+    // check for image select
+    var $libraryTypeSelect = $('#library-type');
+    var $thumbnailsGroup = $('.thumbnails-group');
+    $libraryTypeSelect.on('change', function () {
+
+        let $target = $(this);
+
+        if ($target.val() == "Image" || $target.val() == 0) {
+            $thumbnailsGroup.show();
+        }
+        else {
+            $thumbnailsGroup.hide();
+        }
+    })
+
+=======
+>>>>>>> origin/master
     function displayAllowedTypes(ev) {
         $allowedTypes.html('');
 

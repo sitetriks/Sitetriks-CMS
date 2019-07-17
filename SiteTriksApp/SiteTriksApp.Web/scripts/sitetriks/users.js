@@ -1,4 +1,10 @@
+<<<<<<< HEAD
+﻿import './layout.js';
+
+import { Loader } from '../common/loader.js';
+=======
 ﻿import { Loader } from '../common/loader.js';
+>>>>>>> origin/master
 import { Validator } from '../common/validator.js';
 import { Multiselect } from '../common/multiselect-setup.js';
 import { WarningWindow } from '../modules/warning-window.js';

@@ -12,6 +12,7 @@
     top: 84px;
     border-bottom: 2px solid #828282;
     transition: padding 0.3s linear;
+/*z-index: 1000;*/
 
     > p {
         margin: 0;
@@ -55,7 +56,7 @@
         float: right;
     }
 
-    .btn-nav-2 {
+    .btn-nav-2, a.btn-nav-2 {
         font-weight: 700;
         color: #fff;
         padding: 6px 14px;
@@ -68,6 +69,11 @@
         height: 32px;
         display: inline-block;
         text-decoration: none;
+    }
+
+    .btn-nav-2.delete-btn, .btn-nav-2#btn-create-item {
+        font-weight: 700;
+        color: #fff;
     }
 
     a:hover {
@@ -109,12 +115,14 @@
             margin: -10px 0;
             display: block;
             top: 7px;
+            color: #fff;
         }
 
         > span.single.st-icon-preview {
             font-size: 40px;
             margin: -20px 0;
             top: 11px;
+            color: #fff;
         }
     }
 
@@ -144,10 +152,10 @@
 
         > span {
             font-weight: bolder;
-            background-color: #96BAC8;
+            background-color: #bcbcbc;
             padding: 11px 80px 10px;
             border: 1px solid #979797;
-            color: #fff;
+            color: #515151;
             transition: unset;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;

@@ -9,6 +9,10 @@ import { Comments } from './comments.js';
 import { HashRouter } from './modules/hash-router.js';
 import { loadHandlebarsTemplates } from './common/handlebars.js';
 import { textEditor } from './text-editor.js';
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/blog-widget.js
+import { DateConversion } from './common/date-conversion.js';
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/blog-widget.js
 
 export function blogWidget() {
     let $wrapper = $('.st-blog-wrapper');
@@ -52,8 +56,8 @@ export function blogWidget() {
         Loader.show('#fff');
         return source.getData({ paging }).then(res => {
             if (res.success) {
-                $container.html('');
-                res.items.forEach(item => item.dateCreated = new Date(item.dateCreated).toDateString());
+				$container.html('');
+				res.items.forEach(item => item.dateCreated = DateConversion.convertUtcToLocal(item.dateCreated));
                 let html = templatesCache['blog-list'](res);
                 $container.append(html);
             }
@@ -85,8 +89,8 @@ export function blogWidget() {
             if (res.success) {
                 $pager.hide();
                 pager.lock();
-                let obj = { item: res.item, isAuthenticated: res.isAuthenticated, paging };
-                obj.item.dateCreated = new Date(obj.item.dateCreated).toDateString();
+				let obj = { item: res.item, isAuthenticated: res.isAuthenticated, paging };
+				obj.item.dateCreated = DateConversion.convertUtcToLocal(obj.item.dateCreated);
                 let html = templatesCache['blog-post'](obj);
                 $container.html(html);
                 if (res.isAuthenticated) {

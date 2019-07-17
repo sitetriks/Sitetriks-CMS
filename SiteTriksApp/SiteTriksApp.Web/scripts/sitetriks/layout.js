@@ -1,16 +1,31 @@
 ﻿/* globals prettify */
+<<<<<<< HEAD
+import 'bootstrap';
+import { Blur } from '../common/loader.js';
+
+function mobileMenu() {
+    $('.with-dd').on('click', '.dropdown-toggle', function () {
+        let $buttons = $('.caret-mobile');
+        console.log($(this));
+        $buttons.each((_, caret) => $(caret).removeClass('caret-mobile-down'));
+=======
 
 function mobileMenu() {
     $('.with-dd').on('click', '.dropdown-toggle', function () {
 
         let $buttons = $('.caret-mobile');
         $buttons.each((_, caret) => caret.classList.remove('caret-mobile-down'));
+>>>>>>> origin/master
 
         let $arrow = $(this).find('.caret-mobile');
 
         if ($(this).attr('aria-expanded') === 'false' || $(this).attr('aria-expanded') === undefined) {
             $arrow.addClass('caret-mobile-down');
+<<<<<<< HEAD
+        } else {
+=======
         } else if ($(this).attr('aria-expanded') === 'true') {
+>>>>>>> origin/master
             $arrow.removeClass('caret-mobile-down');
         }
     });
@@ -143,7 +158,11 @@ function multiSitePopup() {
     }
 
     $container.on('click', '.selected-site', displayMultiSite);
+<<<<<<< HEAD
+    $multisiteSelect.on('click', '.fa-times', hideMultisite);
+=======
     $multisiteSelect.on('click', '.glyphicon-remove', hideMultisite);
+>>>>>>> origin/master
 }
 
 $(document).ready(function () {
@@ -163,4 +182,30 @@ $(document).ready(function () {
     // permission 
     $('#allowed-roles').parent().hide();
     $('#allowed-groups').parent().hide();
+<<<<<<< HEAD
+    
+    //gallery
+    $('body').on('click', 'img.display-image, img.gallery-image', function (ev) {
+        let $target = $(ev.target);
+        let src = $target.attr('src');
+
+        let $container = Blur.add({ hideOnBlurClick: true });
+        $('<img />', {
+            class: 'blur-content preview-image',
+            src: src
+        }).appendTo($container);
+    });
+
+    $('body').on('click', 'img.display-video', function (ev) {
+        let src = ev.target.getAttribute('data-url');
+        let $container = Blur.add({ hideOnBlurClick: true });
+        $('<video></video>', {
+            class: 'blur-content',
+            width: '560',
+            height: '315',
+            controls: true
+        }).append($('<source/>', { type: 'video/mp4', src })).appendTo($container);
+    });
+=======
+>>>>>>> origin/master
 });

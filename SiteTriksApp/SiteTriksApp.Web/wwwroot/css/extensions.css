@@ -4,10 +4,11 @@
 }
 
     .extensions-menu h5 {
+        padding-left: 25px;
         margin-top: 70px;
         text-transform: uppercase;
         font-weight: bolder;
-        text-align: center;
+        text-align: left;
         font-size: 16px;
     }
 
@@ -26,7 +27,7 @@
 
             .extensions-menu .module-name .toggle .toggle-on,
             .extensions-menu .module-name .toggle .toggle-off {
-                font-size: 9px;
+                font-size: 16px;
                 padding-left: 5px;
                 padding-top: 3.5px;
                 color: #d8d8d8;
@@ -108,7 +109,7 @@
 
         /**/
 
-        #drop-area .drop-info-btn span.glyphicon {
+        #drop-area .drop-info-btn span.fa {
             margin-right: 20px;
         }
 
@@ -228,12 +229,23 @@
 
 /*File-handler / Upload specific styles*/
 
+.file-handler-container .btn-cancel {
+    display: none;
+}
+
+#file-upload-modal .btn-cancel {
+    color: white;
+    display: inline-block;
+    background-color: #c9302c;
+}
+
 .file-handler-container .btn-submit-images {
     color: white;
     display: inline-block;
 }
 
-    .file-handler-container .btn-submit-images.disabled {
+    .file-handler-container .btn-submit-images.disabled,
+    #file-upload-modal .btn-cancel.disabled {
         display: none;
     }
 

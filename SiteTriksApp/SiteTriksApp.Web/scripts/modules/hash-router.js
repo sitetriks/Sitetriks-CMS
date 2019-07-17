@@ -29,7 +29,7 @@ var HashRouter = (function () {
         }, {});
 
         for (let key in newData) {
-            if (!data[key] || !newData[key].every((val, index) => val === data[key][index])) {
+            if (!data[key] || !newData[key].every((val, index) => val === data[key][index]) || !data[key].every((val, index) => val === newData[key][index])) {
                 data[key] = newData[key];
                 dispatchChange(key);
             }

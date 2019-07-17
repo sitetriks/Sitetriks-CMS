@@ -9,12 +9,42 @@ body, html {
 .sitetriks-body {
     padding-top: 0;
     min-width: 768px;
+    position: relative;
+    font-family: unset;
+    /* Style default bootstrap*/
+    .btn-default {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+
+    .hidden {
+        display: none;
+    }
+    /*Set modal width*/
+    .modal-dialog {
+        max-width: 35%;
+    }
 }
 
 .sitetriks-wrapper {
     border-bottom: 2px solid #0089fa;
     padding-left: 2.5%;
+    height: 100%;
+
 }
+
+    .grid.full-grid-width {
+        min-width: 1100px;
+    }
+.st-max-w-50 .form-control {
+    max-width: 50%;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
 /**********************From Site.css***********************/
 /**********************************************************/
 
@@ -23,17 +53,58 @@ body, html {
     padding-top: 10px;
     /*Cleanfix for UI button*/
     a.btn-backend {
-        color: white;
+        color: #fff;
     }
     /*Private case*/
     .library-grid {
         margin-top: 20px;
     }
+
+    .btn-warning {
+        background-color: #979797;
+        border-color: #979797;
+        padding: 4px 7px;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .btn-danger {
+        padding: 4px 7px;
+        font-size: 16px;
+    }
+
+    .btn-delete-field {
+        line-height: 23px;
+        height: 40px;
+        margin-left: 5px;
+    }
+
+    .st-label-al-right {
+        text-align: right;
+        font-weight: 600;
+    }
+
+    .st-label-al-left {
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .st-lable-bold {
+        font-weight: 600;
+    }
+
+    .btn-st-blue, a.btn-st-blue {
+        border: 1px solid grey;
+        color: #fff;
+        background-color: #00aeff;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
 }
 
 @import 'back-end-styles/dynamics-styles';
 
-@import 'back-end-styles/sitemap-styles';
+/*@import 'back-end-styles/sitemap-styles';*/
 
 @import 'back-end-styles/navigation-backend';
 
@@ -63,8 +134,27 @@ body, html {
 
 @import 'back-end-styles/footer';
 
-
 @import 'back-end-styles/file-upload-modal';
+
+@import 'back-end-styles/_navigation-widget';
+
+@import 'back-end-styles/sitemap';
+
+@import 'back-end-styles/user-groups';
+
+@import 'back-end-styles/page-builder-custom';
+
+@import 'back-end-styles/custom-notifier';
+
+@import 'front-end-styles/share-buttons';
+
+@import 'back-end-styles/site-sync';
+
+@import 'back-end-styles/smtp-config';
+
+@import 'back-end-styles/languages';
+
+@import 'back-end-styles/permissions';
 
 /*--------------------------------------------------------------------*/
 

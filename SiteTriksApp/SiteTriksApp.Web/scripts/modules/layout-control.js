@@ -150,11 +150,13 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
     // clears selected item from the control and the ui
     function clearSelected() {
         l.selected = [];
-        $wrapper.find('.select-row.glyphicon-check').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+        $wrapper.find('.select-row.fa-check-square-o').removeClass('fa-check-square-o').addClass('fa-square-o');
         $wrapper.find('.selected').each(function (_, element) {
             $(element).removeClass('selected');
         });
     }
+
+
 
     // helper for displaying selected column 
     function selectColumn($element, direction, unselect) {
@@ -382,13 +384,13 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
     function selectRow(ev) {
         let $target = $(this);
 
-        if ($target.hasClass('glyphicon-check')) {
+        if ($target.hasClass('fa-check-square-o')) {
             return;
         }
 
         clearSelected();
 
-        $target.removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+        $target.removeClass('fa-square-o').addClass('fa-check-square-o');
 
         $target.parents('.row-holder').addClass('selected');
 
@@ -409,6 +411,7 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         });
 
         $options.append(html);
+        $('.placeholder-blurred').html('');
     }
 
     // updates row properties
@@ -553,7 +556,7 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         $rowWrapper.append(templates['layout-column-control']({ position, colCount }));
 
         $rowWrapper.appendTo($holder);
-        $holder.append('<br/>');
+        //$holder.append('<br/>');
 
         return $row;
     }

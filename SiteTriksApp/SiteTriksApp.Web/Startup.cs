@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+using System;
+using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SiteTriks.Data.Models;
+using SiteTriks.Data.Models.Users;
 using SiteTriks.Extensions;
 using SiteTriksApp.Web.Data;
-using System;
-using System.IO;
+
 
 namespace SiteTriksApp.Web
 {
@@ -65,7 +67,9 @@ namespace SiteTriksApp.Web
 
             services.ConfigureApplicationCookie(options =>
             {
+                options.LoginPath = new PathString("/sitetriks/login/");
                 options.Cookie.Expiration = TimeSpan.FromHours(4);
+
             });
 
             services.AddGZipConpression();

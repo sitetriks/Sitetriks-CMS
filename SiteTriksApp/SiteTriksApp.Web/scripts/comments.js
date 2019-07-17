@@ -3,6 +3,10 @@ import { Loader } from './common/loader.js';
 import { loadHandlebarsTemplates } from './common/handlebars.js';
 import { textEditor } from './text-editor.js';
 import { Notifier } from './common/notifier.js';
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
+import { DateConversion } from './common/date-conversion.js';
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
 
 const Comments = (function () {
     let parentId;
@@ -31,6 +35,14 @@ const Comments = (function () {
         return Data.getJson({ url: '/sitetriks/comments/loadcomments?id=' + id }).then(function (res) {
             if (res) {
                 $container.append(res);
+
+                $('.comment-date').each((_, e) => {
+					let d = e.getAttribute('data-original-date');
+					let date = DateConversion.convertUtcToLocal(d);
+                    e.textContent = date.toLocaleString();
+
+                });
+
                 return { success: true };
             }
 
@@ -41,12 +53,22 @@ const Comments = (function () {
     function addComment(ev) {
         Loader.show('#fff');
         let content = textEditor.getContent(areaId);
-
         let body = { id: parentId, content };
-        Data.postJson({ url: '/sitetriks/comments/addcomment', data: body }).then(function (res) {
+
+        Data.postJson({ url: '/sitetriks/comments/addcomment', data: body }).then(function (res) {           
             if (res.success) {
                 $container.append(res.view);
                 textEditor.clear(areaId);
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
+
+                $('.comment-date').each((_, e) => {
+                    let d = e.getAttribute('data-original-date');
+
+					let newDate = DateConversion.convertUtcToLocal(d);
+                    e.textContent = newDate.toLocaleString();
+                });
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
             } else {
                 Notifier.createAlert({ containerId: '#alert', message: 'Comment must not be empty', status: 'danger' });
             }

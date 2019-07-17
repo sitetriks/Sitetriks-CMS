@@ -56,18 +56,19 @@ div.row.st-documentation-wrapper {
     .col-md-3 .documentation-versions {
         max-width: 100%;
         width: 100%;
-        height: 30px;
-        font-size: 16px;
-        color: $font-contrast;
-        font-weight: bold;
-        height: 30px;
+        height: 34px;
         padding-left: 10px;
         margin-bottom: -1px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: right;
+        color: $font-contrast;
         border: 2px solid #d3d3d3;
         border-bottom-color: rgb(211, 211, 211);
         border-bottom-style: solid;
         border-bottom-width: 2px;
-        border-bottom: none;
+        border: 1px solid rgb(211, 211, 211);
+        border-radius: 0;
 
         option {
             padding-left: 10px;
@@ -76,20 +77,39 @@ div.row.st-documentation-wrapper {
 }
 
 /* Documentation navigation tree */
+.bottom-menu {
+    ul.docs-menu {
+        max-height: 574px;
+    }
+}
+
 ul.docs-menu {
     border: 2px solid #d3d3d3;
     color: $font-plain;
     font-weight: 700;
     font-size: 14px;
-    background-color: #6d92cd;
-    min-height: 530px;
-    border-right: none;
+    /*background-color: #6d92cd;*/
+    max-height: 900px;
     overflow-y: auto;
     list-style-type: none;
     padding-left: 0px;
+    overflow-y: auto;
 
-    .glyphicon {
+    .docs-menu-item .selected {
+        color: #6d92cd;
+        background-color: #ffffff;
+
+        a {
+            color: #6d92cd;
+        }
+    }
+
+    .fa {
         margin-right: 15px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
     }
 
     ul {
@@ -109,20 +129,44 @@ ul.docs-menu {
         margin-right: 33px;
     }
 
-    li.docs-menu-item > div {
-        padding: 10px 15px;
-        /*background-color: #fff;*/
-        border-bottom: 2px solid #ddd;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        /*white-space: nowrap;*/
+    li.docs-menu-item {
+        > div {
+            padding: 10px 15px;
+            /*background-color: #fff;*/
+            border-bottom: 2px solid #ddd;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /*white-space: nowrap;*/
+            padding-left: 45px;
+            padding-right: 35px;
+            position: relative;
+            /*background-color: #6d92cd;*/
+        }
+    }
+
+    .docs-menu-item {
+        background-color: #6d92cd;
+
+        .docs-menu-item {
+            background-color: #78a7f2;
+
+            .docs-menu-item {
+                background-color: #91b0e2;
+
+                .docs-menu-item {
+                    background-color: #97abcb;
+
+                    .docs-menu-item {
+                        background-color: #a6b1c4;
+                    }
+                }
+            }
+        }
     }
 }
-
 /*------------------------------------------------------------
        Documentation Edit page styles
     ---------------------------------------------------------------*/
-
 .form-horizontal .control-label {
     padding-top: 0;
 }
@@ -134,9 +178,7 @@ ul.docs-menu {
 #btn-add-version, #btn-delete-version {
     vertical-align: top;
 }
-
 /*Add version popul*/
-
 .preview-container {
     .preview-item-container {
         .blur-content {
@@ -147,8 +189,38 @@ ul.docs-menu {
                 margin-right: 15px;
                 margin-top: 5px;
             }
+
             .btn-success {
                 margin-right: 12px;
+            }
+        }
+    }
+}
+/* Search */
+.search-wrapper {
+    position: relative;
+
+    .documentation-search {
+        border-radius: 0;
+    }
+
+    .search-results {
+        position: absolute;
+        width: 100%;
+        background-color: #fff;
+        list-style: none;
+        padding: 0;
+        z-index: 1;
+
+        .result {
+            height: auto;
+            line-height: 24px;
+            font-size: 14px;
+            border: 1px solid #fff;
+            cursor: pointer;
+
+            &.suggested {
+                border-color: #000;
             }
         }
     }
@@ -156,9 +228,7 @@ ul.docs-menu {
 
 
 @media screen and (min-width: 2880px) {
-
     /*Documentation 4k resolution*/
-
     .st-documentation-wrapper {
         .col-md-9 .topic-details {
             min-height: 1200px;

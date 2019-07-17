@@ -1,4 +1,11 @@
+<<<<<<< HEAD
+﻿import './layout.js';
+import 'eonasdan-bootstrap-datetimepicker';
+
+import { Data } from '../common/data.js';
+=======
 ﻿import { Data } from '../common/data.js';
+>>>>>>> origin/master
 import { Loader } from '../common/loader.js';
 import { Utils } from '../common/utils.js';
 import { Validator } from '../common/validator.js';
@@ -7,6 +14,10 @@ import { loadHandlebarsTemplates } from '../common/handlebars.js';
 import { FileHandler } from '../modules/file-handler.js';
 import { WarningWindow } from '../modules/warning-window.js';
 import { textEditor } from '../text-editor.js';
+<<<<<<< HEAD
+import { DateConversion } from '../common/date-conversion.js';
+=======
+>>>>>>> origin/master
 
 var News = (function () {
     function createNews(validateNewsLinkUrl, mediator, logger) {
@@ -41,6 +52,15 @@ var News = (function () {
 
         function submitCreateNewsForm(evt) {
             let form = this;
+<<<<<<< HEAD
+            var url = $urlFlied.val();
+            var versionTitle = $versionTitle.val();
+            var content = $contentField.val();
+            
+            if (url.length < 3 || versionTitle.length < 3 || content.length < 3) {
+                evt.preventDefault();
+                mediator.dispatch('alert', { selector: '#alerts', message: 'Please provide valid information in the required fields (Permanent Title, Editable Title and Content)!', status: 'danger' });
+=======
             console.log(form);
             var url = $urlFlied.val();
             var versionTitle = $versionTitle.val();
@@ -49,6 +69,7 @@ var News = (function () {
             if (url.length < 3 || versionTitle.length < 3 || content.length < 3) {
                 evt.preventDefault();
                 mediator.dispatch('alert', { selector: '#alerts', message: 'Please provide valid information in the required fields (title, version title and content)!', status: 'danger' });
+>>>>>>> origin/master
                 return false;
             }
             Loader.show(true);
@@ -67,6 +88,16 @@ var News = (function () {
                 return res;
             }, Data.defaultError).then(function (res) {
                 if (res.success) {
+<<<<<<< HEAD
+					let datePicker = document.getElementById('date-picker');
+					if (datePicker.value) {
+						let hidden = document.getElementById('date-picker-hidden');
+						let parsedDate = new Date(Date.parse(datePicker.value)).toUTCString();
+						hidden.value = parsedDate;
+					}
+
+=======
+>>>>>>> origin/master
                     return Data.postForm({ url: form.action, formData: new FormData(form) });
                 } else {
                     mediator.dispatch('alert', { selector: '#alerts', message: res.message, status: 'danger' });
@@ -129,7 +160,11 @@ var News = (function () {
         let $modal = $('#file-upload-modal');
         let $container = $modal.find('.file-handler-wrapper');
         let fileHandler = FileHandler($container, ['Upload', 'Select', 'Selected'], '', mediator, logger, true);
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> origin/master
         var $urlFlied = $('#url');
         var $urlValidation = $('#url-validation');
         let $versionTitle = $('.version-title');
@@ -150,6 +185,16 @@ var News = (function () {
         loadHandlebarsTemplates(templatesCache, templates).then(function (res) {
             bindEvents();
             WarningWindow.attach();
+<<<<<<< HEAD
+            
+            common.countSEOWords.apply($('#seo-words'));
+			let dateToPublish = $dateTimePicker.attr('value');
+			let utc = DateConversion.convertUtcToLocal(dateToPublish);            
+
+            $dateTimePicker.datetimepicker({
+                minDate: new Date(),
+                date: utc,                
+=======
 
             common.countSEOWords.apply($('#seo-words'));
             let dateToPublish = $dateTimePicker.attr('value');
@@ -157,13 +202,20 @@ var News = (function () {
             $dateTimePicker.datetimepicker({
                 minDate: new Date(),
                 date: dateToPublish
+>>>>>>> origin/master
             });
 
             if (!dateToPublish || new Date(dateToPublish) < new Date()) {
                 $dateTimePicker.datetimepicker().val(' ');
             }
+<<<<<<< HEAD
+           
+            Utils.populateUrl('#title', '#url', common.validateUrlOnChange);
+          
+=======
 
             Utils.populateUrl('#title', '#url', common.validateUrlOnChange);
+>>>>>>> origin/master
         }, Data.defaultError);
 
         //------------------------------------------------------------------------------------------------------
@@ -209,8 +261,14 @@ var News = (function () {
 
                 Data.postJson({ url: newsMlfUrl, data: body }).then(function (res) {
                     if (res.success) {
+<<<<<<< HEAD
+                        mlf = res.mlf;                       
+                        window.location.replace('/sitetriks/news');
+                       
+=======
                         mlf = res.mlf;
                         window.location.replace('/sitetriks/news');
+>>>>>>> origin/master
                     } else {
                         mediator.dispatch('alert', { selector: '#alerts', title: 'Failed', message: res.message || 'News was not updated!', status: 'daneger' });
                     }
@@ -253,7 +311,17 @@ var News = (function () {
                     Loader.hide();
                 }
             }, Data.defaultError).then(function (res) {
+<<<<<<< HEAD
+				if (res.success) {
+					let datePicker = document.getElementById('date-picker');
+					if (datePicker.value) {
+						let hidden = document.getElementById('date-picker-hidden');
+						let parsedDate = new Date(Date.parse(datePicker.value)).toUTCString();
+						hidden.value = parsedDate;
+					}
+=======
                 if (res.success) {
+>>>>>>> origin/master
                     return Data.postForm({ url: form.action, formData: new FormData(form) });
                 } else {
                     mediator.dispatch('alert', { selector: '#alerts', message: res.message, status: 'daneger' });
@@ -311,6 +379,10 @@ var News = (function () {
             textEditor.remove('news-en-content');
             textEditor.remove('content-area');
         }
+<<<<<<< HEAD
+    
+=======
+>>>>>>> origin/master
     }
 
     function newsCommon(mediator, $urlFlied, $urlValidation, $btnSubmit, $dateTimePicker, $seoWordsCounter, $mainImageInput, $imagesInput, validateNewsLinkUrl, newsId) {
@@ -387,6 +459,11 @@ var News = (function () {
             }
 
             $('#file-upload-modal').modal('hide');
+<<<<<<< HEAD
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+=======
+>>>>>>> origin/master
         }
 
         function openDatePicker() {
@@ -420,7 +497,11 @@ var News = (function () {
 
         function createImageView(fieldId, imgLinkId, $mainContainer) {
             let $container = $('<div class="news-listed-images-container"></div>');
+<<<<<<< HEAD
+            let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="fa fa-times"></span></div>');
+=======
             let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="glyphicon glyphicon-remove"></span></div>');
+>>>>>>> origin/master
             let $img = $('<img src="/files/id/' + imgLinkId + '" class="display-image" />');
 
             $container.append($deleteBtn)

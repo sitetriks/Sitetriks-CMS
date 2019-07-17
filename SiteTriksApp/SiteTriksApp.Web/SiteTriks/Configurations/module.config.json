@@ -1,18 +1,132 @@
 {
-  "Available": [   
+  "Available": [
+    {
+      "Name": "SiteTriks.BlogModule",
+      "IsActive": false,
+      "DisplayName": "Blog",
+      "Dependencies": [
+        "SiteTriks.SiteSync",
+        "SiteTriks.RssFeedModule"
+      ]
+    },
+    {
+      "Name": "SiteTriks.SiteSync",
+      "IsActive": false,
+      "DisplayName": "Site Sync",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.DocumentationModule",
+      "IsActive": false,
+      "DisplayName": "Documentation",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ForumModule",
+      "IsActive": false,
+      "DisplayName": "Forum",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ErrorPagesModule",
+      "IsActive": false,
+      "DisplayName": "Error Pages",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.RssFeedModule",
+      "IsActive": false,
+      "DisplayName": "Rss Feed",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.MarketingEmailModule",
+      "IsActive": false,
+      "DisplayName": "Marketing Emails",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.FinTechModule",
+      "IsActive": true,
+      "DisplayName": "FinTech",
+      "Dependencies": []
+    },
     {
       "Name": "SiteTriks.SiteMapModule",
       "IsActive": false,
       "DisplayName": "Site Map",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ECommerceModule",
+      "IsActive": true,
+      "DisplayName": "E-Commerce",
       "Dependencies": []
     }
   ],
-  "Installed": [    
+  "Installed": [
+    {
+      "Name": "SiteTriks.BlogModule",
+      "IsActive": true,
+      "DisplayName": "Blog",
+      "Dependencies": [
+        "SiteTriks.SiteSync",
+        "SiteTriks.RssFeedModule"
+      ]
+    },
+    {
+      "Name": "SiteTriks.ErrorPagesModule",
+      "IsActive": true,
+      "DisplayName": "Error Pages",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.SiteSync",
+      "IsActive": true,
+      "DisplayName": "Site Sync",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ForumModule",
+      "IsActive": true,
+      "DisplayName": "Forum",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.RssFeedModule",
+      "IsActive": true,
+      "DisplayName": "Rss Feed",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.MarketingEmailModule",
+      "IsActive": true,
+      "DisplayName": "Marketing Emails",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.FinTechModule",
+      "IsActive": true,
+      "DisplayName": "FinTech",
+      "Dependencies": []
+    },
     {
       "Name": "SiteTriks.SiteMapModule",
-      "IsActive": false,
+      "IsActive": true,
       "DisplayName": "Site Map",
       "Dependencies": []
-    }    
+    },
+    {
+      "Name": "SiteTriks.DocumentationModule",
+      "IsActive": true,
+      "DisplayName": "Documentation",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ECommerceModule",
+      "IsActive": true,
+      "DisplayName": "E-Commerce",
+      "Dependencies": []
+    }
   ]
 }

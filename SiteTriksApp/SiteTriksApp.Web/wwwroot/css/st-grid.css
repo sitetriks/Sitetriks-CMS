@@ -177,7 +177,7 @@ ul.st-table ul> li.col-5{
     padding-left: 6%;
 }
 
-.bodyRow.child li:nth-of-type(4) .glyphicon {
+.bodyRow.child li:nth-of-type(4) .fa {
     display: none;
 }
 

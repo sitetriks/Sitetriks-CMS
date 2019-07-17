@@ -1,6 +1,7 @@
 ﻿const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
@@ -23,7 +24,7 @@ module.exports = {
         'sitetriks/news': './scripts/sitetriks/news.js',
         'sitetriks/dashboard-configuration': './scripts/sitetriks/dashboard-configuration.js',
         'frontend-layout-scripts': './scripts/frontend-layout-scripts.js',
-        'home-page': './scripts/home-page.js',
+        //'home-page': './scripts/home-page.js',
         'sitetriks/users': './scripts/sitetriks/users.js',
         'sitetriks/user-groups': './scripts/sitetriks/user-groups.js',
         'sitetriks/roles': './scripts/sitetriks/roles.js',
@@ -36,6 +37,9 @@ module.exports = {
         'sitetriks/helpers': './scripts/sitetriks/helpers.js',
         'sitetriks/forum': './scripts/sitetriks/forum.js',
         'sitetriks/setup': './scripts/sitetriks/setup.js',
+        'sitetriks/sitemap': './scripts/sitetriks/sitemap.js',
+        'calculator':'./scripts/fintech/calculator.js',
+        'sitetriks/smtp-config': './scripts/sitetriks/smtp-config.js',
         'sitetriks/storemanager': './scripts/sitetriks/storemanager.js',
         'sitetriks/storeitemmanager': './scripts/sitetriks/storeitemmanager.js',
         'sitetriks/categorymanager': './scripts/sitetriks/categorymanager.js',
@@ -45,12 +49,15 @@ module.exports = {
         'sitetriks/languages': './scripts/sitetriks/languages.js',
         'sitetriks/sitesync': './scripts/sitetriks/sitesync.js',
         'sitetriks/dynamic-views': './scripts/sitetriks/dynamic-views.js',
+        'subscription': './scripts/subscription.js',
         'manage-profile-index': './scripts/manage-profile-index.js',
         'sitetriks/layout': './scripts/sitetriks/layout.js',
         'sitetriks/permissions': './scripts/sitetriks/permissions.js',
         'scss/site': './styles/site.scss',
         'scss/front-end-entry': './styles/front-end-entry.scss',
-        'scss/back-end-entry': './styles/back-end-entry.scss'
+        'scss/back-end-entry': './styles/back-end-entry.scss',
+        'scss/page-builder-preview-entry': './styles/page-builder-preview-entry.scss',
+        'bundle': './scripts/bundle.js'
     },
     resolve: {
         modules: [
@@ -67,7 +74,7 @@ module.exports = {
             use: {
                 loader: 'babel-loader',
                 options: {
-                    presets: ['env']
+                    presets: ['@babel/preset-env']
                 }
             }
         },
@@ -76,9 +83,9 @@ module.exports = {
             use: [
                 {
                     loader: 'file-loader',
-                    options: {
-                        name: 'css/scss/[name]-sitetriks.css'
-                    }
+                    //options: {
+                    //    name: 'css/scss/[name].css'
+                    //}
                 },
                 {
                     loader: 'extract-loader'
@@ -87,10 +94,41 @@ module.exports = {
                     loader: 'css-loader?-url'
                 },
                 {
-                    loader: 'postcss-loader'
+                    loader: 'sass-loader',
+                    options: {
+                        implementation: require("sass")
+                    }
+                }
+            ]
+        },
+        {
+            test: require.resolve('jquery'),
+            use: [{
+                loader: 'expose-loader',
+                options: 'jQuery'
+            }, {
+                loader: 'expose-loader',
+                options: '$'
+            }]
+        },
+        {
+            test: /\.(sa|sc|c)ss$/,
+            use: [
+                {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath: '/css/'
+                    }
                 },
                 {
-                    loader: 'sass-loader'
+                    loader: 'css-loader',
+                    options: { url: false }
+                },
+                {
+                    loader: 'sass-loader',
+                    options: {
+                        implementation: require("sass")
+                    }
                 }
             ]
         }]
@@ -112,7 +150,15 @@ module.exports = {
     },
     devtool: false,
     plugins: [
-        new webpack.SourceMapDevToolPlugin()
+        new webpack.SourceMapDevToolPlugin(),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+            chunkFilename: 'css/[id].css'
+        })
     ],
     output: {
         // The format for the outputted files

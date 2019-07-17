@@ -1,19 +1,19 @@
-﻿{{#if items}}
-    <div class="buttons-container">
-        <div class="deselect-all">Deselect All</div>
-    </div>
+﻿<div class="buttons-container">
+    <div class="deselect-all">Deselect All</div>
+</div>
+{{#if items}}
 
-    {{#each items as |value key|}}
+{{#each items as |value key|}}
 
-    <div id="staged-{{key}}" class="main-element" data-displayName="{{value}}">
-        {{key}}<span class="glyphicon glyphicon-menu-right" style="display: none;"></span><span class="glyphicon glyphicon-menu-down"></span>
-    </div>
-    <div id="staged-{{key}}-content" class="content-element">
-        {{#each value}}
-        <div class="{{title}}" data-id="{{id}}"><span class="glyphicon glyphicon-remove"></span> {{title}}</div>
-        {{/each}}
-    </div>
+<div id="staged-{{key}}" class="main-element" data-displayName="{{key}}">
+    {{key}}<span class="fa fa-angle-right" style="display: none;"></span><span class="fa fa-angle-down"></span><img class="remove-category" src="/images/site-sync/delete.svg" />
+</div>
+<div id="staged-{{key}}-content" class="content-element">
+    {{#each value}}
+    <div class="{{title}} staged-element" data-id="{{id}}"><span>{{title}}</span><img class="remove-item" src="/images/site-sync/delete-dark.svg" /> </div>
     {{/each}}
+</div>
+{{/each}}
 {{/if}}
 
 

@@ -12,11 +12,11 @@
 
     let childClassNumber;
 
-    let $arrowRight = '<span class="glyphicon glyphicon-chevron-right"></span>';
-    let $arrowDown = '<span class="glyphicon glyphicon-chevron-down"></span>';
+    let $arrowRight = '<span class="fa fa-angle-right"></span>';
+    let $arrowDown = '<span class="fa fa-angle-down"></span>';
 
     let $glyph = $element.find('.page-toggle');
-    $glyph.html() === '<span class="glyphicon glyphicon-chevron-down"></span>' ? $glyph.html($arrowRight) : $glyph.html($arrowDown);
+    $glyph.html() === '<span class="fa fa-angle-down"></span>' ? $glyph.html($arrowRight) : $glyph.html($arrowDown);
 
     for (var i = 0; i < 5; i++) {
         if ($element.hasClass(tempClass + i)) {

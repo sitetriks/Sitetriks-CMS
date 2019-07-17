@@ -1,7 +1,10 @@
-﻿{{#each items as |value key|}}
-
+﻿<div class="buttons-container">
+    <div class="expand-all">Expand All</div>
+    <div class="shrink-all">Shrink All</div>
+</div>
+{{#each items as |value key|}}
 <div id="destination-{{value}}" class="main-element" data-displayName="{{value}}">
-    {{value}}<span class="glyphicon glyphicon-menu-right" style=""></span><span class="glyphicon glyphicon-menu-down" style="display: none;"></span>
+    {{value}}<span class="fa fa-angle-right" style=""></span><span class="fa fa-angle-down" style="display: none;"></span>
 </div>
 <div id="destination-{{value}}-content" class="content-element">
 </div>

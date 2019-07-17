@@ -13,7 +13,7 @@ namespace SiteTriksApp.Web
 		public static void Main(string[] args)
 		{
 			BuildWebHost(args)
-			.InitializeSiteTriks(new string[] { STUserRoles.FrontEnd, STUserRoles.Partner, STUserRoles.Client, STUserRoles.UnAuthorized })
+			.InitializeSiteTriks(new string[] { STUserRoles.Partner, STUserRoles.Client, STUserRoles.UnAuthorized })
 			.Run();
 		}
 

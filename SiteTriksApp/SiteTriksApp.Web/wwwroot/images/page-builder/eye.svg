@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="77px" height="80px" viewBox="0 0 77 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 15</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="page_builder" transform="translate(-1017.000000, -2296.000000)" fill-rule="nonzero">
+            <g id="Group-15" transform="translate(1017.000000, 2296.000000)">
+                <rect id="Rectangle-Copy-33" stroke="#979797" fill="#FFFFFF" x="0.5" y="0.5" width="76" height="79" rx="12"></rect>
+                <circle id="Oval" fill="#000000" cx="40" cy="38" r="11"></circle>
+                <path d="M37.5,34 C40,33.5 41,33.2085533 41,32.3542766 C41,31.5 40,31 39,31 C35,31 32,33.9101491 32,37.5 C32,37.9599809 32.0514549,38.4088023 32.1493115,38.8417719 C32.3266508,39.6264152 34.0270876,39.5 34.5,38.5 C35.5,37 35.0270876,34 37.5,34 Z" id="Oval" fill="#FFFFFF"></path>
+                <path d="M40,54 C46.9956068,54 53.6622735,49.6666667 60,41 C53.6622735,32.3333333 46.9956068,28 40,28 C33.0043932,28 25.8377265,32.3333333 18.5,41 C25.8377265,49.6666667 33.0043932,54 40,54 Z" id="Oval" stroke="#000000" stroke-width="2"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,7 +1,15 @@
 import { Data } from '../common/data.js';
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
+import { Utils } from '../common/utils.js';
 import { Pager } from './pager.js';
 import { DataSource } from './data-source.js';
 import { Handlebars } from '../common/handlebars.js';
+import { DateConversion } from '../common/date-conversion.js';
+=======
+import { Pager } from './pager.js';
+import { DataSource } from './data-source.js';
+import { Handlebars } from '../common/handlebars.js';
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
 
 'use strict';
 
@@ -31,19 +39,17 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
     render();
     bindEvents();
 
+    if (config.type === 'grid') {
+
+        $bodyRow.css('display', 'inline-block');
+    }
+
     const dataSource = new DataSource(sourceConfig);
     pagerConfig = pagerConfig || { pageSizes: [1, 2, 5, 10, 20, 50, 100, 'all'], pageReadOnly: true, default: 20 };
     const pager = new Pager($pagerRow, pagerConfig, onPageChange);
     const paging = { page: 1, size: pagerConfig.default || 10, default: pagerConfig.default };
     const sorting = {};
     const filters = [];
-    const dateFormatOptions = {
-        month: 'numeric',
-        year: 'numeric',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    };
 
     function render() {
         $headerRow.append(createButtons()).append(createHeader());
@@ -86,15 +92,15 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
         pager.setCurrentPage(1);
 
         $headerRow.find('button[data-sort="desc"]').attr('data-sort', 'asc');
-        $headerRow.find('span.glyphicon-sort-by-attributes-alt')
-            .removeClass('glyphicon-sort-by-attributes-alt')
-            .addClass('glyphicon-sort-by-attributes');
+        $headerRow.find('span.fa-sort-amount-desc')
+            .removeClass('fa-sort-amount-desc')
+            .addClass('fa-sort-amount-asc');
 
         if (sorting.order === 1) {
             $target.attr('data-sort', 'desc');
-            $target.children('span.glyphicon-sort-by-attributes')
-                .removeClass('glyphicon-sort-by-attributes')
-                .addClass('glyphicon-sort-by-attributes-alt');
+            $target.children('span.fa-sort-amount-asc')
+                .removeClass('fa-sort-amount-asc')
+                .addClass('fa-sort-amount-desc');
         }
 
         loadData();
@@ -102,13 +108,16 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
     function showChildren(ev) {
         let $target = $(this);
-        let $icon = $target.children('.glyphicon');
-        if ($icon.hasClass('glyphicon-plus')) {
-            $icon.removeClass('glyphicon-plus').addClass('glyphicon-minus');
-            $target.parents('.grid-item').first().children('.nested-grid-items').show();
+        let $icon = $target.children('.fa');
+        let $currentNestedRow = $target.parents('.grid-item').first().children('.nested-grid-items');
+        if ($icon.hasClass('fa-plus')) {
+            $icon.removeClass('fa-plus').addClass('fa-minus');
+            $currentNestedRow.show();
+            $currentNestedRow.children('.grid-item').addClass('full-row');
         } else {
-            $icon.removeClass('glyphicon-minus').addClass('glyphicon-plus');
-            $target.parents('.grid-item').first().children('.nested-grid-items').hide();
+            $icon.removeClass('fa-minus').addClass('fa-plus');
+            $currentNestedRow.hide();
+            $currentNestedRow.children('.grid-item').removeClass('full-row');
         }
     }
 
@@ -208,12 +217,12 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
         for (let i = 0; i < config.fields.length; i += 1) {
             let $cell = $('<div></div>', {
-                class: config.isGrid ? 'grid-filter' : 'col-xs-' + config.fields[i].size || 2
+                class: config.isGrid ? 'grid-filter' : 'col-' + config.fields[i].size || 2
             });
 
             if (config.fields[i].sort) {
                 let $ascendingIcon = $('<span></span>', {
-                    class: 'glyphicon glyphicon-sort-by-attributes'
+                    class: 'fa fa-sort-amount-asc'
                 });
 
                 let $filterButton = $('<button></button>', {
@@ -241,10 +250,10 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
             if (!config.isGrid) {
                 let content = config.fields[i].type === 'checkbox' ? '<input type="checkbox" class="st-select-all-checkbox" />' :
-                    config.fields[i].headerTemplate ? replaceAll(config.fields[i].headerTemplate, '#item#', config.fields[i].title || '') : config.fields[i].title || '';
+                    config.fields[i].headerTemplate ? Utils.replaceAll(config.fields[i].headerTemplate, '#item#', config.fields[i].title || '') : config.fields[i].title || '';
 
                 $('<div></div>', {
-                    class: config.isGrid ? 'grid-filter' : 'col-xs-' + config.fields[i].size || 2,
+                    class: config.isGrid ? 'grid-filter' : 'col-' + config.fields[i].size || 2,
                     html: content
                 }).appendTo($titleHeader);
             }
@@ -316,22 +325,22 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             switch (config.customActions[key].type) {
                 case 'success':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-ok'
+                        class: 'fa fa-check'
                     }).css('color', 'lime').prependTo($btn);
                     break;
                 case 'warning':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-ok'
+                        class: 'fa fa-check'
                     }).css('color', 'red').prependTo($btn);
                     break;
                 case 'danger':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-remove'
+                        class: 'fa fa-times'
                     }).css('color', 'red').prependTo($btn);
                     break;
                 case 'add':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-plus'
+                        class: 'fa fa-plus'
                     }).prependTo($btn);
                     $btn.removeClass('btn-grid').removeClass('btn').addClass('btn-grid-add');
 
@@ -367,7 +376,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
                 if (nestingProperty && items[i][nestingProperty] && items[i][nestingProperty].length) {
                     $('<div></div>', {
-                        class: 'col-xs-12 nested-grid-items'
+                        class: 'col-12 nested-grid-items'
                     }).hide()
                         .append(buildBody(items[i][nestingProperty]))
                         .appendTo($row);
@@ -382,7 +391,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
     function createItemRow(item) {
         let $bodyRow = $('<div></div>', {
-            class: `grid-item ${config.isGrid ? 'grid-cell' : 'row'}`
+            class: `grid-item ${config.isGrid ? 'grid-cell' : 'row'} full-row`
         });
 
         for (let i = 0; i < config.fields.length; i += 1) {
@@ -422,8 +431,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
                         str = parseInt(str.substr(6, str.length - 2 - 6));
                     }
 
-                    // parse date to formated string
-                    content = new Date(str).toLocaleString('en', dateFormatOptions);
+                    content = DateConversion.convertUtcToLocal(str);
                     break;
 
                 case 'image':
@@ -472,21 +480,21 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             }
 
             if (columnConfig.contentTemplate) {
-                content = replaceAll(columnConfig.contentTemplate, '#item#', content);
+                content = Utils.replaceAll(columnConfig.contentTemplate, '#item#', content);
             }
 
             if (content && columnConfig.extraFields && columnConfig.extraFields.length > 0) {
                 for (let i = 0; i < columnConfig.extraFields.length; i++) {
-                    content = replaceAll(content, `#item${i}#`, item[columnConfig.extraFields[i]]);
+                    content = Utils.replaceAll(content, `#item${i}#`, item[columnConfig.extraFields[i]]);
                 }
             }
 
             if (i === 0 && item[nestingProperty] && item[nestingProperty].length > 0) {
-                content = '<button class="btn-xs btn-default child-expand"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>' + content;
+                content = '<button class="btn-xs btn-default child-expand"><i class="fa fa-plus" aria-hidden="true"></i></button>' + content;
             }
 
             $('<div></div>', {
-                class: config.isGrid ? '' : `col-xs-${columnConfig.size || 2}`,
+                class: config.isGrid ? '' : `col-${columnConfig.size || 2}`,
                 html: content
             }).appendTo($bodyRow);
         }
@@ -548,6 +556,8 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
     };
 }
 
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
+=======
 //=======================================================================================
 // TODO: move
 function escapeRegExp(str) {
@@ -558,5 +568,6 @@ function replaceAll(str, find, replace) {
     return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 }
 
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
 window._Grid = _Grid;
 export { _Grid };

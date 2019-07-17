@@ -16,7 +16,7 @@
     line-height: normal;
 }
 
-.layout-builder-container .glyphicon.select-row.glyphicon-check, .layout-builder-container .glyphicon.select-row.glyphicon-unchecked {
+.layout-builder-container .fa.select-row.fa-check-square-o, .layout-builder-container .fa.select-row.fa-check-square-o {
     color: #088cfc;
     position: relative;
     -webkit-text-stroke: 2px white;
@@ -133,9 +133,9 @@
         z-index: 10;
         position: relative;
         background-color: #6bbbff;
-        padding: 2px;
+        padding: 7px;
         color: #fff;
-        font-size: 16px;
+        font-size: 18px;
         left: -10px;
     }
 
@@ -162,6 +162,8 @@
     border-radius: 4px;
     text-align: center;
     padding: 15px;
+    line-height: normal;
+    padding-top: 17px;
     cursor: pointer;
     color: #048cff;
     margin-left: 5%;
@@ -194,6 +196,10 @@
     text-align: center;
     line-height: normal;
     margin-left: 10px;
+}
+
+.col-control div{
+float: left;
 }
 
     .col-control .columns-count-wrapper {
@@ -297,13 +303,13 @@
     line-height: normal;
 }
 
-/*Row glyphicons*/
+/*Row fa*/
 
-.glyphicon.select-row.glyphicon-check,
-.glyphicon.select-row.glyphicon-unchecked {
+.fa.select-row.fa-square-o,
+.fa.select-row.fa-check-square-o {
     color: #088cfc;
     position: relative;
-    -webkit-text-stroke: 4px white;
+    -webkit-text-stroke: 2px white;
     line-height: normal;
     vertical-align: middle;
 }
@@ -344,3 +350,9 @@
         float: right;
         text-align: right;
     }
+
+#layout-properties .select-tag,
+#layout-properties .input-cssClass {
+    width: 60%;
+    float: right;
+}

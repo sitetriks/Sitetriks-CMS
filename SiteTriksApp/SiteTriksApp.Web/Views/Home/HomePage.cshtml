@@ -166,7 +166,7 @@
     <div class="toggle-menu" data-open-state="closed">
         <div class="features-section">
             <div class="row">
-                <div class="side-section col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <div class="side-section col col-1">
                     <div class="menu-icon" data-order="0">
                         <img class="icon-image" src="~/images/toggle-menu-icons/Default/Videos.svg">
                         <img class="icon-image" src="~/images/toggle-menu-icons/Selected/Videos_selected.svg" style="display:none;">
@@ -193,10 +193,10 @@
                         @*<div class="icon-name">Downloads</div>*@
                     </div>
                 </div>
-                <div class="middle-section col col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                <div class="middle-section col col-10">
                     <div class="selected-feature" id="floating-section"><div class="feature-content"></div></div>
                 </div>
-                <div class="side-section col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <div class="side-section col col-1">
                     <div class="menu-icon" data-order="1">
                         <img class="icon-image" src="~/images/toggle-menu-icons/Default/Next.svg">
                         <img class="icon-image" src="~/images/toggle-menu-icons/Selected/Next_selected.svg" style="display:none;">
@@ -263,11 +263,11 @@
 <div class="detailed-menu hidden-by-menu">
     <div class="wrapper-detailed-menu">
         <div class="row">
-            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 before-middle-box"></div>
-            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 before-middle-box"></div>
+            <div class="col col-6 before-middle-box"></div>
+            <div class="col col-6 before-middle-box"></div>
         </div>
         <div class="row">
-            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col col-12">
                 <div id="middle-box">
                     <div class="advanced-cms">
                         Advance CMS
@@ -286,8 +286,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 after-middle-box"></div>
-            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 after-middle-box"></div>
+            <div class="col col-6 after-middle-box"></div>
+            <div class="col col-6 after-middle-box"></div>
         </div>
         <div class="wrapper-menu-items">
             @for (int i = 0; i < 3; i++)
@@ -299,17 +299,17 @@
 
                 }
                 <div class="row">
-                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item"></div>
-                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item"></div>
-                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item @{if (lastClass) {<text> third-last </text> } } "></div>
-                    <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-3 item before-item fourth-last"></div>
+                    <div class="col col-3 item before-item"></div>
+                    <div class="col col-3 item before-item"></div>
+                    <div class="col col-3 item before-item @{if (lastClass) {<text> third-last </text> } } "></div>
+                    <div class="col col-3 item before-item fourth-last"></div>
                 </div>
                 <div class="row">
-                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 item item-left @{if (lastClass) { <text> last-left </text> } }">
+                    <div class="col col-6 col-xs-12 item item-left @{if (lastClass) { <text> last-left </text> } }">
                         @{Html.RenderPartial("MiddleMenuTemplate");}
 
                     </div>
-                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 item item-right @{if (lastClass) { <text> last-right </text> } }">
+                    <div class="col col-6 col-xs-12 item item-right @{if (lastClass) { <text> last-right </text> } }">
                         @{Html.RenderPartial("MiddleMenuTemplate");}
                     </div>
                 </div>
@@ -321,15 +321,15 @@
     <div class="wrapper-technology-list">
         <div class="technology-list-header">
             <div class="row before-header">
-                <div class="col col-lg-6 col-md-6 col-sm-6"></div>
-                <div class="col col-lg-6 col-md-6 col-sm-6"></div>
+                <div class="col col-6"></div>
+                <div class="col col-6"></div>
             </div>
             <div class="row header">
                 <p>Technology & advantages</p>
             </div>
         </div>
         <div class="row">
-            <div class="col col-lg-12 col-md-12 col-xs-12 technology-description">
+            <div class="col col-12 technology-description">
                 <div class="main-description-mobile-wrapper">
                     <div class="col col-lg-12 col-xs-12 main-description">
                         <div>
@@ -349,7 +349,7 @@
             </div>
         </div>
         <div class="row toggle-flex-block">
-            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 technology-description">
+            <div class="col col-12 technology-description">
                 <div class="advantages-wrapper">
                     <div class="advantages-block">
                         Advantages
@@ -357,7 +357,7 @@
                         <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="dropdownOne-advantage arrow-down" />
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 bullets first-column">
+                <div class="col col-6 col-xs-12 bullets first-column">
                     <ul>
                         <li>Custom modules with access to the core functionality and content.</li>
                         <li>Extensive widget configuration.</li>
@@ -369,7 +369,7 @@
                         <li>Two tier configuration storage</li>
                     </ul>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 bullets second-column">
+                <div class="col col-6 col-xs-12 bullets second-column">
                     <ul>
                         <li>Quicker load time</li>
                         <li>Simpler and faster development</li>
@@ -387,7 +387,7 @@
                 <img src="~/images/mobile/shrank.svg" alt="shrank" class="dropdownOne-tech side-arrow" />
                 <img src="~/images/mobile/Arrow down.svg" alt="shrank" style="display:none" class="dropdownOne-tech arrow-down" />
             </div>
-            <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12 technology-links">
+            <div class="col col-4 col-xs-12 technology-links">
                 <div>
                     <div>.NET CORE</div>
                     <div>Entity Framework</div>
@@ -445,7 +445,7 @@
 
 <div id="desktop-view-menu" class="features-section bottom-menu">
     <div class="row">
-        <div class="col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+        <div class="col col-1">
             <div class="menu-icon" data-order="0">
                 <img class="icon-image" src="~/images/toggle-menu-icons/Default/Videos.svg">
                 <img class="icon-image" src="~/images/toggle-menu-icons/Selected/Videos_selected.svg" style="display:none">
@@ -472,10 +472,10 @@
                 @*<div class="icon-name">Downloads</div>*@
             </div>
         </div>
-        <div class="col col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <div class="col col-10">
             <div class="selected-feature" id="static-section"><div class="feature-content"></div></div>
         </div>
-        <div class="col col-lg-1 col-md-1 col-sm-1 col-xs-1">
+        <div class="col col-1">
             <div class="menu-icon" data-order="1">
                 <img class="icon-image" src="~/images/toggle-menu-icons/Default/Next.svg">
                 <img class="icon-image" src="~/images/toggle-menu-icons/Selected/Next_selected.svg" style="display:none">

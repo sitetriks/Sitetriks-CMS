@@ -1,4 +1,6 @@
-﻿function builderFields(mappingsUrl, builderName) {
+﻿import './layout.js';
+
+function builderFields(mappingsUrl, builderName) {
     $(document).ready(function () {
         var mappingDropdownValue = $("#mapping_options").val();
 

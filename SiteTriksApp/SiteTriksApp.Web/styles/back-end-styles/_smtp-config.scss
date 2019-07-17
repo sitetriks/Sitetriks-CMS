@@ -1,0 +1,46 @@
+﻿.marketing-smtp {
+
+    h4 {
+        font-size: 18px;
+    }
+
+    #smtp-configuration-form {
+
+        .form-horizontal .control-label {
+            padding-top: 0;
+            text-align: right;
+            color: rgb(51, 51, 51);
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+
+    .smtp-senders-container {
+
+        .smtp-sender-list {
+            margin-top: 10px;
+        }
+
+        .smtp-sender-name {
+            margin-right: 20px;
+        }
+
+        a.smtp-add-btn {
+            color: #fff;
+        }
+
+        .remove-smtp-sender {
+            border: 1px solid gray;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    }
+}
+
+.sitetriks-login {
+    #smtp-configuration-form {
+        h4, label {
+            color: #b0b0b0;
+        }
+    }
+}

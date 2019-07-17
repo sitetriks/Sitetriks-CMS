@@ -654,17 +654,29 @@ var Grid = function () {
             switch (element.type) {
                 case 'success':
                     $('<span></span>', {
+<<<<<<< HEAD
+                        class: 'fa fa-check'
+=======
                         class: 'glyphicon glyphicon-ok'
+>>>>>>> origin/master
                     }).css('color', 'lime').prependTo($button);
                     break;
                 case 'warning':
                     $('<span></span>', {
+<<<<<<< HEAD
+                        class: 'fa fa-check'
+=======
                         class: 'glyphicon glyphicon-ok'
+>>>>>>> origin/master
                     }).css('color', 'red').prependTo($button);
                     break;
                 case 'danger':
                     $('<span></span>', {
+<<<<<<< HEAD
+                        class: 'fa fa-times'
+=======
                         class: 'glyphicon glyphicon-remove'
+>>>>>>> origin/master
                     }).css('color', 'red').prependTo($button);
                     break;
 
@@ -723,7 +735,11 @@ var Grid = function () {
 
             if (columnConfiguration[i].filter) {
                 //let $icon = $('<span></span>', {
+<<<<<<< HEAD
+                //    class: 'fa fa-search'
+=======
                 //    class: 'glyphicon glyphicon-search'
+>>>>>>> origin/master
                 //});
 
 
@@ -777,7 +793,11 @@ var Grid = function () {
 
             if (columnConfiguration[i].sort) {
                 let $ascendingIcon = $('<span></span>', {
+<<<<<<< HEAD
+                    class: 'fa fa-sort-amount-asc'
+=======
                     class: 'glyphicon glyphicon-sort-by-attributes'
+>>>>>>> origin/master
                 });
 
                 let $filterButton = $('<button></button>', {
@@ -812,7 +832,11 @@ var Grid = function () {
                 .addClass('dsc-sort')
                 .attr('data-order', 1);
 
+<<<<<<< HEAD
+            sortingClass = 'fa fa-sort-amount-desc';
+=======
             sortingClass = 'glyphicon glyphicon-sort-by-attributes-alt';
+>>>>>>> origin/master
         }
         else {
             $filterButton.removeClass('no-sort')
@@ -820,7 +844,11 @@ var Grid = function () {
                 .addClass('asc-sort')
                 .attr('data-order', 0);
 
+<<<<<<< HEAD
+            sortingClass = 'fa fa-sort-amount-asc';
+=======
             sortingClass = 'glyphicon glyphicon-sort-by-attributes';
+>>>>>>> origin/master
         }
 
         $filterButton.children('span')
@@ -896,7 +924,11 @@ var Grid = function () {
             let $arrow = $('<i>');
 
             $btn.attr('class', 'btn-xs btn-default child-expand');
+<<<<<<< HEAD
+            $arrow.attr('class', 'fa fa-plus');
+=======
             $arrow.attr('class', 'glyphicon glyphicon-plus');
+>>>>>>> origin/master
             $arrow.attr('aria-hidden', 'true');
 
             $btn.append($arrow);
@@ -916,6 +948,15 @@ var Grid = function () {
     }
 
     function expandChildren() {
+<<<<<<< HEAD
+        if ($(this).children().first().hasClass('fa-plus')) {
+            $(this).children().first().removeClass('fa-plus');
+            $(this).children().first().addClass('fa-minus');
+        }
+        else {
+            $(this).children().first().addClass('fa-plus');
+            $(this).children().first().removeClass('fa-minus');
+=======
         if ($(this).children().first().hasClass('glyphicon-plus')) {
             $(this).children().first().removeClass('glyphicon-plus');
             $(this).children().first().addClass('glyphicon-minus');
@@ -923,6 +964,7 @@ var Grid = function () {
         else {
             $(this).children().first().addClass('glyphicon-plus');
             $(this).children().first().removeClass('glyphicon-minus');
+>>>>>>> origin/master
         }
 
         $(this).parent().parent().removeClass('hidden');
@@ -1123,7 +1165,11 @@ var Grid = function () {
             // console.log(data);
             if (typeof config != 'undefined') {
                 if (j === 0 && data[config.data.nestingPropertyName] != undefined && data[config.data.nestingPropertyName].length > 0) {
+<<<<<<< HEAD
+                    content = '<button class="btn-xs btn-default child-expand"><i class="fa fa-plus" aria-hidden="true"></i></button>' + content;
+=======
                     content = '<button class="btn-xs btn-default child-expand"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>' + content;
+>>>>>>> origin/master
                 }
             }
 
@@ -1172,13 +1218,19 @@ var Grid = function () {
         });
 
         let $previousPageArrow = $('<span></span>', {
+<<<<<<< HEAD
+=======
             //class: 'glyphicon glyphicon-arrow-left btn-pager btn-disabled',
+>>>>>>> origin/master
             id: 'previousPageArrow',
             class: 'btn-disabled'
         });
 
         let $nextPageArrow = $('<span></span>', {
+<<<<<<< HEAD
+=======
             //class: 'glyphicon glyphicon-arrow-right btn-pager',
+>>>>>>> origin/master
             id: 'nextPageArrow'
         });
 

@@ -1,4 +1,10 @@
+<<<<<<< HEAD
+﻿import './layout.js';
+
+import { Data } from '../common/data.js';
+=======
 ﻿import { Data } from '../common/data.js';
+>>>>>>> origin/master
 import { Notifier } from '../common/notifier.js';
 import { createSiteSyncModel } from './sitesync-model.js';
 import { createSiteSyncCore } from './sitesync-core';
@@ -22,7 +28,13 @@ window.siteSyncModule = (function () {
             $historyButton = $('#history-button'),
             $historyResultsContainer = $('.history-content-results'),
             $alertBox = $('#site-sync-alert'),
+<<<<<<< HEAD
+            $siteSyncButton = $('#site-sync-button'),
+            $destinationTitle = $('.destination h4'),
+            $sourceContainer = $('#source-container');
+=======
             $siteSyncButton = $('#site-sync-button');
+>>>>>>> origin/master
 
         bindEvents();
 
@@ -39,6 +51,18 @@ window.siteSyncModule = (function () {
 
         /*Events functions */
         function selectItemsForPublish() {
+<<<<<<< HEAD
+
+            let $target = $(this);
+            let $item = $target.find('.source-checkbox');
+
+            let id = $item.attr('data-id');
+            let displayName = $item.parent().parent().parent().attr('data-displayName');
+            let title = $item.attr('data-paragraph-title');
+
+            siteSyncModel.addItem(displayName, id);
+            siteSyncCore.addElementToSyncData(displayName, id, title);
+=======
             console.log('in select for publish');
 
             let $target = $(this);
@@ -56,6 +80,7 @@ window.siteSyncModule = (function () {
             siteSyncModel.addItem(displayName, id);
             siteSyncCore.addElementToSyncData(displayName, id, title);
             console.log(siteSyncModel.getCurrentModel());
+>>>>>>> origin/master
         }
 
         function selectAllItems() {
@@ -76,7 +101,11 @@ window.siteSyncModule = (function () {
         }
 
         function deselectAllItems() {
+<<<<<<< HEAD
+            // $('#staged-container').html('');
+=======
             $('#staged-container').html('');
+>>>>>>> origin/master
             uncheckItems();
             siteSyncModel.removeAllItems();
             siteSyncCore.deselectAllSourceData();
@@ -98,6 +127,21 @@ window.siteSyncModule = (function () {
             siteSyncModel.removeItem(displayName, itemId);
         }
 
+<<<<<<< HEAD
+        function removeCategory() {
+            let $mainElement = $(this).parent();
+            let displayName = $mainElement.attr('data-displayName');
+
+            siteSyncCore.removeCategoryFromStaged(displayName);
+            siteSyncCore.renderStagedContainer();
+
+            let $checkbox = $(`#source-${displayName}`).find('.source-items');
+
+            $checkbox.prop('checked', false);
+        }
+
+=======
+>>>>>>> origin/master
         function displayDeleteMessage() {
             let $popup = $('.delete-popup');
             $popup.css('display', 'block');
@@ -128,6 +172,8 @@ window.siteSyncModule = (function () {
             $popup.css('display', 'none');
         }
 
+<<<<<<< HEAD
+=======
         function displayHistoryContainer() {
             if ($historyButton.hasClass('clicked')) {
                 $historyResultsContainer.html('');
@@ -146,6 +192,7 @@ window.siteSyncModule = (function () {
             }
         }
 
+>>>>>>> origin/master
         function displaySyncedFiles() {
             let $target = $(this);
             let $fileDetails = $target.parent().parent().next();
@@ -181,7 +228,10 @@ window.siteSyncModule = (function () {
         }
 
         function onTargetSelect() {
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
             resetHistoryContainer();
             $('#source-container').html('');
             $('#staged-container').html('');
@@ -190,9 +240,13 @@ window.siteSyncModule = (function () {
             $('.edit-target-form').css('display', 'none');
             $('.create-target-form').css('display', 'none');
 
+<<<<<<< HEAD
+            let $historyDataLink = $('#history-button a');
+=======
             // enable the start button
             $connectTargetButton.removeClass('grayed-out');
             $siteSyncButton.removeClass('grayed-out');
+>>>>>>> origin/master
 
             if ($(this).val() == 0) {
                 return;
@@ -204,13 +258,34 @@ window.siteSyncModule = (function () {
 
 
             currSelectedSite = $(this).val();
+<<<<<<< HEAD
+            $destinationTitle.html(currSelectedSite);
             siteSyncCore.fillContainers(currSelectedSite);
+            if (currSelectedSite.length > 3) {
+                $historyDataLink.attr('href', '/sitetriks/sitesync/historydata?targetSite=' + currSelectedSite);
+            } else {
+                $historyDataLink.attr('href', '#');
+            }
+
+=======
+            siteSyncCore.fillContainers(currSelectedSite);
+>>>>>>> origin/master
         }
 
         function onClickSourceContainerDisplayName() {
             let mainContainer = $(this);
             var displayName = $(this).attr('data-displayName');
 
+<<<<<<< HEAD
+            siteSyncCore.getDataByDisplayName(displayName).then(function () {
+                let content = mainContainer.next();
+                content.slideToggle(500, function () {
+                });
+                var $fas = mainContainer.find('.fa');
+                $fas.toggle();
+            })
+
+=======
             var $glyphicons = mainContainer.find('.glyphicon');
             $glyphicons.toggle();
             siteSyncCore.getDataByDisplayName(displayName);
@@ -220,6 +295,7 @@ window.siteSyncModule = (function () {
             content.slideToggle(500, function () {
 
             });
+>>>>>>> origin/master
         }
 
         function onClickStageContainerDisplayName() {
@@ -227,8 +303,13 @@ window.siteSyncModule = (function () {
             var displayName = $(this).attr('data-displayName');
             let content = mainContainer.next();
 
+<<<<<<< HEAD
+            var $fas = mainContainer.find('.fa');
+            $fas.toggle();
+=======
             var $glyphicons = mainContainer.find('.glyphicon');
             $glyphicons.toggle();
+>>>>>>> origin/master
 
             content.slideToggle(500, function () {
             });
@@ -237,6 +318,46 @@ window.siteSyncModule = (function () {
         function onClickDestinationContainerDisplayName() {
             let mainContainer = $(this);
             var displayName = $(this).attr('data-displayName');
+<<<<<<< HEAD
+            var $fas = mainContainer.find('.fa');
+            $fas.toggle();
+
+            siteSyncCore.getDataFromDestinationSite(displayName).then(function () {
+
+                let content = mainContainer.next();
+
+                content.slideToggle(500, function () {
+                });
+            })
+        }
+
+        function expandAllInDestination() {
+            let $mainElements = $('#destination-container .main-element');
+
+            for (var i = 0; i < $mainElements.length; i++) {
+                let displayName = $($mainElements[i]).attr('data-displayName');
+                let content = $($mainElements[i]).next();
+
+                siteSyncCore.getDataFromDestinationSite(displayName).then(function () {
+                    content.slideToggle(500, function () {
+                    });
+                })
+            }
+
+            $('#destination-container .fa-angle-right').css('display', 'none');
+            $('#destination-container .fa-angle-down').css('display', 'inline-block');
+        }
+
+        function shrinkAll() {
+            $('.content-element').slideToggle(500, function () {
+                $('.content-element').html('');
+            });
+            $('#destination-container .fa-angle-right').css('display', 'inline-block');
+            $('#destination-container .fa-angle-down').css('display', 'none');
+        }
+
+
+=======
             var $glyphicons = mainContainer.find('.glyphicon');
             $glyphicons.toggle();
 
@@ -247,6 +368,7 @@ window.siteSyncModule = (function () {
             });
         }
 
+>>>>>>> origin/master
         function onClickDependencyRadioButton() {
             let $target = $(this);
 
@@ -262,7 +384,10 @@ window.siteSyncModule = (function () {
         function onSync() {
             var selection = siteSyncCore.checkIfDependencyIsChecked();
             var url = postSyncUrl;
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
             if (selection == 0) {
                 return false;
             } else if (selection == 1) {
@@ -272,10 +397,15 @@ window.siteSyncModule = (function () {
             }
 
             var data = siteSyncModel.getCurrentModel();
+<<<<<<< HEAD
+            $siteSyncButton.addClass('grayed-out');
+            Data.postJson({ url: url, data: data }).then(function (res) {
+=======
             console.log(data);
             $siteSyncButton.addClass('grayed-out');
             Data.postJson({ url: url, data: data }).then(function (res) {
                 console.log(res);
+>>>>>>> origin/master
                 res.message.map(value => {
                     $('<div/>', {
                         class: 'sync-status-item',
@@ -303,10 +433,16 @@ window.siteSyncModule = (function () {
 
             $editForm.css('display', 'block');
             $('.create-target-form').css('display', 'none');
+<<<<<<< HEAD
+
+            Data.getJson({ url: url }).then((res) => {
+
+=======
             console.log(url);
 
             Data.getJson({ url: url }).then((res) => {
                 console.log(res);
+>>>>>>> origin/master
                 $inputName.val(res.targetName);
                 $inputUrl.val(res.url);
             });
@@ -368,11 +504,17 @@ window.siteSyncModule = (function () {
                 email: $email.val(),
                 password: $password.val()
             };
+<<<<<<< HEAD
+            let url = '/sitetriks/sitesynctargets/create';
+
+            Data.postJson({ url: url, data: data }).then((res) => {
+=======
             console.log(data);
             let url = '/sitetriks/sitesynctargets/create';
 
             Data.postJson({ url: url, data: data }).then((res) => {
                 console.log(res);
+>>>>>>> origin/master
                 if (res.success) {
                     $('.create-target-form').css('display', 'none');
 
@@ -383,7 +525,10 @@ window.siteSyncModule = (function () {
                         name: $inputUrl.val()
                     });
                     $option.html($inputUrl.val());
+<<<<<<< HEAD
+=======
                     console.log(res.siteId);
+>>>>>>> origin/master
                     $option.attr('data-id', res.siteId);
 
                     $selectMenu.append($option);
@@ -409,7 +554,11 @@ window.siteSyncModule = (function () {
 
 
         function bindEvents() {
+<<<<<<< HEAD
+            $('#source-container').on('click', '.action', selectItemsForPublish);
+=======
             $('#source-container').on('click', '.source-checkbox', selectItemsForPublish);
+>>>>>>> origin/master
 
             $('#source-container').on('click', '.select-all', selectAllItems);
 
@@ -417,7 +566,13 @@ window.siteSyncModule = (function () {
 
             $('#staged-container').on('click', '.deselect-all', deselectAllItems);
 
+<<<<<<< HEAD
+            $('#staged-container').on('click', '.remove-item', removeSingleStagedItem);
+
+            $('#staged-container').on('click', '.remove-category', removeCategory);
+=======
             $('#staged-container').on('click', '.glyphicon-remove', removeSingleStagedItem);
+>>>>>>> origin/master
 
             $targetDeleteButton.on('click', displayDeleteMessage);
 
@@ -425,7 +580,11 @@ window.siteSyncModule = (function () {
 
             $('.btn-no').on('click', closeDeleteMessage);
 
+<<<<<<< HEAD
+      //      $('#history-button').on('click', displayHistoryContainer);
+=======
             $('#history-button').on('click', displayHistoryContainer);
+>>>>>>> origin/master
 
             $('.history-data').on('click', '.details', displaySyncedFiles);
 
@@ -443,12 +602,22 @@ window.siteSyncModule = (function () {
             $('#staged-container').on('click', '.main-element', onClickStageContainerDisplayName);
 
             $('#destination-container').on('click', '.main-element', onClickDestinationContainerDisplayName);
+<<<<<<< HEAD
+
+            $('#destination-container').on('click', '.expand-all', expandAllInDestination);
+
+            $('#destination-container').on('click', '.shrink-all', shrinkAll);
+=======
+>>>>>>> origin/master
             /* End Slide Events */
 
             $('.dependencies').on('click', '.btn-dependencies', onClickDependencyRadioButton);
 
             /*To move*/
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
             $('.edit').on('click', displayEditTarget);
 
             $('.btn-add-target').on('click', onTargetCreate);

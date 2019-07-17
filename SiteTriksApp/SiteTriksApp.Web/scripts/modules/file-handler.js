@@ -11,15 +11,25 @@ import { Data } from '../common/data.js';
 import { Utils } from '../common/utils.js';
 import { Validator } from '../common/validator.js';
 import { loadHandlebarsTemplates } from '../common/handlebars.js';
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+import { Pager } from './pager.js';
+import { DataSource } from './data-source.js';
+import { Loader } from '../common/loader.js';
+// import { Blur } from '../common/loader.js';
+
+'use strict';
+
+export function FileHandler($container, modes, selectedLibrary, mediator, logger, multipleSelection, type) {
+=======
 
 'use strict';
 
 export function FileHandler($container, modes, selectedLibrary, mediator, logger, multipleSelection) {
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
     let modules = {
         'Upload': { ctor: fileHandlerUpload, instance: undefined, status: 'not-active' },
         'Select': { ctor: fileHandlerSelect, instance: undefined, status: 'not-active' },
         'Selected': { ctor: fileHandlerSelected, instance: undefined, status: 'not-active' }
-
     };
 
     let $nav = $('<ul></ul>', { class: 'nav nav-tabs file-handler-nav' }).appendTo($container);
@@ -29,7 +39,7 @@ export function FileHandler($container, modes, selectedLibrary, mediator, logger
         if (modules[key]) {
 
             let $btnNav = $('<li></li>', {
-                class: ``,
+                class: `nav-item nav-link`,
                 html: `<a class="file-handler-nav-btn" data-type="${key}">${key}</a>`,
                 role: 'presentation'
             });
@@ -42,7 +52,7 @@ export function FileHandler($container, modes, selectedLibrary, mediator, logger
 
             $contentRow.append($wrapper);
 
-            modules[key].instance = modules[key].ctor(logger, $wrapper, mediator, selectedLibrary, multipleSelection);
+            modules[key].instance = modules[key].ctor(logger, $wrapper, mediator, selectedLibrary, multipleSelection, type);
             modules[key].status = 'active';
         }
     }
@@ -104,6 +114,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
     let $btnUpload;
     let $dropArea;
     let $uploadBtn;
+    let $cancelUploadBtn;
 
     let libraryPrefix = '';
     let libraryAllowed = '';
@@ -126,6 +137,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $btnUpload = $container.find('.btn-submit-images');
         $dropArea = $container.find('#drop-area');
         $uploadBtn = $container.find('.btn-submit-images');
+        $cancelUploadBtn = $container.find('.btn-cancel');
 
         return loadHandlebarsTemplates(templatesCache, templates);
     }, Data.defaultError).then(function (res) {
@@ -136,6 +148,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $libraries.on('change', loadAllowedTypes);
         $inputFiles.on('change', renderFiles);
         $btnUpload.on('click', uploadFiles);
+        $cancelUploadBtn.on('click', closeUploadModal);
         $container.on('keyup', '.input-url', validateFileUrl);
         $dropArea.on('dragover', dragOver);
         $dropArea.on('dragenter', dragEnter);
@@ -152,6 +165,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $libraries.off('change', loadAllowedTypes);
         $inputFiles.off('change', renderFiles);
         $btnUpload.off('click', uploadFiles);
+        $cancelUploadBtn.off('click', closeUploadModal);
         $container.off('keyup', '.input-url', validateFileUrl);
         $dropArea.off('dragover', dragOver);
         $dropArea.off('dragenter', dragEnter);
@@ -232,6 +246,8 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
 
         if (files.length > 0) {
             $uploadBtn.removeClass('disabled');
+            $cancelUploadBtn.removeClass('disabled');
+
         }
     }
 
@@ -284,7 +300,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         }
 
         return Data.postJson({ url: '/sitetriks/pages/validateUrls', data: { urls } }).then(function (res) {
-
+            Loader.show(true);
             if (res.success) {
                 updateFilesInfo(uploadedFiles);
 
@@ -301,7 +317,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
                 formData.append('library', libraryId);
 
                 return Data.postForm({ url: '/sitetriks/files/uploadfile', formData: formData });
-
+                Loader.hide();
             } else {
                 mediator.dispatch('alert', { selector: notifier, title: 'Not all urls are valid!', message: res.message, status: 'danger' });
                 return Promise.reject();
@@ -317,6 +333,17 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         }, Data.defaultError);
     }
 
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+    function closeUploadModal() {
+        let $singleModal = $('#file-upload-modal')
+        if ($singleModal.length > 0) {
+
+            $singleModal.modal('toggle');
+        }
+    }
+
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
     function updateFilesInfo(files) {
         for (var i = 0; i < files.length; i++) {
             files[i].name = $container.find('#input-name-' + files[i].id).val();
@@ -392,6 +419,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $inputFiles.val('');
         $filesContainer.html('');
         $uploadBtn.addClass('disabled');
+        $cancelUploadBtn.addClass('disabled');
         $('.file-handler-notifier').html('');
     }
 
@@ -400,34 +428,44 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
     };
 }
 
-function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) {
+function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple, type) {
     let $filesContainer;
     let $libraries;
     let templatesCache = {};
-    let templates = [{ name: 'file-select', url: '/templates/file-select.html' }];
-    let page = 0;
-    let $btnNext;
-    let $btnPrev;
-    let $pageNumber;
-    const pageSize = 9;
-    let nextPageExists = false;
+    let templates = [{ name: 'file-select', url: '/templates/file-select.html' }, { name: 'file-select-video', url: '/templates/file-select-video.html' }, { name: 'file-select-document', url: '/templates/file-select-document.html' }, { name: 'file-select-empty', url: '/templates/file-select-empty.html' }];
+    let page = 1;
+    let pageSize = 9;
     let $btnSelect;
     let requester;
     let selectedFiles = {};
+    type = type || 0;
+
+    let pager;
+    let source;
 
     logger.log('init select module');
 
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+    Data.getJson({ url: `/sitetriks/files/selectTemplate?libraryId=${libraryId}&type=${type}` }).then(function (res) {
+=======
     let url = `/sitetriks/files/selectTemplate?libraryId=${libraryId}`;
     Data.getJson({ url: url }).then(function (res) {
         logger.log(res);
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
         $container.html(res);
         $filesContainer = $container.find('.files-container');
         $libraries = $container.find('.file-select-library');
-        $btnNext = $container.find('.next-page');
-        $btnPrev = $container.find('.previous-page');
-        $pageNumber = $container.find('.page-number');
         $btnSelect = $container.find('.btn-select');
+        let $pager = $container.find('.files-handler-pager');
 
+        source = DataSource({ url: '/sitetriks/files/grid', type: 'server' });
+        updateSourceFilters();
+
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+        pager = Pager($pager, { pageSizes: [9, 18, 27, 'all'], default: 9 }, pagingHandler);
+
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
         return loadHandlebarsTemplates(templatesCache, templates);
     }).then(function (res) {
         bindEvents();
@@ -436,8 +474,12 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         logger.log('select module initialized');
     }, Data.defaultError);
 
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+    let $btnSaveWidget = $('.btn-save-widget');
+=======
     let $btnSave = $('.btn-add-widget');
     let $btnEdit = $('.btn-edit-widget');
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
 
     function selectUploadedFiles(data) {
         logger.log('data-select-files: ', data);
@@ -457,14 +499,14 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     function bindEvents() {
         logger.log('bind select module events');
         $libraries.on('change', changeLibrary);
-        $btnNext.on('click', nextPage);
-        $btnPrev.on('click', prevPage);
         $container.on('change', '.thumbnailSelect', selectSize);
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+=======
         //      $container.on('click', '.image-checkbox', checkCheckbox);
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
         $container.on('click', '.checkmark-cover', triggerCheckbox);
         $container.on('click', '.image-checkbox', toggleSelectDropdown);
-        $btnSave.on('click', selectFiles);
-        $btnEdit.on('click', selectFiles);
+        $btnSaveWidget.on('click', selectFiles);
         $btnSelect.on('click', selectFiles);
         mediator.on('fileLibraryChange', selectLibrary, 'selectLibrary', 'FileHandlerSelect');
         mediator.on('fileHandlerTypeChange', typeChange, 'selectTypeChange', 'FileHandlerSelect');
@@ -477,14 +519,14 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         logger.log('destoy select module');
         $libraries.off('change', changeLibrary);
         $container.off('change', '.thumbnailSelect', selectSize);
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+=======
         //      $container.off('click', '.image-checkbox', checkCheckbox);
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
         $container.off('click', '.checkmark-cover', triggerCheckbox);
         $container.off('click', '.image-checkbox', toggleSelectDropdown);
-        $btnSave.off('click', selectFiles);
-        $btnEdit.off('click', selectFiles);
+        $btnSaveWidget.off('click', selectFiles);
         $btnSelect.off('click', selectFiles);
-        $btnNext.off('click', nextPage);
-        $btnPrev.off('click', prevPage);
         mediator.off('fileLibraryChange', 'selectLibrary', 'FileHandlerSelect');
         mediator.off('fileHandlerTypeChange', 'selectTypeChange', 'FileHandlerSelect');
         mediator.off('populatedSelected', 'populateSelectedFiles', 'FileHandlerSelect');
@@ -494,8 +536,43 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     function loadImages() {
         $filesContainer.html('<p>Loading...</p>');
         let template = templatesCache['file-select'];
+        let videoTemplate = templatesCache['file-select-video'];
+        let documentTemplate = templatesCache['file-select-document'];
+        let emptySelectContainer = templatesCache['file-select-empty'];
         let inputType = isMultiple ? 'checkbox' : 'radio';
 
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+        source.getData({ paging: { page, size: pageSize } }).then(function (res) {
+            if (!res || !res.success) {
+                return Promise.reject((res || {}).message);
+            }
+            $filesContainer.html('');
+            console.log(res.items.length);
+            if (res.items.length < 1) {
+                $filesContainer.append(emptySelectContainer);
+            }
+            res.items.forEach(function (element) {
+                if (+element.type === 0) {
+                    $filesContainer.append(template({
+                        title: element.title,
+                        id: element.id,
+                        url: element.url,
+                        thumbnails: element.thumbnails,
+                        inputType
+                    }));
+                } else if (+element.type === 1) {
+                    $filesContainer.append(documentTemplate({
+                        title: element.title,
+                        id: element.id,
+                        inputType
+                    }));
+                } else if (+element.type === 3) {
+                    $filesContainer.append(videoTemplate({
+                        title: element.title,
+                        id: element.id,
+                        inputType
+                    }));
+=======
         let filters = [];
 
         if (libraryId) {
@@ -533,36 +610,51 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
                     $btnNext.attr('disabled', true).hide();
                 } else {
                     $btnNext.attr('disabled', false).show();
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
                 }
+            });
 
-                $pageNumber.text(`${page + 1}/${Math.max(Math.ceil(res.count / pageSize), 1)}`);
-                logger.log('images rendered');
-
-                setSelectedImages();
+            if (pageSize !== 'all') {
+                pager.setCurrentPage(page);
+                pager.setPageSize(pageSize);
+                pager.setPagesCount(Math.ceil(res.count / pageSize));
             }
+
+            pager.unlock();
+            setSelectedImages();
         }, Data.defaultError);
     }
 
-    function nextPage() {
-        if (!nextPageExists) {
-            return;
-        }
-
-        page += 1;
+    function pagingHandler(p, s) {
+        page = p;
+        pageSize = s;
         loadImages();
     }
 
-    function prevPage() {
-        if (page <= 0) {
-            return;
+    function updateSourceFilters() {
+        let filters = [];
+        if (libraryId && Utils.isGuid(libraryId)) {
+            filters.push({
+                comparison: 1,
+                propertyName: 'LibraryId',
+                value: libraryId
+            });
         }
 
-        page -= 1;
-        loadImages();
+        if (type || type === 0) {
+            filters.push({
+                comparison: 1,
+                propertyName: 'Type',
+                value: type
+            });
+        }
+
+        source.updateDefaultFilters(filters, true);
     }
 
     function changeLibrary(ev) {
         libraryId = ev.target.value;
+        updateSourceFilters();
         loadImages();
     }
 
@@ -580,6 +672,10 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
 
     function triggerCheckbox(ev) {
         let $checkbox = $(this).parent().find('.image-checkbox-wrapper').find('.image-checkbox');
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
+        $checkbox.prop('checked', !$checkbox.prop('checked'));
+
+=======
 
         if ($checkbox.prop('checked') === true) {
             $checkbox.prop('checked', false);
@@ -588,6 +684,7 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
 
         }
 
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/file-handler.js
         let id = $checkbox.attr('data-id');
 
         if ($checkbox.is(':checked')) {
@@ -613,6 +710,12 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
         }
 
         selectFileUI();
+        let selectedFileIds = [];
+        for (const key in selectedFiles) {
+            selectedFileIds.push(selectedFiles[key].selectedLinkId);
+        }
+
+        mediator.dispatch('selectedFilesChanged', selectedFileIds);
     }
 
     function selectFiles() {
@@ -630,10 +733,9 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     }
 
     function populateSelected(selected) {
-        selectedFiles = JSON.parse(JSON.stringify(selected)) || {};
+        selectedFiles = JSON.parse(JSON.stringify(selected || {}));
         loadImages();
     }
-
 
     function selectFileUI() {
         $('input[name=images-list]').each(function (_, element) {
@@ -654,10 +756,9 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple) 
     function typeChange(data) {
         isMultiple = data.type === 'multiple';
         requester = data.requester;
-        page = 0;
+        page = 1;
         loadImages();
     }
-
 
     function setSelectedImages() {
         let selectedImagesFullInfo = selectedFiles;
