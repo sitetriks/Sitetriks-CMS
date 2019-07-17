@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Data } from '../common/data.js';
+=======
+﻿import { Data } from '../common/data.js';
+>>>>>>> origin/master
 import { Loader } from '../common/loader.js';
 import { Validator } from '../common/validator.js';
 import { Multiselect } from '../common/multiselect-setup.js';
@@ -43,7 +47,11 @@ function createStoreItem(efc, storeId, logger, mediator, currentExtraFields) {
 
     function createImageView(fieldId, imgLinkId) {
         let $container = $('<div class="news-listed-images-container"></div>');
+<<<<<<< HEAD
         let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="fa fa-times"></span></div>');
+=======
+        let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="glyphicon glyphicon-remove"></span></div>');
+>>>>>>> origin/master
         let $img = $('<img src="/files/id/' + imgLinkId + '" class="display-image" />');
 
         $container.append($deleteBtn)

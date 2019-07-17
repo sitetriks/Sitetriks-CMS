@@ -2,13 +2,7 @@
 // Widgets 2.01
 // - v. 2.01 - add func getRoles() and getUserGroups() for loading multiselect dropdowns
 //         for widgets AllowedRoles, AllowedGroups 
-// - v. 2.1 - refactor, unified modals, removed most of duplicating logic for add/edit
 //===================================================================================================
-
-import 'jquery-ui';
-import 'jquery-ui/ui/widgets/dialog';
-import 'jquery-ui/ui/widgets/droppable';
-import 'jquery-ui/ui/widgets/sortable';
 
 import { Data } from '../common/data.js';
 import { Utils } from '../common/utils.js';
@@ -16,36 +10,12 @@ import { Loader } from '../common/loader.js';
 import { Notifier } from '../common/notifier.js';
 import { Multiselect } from '../common/multiselect-setup.js';
 import { WarningWindow } from './warning-window.js';
-import { mainMenuModule } from './main-widgets-menu.js';
 
 export function widgetsModule($widgetContainer, initFunctions, pageContent) {
-    const $dialog = $('#Dialog-Box').dialog({ autoOpen: false, height: 700, width: '80%', modal: true, dialogClass: 'widget-dialog' });
-    const $dialogTitle = $('<span></span>', { class: 'widget-dialog-title', text: 'title' }).appendTo('.widget-dialog .ui-dialog-titlebar');
-    const $btnSaveWidget = $('<button></button>', {
-        class: 'btn btn-success btn-sm btn-save-widget',
-        html: '<span class="fa fa-pencil-square-o"></span> Save'
-    }).prop('disabled', true).appendTo(`.widget-dialog .ui-dialog-titlebar`);
-    $dialog.find('.ui-dialog-titlebar-close').addClass('btn');
-
-
-    bindEvents();
-
-    function bindEvents() {
-        $('.ui-dialog').on('click', '.btn-save-widget[data-mode="add"]', addWidget);
-        $('.ui-dialog').on('click', '.btn-save-widget[data-mode="edit"]', saveEditedWidget);
-        $('body').on('click', '.edit-widget', editWidget);
-        $('body').on('click', '.delete-widget', removeWidget);
-        $('body').on('click', '.main-widgets-wrapper', mainMenuModule.toggleMainWidgets);
-        $('body').on('click', '.lock-label', mainMenuModule.toggleLockWidget);
-        $('body').on('click', '.notifications-default', Notifier.displayList);
-        $('body').on('click', '.close-list', Notifier.hideList);
-
-    }
-
     function getRoles(selectedRoles) {
         var selectedRolesNames = !selectedRoles ? [] : selectedRoles.split(';');
 
-        return Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function (data) {
+        Data.getJson({ url: '/sitetriks/roles/getAllRolesNames' }).then(function (data) {
             $.each(data.names, function (index, item) {
                 $('<option></option>', {
                     value: item,
@@ -61,7 +31,7 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
     function getUserGroups(selectedUserGroups) {
         var selectedUserGroupsNames = !selectedUserGroups ? [] : selectedUserGroups.split(';');
 
-        return Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function (data) {
+        Data.getJson({ url: '/sitetriks/userGroups/getAllUserGroupsNames' }).then(function (data) {
             $.each(data.names, function (index, item) {
                 $('<option></option>', {
                     value: item,
@@ -74,28 +44,67 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
         });
     }
 
-    function createAlert(action, data, status, $dialog, modalId) {
+    function LoadWidget(type, extra) {
+        $widgetContainer.html('<p>Loading...</p>');
+
+        Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type + '&extra=' + extra }).then(function (res) {
+            $widgetContainer.html(res);
+
+            if (initFunctions[type] && {}.toString.call(initFunctions[type].init) === '[object Function]') {
+                initFunctions[type].init();
+            }
+
+            getRoles();
+            getUserGroups();
+
+            $('.add-widget-dialog .btn-add-widget').prop('disabled', false);
+            $('.add-widget-dialog .btn-add-widget').attr('data-type', type);
+
+            var $templatesSelector = $('#template-selector');
+            if ($templatesSelector.length) {
+                return Promise.resolve();
+            }
+
+            return Data.getJson({ url: '/SiteTriks/Widgets/GetTemplateNames?widgetName=' + type }).then(function (data) {
+                let templateNames = data.templateNames;
+                $templatesSelector.empty();
+
+                for (let i = 0; i < templateNames.length; i++) {
+                    let $option = $('<option></option>');
+                    $option.text(templateNames[i]);
+                    $option.val(templateNames[i]);
+
+                    $templatesSelector.append($option);
+                }
+            });
+        }).then(function (res) {
+            setModalFocus($widgetContainer);
+        });
+    }
+
+    function createAlert(action, data, status, dialogId, modalId, isLocal) {
         Notifier.createAlert({
             containerId: '#alerts',
+            //title: 'Successfully ',
             message: `${action} ${data.type} widget`,
-            status: status,
-            seconds: 2
-        });
-        Notifier.storeAlerts({
-            containerClass: '.notifications-holder',
-            alertMessage :`${action} ${data.type} widget`,
-            counterClass: '.count'
+            status: status
         });
 
-        if ($dialog) {
-            $dialog.dialog('close');
+        if (dialogId) {
+            $(dialogId).dialog('close');
         }
         if (modalId) {
             $(modalId).modal('hide');
         }
 
-        $(document).trigger('initCarousel');
+        if (!isLocal) {
+            $(document).trigger('updatePreview');
+        } else {
+            $(document).trigger('initCarousel');
+        }
+
         $widgetContainer.html('');
+        $('#edit-widget-container').html('');
         Loader.hide();
     }
 
@@ -104,118 +113,30 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
             accept: '.drag',
             greedy: true,
             tolerance: 'touch',
-            drop: function (ev, ui) {
+            drop: function (event, ui) {
+
                 $('.drop').removeClass('drag-hover');
-                if (ui.draggable.hasClass('preview-placeholder')) {
-                    return;
+
+                if (!ui.draggable.hasClass('preview-placeholder')) {
+                    let $drag = ui.draggable.first();
+                    ui.helper.detach();
+
+                    var placeholder = $(event.target).attr('data-placeholder');
+                    var type = $drag.data('type');
+                    let extra = $drag.attr('data-extra');
+
+                    setupDialog($addDialog, 'add-widget-dialog', $drag.text(), 'btn-add-widget');
+                    $addDialog.data('placeholder', placeholder);
+
+                    LoadWidget(type, extra);
                 }
-
-                let $drag = ui.draggable.first();
-                ui.helper.detach();
-
-                let placeholder = $(ev.target).attr('data-placeholder');
-                let type = $drag.attr('data-type');
-                let extra = $drag.attr('data-extra');
-
-                setupDialog('add', $drag.text(), { placeholder, type });
-                loadWidgetConfig({ type, extra });
             },
             over: function (event, ui) {
                 $('.drop').removeClass('drag-hover');
-                $(this).addClass('drag-hover');
+                $(event.target).addClass('drag-hover');
             },
             out: function () {
                 $(this).removeClass('drag-hover');
-            }
-        });
-    }
-
-    function renderWidget(widget) {
-        let body = { content: widget, preview: 'preview' };
-        Loader.show(true);
-        return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body });
-    }
-
-    function loadWidgetTemplates(type, selected) {
-        var $templatesSelector = $dialog.find('#template-selector');
-        if (!$templatesSelector.length) {
-            return Promise.resolve();
-        }
-
-        return Data.getJson({ url: '/SiteTriks/Widgets/GetTemplateNames?widgetName=' + type }).then(function (data) {
-            $templatesSelector.empty();
-            for (let i = 0; i < data.templateNames.length; i++) {
-                $('<option></option>', {
-                    text: data.templateNames[i],
-                    value: data.templateNames[i],
-                    selected: selected && data.templateNames[i] === selected
-                }).appendTo($templatesSelector);
-            }
-        });
-    }
-
-    function getWidgetData(type) {
-        let data = { valid: true };
-        if (initFunctions[type] && Utils.isFunction(initFunctions[type].validate)) {
-            let validation = initFunctions[type].validate();
-            if (!validation.isValid) {
-                Notifier.createAlert({ containerId: '#add-modal-alerts', message: validation.message, status: 'danger' });
-                return validation;
-            }
-        }
-
-        data.cssClass = $dialog.find('#css-class').val();
-        data.templateName = $dialog.find('#template-selector').val();
-        data.allowedRoles = ($dialog.find('#allowed-roles').val() || []).join(';');
-        data.allowedGroups = ($dialog.find('#allowed-groups').val() || []).join(';');
-
-        if (initFunctions[type] && Utils.isFunction(initFunctions[type].save)) {
-            data.element = initFunctions[type].save();
-        }
-
-        return data;
-    }
-
-    let isLicensed = function (type) {
-        Data.getJson({ url: '/sitetriks/pages/IsLicensed?widgetType=' + type }).then(function (res) {
-            if (!res.success) {
-                appendLicenseInfoMessage();
-            }
-        });
-    };
-
-    function appendLicenseInfoMessage() {
-
-        let $container = $('#add-widget-container');
-        let $message = 'This widget is restricted to the business license holders only, please contact support to upgrade.';
-        let $openingStyledDivTag = '<div class="license-info">';
-        let $closingDivTag = '</div>';
-
-        if ($container.find('.license-info').length == 0) {
-            $container.prepend($openingStyledDivTag + $message + $closingDivTag);
-        }
-    };
-
-    function loadWidgetConfig({ type, extra, data }) {
-        $widgetContainer.html('<p>Loading...</p>');
-
-        return Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type + (extra ? '&extra=' + extra : '') }).then(function success(res) {
-            $widgetContainer.html(res);
-            $('.btn-save-widget').prop('disabled', false);
-            setModalFocus($widgetContainer);
-            if (data) {
-                $('#css-class').val(data.cssClass);
-                if (initFunctions[type] && Utils.isFunction(initFunctions[type].edit)) {
-                    initFunctions[type].edit(data.element || '');
-                }
-
-                return Promise.all([loadWidgetTemplates(type, data.templateName), getRoles(data.allowedRoles), getUserGroups(data.allowedGroups), isLicensed(type)]);
-            } else {
-                if (initFunctions[type] && Utils.isFunction(initFunctions[type].add)) {
-                    initFunctions[type].add();
-                }
-
-                return Promise.all([loadWidgetTemplates(type), getRoles(), getUserGroups(), isLicensed(type)]);
             }
         });
     }
@@ -224,20 +145,40 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
     // Dialogs
     //=================================================================================================================================================
 
-    // TODO: keep state instead of saving in attributes
-    function setupDialog(mode, displayName, params) {
-        $dialog.dialog('open').parent().css({ position: 'fixed', top: '10%' });
-        $dialogTitle.text(displayName);
-        $widgetContainer.html('');
-        $btnSaveWidget.prop('disabled', true).attr('data-mode', mode);
-        $dialog.find('#widget-info').html('');
-        $dialog.find('.widget-title-status').text(mode === 'edit' ? 'Edit' : 'Create');
+    let dialogConfig = {
+        autoOpen: false,
+        height: 700,
+        width: '80%',
+        modal: true
+    };
 
-        if (params) {
-            for (let param in params) {
-                $dialog.attr(`data-${param}`, params[param]);
-            }
-        }
+    const $addDialog = $('#Dialog-Box').dialog(dialogConfig);
+    const $editDialog = $('#Dialog-Box-Edit').dialog(dialogConfig);
+
+    function setupDialog($dialog, dialogClass, displayName, btnSaveClass) {
+        $dialog.dialog('option', 'dialogClass', dialogClass)
+            .dialog('open')
+            .parent().css({ position: 'fixed', top: '10%' });
+
+        $widgetContainer.html('');
+        $('#edit-widget-container').html('');
+
+        $('.btn-add-widget').remove();
+        $('.btn-edit-widget').remove();
+
+        $('<button></button>', {
+            class: 'btn btn-success btn-sm ' + btnSaveClass,
+            html: '<span class="glyphicon glyphicon-edit"></span> Save'
+        }).prop('disabled', true)
+            .appendTo(`.${dialogClass} .ui-dialog-titlebar`);
+
+        $dialog.find('.ui-dialog-titlebar-close').addClass('btn');
+        $('.widget-dialog-title').remove();
+
+        $('<span></span>', {
+            class: 'widget-dialog-title',
+            text: displayName
+        }).appendTo(`.${dialogClass} .ui-dialog-titlebar`);
     }
 
     function setModalFocus($container) {
@@ -257,52 +198,108 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
     // Add widget
     //=================================================================================================================================================
 
-    function addWidget() {
-        let type = $dialog.attr('data-type');
-        let placeholder = type === 'css' || type === 'javascript' ? type : $dialog.attr('data-placeholder');
-        let data = getWidgetData(type);
-        if (!data.valid) {
-            return;
+    $('.ui-dialog').on('click', '.btn-add-widget', function () {
+        var placeholder = $('#Dialog-Box').data('placeholder');
+        var type = $(this).attr('data-type');
+        if (type === 'css') {
+            placeholder = 'css';
+        }
+        if (type === 'javascript') {
+            placeholder = 'javascript';
         }
 
-        let order = Math.max.apply(Math, pageContent.map(function (c) { return c.order; })) + 1;
-        order = order === -Infinity ? 0 : order || 0;
-        let id = Utils.guid();
+        var cssClass = $('#css-class').val();
+        var templateName = $('#template-selector').val();
+        var allowedRoles = ($('#allowed-roles').val() || []).join(';');
+        var allowedGroups = ($('#allowed-groups').val() || []).join(';');
 
-        let widget = {
-            type: type,
-            id: id,
-            element: data.element,
-            cssClass: data.cssClass,
-            templateName: data.templateName
+        var element;
+        if (initFunctions[type] && Utils.isFunction(initFunctions[type].save)) {
+            element = initFunctions[type].save();
+        }
+
+        if (element && typeof element === 'object') {
+            if (!element.success) {
+                if (element.message) {
+                    createErrorAlert(element.message);
+                } else {
+                    createErrorAlert('Invalid information');
+                }
+
+                Loader.hide();
+                return;
+            } else {
+                element = element.element;
+            }
+        }
+
+        if (!element) {
+            var isValid = widgetValidation(type);
+
+            if (!isValid) {
+                return;
+            }
+        }
+
+        addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups).then(function (id) {
+            if (initFunctions[type] && Utils.isFunction(initFunctions[type].callback)) {
+                initFunctions[type].callback(id);
+            }
+        });
+    });
+
+    function addWidgetLocal(type, element, placeholder, cssClass, templateName, allowedRoles, allowedGroups, noAlert) {
+        let order = Math.max.apply(Math, pageContent.map(function (c) { return c.order; })) + 1;
+
+        if (order === -Infinity) {
+            order = 0;
+        }
+        var id = Utils.guid();
+        var body = {
+            content: {
+                type: type,
+                id: id,
+                element: element,
+                placeholder: placeholder,
+                cssClass: cssClass,
+                templateName: templateName,
+                allowedRoles: allowedRoles,
+                allowedGroups: allowedGroups,
+                order: order || 0
+            },
+            preview: 'preview'
         };
 
-        renderWidget(widget).then(function (view) {
+        Loader.show(true);
+
+        return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body }).then(function (data) {
             $(document).trigger('removeCarousel');
 
             pageContent.push({
                 id: id,
-                cssClass: data.cssClass,
-                allowedRoles: data.allowedRoles,
-                allowedGroups: data.allowedGroups,
-                element: data.element,
-                templateName: data.templateName,
+                cssClass: cssClass,
+                allowedRoles: allowedRoles,
+                element: element,
+                isLocked: false,
+                templateName: templateName,
                 order: order || 0,
                 placeholder: placeholder,
                 type: type
             });
-            $('.placeholder[data-placeholder="' + placeholder + '"]').append(view);
-            mainMenuModule.setMenuOnChange();
 
-        }).then(function () {
+            $('.placeholder[data-placeholder="' + placeholder + '"]').append(data);
+
             WarningWindow.force();
-            createAlert('Successfully Added', { type }, 'success', $dialog, null);
-            if (initFunctions[type] && Utils.isFunction(initFunctions[type].callback)) {
-                initFunctions[type].callback(id);
+            if (!noAlert) {
+                createAlert('Successfully Added', { type }, 'success', '#Dialog-Box', null, true);
+            } else {
+                Loader.hide();
             }
+
+            return id;
         }, function (error) {
             $(document).trigger('removeCarousel');
-            createAlert('Failed to Add', { type }, 'danger', $dialog, null);
+            createAlert('Failed to Add', { type }, 'danger', '#Dialog-Box', null, true);
         });
     }
 
@@ -310,60 +307,169 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
     // Edit widget
     //=================================================================================================================================================
 
-    function editWidget(ev) {
-        let type = ev.target.getAttribute('data-type');
-        let id = ev.target.getAttribute('data-id');
-        let displayName = ev.target.getAttribute('data-display');
-
-        let data = pageContent.find(e => e.id === id && e.type === type);
-        setupDialog('edit', displayName || type, { id, type });
-        $dialog.find('#widget-info').html(`<span class="label label-default">Order: ${data.order}</span><span>,</span><span class="label label-default">Type: ${data.type}</span><hr/>`);
-        loadWidgetConfig({ type, data });
+    function editWidget(type, id) {
+        var item = pageContent.find(function (e) {
+            return e.id === id && e.type === type;
+        });
+        showWidget({ order: item.order, type: type, element: item.element, templateName: item.templateName, cssClass: item.cssClass, allowedRoles: item.allowedRoles, allowedGroups: item.allowedGroups, placeholder: item.placeholder, id: id });
     }
 
-    function saveEditedWidget() {
-        let id = $dialog.attr('data-id');
-        let type = $dialog.attr('data-type');
-        let data = getWidgetData(type);
-        if (!data.valid) {
-            return;
+    $('body').on('click', '.edit-widget', function (ev) {
+        let $trigger = $(this);
+        let type = $trigger.attr('data-type');
+        let id = $trigger.attr('data-id');
+        let displayName = $trigger.attr('data-display');
+
+        setupDialog($editDialog, 'edit-widget-dialog', displayName || type, 'btn-edit-widget');
+        editWidget(type, id);
+    });
+
+    $('.ui-dialog').on('click', '.btn-edit-widget', function () {
+        var id = $(this).attr('data-id');
+        var placeholder = $(this).attr('data-placeholder');
+        var type = $(this).attr('data-type');
+
+        if (type === 'css') {
+            placeholder = 'css';
+        }
+        if (type === 'javascript') {
+            placeholder = 'javascript';
         }
 
-        let item = pageContent.find(e => e.id === id && e.type === type);
-        let widget = {
-            type: type,
-            id: id,
-            element: data.element,
-            cssClass: data.cssClass,
-            templateName: data.templateName,
-            isLocked: item.isLocked,
-            isStatic: item.isStatic
-        };
+        var cssClass = $('#css-class').val();
+        var templateName = $('#template-selector').val();
+        var allowedRoles = ($('#allowed-roles').val() || []).join(';');
+        var allowedGroups = ($('#allowed-groups').val() || []).join(';');
+        let element;
+        if (initFunctions[type] && {}.toString.call(initFunctions[type].save) === '[object Function]') {
+            element = initFunctions[type].save(id);
+        }
 
-        renderWidget(widget).then(function (view) {
-            $(document).trigger('removeCarousel');
+        if (element && typeof element === 'object') {
+            if (!element.success) {
+                if (element.message) {
+                    createErrorAlert(element.message);
+                } else {
+                    createErrorAlert('Invalid information');
+                }
 
-            item.element = data.element;
-            item.cssClass = data.cssClass;
-            item.allowedRoles = data.allowedRoles;
-            item.allowedGroups = data.allowedGroups;
-            item.templateName = data.templateName;
-            item.isModifiedOnChild = item.isInherited ? true : item.isModifiedOnChild;
-
-            if (type !== 'layoutBuilder') {
-                let $old = $(`.preview-placeholder[data-identifier="${id}"]`);
-                $old.after(view);
-                $old.remove();
+                Loader.hide();
+                return;
+            } else {
+                element = element.element;
             }
-        }).then(function () {
-            WarningWindow.force();
-            createAlert('Edited', { type }, 'warning', $dialog, null);
+        }
+
+        if (!element) {
+            let isValid = widgetValidation(type, 'edit');
+
+            if (!isValid) {
+                return;
+            }
+        }
+
+        saveEditWidgetLocal(type, element, id, placeholder, cssClass, templateName, allowedRoles, allowedGroups).then(function () {
             if (initFunctions[type] && Utils.isFunction(initFunctions[type].callback)) {
                 initFunctions[type].callback(id);
             }
-        }, function (error) {
+        });
+    });
+
+    function saveEditWidgetLocal(type, element, id, placeholder, cssClass, templateName, allowedRoles, allowedGroups) {
+        var item = pageContent.find(function (e) {
+            return e.id === id && e.type === type;
+        });
+        item.element = element;
+        item.cssClass = cssClass;
+        item.allowedRoles = allowedRoles;
+        item.allowedGroups = allowedGroups;
+        item.templateName = templateName;
+
+        let order = item.order;
+
+        if (item.isInherited) {
+            item.isModifiedOnChild = true;
+        }
+
+        var $old = $('.preview-placeholder[data-identifier="' + id + '"]');
+
+        var body = {
+            content: {
+                type: type,
+                id: id,
+                element: element,
+                placeholder: placeholder,
+                cssClass: cssClass,
+                templateName: templateName,
+                allowedRoles: allowedRoles,
+                allowedGroups: allowedGroups,
+                order: order,
+                isLocked: item.isLocked,
+                isStatic: item.isStatic
+            },
+            preview: 'preview'
+        };
+
+        Loader.show(true);
+
+        return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body }).then(function (data) {
             $(document).trigger('removeCarousel');
-            createAlert('Failed to Edit', { type }, 'danger', $dialog, null);
+
+            if (type !== 'layoutBuilder') {
+                $old.after(data);
+                $old.remove();
+            }
+
+            WarningWindow.force();
+            createAlert('Edited', { type: type }, 'warning', '#Dialog-Box-Edit', null, true);
+        });
+    }
+
+    function showWidget(data) {
+        $('#order').text('Order: ' + data.order);
+        $('#type').text('Type: ' + data.type);
+
+        var type = data.type;
+        var $widgetContainer = $('#edit-widget-container');
+        $widgetContainer.html('<p>Loading...</p>');
+        $('.btn-edit-widget').prop('disabled', true);
+        $('.btn-edit-widget').removeAttr('data-type');
+        var element = data.element || '';
+
+        Data.getJson({ url: '/sitetriks/widgets/addwidget?name=' + type }).then(function success(res) {
+            $widgetContainer.html(res);
+            var $templatesSelector = $('#template-selector');
+
+            if ($templatesSelector.length) {
+                Data.getJson({ url: '/SiteTriks/Widgets/GetTemplateNames?widgetName=' + type }).then(function (tempData) {
+                    let templateNames = tempData.templateNames;
+                    $templatesSelector.empty();
+
+                    for (let i = 0; i < templateNames.length; i++) {
+                        let $option = $('<option></option>');
+                        $option.text(templateNames[i]);
+                        $option.val(templateNames[i]);
+
+                        $templatesSelector.append($option);
+                    }
+                    $('#template-selector').val(data.templateName);
+                });
+            }
+
+            $('#css-class').val(data.cssClass);
+
+            //Add allowedGroups and Roles menus
+            getRoles(data.allowedRoles);
+            getUserGroups(data.allowedGroups);
+
+            if (initFunctions[type] && {}.toString.call(initFunctions[type].show) === '[object Function]') {
+                initFunctions[type].show(element);
+            }
+
+            $('.edit-widget-dialog .btn-edit-widget').prop('disabled', false).attr('data-id', data.id)
+                .attr('data-placeholder', data.placeholder).attr('data-type', type).attr('data-order', data.order);
+
+            setModalFocus($widgetContainer);
         });
     }
 
@@ -378,11 +484,9 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
         let index = pageContent.findIndex(e => e.type === type && e.id === id);
         removeSingleWidget(index);
 
-        $element.parents(`.preview-placeholder[data-identifier="${id}"]`).remove();
+        $element.parents('.preview-placeholder[data-identifier="' + id + '"]').remove();
         WarningWindow.force();
-        createAlert('Removed', { type }, 'danger', null, '#delete-confirm');
-
-        mainMenuModule.setMenuOnChange();
+        createAlert('Removed', { type }, 'danger', null, '#delete-confirm', true);
     }
 
     function removeWidgetForPlaceholder(placeholder, widgets) {
@@ -411,10 +515,57 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
         }
     }
 
+    $('body').on('click', '.delete-widget', removeWidget);
+
     return {
+        addWidgetLocal,
+        saveEditWidgetLocal,
         makeDrop,
         getPageContent: () => pageContent,
         setPageContent: (content) => pageContent = content,
         removeWidgetForPlaceholder
     };
+}
+
+function createErrorAlert(msg, type) {
+    let containerId = '#add-modal-alerts';
+
+    if (type === 'edit') {
+        containerId = '#edit-modal-alerts';
+    }
+
+    Notifier.createAlert({
+        containerId: containerId,
+        message: msg,
+        status: 'danger'
+    });
+}
+//MOVE TO CURRENT WIDGET LOGIC
+function widgetValidation(widgetType, method) {
+    switch (widgetType) {
+        case 'detailedNews':
+            createErrorAlert('You must select news!', method);
+            return false;
+            break;
+        case 'image':
+            createErrorAlert('You must select an image!', method);
+            Loader.hide();
+            return false;
+            break;
+        case 'presentation':
+            createErrorAlert('You must set a valid url!', method);
+            return false;
+            break;
+        case 'gallery':
+            createErrorAlert('You must select images or library first!', method);
+            return false;
+            break;
+        case 'dynamic':
+            createErrorAlert('You must select class!', method);
+            return false;
+            break;
+        default:
+            return true;
+            break;
+    }
 }

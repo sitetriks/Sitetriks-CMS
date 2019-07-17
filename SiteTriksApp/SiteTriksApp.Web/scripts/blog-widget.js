@@ -9,7 +9,10 @@ import { Comments } from './comments.js';
 import { HashRouter } from './modules/hash-router.js';
 import { loadHandlebarsTemplates } from './common/handlebars.js';
 import { textEditor } from './text-editor.js';
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/blog-widget.js
 import { DateConversion } from './common/date-conversion.js';
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/blog-widget.js
 
 export function blogWidget() {
     let $wrapper = $('.st-blog-wrapper');

@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { WarningWindow } from '../modules/warning-window.js';
+=======
+﻿import { WarningWindow } from '../modules/warning-window.js';
+>>>>>>> origin/master
 import { Data } from '../common/data.js';
 import { Notifier } from '../common/notifier.js';
 
 
 function editPermission(id) {
 WarningWindow.attach();
+<<<<<<< HEAD
 
     let forms = $('.method-form');
     console.log(forms);
@@ -91,6 +96,38 @@ WarningWindow.attach();
 
     
 
+=======
+    $('.move-to-right').on('click', function () {
+        $('.all-permissions-select option:selected').each(function (_, element) {
+            $(element).remove();
+            $('.permissions-to-role-select').append($('<option>', {
+                value: element.value,
+                text: element.value
+            }));
+        });
+    });
+
+    $('.move-to-left').on('click', function () {
+        $('.permissions-to-role-select option:selected').each(function (_, element) {
+            $(element).remove();
+            $('.all-permissions-select').append($('<option>', {
+                value: element.value,
+                text: element.value
+            }));
+        });
+
+    });
+
+    function getAllRoles() {
+        var roles = [];
+        $('.permissions-to-role-select option').each(function (_, element) {
+            roles.push(element.value);
+        });
+
+        return roles;
+    }
+
+>>>>>>> origin/master
     $('#permission-form').on('submit', function (ev) {
         ev.preventDefault();
 

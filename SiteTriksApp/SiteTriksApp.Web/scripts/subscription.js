@@ -2,38 +2,25 @@
 import { Validator } from './common/validator.js';
 import { Notifier } from './common/notifier.js';
 
-export function subscriptionWidget() {  
-
-    function getGroupIds() {
-        let groupIds = [];
-        let groupCheckboxes = $('.subscription-widget > .group-checkboxes').find('.subscription-radio-group');
-
-        if (groupCheckboxes.length == 0) {
-            return;
-        }
-
-        for (let i = 0; i < groupCheckboxes.length; i++) {
-            let $currItem = $(groupCheckboxes[i]);
-            console.log($currItem)
-            console.log($currItem.data('groupname'));
-            let inputOfItem = $currItem.find(`input[name="${$currItem.data('groupname')}"]:checked`)
-            console.log('input', $(inputOfItem).val());
-
-            let value = $(inputOfItem).val();
-
-            if (value == 1) {
-                groupIds.push($currItem.data('id'));
-            }
-        }
-
-        return groupIds;
+export function subscriptionWidget() {
+    if ($('.subscription-form-wrapper').length < 1) {
+        return;
     }
 
-    $('.subscription-widget').on('click', '.subscription-submit', function (e) {
-        getGroupIds();
+    function toggleForm() {
+        $('.subscription-button').on('click', function () {
+            $(this).next().toggle();
+        });
+    }
+
+    $(window).ready(toggleForm());
+
+    $('#subscription-submit').on('click', function (e) {
         let flag = true;
-        let $name = $('.subscription-widget input[name="name"]');
-        let $email = $('.subscription-widget input[name="email"]');
+        let $name = $('#subscriptionForm input[name="name"]');
+        let $email = $('#subscriptionForm input[name="email"]');
+        let $featuresReleases = $('input[name="features-releases"]:checked');
+        let $promotionalMaterials = $('input[name="promotional-materials"]:checked');
 
         if (!Validator.validate($email, 'Must enter valid email', function (val) {
             return Validator.validateEmail(val);
@@ -47,46 +34,42 @@ export function subscriptionWidget() {
             flag = false;
         }
 
-        let groupCheckboxes = $('.subscription-widget > .group-checkboxes').find('.subscription-radio-group');
-
-        if (groupCheckboxes.length == 0) {
-            return;
+        if (!$featuresReleases.length > 0) {
+            $('#features-releases-group .validation-output').text('Please check one of the options.');
+            flag = false;
+        }
+        else {
+            $('#features-releases-group .validation-output').text('');
         }
 
-        for (let i = 0; i < groupCheckboxes.length; i++) {
-            let $currItem = $(groupCheckboxes[i]);
-            let inputOfItem = $currItem.find(`input[name="${$currItem.data('groupname')}"]:checked`)
-            console.log('input', $(inputOfItem).val());
-
-            if (!inputOfItem.length > 0) {
-                $currItem.find('.validation-output').text('Please check one of the options.')
-            }
-            if (inputOfItem.val() <= 0){
-                Notifier.createAlert({ containerId: '.subscription-form-wrapper', message: 'You faild to subscribed', status: 'danger', seconds: 5 });
-                flag = false;
-            }
+        if (!$promotionalMaterials.length > 0) {
+            $('#promotional-materials-group .validation-output').text('Please check one of the options.');
+            flag = false;
         }
-       
+        else {
+            $('#promotional-materials-group .validation-output').text('');
+        }
+
         if (flag) {
-            var subscriptionModel = {
-                name: $name.val(),
-                email: $email.val(),
-                groupIds: getGroupIds()
-            }
 
-            console.log('subscription-model', subscriptionModel);
+            var emailGroups = $featuresReleases.val().toString() + $promotionalMaterials.val().toString() + '0';
+            console.log(emailGroups);
 
+            var subscriberData = {
+                Name: $name.val(),
+                Email: $email.val(),
+                MarketingEmailGroups: emailGroups
+            };
+            
+            Data.postJson({ url: '/sitetriks/marketingEmails/subscribe', data: subscriberData }).then(function (res) {
+                Notifier.createAlert({ containerId: '#subscription-form-container', message: res.message, status: (res.success ? 'info' : 'warning'), seconds: 5});
 
-            Data.postJson({ url: '/sitetriks/marketingEmailGroups/subscribe', data: subscriptionModel }).then(function (res) {
-                if (res.success) {
-                    Notifier.createAlert({ containerId: '.subscription-form-wrapper', message: res.message, status: (res.success ? 'info' : 'warning'), seconds: 5 });
-                    $name.val('');
-                    $email.val('');
-                } else {
-                    Notifier.createAlert({ containerId: '.subscription-form-wrapper', message: res.message, status: 'danger', seconds: 5 });
-                }
-              
+                $name.val('');
+                $email.val('');
+                $promotionalMaterials.attr('checked', false);
+                $featuresReleases.attr('checked', false);
+                $('.subscription-button').click();
             }, Data.defaultError);
         }
-    });    
+    });
 }

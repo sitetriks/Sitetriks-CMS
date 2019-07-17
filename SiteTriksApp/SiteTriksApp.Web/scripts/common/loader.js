@@ -33,6 +33,25 @@ var Loader = (function () {
             Blur.remove();
         }
     };
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
+=======
+})();
+
+export { Loader };
+
+// Gallery registration
+(function () {
+    $('body').on('click', 'img.display-image, img.gallery-image', function (ev) {
+        let $target = $(ev.target);
+        let src = $target.attr('src');
+
+        let $container = Blur.add({ hideOnClick: true });
+        $('<img />', {
+            class: 'blur-content preview-image',
+            src: src
+        }).appendTo($container);
+    });
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
 })();
 
 export { Loader };
@@ -43,7 +62,15 @@ var Blur = (function () {
     const PREVIEW_ITEM_CONTAINER_CLASS = 'preview-item-container';
     const BLUR_ELEMENT_CLASS = 'blur';
 
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
     function addBlur({ hideOnClick, color, opacity, hideOnBlurClick }) {
+=======
+    function addBlur({ hideOnClick, color, opacity }) {
+        if (hideOnClick !== true) {
+            hideOnClick = false;
+        }
+
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
         $('html').addClass('st-no-overflow');
 
         let $blurElement = $('<div></div>', {
@@ -86,6 +113,7 @@ var Blur = (function () {
         $('body').find('.' + BLUR_ELEMENT_CLASS).remove();
         $('body').find('.' + PREVIEW_CONTAINER_CLASS).remove();
         $('html').removeClass('st-no-overflow');
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
     }
 
     function removeBlurOnNonContentTarget(ev) {
@@ -95,6 +123,8 @@ var Blur = (function () {
         }
 
         removeBlur();
+=======
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/loader.js
     }
 
     return {

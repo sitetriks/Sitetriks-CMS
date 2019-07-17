@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Data } from '../common/data.js';
+=======
+﻿import { Data } from '../common/data.js';
+>>>>>>> origin/master
 import { Loader } from '../common/loader.js';
 import { WarningWindow } from '../modules/warning-window.js';
 

@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Validator } from '../common/validator.js';
+=======
+﻿import { Validator } from '../common/validator.js';
+>>>>>>> origin/master
 import { WarningWindow } from '../modules/warning-window.js';
 
 function createRole() {

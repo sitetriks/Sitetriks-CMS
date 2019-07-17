@@ -1,7 +1,5 @@
 ﻿/* globals Prism, prettify */
 import { Data } from './common/data.js';
-import { Utils } from './common/utils.js';
-import { HashRouter } from './modules/hash-router.js';
 
 export function documentationModule() {
     let $wrapper = $('.st-documentation-wrapper');
@@ -10,79 +8,46 @@ export function documentationModule() {
     }
 
     let $docMenu = $wrapper.find('.docs-menu');
-    let $btnNext = $wrapper.find('.next-doc').hide();
-    let $btnPrev = $wrapper.find('.prev-doc').hide();
+    let $btnNext = $wrapper.find('.next-doc');
+    let $btnPrev = $wrapper.find('.prev-doc');
     let $versions = $wrapper.find('.documentation-versions');
     let $topicDetails = $wrapper.find('.topic-details');
-    let $inputSearch = $wrapper.find('.documentation-search');
-    let $searchResults = $wrapper.find('.documentation-search-results');
-
-    let lastVersion = $versions.find('option').first().val();
-    $versions.val(lastVersion);
-    let currentVersion;
-    let currentId;
 
     init();
 
     function init() {
         let $first = $docMenu.find('a').first();
-        let routeData = HashRouter.get('docs');
-        if (!onRouteUpdate(routeData) && $first && $first.length > 0) {
-            currentId = $first.attr('data-id');
-            openTopic();
+        if ($first && $first.length > 0) {
+            selectTopic({ target: $first });
+        }
+
+        if (!$first || !$first.attr('data-next')) {
+            $btnNext.hide();
         }
 
         bindEvents();
     }
 
     function bindEvents() {
-        $docMenu.on('click', '.documentation-element', toggleDocs);
+        $docMenu.on('click', '.glyphicon-menu-right', expand);
+        $docMenu.on('click', '.glyphicon-menu-down', collapse);
         $docMenu.on('click', 'li', selectTopic);
-        $btnNext.on('click', paging);
-        $btnPrev.on('click', paging);
+        $btnNext.on('click', pageing);
+        $btnPrev.on('click', pageing);
         $versions.on('change', loadVersion);
-        HashRouter.onChange('docs', onRouteUpdate, 'documentationWidget');
-
-        // autocomplete search
-        $wrapper.on('click', '.result', selectAutocomepleteDoc);
-        $(document).on('click', clearAutocomplete);
-        $inputSearch.on('keyup', loadAutocompleteDocs);
-        $inputSearch.on('keydown', autoCompleteArrowsAndEnterSuggestion);
-        $searchResults.on('mouseenter', '.result', autocompleteMouseSuggestion);
     }
 
     function dispose() {
-        $docMenu.off('click', '.documentation-element', toggleDocs);
+        $docMenu.off('click', '.glyphicon-menu-right', expand);
+        $docMenu.off('click', '.glyphicon-menu-down', collapse);
         $docMenu.off('click', 'li', selectTopic);
-        $btnNext.off('click', paging);
-        $btnPrev.off('click', paging);
+        $btnNext.off('click', pageing);
+        $btnPrev.off('click', pageing);
         $versions.off('change', loadVersion);
-        HashRouter.offChange('docs', 'documentationWidget');
-
-        $wrapper.off('click', '.result', selectAutocomepleteDoc);
-        $(document).off('click', clearAutocomplete);
-        $inputSearch.off('keyup', loadAutocompleteDocs);
-        $inputSearch.off('keydown', autoCompleteArrowsAndEnterSuggestion);
-        $searchResults.off('mouseenter', '.result', autocompleteMouseSuggestion);
     }
 
-    function onRouteUpdate(data) {
-        if (!data || !data.length || !Utils.isGuid(data[0])) {
-            return false;
-        }
-
-        currentId = data[0];
-        currentVersion = data.length > 1 ? data[1] : undefined;
-        if (currentVersion && $versions.val() !== currentVersion && currentVersion !== lastVersion) {
-            $versions.val(currentVersion);
-        }
-
-        openTopic();
-        return true;
-    }
-
-    function loadTopic() {
-        return Data.postJson({ url: '/sitetriks/documentation/getcontent', data: { id: currentId, version: currentVersion } }).then(function (res) {
+    function loadTopic(id) {
+        return Data.postJson({ url: '/sitetriks/documentation/getcontent', data: { id: id, version: $versions.val() } }).then(function (res) {
             $topicDetails.html(res);
         }, Data.defaultError).then(function () {
             // TODO: dispatch event instead
@@ -96,32 +61,28 @@ export function documentationModule() {
         });
     }
 
-    function toggleDocs(ev) {
-        let $target = $(this || ev.target);
-        if (!$target.hasClass('documentation-element')) {
-            $target = $target.parents('.documentation-element').first();
-        }
+    function expand(ev) {
+        let $icon = $(ev.target);
+        $icon.parent().next('ul').show();
+        $icon.removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
+    }
 
-        let $icon = $target.find('.fa');
-        if ($icon.hasClass('fa-angle-right')) {
-            $target.next('ul').show();
-            $icon.removeClass('fa-angle-right').addClass('fa-angle-down');
-        } else {
-            $icon.removeClass('fa-angle-down').addClass('fa-angle-right');
-            let $toHide = $target.next('ul');
-            $toHide.hide();
+    function collapse(ev) {
+        let $icon = $(ev.target);
+        $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
+        let $toHide = $icon.parent().next('ul');
+        $toHide.hide();
 
-            let descendants = Array.prototype.slice.call($toHide[0].querySelectorAll('ul'), 0);
+        let descendants = Array.prototype.slice.call($toHide[0].querySelectorAll('ul'), 0);
 
-            descendants.forEach(function (descendant) {
-                let $item = $(descendant);
-                $item.hide();
-                let $icon = $item.prev().find('span.fa');
-                if ($icon && $icon.length > 0) {
-                    $icon.removeClass('fa-angle-down').addClass('fa-angle-right');
-                }
-            });
-        }
+        descendants.forEach(function (descendant) {
+            let $item = $(descendant);
+            $item.hide();
+            let $icon = $item.prev().find('span.glyphicon');
+            if ($icon && $icon.length > 0) {
+                $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
+            }
+        });
     }
 
     function selectTopic(ev) {
@@ -130,7 +91,7 @@ export function documentationModule() {
             $trigger = $trigger.find('a');
         }
 
-        if ($trigger.is('span.fa')) {
+        if ($trigger.is('span.glyphicon')) {
             return;
         }
 
@@ -138,118 +99,42 @@ export function documentationModule() {
             $trigger = $trigger.next('a');
         }
 
+        let nextId = $trigger.attr('data-next');
+        let prevId = $trigger.attr('data-prev');
+
+        if (!nextId) {
+            $btnNext.hide();
+        } else {
+            $btnNext.show();
+        }
+
+        if (!prevId) {
+            $btnPrev.hide();
+        } else {
+            $btnPrev.show();
+        }
+
+        $btnNext.attr('data-id', nextId);
+        $btnPrev.attr('data-id', prevId);
+
         let id = $trigger.attr('data-id');
-        HashRouter.set('docs', currentVersion ? [id, currentVersion] : [id]);
+        $docMenu.attr('data-selected', id);
+
+        loadTopic(id);
+        expand({ target: $trigger.prev('span.glyphicon') });
     }
 
-    function openTopic() {
-        let $target = $docMenu.find('a[data-id="' + currentId + '"]');
-
-        let $allItems = $docMenu.find('a').parent();
-        $allItems.removeClass('selected');
-        $target.parent().addClass('selected');
-
-        if (!$target.length) {
+    function pageing(ev) {
+        let id = $(ev.target).attr('data-id');
+        if (!id) {
             return;
         }
 
-        let nextId = $target.attr('data-next');
-        let prevId = $target.attr('data-prev');
-
-        $btnNext.toggle(!!nextId).attr('data-id', nextId);
-        $btnPrev.toggle(!!prevId).attr('data-id', prevId);
-
-        loadTopic();
+        selectTopic({ target: $docMenu.find('a[data-id="' + id + '"]') });
     }
-
-    function paging(ev) {
-        let id = (this || ev.target).getAttribute('data-id');
-        if (id) {
-            HashRouter.set('docs', currentVersion ? [id, currentVersion] : [id]);
-        }
-    }
-
-    const SUGGESTED_CLASS = 'suggested';
-    function autoCompleteArrowsAndEnterSuggestion(ev) {
-        if (ev.keyCode !== 13 && ev.keyCode !== 38 && ev.keyCode !== 40) {
-            return;
-        }
-
-        let $suggested = $searchResults.find('.' + SUGGESTED_CLASS);
-        if (ev.keyCode === 13) {
-            if ($suggested.length > 0) {
-                selectAutocomepleteDoc.apply($suggested[0]);
-            }
-
-            return;
-        }
-
-        if (ev.keyCode === 40) {
-            if ($suggested.length < 1) {
-                $searchResults.children().first().addClass(SUGGESTED_CLASS);
-            } else if ($suggested.next().length > 0) {
-                $suggested.removeClass(SUGGESTED_CLASS)
-                    .next().addClass(SUGGESTED_CLASS);
-            }
-
-            return;
-        }
-
-        if (ev.keyCode === 38) {
-            if ($suggested.length < 1) {
-                $searchResults.children().last().addClass(SUGGESTED_CLASS);
-            } else if ($suggested.prev().length > 0) {
-                $suggested.removeClass(SUGGESTED_CLASS)
-                    .prev().addClass(SUGGESTED_CLASS);
-            }
-        }
-    }
-
-    function autocompleteMouseSuggestion(ev) {
-        $searchResults.find('.' + SUGGESTED_CLASS).removeClass(SUGGESTED_CLASS);
-        $(this || ev.target).addClass(SUGGESTED_CLASS);
-    }
-
-    function loadAutocompleteDocs(ev) {
-        if (!this.value || this.value.length < 3 || ev.keyCode === 40 || ev.keyCode === 38 || ev.keyCode === 13) {
-            return;
-        }
-
-        Data.getJson({ url: '/sitetriks/documentation/search?pattern=' + this.value }).then(function (res) {
-            if (res && res.success) {
-                $searchResults.html('');
-                res.items.forEach(e => {
-                    $('<li></li>', {
-                        'data-id': e.id,
-                        text: e.name,
-                        class: 'result'
-                    }).appendTo($searchResults);
-                });
-            }
-        });
-    }
-
-    function clearAutocomplete(ev) {
-        let $target = $(ev.target);
-        if ($target.is('.result') || $target.is($inputSearch) || $target.is($searchResults)) {
-            return;
-        }
-
-        $searchResults.html('');
-        $inputSearch.val('');
-    }
-
-    function selectAutocomepleteDoc(ev) {
-        paging.apply(this || ev.target);
-
-        $searchResults.html('');
-        $inputSearch.val('');
-    }
-
 
     function loadVersion(ev) {
-        let version = $versions.val();
-        currentVersion = version === lastVersion ? undefined : version;
-        HashRouter.set('docs', currentVersion ? [currentId, currentVersion] : [currentId]);
+        let id = $docMenu.attr('data-selected');
+        loadTopic(id);
     }
 }

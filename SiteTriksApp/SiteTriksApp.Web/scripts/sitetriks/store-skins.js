@@ -1,6 +1,9 @@
 ﻿/* globals CodeMirror */
+<<<<<<< HEAD
 import './layout.js';
 
+=======
+>>>>>>> origin/master
 import { Data } from '../common/data.js';
 import { Utils } from '../common/utils.js';
 import { Loader } from '../common/loader.js';
@@ -343,7 +346,11 @@ var StoreSkins = (function () {
                 }
 
                 $wrapper.append($('<span></span>', {
+<<<<<<< HEAD
                     class: 'delete-section fa fa-times'
+=======
+                    class: 'delete-section glyphicon glyphicon-remove'
+>>>>>>> origin/master
                 }));
 
                 $section.appendTo($wrapper);
@@ -805,7 +812,11 @@ var StoreSkins = (function () {
         function toggleFilterSection(ev) {
             let $target = $(this);
             $target.parents('.section-wrapper').first().toggleClass('collapsed');
+<<<<<<< HEAD
             $target.find('span.fa').toggleClass('fa-angle-up').toggleClass('fa-angle-down');
+=======
+            $target.find('span.glyphicon').toggleClass('glyphicon-chevron-up').toggleClass('glyphicon-chevron-down');
+>>>>>>> origin/master
         }
 
         //-------------------------------------------------------------------------------------------------------
@@ -931,7 +942,11 @@ var StoreSkins = (function () {
                     let html =
                         `<div class="cart-item">
                             ${items[key].info.title} - <input class="count-change" value="${items[key].count}" data-id="${key}" type="number"/> x ${items[key].info.price.toFixed(2)} lv 
+<<<<<<< HEAD
                             <span class="btn btn-danger fa fa-times remove-from-cart" data-id="${key}"></span>
+=======
+                            <span class="btn btn-danger glyphicon glyphicon-remove remove-from-cart" data-id="${key}"></span>
+>>>>>>> origin/master
                         </div> `;
 
                     $container.append(html);

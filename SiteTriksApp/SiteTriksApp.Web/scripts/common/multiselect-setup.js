@@ -1,7 +1,11 @@
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/multiselect-setup.js
 ﻿import 'bootstrap';
 import 'bootstrap-multiselect';
 
 var Multiselect = (function () {
+=======
+﻿var Multiselect = (function () {
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/multiselect-setup.js
     function setup(id, onChangeCallback) {
         setupElement($('#' + id), onChangeCallback);
     }

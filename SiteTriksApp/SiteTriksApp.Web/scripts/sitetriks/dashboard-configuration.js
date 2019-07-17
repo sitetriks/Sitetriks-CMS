@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Data } from '../common/data.js';
 
 function initConfiguration() {
+=======
+﻿import { Data } from '../common/data.js';
+import { WarningWindow } from '../modules/warning-window.js';
+
+function initConfiguration() {
+    WarningWindow.attach();
+>>>>>>> origin/master
     $('#save-dashboard-config').on('click', function () {
         var dashboardWidgetNames = [];
         $('.checkboxes input:checked').each(function () {
@@ -16,4 +24,7 @@ function initConfiguration() {
 }
 
 window.initConfiguration = initConfiguration;
+<<<<<<< HEAD
 s
+=======
+>>>>>>> origin/master

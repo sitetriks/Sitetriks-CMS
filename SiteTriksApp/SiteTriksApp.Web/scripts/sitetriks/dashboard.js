@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 ﻿/* globals gapi */
 import './layout.js';
 import 'jquery-ui';
 import 'jquery-ui/ui/widgets/sortable';
+=======
+﻿/* globals gapi */ 
+>>>>>>> origin/master
 
 import { Data } from '../common/data.js';
 import { Loader } from '../common/loader.js';

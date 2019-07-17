@@ -2,7 +2,10 @@
 import { Loader } from '../common/loader.js';
 import { Notifier } from '../common/notifier.js';
 import { handleApplicationRestart } from '../restart-app.js';
+<<<<<<< HEAD
 import { format } from 'url';
+=======
+>>>>>>> origin/master
 
 function setupInitialization(url) {
     $('#create-site-btn').on('click', (e) => {
@@ -26,6 +29,7 @@ function setupInitialization(url) {
     });
 }
 
+<<<<<<< HEAD
 function registerUser() {
     $('#registerUserForm').on('submit', function (ev) {
         ev.preventDefault();
@@ -44,6 +48,8 @@ function registerUser() {
     });
 }
 
+=======
+>>>>>>> origin/master
 function uploadLicense(urlWithUpload, urlWithCurrent) {
     $('input[type=file]').change(function (e) {
         var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
@@ -87,6 +93,7 @@ function uploadLicense(urlWithUpload, urlWithCurrent) {
     });
 }
 
+<<<<<<< HEAD
 function validateSmtp() {
     $('#validateSmtp').on('click', function () {
         let url = '/Setup/CheckSmtp';
@@ -152,3 +159,7 @@ window.registerUser = registerUser;
 window.validateSmtp = validateSmtp;
 window.skipValidation = skipValidation;
 window.saveSmtp = saveSmtp;
+=======
+window.setupInitialization = setupInitialization;
+window.uploadLicense = uploadLicense;
+>>>>>>> origin/master

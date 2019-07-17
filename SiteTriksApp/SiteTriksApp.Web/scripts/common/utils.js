@@ -154,9 +154,15 @@
             if (callback) {
                 callback(evt);
             }
+<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/common/utils.js
         });      
     }
 	
+=======
+        });
+    }
+
+>>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/common/utils.js
     return {
         s4,
         guid,
