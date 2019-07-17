@@ -1,6 +1,6 @@
 {
   "MaxMegaEventYearAheadFromThisYear": 5,
-  "Initialized": true,
+  "Initialized": false,
   "WidgetConfigurations": {
     "allNews": {
       "AllowedRoles": [

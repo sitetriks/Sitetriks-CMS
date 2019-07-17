@@ -10,7 +10,7 @@ using SiteTriksApp.Web.Data;
 namespace SiteTriksApp.Web.Migrations
 {
     [DbContext(typeof(SiteTriksAppContext))]
-    [Migration("20190717113931_Initial")]
+    [Migration("20190717114403_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
