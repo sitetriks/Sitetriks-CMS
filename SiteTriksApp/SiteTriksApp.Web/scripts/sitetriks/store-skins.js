@@ -343,7 +343,7 @@ var StoreSkins = (function () {
                 }
 
                 $wrapper.append($('<span></span>', {
-                    class: 'delete-section glyphicon glyphicon-remove'
+                    class: 'delete-section fa fa-times'
                 }));
 
                 $section.appendTo($wrapper);
@@ -805,7 +805,7 @@ var StoreSkins = (function () {
         function toggleFilterSection(ev) {
             let $target = $(this);
             $target.parents('.section-wrapper').first().toggleClass('collapsed');
-            $target.find('span.glyphicon').toggleClass('glyphicon-chevron-up').toggleClass('glyphicon-chevron-down');
+            $target.find('span.fa').toggleClass('fa-angle-up').toggleClass('fa-angle-down');
         }
 
         //-------------------------------------------------------------------------------------------------------
@@ -931,7 +931,7 @@ var StoreSkins = (function () {
                     let html =
                         `<div class="cart-item">
                             ${items[key].info.title} - <input class="count-change" value="${items[key].count}" data-id="${key}" type="number"/> x ${items[key].info.price.toFixed(2)} lv 
-                            <span class="btn btn-danger glyphicon glyphicon-remove remove-from-cart" data-id="${key}"></span>
+                            <span class="btn btn-danger fa fa-times remove-from-cart" data-id="${key}"></span>
                         </div> `;
 
                     $container.append(html);

@@ -6,7 +6,7 @@ import '../wwwroot/lib/custom/slick/slick.css';
 import '../wwwroot/lib/custom/slick/slick-theme.css';
 import '../wwwroot/css/toggle-menu.css';
 import '../wwwroot/css/multi-level-dropdown.css';
-import '../wwwroot/css/home-page.css';
+//import '../wwwroot/css/home-page.css';
 import '../wwwroot/lib/custom/jquery-ui/jquery-ui.css';
 import '../wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css';
 import '../wwwroot/lib/custom/font-awesome/font-awesome.min.css';

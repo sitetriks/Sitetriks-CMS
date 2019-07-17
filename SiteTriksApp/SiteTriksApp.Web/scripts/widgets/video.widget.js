@@ -65,15 +65,32 @@ export function video({ mediator, logger }) {
             config = '<div class="file-handler-wrapper"></div>';
         }
         // multiple playlists should remain the same for the time being
-        else if (/*source === 'youtubeMultiplePlaylists' ||*/ source === 'youtubeCustomPlaylist') {
+        else if (source === 'youtubeCustomPlaylist') {
             config = `
                 <div class="video-selection">
+                <div style="margin-bottom: 10px;">*Add the full video urls.</div>
                     <input class="form-control inline-block" style="width: 500px;"/>
                     <button class="btn btn-add-video">Add</button>
                 </div>
                 <div class="selected-videos"></div>`;
+        } else if (source === 'youtubeMultiplePlaylists') {
+            config = `
+                <div class="video-selection multiple-playlists">
+                    <div style="margin-bottom: 10px;">*Add only the Id of the default video and playlists.</div>
+                    <input id="video-name" type="text" class="form-control title-field text-box single-line" style="visibility:hidden; height: 0; margin: 0; padding: 0;">
+                    <input class="form-control inline-block" style="width: 500px;"/>
+                    <button class="btn btn-add-playlist-id">Add Playlist ID</button>
+                    <div>
+                        <input class="default-video-url"/>
+                        <span class="default-video-label"> Default Video Id</span>
+                     </div>
+                </div>
+                <div class="selected-videos"></div>`;
+        } else if (source === 'youtubePlaylist') {
+            config = `<label for="video-name" class="col-md-5">YouTube Playlist ID: </label>
+            <input id="video-name" type="text" class="form-control title-field text-box single-line" />`;
         } else {
-            config = `<label for="video-name" class="col-md-5">ID or the url of the video: </label>
+            config = `<label for="video-name" class="col-md-5">Full YouTube Video Url: </label>
             <input id="video-name" type="text" class="form-control title-field text-box single-line" />`;
         }
 
@@ -95,8 +112,8 @@ export function video({ mediator, logger }) {
             <div class="video-container clearfix">
                 <span class="video-url">${url}</span>
                 <div style="float:right;" class="video-url-control">
-                    <span class="edit-video">edit</span>
-                    <span class="remove-video">remove</span>
+                    <span class="edit-video fa fa-pencil"></span>
+                    <span class="remove-video fa fa-times"></span>
                 </div>
             </div>`);
     }
@@ -117,8 +134,8 @@ export function video({ mediator, logger }) {
         $container.html(`
                     <span class="video-url">${$input.val()}</span>
                     <div style="float:right;" class="video-url-control">
-                        <span class="edit-video">edit</span>
-                        <span class="remove-video">remove</span>
+                        <span class="edit-video fa fa-pencil"></span>
+                        <span class="remove-video fa fa-times"></span>
                     </div>`);
     }
 
@@ -128,8 +145,8 @@ export function video({ mediator, logger }) {
         $container.html(`
                     <span class="video-url">${$input.attr('data-url')}</span>
                     <div style="float:right;" class="video-url-control">
-                        <span class="edit-video">edit</span>
-                        <span class="remove-video">remove</span>
+                    <span class="edit-video fa fa-pencil"></span>
+                    <span class="remove-video fa fa-times"></span>
                     </div>
                 `);
     }
@@ -146,6 +163,67 @@ export function video({ mediator, logger }) {
             addVideo(videoUrl);
             this.previousElementSibling.value = '';
         });
+
+        $('#video-widget-config').on('click', '.btn-add-playlist', function (ev) {
+            let videoUrl = this.previousElementSibling.value;
+            //if (parseYouTubeUrl(videoUrl) === 'error') {
+            //    alert('invalid youtube url');
+            //    return;
+            //}
+
+
+            addVideo(videoUrl);
+            this.previousElementSibling.value = '';
+        });
+
+        $('#video-widget-config').on('click', '.btn-add-playlist-id', function (ev) {
+            let playlistId = this.previousElementSibling.value;
+            //if (parseYouTubeUrl(videoUrl) === 'error') {
+            //    alert('invalid youtube url');
+            //    return;
+            //}
+            //let currentIds = $('#video-name').val();
+
+            //if (currentIds.length > 0) {
+            //    currentIds = currentIds + ';' + playlistId;
+            //} else {
+            //    currentIds = playlistId;
+            //}
+            //$('#video-name').val(currentIds);
+
+            addVideo(playlistId);
+            this.previousElementSibling.value = '';
+        });
+
+        $('#video-widget-config').on('click', '.btn-add-playlist-id', getAllPlaylistIds);
+        $('#video-widget-config').on('click', '.video-url-control', getAllPlaylistIds);
+        $('#video-widget-config').on('change', '.default-video-url', getAllPlaylistIds);
+
+
+
+        function getAllPlaylistIds() {
+            setTimeout(function () {
+                $('#video-name').val('');
+                let ids = '';
+                let $deafaultVideo = $('.default-video-url');
+                if ($deafaultVideo.val().length > 0) {
+                    ids += $deafaultVideo.val();
+                }
+
+                $('.video-url').each(function () {
+                    let idLine = $(this).text();
+                    if (idLine.length > 0) {
+                        if (ids.length > 0) {
+
+                            ids += ';' + idLine;
+                        } else {
+                            ids += idLine;
+                        }
+                    }
+                });
+                $('#video-name').val(ids);
+            }, 500);
+        }
 
         $('#video-widget-config').on('click', '.remove-video', function (ev) {
             $(this).parents('.video-container').remove();
@@ -172,7 +250,23 @@ export function video({ mediator, logger }) {
                     mediator.dispatch('populatedSelected', info);
                 }, 500);
             }
-            else if (/*source === 'youtubeMultiplePlaylists' ||*/ source === 'youtubeCustomPlaylist') {
+            else if (source === 'youtubeMultiplePlaylists') {
+                let fullArray = (elements[1] || '').split(';');
+                let defaultVideo = fullArray[0];
+                if (defaultVideo.length < 20) {
+
+                    $('.default-video-url').val(defaultVideo);
+                    fullArray.splice(0, 1);
+                    fullArray.forEach(value => {
+                        addVideo(value);
+                    });
+                } else {
+                    fullArray.forEach(value => {
+                        addVideo(value);
+                    });
+                }
+            }
+            else if (source === 'youtubeCustomPlaylist') {
                 (elements[1] || '').split(';').forEach(value => {
                     addVideo('https://www.youtube.com/watch?v=' + value);
                 });
@@ -233,11 +327,17 @@ export function video({ mediator, logger }) {
                     values = parseYoutubeVideosList(urls).join(';');
                     break;
 
-                //case 'youtubeMultiplePlaylists':
-                //    urls = [];
-                //    $('#video-widget-config').find('.video-url').each((_, e) => { urls.push(e.innerText); });
-                //    values = parseYoutubeVideosList(urls).join(';');
-                //    break;
+                case 'youtubeMultiplePlaylists':
+                    urls = [];
+                    $('#video-widget-config').find('.video-url').each((_, e) => { urls.push(e.innerText); });
+                    if ($('.default-video-url').val().length == 0) {
+                        values = 'missing default url';
+                    } else {
+
+                    values = $('.default-video-url').val() + ';' + urls.join(';');
+                    $('#video-name').val(values);
+                    }
+                    break;
 
                 default:
                     values = $('#video-name').val();
@@ -250,6 +350,10 @@ export function video({ mediator, logger }) {
 
             if (values.indexOf('error') > -1) {
                 return { isValid: false, message: 'Invalid youtube url!' };
+            }
+
+            if (values === 'missing default url') {
+                return {isValid: false, message : 'Missing default video Id!' }
             }
 
             return { isValid: true };

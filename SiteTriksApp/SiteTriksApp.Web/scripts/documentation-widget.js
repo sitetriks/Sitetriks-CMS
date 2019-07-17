@@ -36,60 +36,34 @@ export function documentationModule() {
     }
 
     function bindEvents() {
-        //$docMenu.on('click', '.glyphicon-menu-right', expand);
-        //$docMenu.on('click', '.glyphicon-menu-down', collapse);
         $docMenu.on('click', '.documentation-element', toggleDocs);
         $docMenu.on('click', 'li', selectTopic);
-        $btnNext.on('click', pageing);
-        $btnPrev.on('click', pageing);
+        $btnNext.on('click', paging);
+        $btnPrev.on('click', paging);
         $versions.on('change', loadVersion);
         HashRouter.onChange('docs', onRouteUpdate, 'documentationWidget');
 
-        $searchResults.on('click', pageing);
-        $wrapper.on('click', '.result', function (ev) {
-            $searchResults.html('');
-            $inputSearch.val('');
-        });
-
-        $(document).on('click', function (ev) {
-            let $target = $(ev.target);
-            if ($target.is('.result') || $target.is($inputSearch) || $target.is($searchResults)) {
-                return;
-            }
-
-            $searchResults.html('');
-            $inputSearch.val('');
-        });
-
-        $inputSearch.on('keyup', function (ev) {
-            if (!this.value || this.value.length < 3) {
-                return;
-            }
-
-            Data.getJson({ url: '/sitetriks/documentation/search?pattern=' + this.value }).then(function (res) {
-                if (res && res.success) {
-                    $searchResults.html('');
-                    res.items.forEach(e => {
-                        $('<li></li>', {
-                            'data-id': e.id,
-                            text: e.name,
-                            class: 'result'
-                        }).appendTo($searchResults);
-                    });
-                }
-            });
-        });
+        // autocomplete search
+        $wrapper.on('click', '.result', selectAutocomepleteDoc);
+        $(document).on('click', clearAutocomplete);
+        $inputSearch.on('keyup', loadAutocompleteDocs);
+        $inputSearch.on('keydown', autoCompleteArrowsAndEnterSuggestion);
+        $searchResults.on('mouseenter', '.result', autocompleteMouseSuggestion);
     }
 
     function dispose() {
-        //$docMenu.off('click', '.glyphicon-menu-right', expand);
-        //$docMenu.off('click', '.glyphicon-menu-down', collapse);
         $docMenu.off('click', '.documentation-element', toggleDocs);
         $docMenu.off('click', 'li', selectTopic);
-        $btnNext.off('click', pageing);
-        $btnPrev.off('click', pageing);
+        $btnNext.off('click', paging);
+        $btnPrev.off('click', paging);
         $versions.off('change', loadVersion);
         HashRouter.offChange('docs', 'documentationWidget');
+
+        $wrapper.off('click', '.result', selectAutocomepleteDoc);
+        $(document).off('click', clearAutocomplete);
+        $inputSearch.off('keyup', loadAutocompleteDocs);
+        $inputSearch.off('keydown', autoCompleteArrowsAndEnterSuggestion);
+        $searchResults.off('mouseenter', '.result', autocompleteMouseSuggestion);
     }
 
     function onRouteUpdate(data) {
@@ -122,46 +96,18 @@ export function documentationModule() {
         });
     }
 
-    function toggleDocElements(ev) {
-        //let $menuItem = $(ev.target);
-        //console.log($menuItem);
-        //let $icon = $menuItem.find('.glyphicon');
-        //if (!$menuItem.hasClass('expanded')) {
-        //    $menuItem.next('ul').show();
-        //    $icon.removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
-        //    $menuItem.addClass('expanded');
-        //} else {
-        //    let $toHide = $menuItem.next('ul');
-        //    $toHide.hide();
-
-        //    let descendants = Array.prototype.slice.call($toHide[0].querySelectorAll('ul'), 0);
-
-        //    descendants.forEach(function (descendant) {
-        //        let $item = $(descendant);
-        //        $item.hide();
-        //        let $icon = $item.prev().find('span.glyphicon');
-        //        if ($icon && $icon.length > 0) {
-        //            $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
-        //        }
-        //    });
-
-        //    $menuItem.removeClass('expanded');
-        //    $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
-        //}
-    }
-
     function toggleDocs(ev) {
         let $target = $(this || ev.target);
         if (!$target.hasClass('documentation-element')) {
             $target = $target.parents('.documentation-element').first();
         }
 
-        let $icon = $target.find('.glyphicon');
-        if ($icon.hasClass('glyphicon-menu-right')) {
+        let $icon = $target.find('.fa');
+        if ($icon.hasClass('fa-angle-right')) {
             $target.next('ul').show();
-            $icon.removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
+            $icon.removeClass('fa-angle-right').addClass('fa-angle-down');
         } else {
-            $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
+            $icon.removeClass('fa-angle-down').addClass('fa-angle-right');
             let $toHide = $target.next('ul');
             $toHide.hide();
 
@@ -170,37 +116,12 @@ export function documentationModule() {
             descendants.forEach(function (descendant) {
                 let $item = $(descendant);
                 $item.hide();
-                let $icon = $item.prev().find('span.glyphicon');
+                let $icon = $item.prev().find('span.fa');
                 if ($icon && $icon.length > 0) {
-                    $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
+                    $icon.removeClass('fa-angle-down').addClass('fa-angle-right');
                 }
             });
         }
-    }
-
-    function expand(ev) {
-        let $icon = $(ev.target);
-        $icon.next('ul').show();
-        $icon.parent().next('ul').show();
-        $icon.removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
-    }
-
-    function collapse(ev) {
-        let $icon = $(ev.target);
-        $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
-        let $toHide = $icon.parent().next('ul');
-        $toHide.hide();
-
-        let descendants = Array.prototype.slice.call($toHide[0].querySelectorAll('ul'), 0);
-
-        descendants.forEach(function (descendant) {
-            let $item = $(descendant);
-            $item.hide();
-            let $icon = $item.prev().find('span.glyphicon');
-            if ($icon && $icon.length > 0) {
-                $icon.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
-            }
-        });
     }
 
     function selectTopic(ev) {
@@ -209,7 +130,7 @@ export function documentationModule() {
             $trigger = $trigger.find('a');
         }
 
-        if ($trigger.is('span.glyphicon')) {
+        if ($trigger.is('span.fa')) {
             return;
         }
 
@@ -239,15 +160,92 @@ export function documentationModule() {
         $btnPrev.toggle(!!prevId).attr('data-id', prevId);
 
         loadTopic();
-        // expand({ target: $target.prev('span.glyphicon') });
     }
 
-    function pageing(ev) {
-        let id = ev.target.getAttribute('data-id');
+    function paging(ev) {
+        let id = (this || ev.target).getAttribute('data-id');
         if (id) {
             HashRouter.set('docs', currentVersion ? [id, currentVersion] : [id]);
         }
     }
+
+    const SUGGESTED_CLASS = 'suggested';
+    function autoCompleteArrowsAndEnterSuggestion(ev) {
+        if (ev.keyCode !== 13 && ev.keyCode !== 38 && ev.keyCode !== 40) {
+            return;
+        }
+
+        let $suggested = $searchResults.find('.' + SUGGESTED_CLASS);
+        if (ev.keyCode === 13) {
+            if ($suggested.length > 0) {
+                selectAutocomepleteDoc.apply($suggested[0]);
+            }
+
+            return;
+        }
+
+        if (ev.keyCode === 40) {
+            if ($suggested.length < 1) {
+                $searchResults.children().first().addClass(SUGGESTED_CLASS);
+            } else if ($suggested.next().length > 0) {
+                $suggested.removeClass(SUGGESTED_CLASS)
+                    .next().addClass(SUGGESTED_CLASS);
+            }
+
+            return;
+        }
+
+        if (ev.keyCode === 38) {
+            if ($suggested.length < 1) {
+                $searchResults.children().last().addClass(SUGGESTED_CLASS);
+            } else if ($suggested.prev().length > 0) {
+                $suggested.removeClass(SUGGESTED_CLASS)
+                    .prev().addClass(SUGGESTED_CLASS);
+            }
+        }
+    }
+
+    function autocompleteMouseSuggestion(ev) {
+        $searchResults.find('.' + SUGGESTED_CLASS).removeClass(SUGGESTED_CLASS);
+        $(this || ev.target).addClass(SUGGESTED_CLASS);
+    }
+
+    function loadAutocompleteDocs(ev) {
+        if (!this.value || this.value.length < 3 || ev.keyCode === 40 || ev.keyCode === 38 || ev.keyCode === 13) {
+            return;
+        }
+
+        Data.getJson({ url: '/sitetriks/documentation/search?pattern=' + this.value }).then(function (res) {
+            if (res && res.success) {
+                $searchResults.html('');
+                res.items.forEach(e => {
+                    $('<li></li>', {
+                        'data-id': e.id,
+                        text: e.name,
+                        class: 'result'
+                    }).appendTo($searchResults);
+                });
+            }
+        });
+    }
+
+    function clearAutocomplete(ev) {
+        let $target = $(ev.target);
+        if ($target.is('.result') || $target.is($inputSearch) || $target.is($searchResults)) {
+            return;
+        }
+
+        $searchResults.html('');
+        $inputSearch.val('');
+    }
+
+    function selectAutocomepleteDoc(ev) {
+        paging.apply(this || ev.target);
+
+        $searchResults.html('');
+        $inputSearch.val('');
+    }
+
 
     function loadVersion(ev) {
         let version = $versions.val();

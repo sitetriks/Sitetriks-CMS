@@ -444,7 +444,7 @@ function OpenDialog(placeholder) {
     $('.btn-edit-widget').remove();
 
     var $btnAddWidget = $(document.createElement('button'));
-    $btnAddWidget.html('<span class="glyphicon glyphicon-edit"></span> Save');
+    $btnAddWidget.html('<span class="fa fa-pencil-square-o"></span> Save');
     $btnAddWidget.addClass('btn btn-success btn-sm btn-add-widget');
     $btnAddWidget.prop('disabled', true);
     $btnAddWidget.attr('id', 'btn-save-widget');
@@ -474,7 +474,7 @@ function OpenEditDialog(type, order) {
     $('.btn-edit-widget').remove();
 
     var $btnEditWidget = $(document.createElement('button'));
-    $btnEditWidget.html('<span class="glyphicon glyphicon-edit"></span> Save');
+    $btnEditWidget.html('<span class="fa fa-pencil-square-o"></span> Save');
     $btnEditWidget.addClass('btn btn-success btn-sm btn-edit-widget');
     $btnEditWidget.prop('disabled', true);
     $btnEditWidget.attr('id', 'btn-edit-widget');

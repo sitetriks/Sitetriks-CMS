@@ -40,7 +40,7 @@ export function presentation({ mediator, logger }) {
         save: function () {
             let type = $('#presentation-type').val();
 
-            return JSON.stringify({ type, id: selectedPresentationId });
+			return JSON.stringify({ type, id: selectedPresentationId });
         },
         validate: function () {
             if (!selectedPresentationId) {

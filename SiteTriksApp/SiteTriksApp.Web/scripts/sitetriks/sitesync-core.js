@@ -2,7 +2,7 @@ import { Data } from '../common/data.js';
 import { Notifier } from '../common/notifier.js';
 import { loadHandlebarsTemplates } from '../common/handlebars.js';
 
-export function createSiteSyncCore (siteSyncModel) {
+export function createSiteSyncCore(siteSyncModel) {
     let getDisplayNamesUrl;
     let getByDisplayNameUrl;
     let getByDisplayNameTargetUrl;
@@ -26,7 +26,7 @@ export function createSiteSyncCore (siteSyncModel) {
     /* Staged container related functions*/
 
     function addElementToSyncData(displayName, id, title) {
-        console.log(siteSyncContainersData.stagedItems);
+      //  console.log(siteSyncContainersData.stagedItems);
         if (!([`${displayName}`] in siteSyncContainersData.stagedItems)) {
             siteSyncContainersData.stagedItems[`${displayName}`] = [{ id: id, title: title }] || [];
         }
@@ -50,10 +50,17 @@ export function createSiteSyncCore (siteSyncModel) {
             siteSyncContainersData.stagedItems[`${displayName}`] = siteSyncContainersData.stagedItems[`${displayName}`].filter(el => el.id !== id);
         }
 
-        if ([`${displayName}`] in siteSyncContainersData.stagedItems && siteSyncContainersData.stagedItems[`${displayName}`] === 0) {
+        if ([`${displayName}`] in siteSyncContainersData.stagedItems && siteSyncContainersData.stagedItems[`${displayName}`].length === 0) {
             delete siteSyncContainersData.stagedItems[`${displayName}`];
         }
         renderStagedContainer();
+    }
+
+    function removeCategoryFromStaged(displayName) {
+        siteSyncContainersData.stagedItems[displayName] = [];
+        delete siteSyncContainersData.stagedItems[`${displayName}`];
+       // console.log(siteSyncContainersData);
+
     }
 
     function selectAllSourceData() {
@@ -98,9 +105,12 @@ export function createSiteSyncCore (siteSyncModel) {
 
     function deselectAllSourceData() {
         siteSyncContainersData.stagedItems = {};
+        let stagedHtml = templatesCache['sitesync-staged']({ items: siteSyncContainersData.stagedItems });
+        $('#staged-container').html(stagedHtml);
     }
 
     function renderStagedContainer() {
+        console.log(siteSyncContainersData.stagedItems);
         let stagedHtml = templatesCache['sitesync-staged']({ items: siteSyncContainersData.stagedItems });
         $('#staged-container').html(stagedHtml);
     }
@@ -115,10 +125,10 @@ export function createSiteSyncCore (siteSyncModel) {
     /* Fill containers */
 
     /* For get all */
-    function fillContainers(domain) {
+
+    function fillDestinationContainer(domain) {
         var displayNamesUrl = `${getDisplayNamesUrl}?targetDomain=` + domain;
         let displayNamesArray;
-        var currDomain = getCurrentSelectedSite();
 
         Data.getJson({ url: displayNamesUrl }).then((res) => {
             if (res.success) {
@@ -126,28 +136,13 @@ export function createSiteSyncCore (siteSyncModel) {
             }
             return displayNamesArray;
         }).then((displayNamesArray) => {
-            let promises = [];
-            displayNamesArray.forEach((displayName) => {
-                var url = `?displayName=${displayName}&domain=${currDomain}`;
-                //  console.log(url);
-                promises.push(getDisplayNameForCurrentDomain(displayName, getByDisplayNameUrl + url, siteSyncContainersData.sourceData));
-                promises.push(getDisplayNameForCurrentDomain(displayName, getByDisplayNameTargetUrl + url, siteSyncContainersData.destinationData));
 
-                //  console.log(promises);
-            });
+            for (var i = 0; i < displayNamesArray.length; i++) {
+                siteSyncContainersData.destinationData[`${displayNamesArray[i]}`] = [];
+            }
+            let destinationHtml = templatesCache['sitesync-destination']({ items: displayNamesArray });
 
-            return Promise.all(promises).then((res) => console.log(res));
-        }).then(function () {
-            let sourceDataHtml = templatesCache['sitesync-source']({ items: siteSyncContainersData.sourceData });
-            let destinationHtml = templatesCache['sitesync-destination']({ items: siteSyncContainersData.destinationData });
-            let stagedHtml = templatesCache['sitesync-staged']({ items: siteSyncContainersData.stagedItems.itemsForSync });
-
-            console.log(siteSyncContainersData);
-
-            $('#source-container').html(sourceDataHtml);
             $('#destination-container').html(destinationHtml);
-            $('#staged-container').html(stagedHtml);
-
         }, Data.defaultError);
     }
 
@@ -174,8 +169,6 @@ export function createSiteSyncCore (siteSyncModel) {
             let destinationHtml = templatesCache['sitesync-destination']({ items: displayNamesArray });
             let stagedHtml = templatesCache['sitesync-staged']({});
 
-            // console.log(siteSyncContainersData);
-
             $('#source-container').html(sourceDataHtml);
             $('#destination-container').html(destinationHtml);
             $('#staged-container').html(stagedHtml);
@@ -186,12 +179,13 @@ export function createSiteSyncCore (siteSyncModel) {
     function getDataByDisplayName(displayName) {
         var currDomain = getCurrentSelectedSite();
         var url = `?displayName=${displayName}&domain=${currDomain}`;
-        $(`#source-${displayName}-content`).html('Loading ...');
+   //     $(`#source-${displayName}-content`).html('Loading ...');
 
         return getDisplayNameForCurrentDomain(displayName, getByDisplayNameUrl + url, siteSyncContainersData.sourceData).then((res) => {
 
             let sourceItemsHtml = templatesCache['sitesync-source-listed']({ items: siteSyncContainersData.sourceData[`${displayName}`] });
             $(`#source-${displayName}-content`).html(sourceItemsHtml);
+          //  console.log(siteSyncContainersData);
         });
 
     }
@@ -229,7 +223,7 @@ export function createSiteSyncCore (siteSyncModel) {
         return Data.getJson({ url: url }).then((res) => {
             if (res.success) {
                 items = res.siteSyncItems;
-                console.log(items);
+             //   console.log(items);
             }
 
             if (items.length > 0) {
@@ -246,7 +240,7 @@ export function createSiteSyncCore (siteSyncModel) {
 
     function selectItemsForPublishByParentDisplayName(displayName, itemName, itemId) {
         var $stagedContainer = $('#staged-container');
-        let element = '<div class="' + itemName + '"><span class="glyphicon glyphicon-remove"></span> ' + itemName + '</div>';
+        let element = '<div class="' + itemName + '"><span class="fa fa-times"></span> ' + itemName + '</div>';
 
         let $parent = $stagedContainer.find('#staged-' + displayName + '-content');
 
@@ -307,7 +301,6 @@ export function createSiteSyncCore (siteSyncModel) {
                 // add template here
 
                 let stagedHtml = templatesCache['sitesync-staged']({ items: siteSyncContainersData.stagedItems });
-                console.log(stagedHtml);
                 $('#staged-container').html(stagedHtml);
 
 
@@ -344,6 +337,7 @@ export function createSiteSyncCore (siteSyncModel) {
                 }
             });
         });
+
     }
 
     return {
@@ -359,6 +353,8 @@ export function createSiteSyncCore (siteSyncModel) {
         removeElementFromSyncData,
         selectAllSourceData,
         deselectAllSourceData,
-        renderStagedContainer
+        renderStagedContainer,
+        fillDestinationContainer,
+        removeCategoryFromStaged
     };
 }

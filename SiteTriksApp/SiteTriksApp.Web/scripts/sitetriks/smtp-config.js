@@ -1,18 +1,19 @@
 ﻿import './layout.js';
-
 import { Data } from '../common/data.js';
 import { Loader } from '../common/loader.js';
 import { Notifier } from '../common/notifier.js';
-import { handleApplicationRestart } from '../restart-app.js';
+import { Validator } from '../common/validator.js';
 
 function validateSmtp() {
     $('#validateSmtp').on('click', function () {
         let url = '/sitetriks/emails/CheckSmtp';
         let $formContent = $('#smtp-configuration-form');
         let formData = new FormData($formContent[0]);
+        console.log($formContent);
+        console.log(formData);
+        Loader.show('#fff');
 
         Data.postForm({ url: url, formData: formData }).then((res) => {
-            console.log(res);
             if (res.success) {
                 Notifier.createAlert({
                     containerId: '#alerts',
@@ -26,6 +27,7 @@ function validateSmtp() {
                     status: 'danger'
                 });
             }
+            Loader.hide();
         });
 
     });
@@ -36,29 +38,87 @@ function sendTestEmail() {
         let url = '/sitetriks/emails/SendTestEmail';
         let $formContent = $('#smtp-configuration-form');
         let formData = new FormData($formContent[0]);
-        let emailAddress = $('.test-email-address').val();
+        let $emailAddress = $('.test-email-address');
 
-        formData.append('testEmail', emailAddress);
-        console.log(formData);
+        let flag = true;
 
-        Data.postForm({ url: url, formData: formData }).then((res) => {
-            if (res.success) {
-                Notifier.createAlert({
-                    containerId: '#alerts',
-                    message: 'The email was sent successfully!',
-                    status: 'success'
-                });
-            } else {
-                Notifier.createAlert({
-                    containerId: '#alerts',
-                    message: 'Email sent failed!',
-                    status: 'danger'
-                });
-            }
-        });
+        if (!Validator.validate($emailAddress, 'Must enter valid email', function (val) {
+            return Validator.validateEmail(val);
+        })) {
+            flag = false;
+        }
+
+        formData.append('testEmail', $emailAddress.val());
+        if (flag) {
+            Loader.show('#fff');
+            Data.postForm({ url: url, formData: formData }).then((res) => {
+                if (res.success) {
+                    Notifier.createAlert({
+                        containerId: '#alerts',
+                        message: 'The email was sent successfully!',
+                        status: 'success'
+                    });
+                } else {
+                    Notifier.createAlert({
+                        containerId: '#alerts',
+                        message: 'Email sent failed!',
+                        status: 'danger'
+                    });
+                }
+                Loader.hide();
+
+            });
+        }
 
     });
 }
 
+function sendMarketingTestEmail() {
+    $('#sendTestEmail').on('click', function () {
+        let url = '/sitetriks/MarketingEmailsSmtp/SendMarketingTestEmail';
+        let $formContent = $('#smtp-configuration-form');
+        let formData = new FormData($formContent[0]);
+        let $emailAddress = $('.test-email-address');
+        let $senderList = $('.smtp-sender-list .smtp-sender');
+
+        for (let i = 0; i < $senderList.length; i++) {
+            formData.append(`Senders[${i}]`, $($senderList[i]).data().email)
+        }
+        
+        
+
+        let flag = true;
+
+        if (!Validator.validate($emailAddress, 'Must enter valid email', function (val) {
+            return Validator.validateEmail(val);
+        })) {
+            flag = false;
+        }
+
+        formData.append('testEmail', $emailAddress.val());
+        if (flag) {
+            Loader.show('#fff');
+            Data.postForm({ url: url, formData: formData }).then((res) => {
+                if (res.success) {
+                    Notifier.createAlert({
+                        containerId: '#alerts',
+                        message: 'The email was sent successfully!',
+                        status: 'success'
+                    });
+                } else {
+                    Notifier.createAlert({
+                        containerId: '#alerts',
+                        message: 'Email sent failed!',
+                        status: 'danger'
+                    });
+                }
+                Loader.hide();
+
+            });
+        }
+
+    });
+}
 window.validateSmtp = validateSmtp;
 window.sendTestEmail = sendTestEmail;
+window.sendMarketingTestEmail = sendMarketingTestEmail;

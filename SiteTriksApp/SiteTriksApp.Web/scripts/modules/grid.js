@@ -33,6 +33,11 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
     render();
     bindEvents();
 
+    if (config.type === 'grid') {
+
+        $bodyRow.css('display', 'inline-block');
+    }
+
     const dataSource = new DataSource(sourceConfig);
     pagerConfig = pagerConfig || { pageSizes: [1, 2, 5, 10, 20, 50, 100, 'all'], pageReadOnly: true, default: 20 };
     const pager = new Pager($pagerRow, pagerConfig, onPageChange);
@@ -81,15 +86,15 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
         pager.setCurrentPage(1);
 
         $headerRow.find('button[data-sort="desc"]').attr('data-sort', 'asc');
-        $headerRow.find('span.glyphicon-sort-by-attributes-alt')
-            .removeClass('glyphicon-sort-by-attributes-alt')
-            .addClass('glyphicon-sort-by-attributes');
+        $headerRow.find('span.fa-sort-amount-desc')
+            .removeClass('fa-sort-amount-desc')
+            .addClass('fa-sort-amount-asc');
 
         if (sorting.order === 1) {
             $target.attr('data-sort', 'desc');
-            $target.children('span.glyphicon-sort-by-attributes')
-                .removeClass('glyphicon-sort-by-attributes')
-                .addClass('glyphicon-sort-by-attributes-alt');
+            $target.children('span.fa-sort-amount-asc')
+                .removeClass('fa-sort-amount-asc')
+                .addClass('fa-sort-amount-desc');
         }
 
         loadData();
@@ -97,14 +102,14 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
     function showChildren(ev) {
         let $target = $(this);
-        let $icon = $target.children('.glyphicon');
+        let $icon = $target.children('.fa');
         let $currentNestedRow = $target.parents('.grid-item').first().children('.nested-grid-items');
-        if ($icon.hasClass('glyphicon-plus')) {
-            $icon.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        if ($icon.hasClass('fa-plus')) {
+            $icon.removeClass('fa-plus').addClass('fa-minus');
             $currentNestedRow.show();
             $currentNestedRow.children('.grid-item').addClass('full-row');
         } else {
-            $icon.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+            $icon.removeClass('fa-minus').addClass('fa-plus');
             $currentNestedRow.hide();
             $currentNestedRow.children('.grid-item').removeClass('full-row');
         }
@@ -206,12 +211,12 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
         for (let i = 0; i < config.fields.length; i += 1) {
             let $cell = $('<div></div>', {
-                class: config.isGrid ? 'grid-filter' : 'col-xs-' + config.fields[i].size || 2
+                class: config.isGrid ? 'grid-filter' : 'col-' + config.fields[i].size || 2
             });
 
             if (config.fields[i].sort) {
                 let $ascendingIcon = $('<span></span>', {
-                    class: 'glyphicon glyphicon-sort-by-attributes'
+                    class: 'fa fa-sort-amount-asc'
                 });
 
                 let $filterButton = $('<button></button>', {
@@ -242,7 +247,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
                     config.fields[i].headerTemplate ? Utils.replaceAll(config.fields[i].headerTemplate, '#item#', config.fields[i].title || '') : config.fields[i].title || '';
 
                 $('<div></div>', {
-                    class: config.isGrid ? 'grid-filter' : 'col-xs-' + config.fields[i].size || 2,
+                    class: config.isGrid ? 'grid-filter' : 'col-' + config.fields[i].size || 2,
                     html: content
                 }).appendTo($titleHeader);
             }
@@ -314,22 +319,22 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             switch (config.customActions[key].type) {
                 case 'success':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-ok'
+                        class: 'fa fa-check'
                     }).css('color', 'lime').prependTo($btn);
                     break;
                 case 'warning':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-ok'
+                        class: 'fa fa-check'
                     }).css('color', 'red').prependTo($btn);
                     break;
                 case 'danger':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-remove'
+                        class: 'fa fa-times'
                     }).css('color', 'red').prependTo($btn);
                     break;
                 case 'add':
                     $('<span></span>', {
-                        class: 'glyphicon glyphicon-plus'
+                        class: 'fa fa-plus'
                     }).prependTo($btn);
                     $btn.removeClass('btn-grid').removeClass('btn').addClass('btn-grid-add');
 
@@ -365,7 +370,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
 
                 if (nestingProperty && items[i][nestingProperty] && items[i][nestingProperty].length) {
                     $('<div></div>', {
-                        class: 'col-xs-12 nested-grid-items'
+                        class: 'col-12 nested-grid-items'
                     }).hide()
                         .append(buildBody(items[i][nestingProperty]))
                         .appendTo($row);
@@ -420,7 +425,7 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
                         str = parseInt(str.substr(6, str.length - 2 - 6));
                     }
 
-                    content = DateConversion.convertUtcToLocal(str); 
+                    content = DateConversion.convertUtcToLocal(str);
                     break;
 
                 case 'image':
@@ -479,11 +484,11 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
             }
 
             if (i === 0 && item[nestingProperty] && item[nestingProperty].length > 0) {
-                content = '<button class="btn-xs btn-default child-expand"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>' + content;
+                content = '<button class="btn-xs btn-default child-expand"><i class="fa fa-plus" aria-hidden="true"></i></button>' + content;
             }
 
             $('<div></div>', {
-                class: config.isGrid ? '' : `col-xs-${columnConfig.size || 2}`,
+                class: config.isGrid ? '' : `col-${columnConfig.size || 2}`,
                 html: content
             }).appendTo($bodyRow);
         }

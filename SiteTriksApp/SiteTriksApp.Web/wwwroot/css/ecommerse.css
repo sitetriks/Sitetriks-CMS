@@ -62,7 +62,7 @@
     transition: left 0.5s ease-in-out;
 }
 
-    .search-filters .section-wrapper .section-name span.glyphicon {
+    .search-filters .section-wrapper .section-name span.fa {
         line-height: 0px;
     }
 

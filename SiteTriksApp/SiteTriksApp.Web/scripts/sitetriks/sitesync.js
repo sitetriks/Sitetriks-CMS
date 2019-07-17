@@ -24,7 +24,9 @@ window.siteSyncModule = (function () {
             $historyButton = $('#history-button'),
             $historyResultsContainer = $('.history-content-results'),
             $alertBox = $('#site-sync-alert'),
-            $siteSyncButton = $('#site-sync-button');
+            $siteSyncButton = $('#site-sync-button'),
+            $destinationTitle = $('.destination h4'),
+            $sourceContainer = $('#source-container');
 
         bindEvents();
 
@@ -41,23 +43,16 @@ window.siteSyncModule = (function () {
 
         /*Events functions */
         function selectItemsForPublish() {
-            console.log('in select for publish');
 
             let $target = $(this);
-            let dataId = $target.attr('data-id');
-            let itemName = $target.attr('data-paragraph-title');
+            let $item = $target.find('.source-checkbox');
 
-            //if (!($target.is(':checked'))) {
-            //    return;
-            //}
-
-            let id = $target.attr('data-id');
-            let displayName = $target.parent().parent().parent().attr('data-displayName');
-            let title = $target.attr('data-paragraph-title');
+            let id = $item.attr('data-id');
+            let displayName = $item.parent().parent().parent().attr('data-displayName');
+            let title = $item.attr('data-paragraph-title');
 
             siteSyncModel.addItem(displayName, id);
             siteSyncCore.addElementToSyncData(displayName, id, title);
-            console.log(siteSyncModel.getCurrentModel());
         }
 
         function selectAllItems() {
@@ -78,7 +73,7 @@ window.siteSyncModule = (function () {
         }
 
         function deselectAllItems() {
-            $('#staged-container').html('');
+            // $('#staged-container').html('');
             uncheckItems();
             siteSyncModel.removeAllItems();
             siteSyncCore.deselectAllSourceData();
@@ -98,6 +93,18 @@ window.siteSyncModule = (function () {
             // add removeItem
             siteSyncCore.removeElementFromSyncData(displayName, itemId);
             siteSyncModel.removeItem(displayName, itemId);
+        }
+
+        function removeCategory() {
+            let $mainElement = $(this).parent();
+            let displayName = $mainElement.attr('data-displayName');
+
+            siteSyncCore.removeCategoryFromStaged(displayName);
+            siteSyncCore.renderStagedContainer();
+
+            let $checkbox = $(`#source-${displayName}`).find('.source-items');
+
+            $checkbox.prop('checked', false);
         }
 
         function displayDeleteMessage() {
@@ -128,24 +135,6 @@ window.siteSyncModule = (function () {
             let $popup = $('.delete-popup');
 
             $popup.css('display', 'none');
-        }
-
-        function displayHistoryContainer() {
-            if ($historyButton.hasClass('clicked')) {
-                $historyResultsContainer.html('');
-
-                $historyContainer.css('display', 'none');
-                $historyButton.removeClass('history-selected');
-                $historyButton.removeClass('clicked');
-                return;
-            } else {
-                $historyContainer.css('display', 'block');
-                $historyResultsContainer.html('');
-                $historyButton.addClass('history-selected');
-                $historyButton.addClass('clicked');
-
-                siteSyncCore.getSiteSyncData();
-            }
         }
 
         function displaySyncedFiles() {
@@ -183,7 +172,6 @@ window.siteSyncModule = (function () {
         }
 
         function onTargetSelect() {
-
             resetHistoryContainer();
             $('#source-container').html('');
             $('#staged-container').html('');
@@ -192,9 +180,7 @@ window.siteSyncModule = (function () {
             $('.edit-target-form').css('display', 'none');
             $('.create-target-form').css('display', 'none');
 
-            // enable the start button
-            $connectTargetButton.removeClass('grayed-out');
-            $siteSyncButton.removeClass('grayed-out');
+            let $historyDataLink = $('#history-button a');
 
             if ($(this).val() == 0) {
                 return;
@@ -206,22 +192,28 @@ window.siteSyncModule = (function () {
 
 
             currSelectedSite = $(this).val();
+            $destinationTitle.html(currSelectedSite);
             siteSyncCore.fillContainers(currSelectedSite);
+            if (currSelectedSite.length > 3) {
+                $historyDataLink.attr('href', '/sitetriks/sitesync/historydata?targetSite=' + currSelectedSite);
+            } else {
+                $historyDataLink.attr('href', '#');
+            }
+
         }
 
         function onClickSourceContainerDisplayName() {
             let mainContainer = $(this);
             var displayName = $(this).attr('data-displayName');
 
-            var $glyphicons = mainContainer.find('.glyphicon');
-            $glyphicons.toggle();
-            siteSyncCore.getDataByDisplayName(displayName);
+            siteSyncCore.getDataByDisplayName(displayName).then(function () {
+                let content = mainContainer.next();
+                content.slideToggle(500, function () {
+                });
+                var $fas = mainContainer.find('.fa');
+                $fas.toggle();
+            })
 
-            let content = mainContainer.next();
-
-            content.slideToggle(500, function () {
-
-            });
         }
 
         function onClickStageContainerDisplayName() {
@@ -229,8 +221,8 @@ window.siteSyncModule = (function () {
             var displayName = $(this).attr('data-displayName');
             let content = mainContainer.next();
 
-            var $glyphicons = mainContainer.find('.glyphicon');
-            $glyphicons.toggle();
+            var $fas = mainContainer.find('.fa');
+            $fas.toggle();
 
             content.slideToggle(500, function () {
             });
@@ -239,15 +231,43 @@ window.siteSyncModule = (function () {
         function onClickDestinationContainerDisplayName() {
             let mainContainer = $(this);
             var displayName = $(this).attr('data-displayName');
-            var $glyphicons = mainContainer.find('.glyphicon');
-            $glyphicons.toggle();
+            var $fas = mainContainer.find('.fa');
+            $fas.toggle();
 
-            siteSyncCore.getDataFromDestinationSite(displayName);
-            let content = mainContainer.next();
+            siteSyncCore.getDataFromDestinationSite(displayName).then(function () {
 
-            content.slideToggle(500, function () {
-            });
+                let content = mainContainer.next();
+
+                content.slideToggle(500, function () {
+                });
+            })
         }
+
+        function expandAllInDestination() {
+            let $mainElements = $('#destination-container .main-element');
+
+            for (var i = 0; i < $mainElements.length; i++) {
+                let displayName = $($mainElements[i]).attr('data-displayName');
+                let content = $($mainElements[i]).next();
+
+                siteSyncCore.getDataFromDestinationSite(displayName).then(function () {
+                    content.slideToggle(500, function () {
+                    });
+                })
+            }
+
+            $('#destination-container .fa-angle-right').css('display', 'none');
+            $('#destination-container .fa-angle-down').css('display', 'inline-block');
+        }
+
+        function shrinkAll() {
+            $('.content-element').slideToggle(500, function () {
+                $('.content-element').html('');
+            });
+            $('#destination-container .fa-angle-right').css('display', 'inline-block');
+            $('#destination-container .fa-angle-down').css('display', 'none');
+        }
+
 
         function onClickDependencyRadioButton() {
             let $target = $(this);
@@ -264,7 +284,6 @@ window.siteSyncModule = (function () {
         function onSync() {
             var selection = siteSyncCore.checkIfDependencyIsChecked();
             var url = postSyncUrl;
-
             if (selection == 0) {
                 return false;
             } else if (selection == 1) {
@@ -274,10 +293,8 @@ window.siteSyncModule = (function () {
             }
 
             var data = siteSyncModel.getCurrentModel();
-            console.log(data);
             $siteSyncButton.addClass('grayed-out');
             Data.postJson({ url: url, data: data }).then(function (res) {
-                console.log(res);
                 res.message.map(value => {
                     $('<div/>', {
                         class: 'sync-status-item',
@@ -305,10 +322,9 @@ window.siteSyncModule = (function () {
 
             $editForm.css('display', 'block');
             $('.create-target-form').css('display', 'none');
-            console.log(url);
 
             Data.getJson({ url: url }).then((res) => {
-                console.log(res);
+
                 $inputName.val(res.targetName);
                 $inputUrl.val(res.url);
             });
@@ -370,11 +386,9 @@ window.siteSyncModule = (function () {
                 email: $email.val(),
                 password: $password.val()
             };
-            console.log(data);
             let url = '/sitetriks/sitesynctargets/create';
 
             Data.postJson({ url: url, data: data }).then((res) => {
-                console.log(res);
                 if (res.success) {
                     $('.create-target-form').css('display', 'none');
 
@@ -385,7 +399,6 @@ window.siteSyncModule = (function () {
                         name: $inputUrl.val()
                     });
                     $option.html($inputUrl.val());
-                    console.log(res.siteId);
                     $option.attr('data-id', res.siteId);
 
                     $selectMenu.append($option);
@@ -411,7 +424,7 @@ window.siteSyncModule = (function () {
 
 
         function bindEvents() {
-            $('#source-container').on('click', '.source-checkbox', selectItemsForPublish);
+            $('#source-container').on('click', '.action', selectItemsForPublish);
 
             $('#source-container').on('click', '.select-all', selectAllItems);
 
@@ -419,7 +432,9 @@ window.siteSyncModule = (function () {
 
             $('#staged-container').on('click', '.deselect-all', deselectAllItems);
 
-            $('#staged-container').on('click', '.glyphicon-remove', removeSingleStagedItem);
+            $('#staged-container').on('click', '.remove-item', removeSingleStagedItem);
+
+            $('#staged-container').on('click', '.remove-category', removeCategory);
 
             $targetDeleteButton.on('click', displayDeleteMessage);
 
@@ -427,7 +442,7 @@ window.siteSyncModule = (function () {
 
             $('.btn-no').on('click', closeDeleteMessage);
 
-            $('#history-button').on('click', displayHistoryContainer);
+      //      $('#history-button').on('click', displayHistoryContainer);
 
             $('.history-data').on('click', '.details', displaySyncedFiles);
 
@@ -445,12 +460,15 @@ window.siteSyncModule = (function () {
             $('#staged-container').on('click', '.main-element', onClickStageContainerDisplayName);
 
             $('#destination-container').on('click', '.main-element', onClickDestinationContainerDisplayName);
+
+            $('#destination-container').on('click', '.expand-all', expandAllInDestination);
+
+            $('#destination-container').on('click', '.shrink-all', shrinkAll);
             /* End Slide Events */
 
             $('.dependencies').on('click', '.btn-dependencies', onClickDependencyRadioButton);
 
             /*To move*/
-
             $('.edit').on('click', displayEditTarget);
 
             $('.btn-add-target').on('click', onTargetCreate);

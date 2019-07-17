@@ -13,6 +13,8 @@ import { Validator } from '../common/validator.js';
 import { loadHandlebarsTemplates } from '../common/handlebars.js';
 import { Pager } from './pager.js';
 import { DataSource } from './data-source.js';
+import { Loader } from '../common/loader.js';
+// import { Blur } from '../common/loader.js';
 
 'use strict';
 
@@ -30,7 +32,7 @@ export function FileHandler($container, modes, selectedLibrary, mediator, logger
         if (modules[key]) {
 
             let $btnNav = $('<li></li>', {
-                class: ``,
+                class: `nav-item nav-link`,
                 html: `<a class="file-handler-nav-btn" data-type="${key}">${key}</a>`,
                 role: 'presentation'
             });
@@ -105,6 +107,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
     let $btnUpload;
     let $dropArea;
     let $uploadBtn;
+    let $cancelUploadBtn;
 
     let libraryPrefix = '';
     let libraryAllowed = '';
@@ -127,6 +130,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $btnUpload = $container.find('.btn-submit-images');
         $dropArea = $container.find('#drop-area');
         $uploadBtn = $container.find('.btn-submit-images');
+        $cancelUploadBtn = $container.find('.btn-cancel');
 
         return loadHandlebarsTemplates(templatesCache, templates);
     }, Data.defaultError).then(function (res) {
@@ -137,6 +141,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $libraries.on('change', loadAllowedTypes);
         $inputFiles.on('change', renderFiles);
         $btnUpload.on('click', uploadFiles);
+        $cancelUploadBtn.on('click', closeUploadModal);
         $container.on('keyup', '.input-url', validateFileUrl);
         $dropArea.on('dragover', dragOver);
         $dropArea.on('dragenter', dragEnter);
@@ -153,6 +158,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $libraries.off('change', loadAllowedTypes);
         $inputFiles.off('change', renderFiles);
         $btnUpload.off('click', uploadFiles);
+        $cancelUploadBtn.off('click', closeUploadModal);
         $container.off('keyup', '.input-url', validateFileUrl);
         $dropArea.off('dragover', dragOver);
         $dropArea.off('dragenter', dragEnter);
@@ -233,6 +239,8 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
 
         if (files.length > 0) {
             $uploadBtn.removeClass('disabled');
+            $cancelUploadBtn.removeClass('disabled');
+
         }
     }
 
@@ -285,7 +293,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         }
 
         return Data.postJson({ url: '/sitetriks/pages/validateUrls', data: { urls } }).then(function (res) {
-
+            Loader.show(true);
             if (res.success) {
                 updateFilesInfo(uploadedFiles);
 
@@ -302,7 +310,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
                 formData.append('library', libraryId);
 
                 return Data.postForm({ url: '/sitetriks/files/uploadfile', formData: formData });
-
+                Loader.hide();
             } else {
                 mediator.dispatch('alert', { selector: notifier, title: 'Not all urls are valid!', message: res.message, status: 'danger' });
                 return Promise.reject();
@@ -316,6 +324,14 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
                 cleanUp();
             }
         }, Data.defaultError);
+    }
+
+    function closeUploadModal() {
+        let $singleModal = $('#file-upload-modal')
+        if ($singleModal.length > 0) {
+
+            $singleModal.modal('toggle');
+        }
     }
 
     function updateFilesInfo(files) {
@@ -393,6 +409,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $inputFiles.val('');
         $filesContainer.html('');
         $uploadBtn.addClass('disabled');
+        $cancelUploadBtn.addClass('disabled');
         $('.file-handler-notifier').html('');
     }
 
@@ -405,7 +422,7 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple, 
     let $filesContainer;
     let $libraries;
     let templatesCache = {};
-    let templates = [{ name: 'file-select', url: '/templates/file-select.html' }, { name: 'file-select-video', url: '/templates/file-select-video.html' }, { name: 'file-select-document', url: '/templates/file-select-document.html' }];
+    let templates = [{ name: 'file-select', url: '/templates/file-select.html' }, { name: 'file-select-video', url: '/templates/file-select-video.html' }, { name: 'file-select-document', url: '/templates/file-select-document.html' }, { name: 'file-select-empty', url: '/templates/file-select-empty.html' }];
     let page = 1;
     let pageSize = 9;
     let $btnSelect;
@@ -489,14 +506,18 @@ function fileHandlerSelect(logger, $container, mediator, libraryId, isMultiple, 
         let template = templatesCache['file-select'];
         let videoTemplate = templatesCache['file-select-video'];
         let documentTemplate = templatesCache['file-select-document'];
+        let emptySelectContainer = templatesCache['file-select-empty'];
         let inputType = isMultiple ? 'checkbox' : 'radio';
 
         source.getData({ paging: { page, size: pageSize } }).then(function (res) {
             if (!res || !res.success) {
                 return Promise.reject((res || {}).message);
             }
-
             $filesContainer.html('');
+            console.log(res.items.length);
+            if (res.items.length < 1) {
+                $filesContainer.append(emptySelectContainer);
+            }
             res.items.forEach(function (element) {
                 if (+element.type === 0) {
                     $filesContainer.append(template({

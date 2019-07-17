@@ -9,7 +9,7 @@ import { forumWidget } from './forum-widget.js';
 import { allNewsWidget } from './all-news.js';
 import { licenseWidget } from './licenses-widgets.js';
 import { subscriptionWidget } from './subscription.js';
-
+import { socialShare } from './social-share.js';
 
 function treeItemsSlide() {
     $('body').on('click', '.more-items', function (event, callback, target) {
@@ -262,7 +262,8 @@ $(document).ready(function () {
     allNewsWidget();
     licenseWidget();
     subscriptionWidget();
-    contactFormWidget();
+	contactFormWidget();
+	socialShare();
 
     $(document).trigger('initCarousel');
     prettyPrintInit();

@@ -1,14 +1,25 @@
 ﻿
 body {
-    font-size: 10px;
+	font-size: 10px;
 }
 
 .st-layout-content {
-    padding: 0;
+	padding: 0;
+}
+
+.license-info {
+    text-align: center;
+    color: #bc3232;
+    font-size: 14px;
+    padding: 3px;
+    font-weight: 600;
+    width: 50%;
+    margin: auto;
+    border: 1px solid #bc3232;
 }
 
 .layout-content {
-    @extend .st-layout-content;
+	@extend .st-layout-content;
 }
 
 @import 'helpers/fonts-frontend';
@@ -25,6 +36,10 @@ body {
 
 @import 'front-end-styles/contact-form-styles';
 
+@import 'front-end-styles/share-buttons';
+
 @import 'commоn/notifier';
 
 @import 'commоn/smtp-form';
+
+@import 'front-end-styles/multi-level-dropdown';

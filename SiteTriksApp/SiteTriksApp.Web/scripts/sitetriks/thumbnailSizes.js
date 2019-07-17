@@ -40,7 +40,7 @@ export function createEditThumbnailSize() {
         $sizeWidth.val(width);
     }
 
-    $('.thumbnail-sizes-multiselect').on('click', '.glyphicon-pencil', function () {
+    $('.thumbnail-sizes-multiselect').on('click', '.fa-pencil', function () {
 
         let $target = $(this).parent().find('.checkbox');
         let id = $target.find('input').val();
@@ -106,8 +106,8 @@ export function createEditThumbnailSize() {
 
 
 
-    $('.thumbnails-label-container').on('click', '.glyphicon-remove', displayDeleteThumbSizePopup);
-    $('.delete-thumbnail-size').on('click', '.glyphicon-remove', hideDeleteLibraryPopup);
+    $('.thumbnails-label-container').on('click', '.fa-times', displayDeleteThumbSizePopup);
+    $('.delete-thumbnail-size').on('click', '.fa-times', hideDeleteLibraryPopup);
 
     $('.delete-thumbnail-size').on('click', '#cancel-delete', hideDeleteLibraryPopup);
     $('#delete-thumbnail-size').on('click', deleteThumbnailSize);

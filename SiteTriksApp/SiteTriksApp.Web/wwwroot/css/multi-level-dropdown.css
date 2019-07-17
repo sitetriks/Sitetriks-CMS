@@ -1,6 +1,4 @@
-﻿/*Adding homepage navigation styles*/
-
-/*Fonts*/
+﻿
 
 @font-face {
     font-family: MontserratBold;
@@ -21,6 +19,7 @@
 }
 
 .header-wrapper {
+    width: 100%;
 }
 
     .header-wrapper.header-white {
@@ -88,7 +87,6 @@
 }
 
     .multi-level-navigation > ul {
-        /*display: none;*/
         list-style: none;
         padding: 0 2%;
         margin: 0;
@@ -97,44 +95,17 @@
     .multi-level-navigation .main-navigation > li.nav-right {
         float: right;
         display: inline-block;
-        /*border-right: 1px solid black;*/
-        /*padding-right: 2%;*/
-        /*font-size: 1.4em;*/
-        /*width: 7%;*/
-        /*border-left: 1px solid black;*/
         text-align: center;
         /*padding: 0;*/
         padding-right: 2%;
         font-weight: bold;
     }
 
-    /*.multi-level-navigation .main-navigation:last-child > li.nav-right {
-        float: right;
-        border-right: 1px solid black;
-    }*/
-
     .multi-level-navigation .main-navigation li {
         display: inline-block;
         padding: 0 2%;
-        /*font-size: 1.4em;*/
-        /*background: #1bc2a2;*/
-        /*Addition: Added from Homepage css*/
-        /*background: #114382;*/
-        /* For browsers that do not support gradients */
-        /*background: -webkit-linear-gradient(#0c56a2, #114382);*/
-        /* For Safari 5.1 to 6.0 */
-        /*background: -o-linear-gradient(#0c56a2, #114382);*/
-        /* For Opera 11.1 to 12.0 */
-        /*background: -moz-linear-gradient(#0c56a2, #114382);*/
-        /* For Firefox 3.6 to 15 */
-        /*background: linear-gradient(#0c56a2, #114382);*/
-        /* Standard syntax */
-        /* background-color: #104a8f; */
-        /* height: 5vh; */
         height: 40px;
-        /*border-bottom: 3px solid #008cff;*/
         color: #f8f2eb;
-        /* position: relative; */
         text-transform: uppercase;
     }
 
@@ -222,6 +193,108 @@
     }
 
 
+.header-blue {
+    background: #114382;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#0c56a2, #114382);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#0c56a2, #114382);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#0c56a2, #114382);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#0c56a2, #114382);
+    /* Standard syntax */
+    /* background-color: #104a8f; */
+    /* height: 5vh; */
+    height: 40px;
+    border-bottom: 3px solid #008cff;
+    color: #f8f2eb;
+    /* position: relative; */
+}
+
+.slogan {
+    position: absolute;
+    top: 20%;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.2em;
+    font-family: Montserrat;
+    position: relative;
+    color: #e3e3e3;
+}
+
+.header-blue.header-blue-drop {
+    color: white;
+    background: #57a9ef;
+    text-align: center;
+    border-bottom: none;
+    -webkit-clip-path: polygon(50% 0%, 84% 0, 100% 0, 100% 1%, 74% 42%, 50% 98%, 23% 42%, 0 1%, 0 0, 31% 0);
+    -webkit-shape-outside: circle() border-box;
+    shape-outside: circle() border-box;
+    clip-path: polygon(50% 0%, 84% 0, 100% 0, 100% 1%, 74% 42%, 50% 98%, 23% 42%, 0 1%, 0 0, 31% 0);
+    -webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+    margin: 0 auto;
+}
+
+.header-blue-drop h1 {
+    margin: 0px;
+    font-size: 14px;
+    padding: 10px;
+}
+
+/*Top hamburger menu*/
+
+#mobile-view-top-menu {
+    display: none;
+}
+
+    #mobile-view-top-menu .login-button {
+        color: #5fb6fd;
+        text-transform: uppercase;
+        font-size: 2.2em;
+        font-family: Montserrat;
+        font-weight: bold;
+        text-align: center;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        border: 2px solid #008cff;
+        margin-bottom: 2px;
+    }
+
+/*#mobile-view-top-menu .login-button:hover {
+        border: 2px solid #0086fb;
+    }*/
+
+
+#hamburger-menu {
+    display: none;
+}
+
+.logo-container {
+    margin: 0;
+    padding: 0;
+    width: 220px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 6%;
+    /* add logo image */
+    font-size: 1.1em;
+    color: #008CFF;
+    text-transform: uppercase;
+    font-family: Montserrat;
+    font-weight: bolder;
+}
+
+    .logo-container img {
+        width: 100%;
+    }
+
+.logo-container-mobile {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .navigation-widget-wrapper .desktop-account-icons {
         display: none;
@@ -234,4 +307,11 @@
     .multi-level-navigation > ul {
         display: block;
     }
+
+    /*#hamburger-menu {
+        display: block;
+    }*/
 }
+
+
+

@@ -32,7 +32,7 @@ function login() {
 
     $('<div></div>', {
         click: Blur.remove,
-        class: 'close-modal glyphicon glyphicon-remove',
+        class: 'close-modal fa fa-times',
         id: 'close-modal'
     }).appendTo(modalContainer);
 
@@ -45,7 +45,7 @@ function register() {
 
     $('<div></div>', {
         click: Blur.remove,
-        class: 'close-modal glyphicon glyphicon-remove',
+        class: 'close-modal fa fa-times',
         id: 'close-modal'
     }).appendTo(modalContainer);
 

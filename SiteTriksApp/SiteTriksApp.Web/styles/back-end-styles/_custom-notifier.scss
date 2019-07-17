@@ -1,0 +1,115 @@
+﻿.notifications-list-wrapper {
+    width: 20%;
+    min-width: 150px;
+    float: right;
+    margin-bottom: 10px;
+
+    .notifications-default {
+        position: relative;
+        height: 40px;
+        width: 35px;
+        float: right;
+
+        .count {
+            position: absolute;
+            top: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        img {
+            height: 35px;
+            width: 35px;
+            float: right;
+            cursor: pointer;
+        }
+    }
+
+    .notifications-listed {
+        width: 20%;
+        min-width: 150px;
+        height: auto;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: 1px solid #bfbfbf;
+        z-index: 10000;
+        background-color: #fff;
+        padding-top: 15px;
+
+        .notifications-holder {
+            margin-top: 50px;
+            overflow-y: auto;
+            max-height: calc(100vh - 70px);
+
+            > div {
+                border-top: 1px solid #bfbfbf;
+                border-bottom: 1px solid #bfbfbf;
+            }
+
+            .title {
+                color: #8e8e8e;
+                height: 70px;
+                text-align: center;
+                line-height: 64px;
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            .listed-message {
+                border-top: none;
+                font-weight: 400;
+                font-size: 14px;
+            }
+
+            .notification-time {
+                margin-top: 10px;
+                text-align: right;
+                font-size: 12px;
+            }
+        }
+
+        img {
+            height: 35px;
+            width: 30px;
+            float: left;
+            border-bottom: 2px solid #1486f9;
+            padding-bottom: 8px;
+            margin-left: 20px;
+        }
+
+        .close-list {
+            height: 25px;
+            width: 25px;
+            margin-top: 10px;
+            margin-right: 24px;
+            padding-left: 10px;
+            position: relative;
+            float: right;
+
+            > div {
+                width: 1px;
+                height: 25px;
+                background-color: #bfbfbf;
+                display: inline-block;
+            }
+
+            > div:nth-of-type(1) {
+                -ms-transform: rotate(45deg); /* IE 9 */
+                -webkit-transform: rotate(45deg); /* Safari */
+                transform: rotate(45deg); /* Standard syntax */
+                float: left;
+            }
+
+            > div:nth-of-type(2) {
+                -ms-transform: rotate(45deg); /* IE 9 */
+                -webkit-transform: rotate(45deg); /* Safari */
+                transform: rotate(-45deg); /* Standard syntax */
+            }
+        }
+    }
+}

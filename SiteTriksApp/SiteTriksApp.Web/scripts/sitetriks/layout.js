@@ -4,15 +4,15 @@ import { Blur } from '../common/loader.js';
 
 function mobileMenu() {
     $('.with-dd').on('click', '.dropdown-toggle', function () {
-
         let $buttons = $('.caret-mobile');
-        $buttons.each((_, caret) => caret.classList.remove('caret-mobile-down'));
+        console.log($(this));
+        $buttons.each((_, caret) => $(caret).removeClass('caret-mobile-down'));
 
         let $arrow = $(this).find('.caret-mobile');
 
         if ($(this).attr('aria-expanded') === 'false' || $(this).attr('aria-expanded') === undefined) {
             $arrow.addClass('caret-mobile-down');
-        } else if ($(this).attr('aria-expanded') === 'true') {
+        } else {
             $arrow.removeClass('caret-mobile-down');
         }
     });
@@ -145,7 +145,7 @@ function multiSitePopup() {
     }
 
     $container.on('click', '.selected-site', displayMultiSite);
-    $multisiteSelect.on('click', '.glyphicon-remove', hideMultisite);
+    $multisiteSelect.on('click', '.fa-times', hideMultisite);
 }
 
 $(document).ready(function () {

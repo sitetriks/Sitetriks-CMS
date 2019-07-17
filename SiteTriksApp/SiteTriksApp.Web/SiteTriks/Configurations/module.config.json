@@ -30,7 +30,7 @@
     {
       "Name": "SiteTriks.ErrorPagesModule",
       "IsActive": false,
-      "DisplayName": "ErrorPages",
+      "DisplayName": "Error Pages",
       "Dependencies": []
     },
     {
@@ -46,12 +46,23 @@
       "Dependencies": []
     },
     {
+      "Name": "SiteTriks.FinTechModule",
+      "IsActive": true,
+      "DisplayName": "FinTech",
+      "Dependencies": []
+    },
+    {
       "Name": "SiteTriks.SiteMapModule",
       "IsActive": false,
       "DisplayName": "Site Map",
       "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ECommerceModule",
+      "IsActive": true,
+      "DisplayName": "E-Commerce",
+      "Dependencies": []
     }
-  
   ],
   "Installed": [
     {
@@ -66,7 +77,7 @@
     {
       "Name": "SiteTriks.ErrorPagesModule",
       "IsActive": true,
-      "DisplayName": "ErrorPages",
+      "DisplayName": "Error Pages",
       "Dependencies": []
     },
     {
@@ -94,6 +105,12 @@
       "Dependencies": []
     },
     {
+      "Name": "SiteTriks.FinTechModule",
+      "IsActive": true,
+      "DisplayName": "FinTech",
+      "Dependencies": []
+    },
+    {
       "Name": "SiteTriks.SiteMapModule",
       "IsActive": true,
       "DisplayName": "Site Map",
@@ -103,6 +120,12 @@
       "Name": "SiteTriks.DocumentationModule",
       "IsActive": true,
       "DisplayName": "Documentation",
+      "Dependencies": []
+    },
+    {
+      "Name": "SiteTriks.ECommerceModule",
+      "IsActive": true,
+      "DisplayName": "E-Commerce",
       "Dependencies": []
     }
   ]

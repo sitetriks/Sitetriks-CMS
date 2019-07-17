@@ -51,7 +51,7 @@ var News = (function () {
             
             if (url.length < 3 || versionTitle.length < 3 || content.length < 3) {
                 evt.preventDefault();
-                mediator.dispatch('alert', { selector: '#alerts', message: 'Please provide valid information in the required fields (title, version title and content)!', status: 'danger' });
+                mediator.dispatch('alert', { selector: '#alerts', message: 'Please provide valid information in the required fields (Permanent Title, Editable Title and Content)!', status: 'danger' });
                 return false;
             }
             Loader.show(true);
@@ -442,7 +442,7 @@ var News = (function () {
 
         function createImageView(fieldId, imgLinkId, $mainContainer) {
             let $container = $('<div class="news-listed-images-container"></div>');
-            let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="glyphicon glyphicon-remove"></span></div>');
+            let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="fa fa-times"></span></div>');
             let $img = $('<img src="/files/id/' + imgLinkId + '" class="display-image" />');
 
             $container.append($deleteBtn)

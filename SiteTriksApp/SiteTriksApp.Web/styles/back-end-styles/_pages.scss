@@ -5,6 +5,7 @@
 .custom-checkbox {
     width: 20px;
     height: 20px;
+    transform: scale(1.2);
 }
 
 .page-properties {
@@ -21,6 +22,10 @@
         width: 500px;
         max-width: inherit;
         z-index: 1;
+        border: 1px solid #ced4da;
+        ul {
+            width: 100%;
+        }
     }
 
     .description-row > div[class*='col-'] {
@@ -54,6 +59,11 @@
     .st-hint:after {
         font-size: 12px;
         background-color: #96BAC8;
+    }
+
+    .input-group-addon {
+        position: absolute;
+        right: -65px;
     }
 }
 

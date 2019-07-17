@@ -24,7 +24,7 @@ module.exports = {
         'sitetriks/news': './scripts/sitetriks/news.js',
         'sitetriks/dashboard-configuration': './scripts/sitetriks/dashboard-configuration.js',
         'frontend-layout-scripts': './scripts/frontend-layout-scripts.js',
-        'home-page': './scripts/home-page.js',
+        //'home-page': './scripts/home-page.js',
         'sitetriks/users': './scripts/sitetriks/users.js',
         'sitetriks/user-groups': './scripts/sitetriks/user-groups.js',
         'sitetriks/roles': './scripts/sitetriks/roles.js',
@@ -37,6 +37,8 @@ module.exports = {
         'sitetriks/helpers': './scripts/sitetriks/helpers.js',
         'sitetriks/forum': './scripts/sitetriks/forum.js',
         'sitetriks/setup': './scripts/sitetriks/setup.js',
+        'sitetriks/sitemap': './scripts/sitetriks/sitemap.js',
+        'calculator':'./scripts/fintech/calculator.js',
         'sitetriks/smtp-config': './scripts/sitetriks/smtp-config.js',
         'sitetriks/storemanager': './scripts/sitetriks/storemanager.js',
         'sitetriks/storeitemmanager': './scripts/sitetriks/storeitemmanager.js',
@@ -47,13 +49,14 @@ module.exports = {
         'sitetriks/languages': './scripts/sitetriks/languages.js',
         'sitetriks/sitesync': './scripts/sitetriks/sitesync.js',
         'sitetriks/dynamic-views': './scripts/sitetriks/dynamic-views.js',
+        'subscription': './scripts/subscription.js',
         'manage-profile-index': './scripts/manage-profile-index.js',
         'sitetriks/layout': './scripts/sitetriks/layout.js',
         'sitetriks/permissions': './scripts/sitetriks/permissions.js',
         'scss/site': './styles/site.scss',
         'scss/front-end-entry': './styles/front-end-entry.scss',
         'scss/back-end-entry': './styles/back-end-entry.scss',
-
+        'scss/page-builder-preview-entry': './styles/page-builder-preview-entry.scss',
         'bundle': './scripts/bundle.js'
     },
     resolve: {
@@ -80,9 +83,9 @@ module.exports = {
             use: [
                 {
                     loader: 'file-loader',
-                    options: {
-                        name: 'css/scss/[name]-sitetriks.css'
-                    }
+                    //options: {
+                    //    name: 'css/scss/[name].css'
+                    //}
                 },
                 {
                     loader: 'extract-loader'
@@ -91,7 +94,10 @@ module.exports = {
                     loader: 'css-loader?-url'
                 },
                 {
-                    loader: 'sass-loader'
+                    loader: 'sass-loader',
+                    options: {
+                        implementation: require("sass")
+                    }
                 }
             ]
         },
@@ -119,7 +125,10 @@ module.exports = {
                     options: { url: false }
                 },
                 {
-                    loader: 'sass-loader'
+                    loader: 'sass-loader',
+                    options: {
+                        implementation: require("sass")
+                    }
                 }
             ]
         }]

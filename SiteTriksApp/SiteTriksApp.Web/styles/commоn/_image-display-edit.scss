@@ -40,9 +40,23 @@
     }
 
     .toggle-button {
+        margin-bottom: 15px;
+
         span:nth-of-type(1) {
             margin-right: 10px;
         }
+    }
+
+    #date-picker {
+        margin-right: 20px;
+    }
+
+    .input-group-addon {
+        padding-top: 6px;
+    }
+
+    #input-update-file {
+        font-size: 14px;
     }
 }
 
@@ -59,9 +73,9 @@
     max-height: 150px;
 }
 
-.news-images-container {
+/*.news-images-container {
     height: 100px;
-}
+}*/
 
 .news-listed-image {
     position: relative;

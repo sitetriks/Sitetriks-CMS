@@ -4,5 +4,5 @@
   },
   "fs": {
     "name": "SiteTriks.Services.StorageProviders.Providers.FileSystemProvider"
-  }
+  }  
 }

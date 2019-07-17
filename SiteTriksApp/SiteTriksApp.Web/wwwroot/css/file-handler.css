@@ -89,8 +89,8 @@
 }
 
 .image-widget .nav-tabs > li.active > a, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus {
-    background-color: #ececec;
-    border-bottom: 1px solid #ddd;
+    /*background-color: #ececec;*/
+    /*border-bottom: 1px solid #ddd;*/
 }
 
 /*.image-widget .multiselect.dropdown-toggle.btn.btn-default.image-widget .btn-group,
@@ -341,3 +341,24 @@
 .image-container2.selected .image-checkbox-wrapper {
     background: #4a90e2;
 }
+
+/*-------------Empty template--------------------*/
+
+.file-select-empty-container {
+    height: 150px;
+    width: 100%;
+    position: relative;
+    margin: 10px;
+    background-color: #f6f6f6;
+    text-align: center;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+    .file-select-empty-container .message {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100%;
+        font-weight: 600;
+    }

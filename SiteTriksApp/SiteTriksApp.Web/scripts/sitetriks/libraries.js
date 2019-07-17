@@ -15,7 +15,7 @@ export function initLibraries(grid, mediator, logger) {
     let $btnEditLibrary = $('#btn-edit-lib');
     let $btnDeleteLibrary = $('#btn-delete-lib');
     let $deletePopup = $('.delete-popup-wrapper');
-    let $removePopup = $('.delete-popup-wrapper .glyphicon-remove');
+    let $removePopup = $('.delete-popup-wrapper .fa-times');
     let $cancelDeleteButton = $('#cancel-delete');
     let $deleteLibraryButton = $('#delete-library');
 

@@ -22,7 +22,7 @@
     }
 
     .thumbnail-image-delete {
-        .glyphicon {
+        .fa {
             top: 0;
         }
     }
@@ -81,11 +81,11 @@
     border-radius: 7px;
     font-weight: bold;
     float: right;
-    margin-right: 28%;
+    margin-right: 30%;
 }
 
 #size-type {
-    margin-left: 16px;
+    margin-left: 0;
 }
 
 #multiselect-thumbnails {
@@ -97,13 +97,6 @@
     padding-left: 30px;
     display: inline-block;
     /*line-height: 15px;*/
-}
-
-.thumbnails-label-container {
-    :hover {
-        background-color: #e8e8e8;
-    }
-
     input[type="checkbox"] {
         top: -2px;
     }
@@ -120,7 +113,7 @@
         color: #484848;
     }
 
-    .glyphicon {
+    .fa {
         float: right;
         padding-right: 20px;
         line-height: 28px;
@@ -128,15 +121,23 @@
         color: #bbbbbb;
     }
 
-    :hover .glyphicon {
+    :hover .fa {
         color: #484848;
     }
 }
 
+.thumbnails-label-container:hover {
+        background-color: #e8e8e8;
+    
+}
+
 #allowed-types {
-    display: block;
+    width: 500px;
     margin-left: 17%;
     margin-top: 10px;
+    display: block;
+    font-size: 14px;
+    text-align: right;
 }
 
 .control-label[for="Prefix"],

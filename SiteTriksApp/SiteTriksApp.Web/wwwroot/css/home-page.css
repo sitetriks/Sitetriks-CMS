@@ -996,12 +996,12 @@ body {
 
 .row.subscription-form-wrapper {
     min-height: 80px;
-    background-color: #123e7a;
+    /*background-color: #123e7a;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-bottom: 6px solid #3d70ca;
+    /*border-bottom: 6px solid #3d70ca;*/
     padding: 30px 0;
     text-align: center;
     margin: 0;
@@ -1313,7 +1313,7 @@ body {
             align-items: center;
         }
 
-            .homepage-footer .row .col-lg-1 .glyphicon {
+            .homepage-footer .row .col-lg-1 .fa {
                 font-size: 25px;
                 color: #268afb;
                 font-weight: bolder;
@@ -1759,7 +1759,7 @@ body {
 
     /*Footer*/
 
-    .homepage-footer .row .col-lg-1 .glyphicon {
+    .homepage-footer .row .col-lg-1 .fa {
         font-size: 22px;
     }
 
@@ -1872,7 +1872,7 @@ body {
     /*Footer*/
 
 
-    .homepage-footer .row .col-lg-1 .glyphicon {
+    .homepage-footer .row .col-lg-1 .fa {
         font-size: 22px;
     }
 
@@ -1972,7 +1972,7 @@ body {
             }
 
     /*Footer*/
-    .homepage-footer .row .col-lg-1 .glyphicon {
+    .homepage-footer .row .col-lg-1 .fa {
         font-size: 20px;
     }
 
@@ -2464,7 +2464,7 @@ body {
 
     /*Footer*/
 
-    .homepage-footer .row .col-lg-1 .glyphicon {
+    .homepage-footer .row .col-lg-1 .fa {
         font-size: 16px;
     }
 

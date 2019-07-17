@@ -74,7 +74,7 @@ export function image({ mediator, logger }) {
     function createImageView(fieldId, imgLinkId) {
         let $selectedImageContainer = $('.file-handler-Selected');
         let $container = $('<div class="news-listed-images-container"></div>');
-        let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="glyphicon glyphicon-remove"></span></div>');
+        let $deleteBtn = $('<div class="news-listed-image-delete" data-id="' + imgLinkId + '" data-field="' + fieldId + '"><span class="fa fa-times"></span></div>');
         let $img = $('<img src="/files/id/' + imgLinkId + '" class="display-image" />');
 
         $selectedImageContainer.html('');
