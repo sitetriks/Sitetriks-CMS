@@ -1,9 +1,6 @@
 ﻿/* globals SkypeWebControl, Prism, prettify */
 import { Data } from './common/data.js';
-<<<<<<< HEAD
 import { Blur } from './common/loader.js';
-=======
->>>>>>> origin/master
 import { documentationModule } from './documentation-widget.js';
 import { initCarousel } from './carousel.js';
 import { blogWidget } from './blog-widget.js';
@@ -12,11 +9,7 @@ import { forumWidget } from './forum-widget.js';
 import { allNewsWidget } from './all-news.js';
 import { licenseWidget } from './licenses-widgets.js';
 import { subscriptionWidget } from './subscription.js';
-<<<<<<< HEAD
 import { socialShare } from './social-share.js';
-=======
-
->>>>>>> origin/master
 
 function treeItemsSlide() {
     $('body').on('click', '.more-items', function (event, callback, target) {
@@ -269,7 +262,6 @@ $(document).ready(function () {
     allNewsWidget();
     licenseWidget();
     subscriptionWidget();
-<<<<<<< HEAD
 	contactFormWidget();
 	socialShare();
 
@@ -299,11 +291,4 @@ $(document).ready(function () {
         }).append($('<source/>', { type: 'video/mp4', src })).appendTo($container);
     });
 });
-=======
-    contactFormWidget();
-
-    $(document).trigger('initCarousel');
-});
-$(window).load(prettyPrintInit());
->>>>>>> origin/master
 window.Data = Data;

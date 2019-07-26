@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Multiselect } from '../common/multiselect-setup.js';
-=======
-﻿import { Multiselect } from '../common/multiselect-setup.js';
->>>>>>> origin/master
 
 function initWidgetConfiguration(grid) {
     const $modal = $('#edit-widget-roles');

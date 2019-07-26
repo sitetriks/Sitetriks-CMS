@@ -12,6 +12,18 @@
 
 .carousel-wrapper {
     margin-top: 50px;
+    display: block;
+    width: 100vw;
+    img {
+        margin: auto;
+    }
+}
+
+.backend-wrapper {
+    .carousel-wrapper {
+        display: unset;
+        width: auto;
+    }
 }
 
 .news-carousel-item {
@@ -31,6 +43,7 @@
         cursor: -moz-grabbing;
         cursor: -webkit-grabbing;
     }
+
     .news-description-wrapper {
         position: absolute;
         width: 100%;
@@ -54,7 +67,6 @@
             overflow: hidden;
         }
     }
-
 }
 
 a.read-more {

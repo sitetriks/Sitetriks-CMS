@@ -268,7 +268,7 @@ let calculate = (function () {
                 });
             }
         });
-  
+
     }
 
     function si() {
@@ -590,38 +590,42 @@ let calculate = (function () {
     }
 
     function createListRow(length) {
-        let row = $('<div/>', { 'class': 'row' });
+        let row = $('<div/>', { 'class': 'row form-group' });
 
-        let labelCol = $('<label>', { class: 'control-label col-md-1', text: `${length + 1}` }).appendTo(row);
-        let firstInputCol = $('<div>', { class: 'col-md-2' }).appendTo(row);
-        let secondInputCol = $('<div>', { class: 'col-md-2' }).appendTo(row);
-        let thirdInputCol = $('<div>', { class: 'col-md-2' }).appendTo(row);
-        let buttonCol = $('<div/>', { class: 'col-md-1' }).appendTo(row);
+        $('<label>', { class: 'col-1 state', text: `${length + 1}` }).appendTo(row);
 
-        let firstInput = $('<input/>', { class: `form-control probability`, type: 'number', step: '0.01', 'data-val': 'true', 'value': 0, name: `Probability[${length}]` }).appendTo(firstInputCol);
-        let secondInput = $('<input/>', { class: `form-control first-stock`, type: 'number', step: '0.01', 'data-val': 'true', 'value': 0, name: `FirstStock[${length}]` }).appendTo(secondInputCol);
-        let thirdInput = $('<input/>', { class: `form-control second-stock`, type: 'number', step: '0.01', 'data-val': 'true', 'value': 0, name: `SecondStock[${length}]` }).appendTo(thirdInputCol);
-        let button = $('<button/>', { class: 'btn remove-year', type: 'button', text: 'Remove' }).appendTo(buttonCol);
+        let fisrstDiv = $('<div/>', { 'class': 'col-2' }).appendTo(row);
+        $('<input/>', { class: `form-control probability`, 'data-val': 'true', 'value': 0, name: `Probability[${length}]` }).appendTo(fisrstDiv);
+        $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(fisrstDiv);
 
-        let probabilityValidation = $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(firstInputCol);
-        let firstStockValidation = $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(secondInput);
-        let secondStockValidation = $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(thirdInput);
+        $('<span/>', { class: 'col-1' }).appendTo(row);
+
+        let secondDiv = $('<div/>', { 'class': 'col-2' }).appendTo(row);
+        $('<input/>', { class: `form-control first-stock`, 'data-val': 'true', 'value': 0, name: `FirstStock[${length}]` }).appendTo(secondDiv);
+        $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(secondDiv);
+
+        $('<span/>', { class: 'col-1' }).appendTo(row);
+
+        let thirdDiv = $('<div/>', { 'class': 'col-2' }).appendTo(row);
+        $('<input/>', { class: `form-control second-stock`, 'data-val': 'true', 'value': 0, name: `SecondStock[${length}]` }).appendTo(thirdDiv);
+        $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(thirdDiv);
+
+        $('<span/>', { class: 'col-1' }).appendTo(row);
+
+        let btnDiv = $('<div/>', { 'class': 'col-2' }).appendTo(row);
+        $('<button/>', { class: 'btn remove-year', type: 'button', text: 'Remove' }).appendTo(btnDiv);
+
         return row
     }
 
     function createYearRow(length) {
 
-        let row = $('<div/>', { 'class': 'row' });
-        let years = $('<div/>', { "class": "years" }).appendTo(row);
+        let row = $('<div/>', { "class": "row years form-group" })
 
-        let labelCol = $('<div/>', { class: 'col-md-1' }).appendTo(years);
-        let inputCol = $('<div/>', { class: 'col-md-4' }).appendTo(years);
-        let buttonCol = $('<div/>', { class: 'col-md-1' }).appendTo(years);
-
-        $('<label/>', { class: 'control-label year', text: `Year ${length + 1}` }).appendTo(labelCol);
-        $('<input/>', { class: `form-control years-value`, type: 'number', step: '0.01', 'data-val': 'true', 'value': 0, name: `CashFlow[${length}]` }).appendTo(inputCol);
-        $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(inputCol);
-        $('<button/>', { class: 'btn remove-year', type: 'button', text: 'Remove' }).appendTo(buttonCol);
+        $('<label/>', { class: 'control-label year col-2', text: `Year ${length + 1}` }).appendTo(row);
+        $('<input/>', { class: `form-control years-value col-8`, 'data-val': 'true', 'value': 0, name: `CashFlow[${length}]` }).appendTo(row);
+        $('<span/>', { class: 'text-danger field-validation-valid' }).appendTo(row);
+        $('<button/>', { class: 'btn remove-year col-1', type: 'button', text: 'Remove' }).appendTo(row);
 
         return row;
     }
@@ -641,7 +645,7 @@ let calculate = (function () {
         ry,
         ser,
         lac,
-        autoLoan, 
+        autoLoan,
         interestOnly
     }
 

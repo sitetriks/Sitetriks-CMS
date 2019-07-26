@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 import 'jquery-ui';
 
 import { Data } from '../common/data.js';
-=======
-﻿import { Data } from '../common/data.js';
->>>>>>> origin/master
 import { Loader, Blur } from '../common/loader.js';
 import { Validator } from '../common/validator.js';
 import { WarningWindow } from '../modules/warning-window.js';
@@ -20,35 +16,6 @@ function createDocumentation() {
     bindEvents();
     WarningWindow.attach();
 
-<<<<<<< HEAD
-=======
-    function autocompleteDocumentationParent(ev) {
-        var val = $(ev.target).val();
-
-        if (val.length < 3) {
-            return;
-        }
-
-        Data.getJson({ url: '/sitetriks/documentation/gettopicnames?pattern=' + val }).then(function (response) {
-            console.log(response);
-            $parentInput.autocomplete({
-                source: response.suggestions,
-                select: function (event, ui) {
-                    $('#' + $parentInput).val(ui.item.label);
-                    $('#' + $parentInput).attr('data-id', ui.item.id);
-
-                    return false;
-                }
-            }).data('ui-autocomplete')._renderItem = function (ul, item) {
-                return $('<li>')
-                    .append(`<a data-id=${item.id}>${item.label}</a>`)
-                    .appendTo(ul);
-            };
-
-        });
-    }
-
->>>>>>> origin/master
     function submitForm(ev) {
         if (!validateFormFunc.apply(this)) {
             ev.preventDefault();
@@ -80,7 +47,6 @@ function createDocumentation() {
     }
 }
 
-<<<<<<< HEAD
 function autocompleteDocumentationParent(ev) {
     let $target = $(ev.target);
     let val = $target.val();
@@ -102,8 +68,6 @@ function autocompleteDocumentationParent(ev) {
     });
 }
 
-=======
->>>>>>> origin/master
 function createContent() {
     textEditor.init('#content-area', 700, 300);
     WarningWindow.attach();
@@ -125,21 +89,14 @@ function createContent() {
 
 function editDocumentation(ev) {
     WarningWindow.attach();
-<<<<<<< HEAD
     $('#parent').on('input', autocompleteDocumentationParent);
-=======
->>>>>>> origin/master
 
     //---------------------------------------------------
     // consts
     const contentNameField = '#contentName';
     const contentField = '#Content';
     const titleInput = '#Title';
-<<<<<<< HEAD
     const upToVersionInput = '#up-to-version';
-=======
-    const orderInput = '#Order';
->>>>>>> origin/master
     const contentIdInput = '#contentId';
     const versionDropDown = '#Version';
     const versionDropDownSelected = versionDropDown + ' :selected';
@@ -181,11 +138,7 @@ function editDocumentation(ev) {
             $(contentNameField).text(contentName);
             $(contentField).html('');
             $(titleInput).val('');
-<<<<<<< HEAD
             $(upToVersionInput).val('');
-=======
-            //  $(orderInput).val('');
->>>>>>> origin/master
             $(contentIdInput).val('');
             return;
         }
@@ -194,19 +147,10 @@ function editDocumentation(ev) {
 
         Data.getJson({ url: '/sitetriks/documentation/gettopicversion/' + versionId }).then(function (res) {
             if (res.success) {
-<<<<<<< HEAD
                 $(contentNameField).html(res.contentName);
                 $(contentField).html(res.content);
                 $(titleInput).val(res.title);
                 $(upToVersionInput).val(res.upToVersion || '');
-=======
-                console.log(res);
-
-                $(contentNameField).html(res.contentName);
-                $(contentField).html(res.content);
-                $(titleInput).val(res.title);
-                //   $(orderInput).val(res.order);
->>>>>>> origin/master
                 $(contentIdInput).val(res.contentId);
             }
 
@@ -335,17 +279,11 @@ function editDocumentation(ev) {
         if (formData.set && {}.toString.call(formData.set) === '[object Function]') {
             formData.set('Version', $(versionDropDownSelected).text());
             formData.set('VersionId', $(versionDropDown).val());
-<<<<<<< HEAD
             formData.set('UpToVersion', $(upToVersionInput).val());
         } else {
             formData.append('Version', $(versionDropDownSelected).text());
             formData.append('VersionId', $(versionDropDown).val());
             formData.append('UpToVersion', $(upToVersionInput).val());
-=======
-        } else {
-            formData.append('Version', $(versionDropDownSelected).text());
-            formData.append('VersionId', $(versionDropDown).val());
->>>>>>> origin/master
         }
 
         if (!$(contentIdInput).val()) {

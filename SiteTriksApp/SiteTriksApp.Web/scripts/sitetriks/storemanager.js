@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Data } from '../common/data.js';
-=======
-﻿import { Data } from '../common/data.js';
->>>>>>> origin/master
 import { Loader } from '../common/loader.js';
 import { Validator } from '../common/validator.js';
 import { Notifier } from '../common/notifier.js';

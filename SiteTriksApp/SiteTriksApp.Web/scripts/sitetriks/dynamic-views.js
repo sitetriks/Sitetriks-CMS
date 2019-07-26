@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { RazorViewsEditor } from '../razor-views-editor.js';
-=======
-﻿import { RazorViewsEditor } from '../razor-views-editor.js';
->>>>>>> origin/master
 import { WarningWindow } from '../modules/warning-window.js';
 
 var DynamicViews = function () {

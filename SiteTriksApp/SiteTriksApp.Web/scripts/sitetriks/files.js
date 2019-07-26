@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 import 'eonasdan-bootstrap-datetimepicker';
 
 import { Data } from '../common/data.js';
-=======
-﻿import { Data } from '../common/data.js';
->>>>>>> origin/master
 import { Utils } from '../common/utils.js';
 import { Loader } from '../common/loader.js';
 import { Validator } from '../common/validator.js';

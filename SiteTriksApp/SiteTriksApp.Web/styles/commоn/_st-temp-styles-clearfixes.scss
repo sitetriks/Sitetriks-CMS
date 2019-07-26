@@ -3,6 +3,9 @@
 .st-body-content .st-row-clear-margin {
     margin-right: 0;
     margin-left: 0;
+    > div:not(.drop-layout) {
+        flex: 0 0 100%;
+    }
 }
 
 .backend-wrapper .title-field {

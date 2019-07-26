@@ -3,10 +3,7 @@ import { Loader } from './common/loader.js';
 import { loadHandlebarsTemplates } from './common/handlebars.js';
 import { textEditor } from './text-editor.js';
 import { Notifier } from './common/notifier.js';
-<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
 import { DateConversion } from './common/date-conversion.js';
-=======
->>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
 
 const Comments = (function () {
     let parentId;
@@ -59,7 +56,6 @@ const Comments = (function () {
             if (res.success) {
                 $container.append(res.view);
                 textEditor.clear(areaId);
-<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
 
                 $('.comment-date').each((_, e) => {
                     let d = e.getAttribute('data-original-date');
@@ -67,8 +63,6 @@ const Comments = (function () {
 					let newDate = DateConversion.convertUtcToLocal(d);
                     e.textContent = newDate.toLocaleString();
                 });
-=======
->>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/comments.js
             } else {
                 Notifier.createAlert({ containerId: '#alert', message: 'Comment must not be empty', status: 'danger' });
             }

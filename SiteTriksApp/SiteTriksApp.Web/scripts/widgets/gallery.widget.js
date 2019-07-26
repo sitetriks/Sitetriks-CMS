@@ -12,7 +12,7 @@ export function gallery({ mediator, logger }) {
         }
 
         fileHandler = FileHandler($('.widget-dialog .gallery-images'), ['Select'], '', mediator, logger, true);
-        $('#gallery-source a#images').trigger('click');
+       // $('#gallery-source a#images').trigger('click');
     }
 
     function show(element) {
@@ -89,16 +89,18 @@ export function gallery({ mediator, logger }) {
     $('body').on('click', '#gallery-source>a', function (e) {
         let source = $(this).attr('id');
         $('#gallery-source').data('source-type', source);
-        $('#' + source).hide();
+        $('.gallery-button').removeClass('selected');
+        //$('#' + source).hide();
         switch (source) {
             case 'images':
                 //showChoice();
                 $('.gallery-library').hide();
                 $('.gallery-images').show();
-                $('#library').show();
+                $('#images').addClass('selected');
                 break;
             case 'library':
-                $('#images').show();
+                $('#library').addClass('selected');
+               // $('#images').show();
                 //files = [];
                 //uploadedFiles = [];
                 $('#files-container').html('');

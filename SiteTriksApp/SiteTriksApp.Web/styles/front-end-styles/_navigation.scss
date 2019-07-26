@@ -1,0 +1,126 @@
+﻿.st-navbar {
+    font-size: 16px;
+
+    .navbar-brand {
+        max-width: 15%;
+        height: auto;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .navbar-nav {
+        width: 100%;
+    }
+
+    .nav-item:hover .nav-link {
+        color: #969797;
+    }
+
+    .desktop-account-icons {
+        position: absolute;
+        right: 2%;
+        top: 40%;
+
+        input {
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+    }
+}
+
+/*Navbar position*/
+
+.st-navbar.FixedTop {
+    position: fixed;
+    width: 100%;
+}
+
+.st-navbar.Top {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.st-navbar.Bottom {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.st-navbar.Sticky {
+    position: sticky;
+    width: 100%;
+}
+
+/*Logo orientation*/
+.st-navbar.Left {
+    flex-direction: row;
+}
+
+.st-navbar.Right {
+    flex-direction: row-reverse;
+}
+
+.st-navbar.Center {
+    flex-direction: column;
+}
+
+/*Items orientation*/
+
+.st-navbar-items.Left .navbar-nav {
+    justify-content: flex-start;
+}
+
+.st-navbar-items.Right .navbar-nav {
+    justify-content: flex-end;
+}
+
+.st-navbar-items.Center .navbar-nav {
+    justify-content: center;
+}
+
+/*Rows + direction combined*/
+
+/*Two rows*/
+
+.st-navbar.TwoRows {
+    flex-direction: column;
+
+    .navbar-brand {
+        width: 100%;
+        max-width: 100%;
+
+        img {
+            max-width: 15%;
+        }
+    }
+
+    .st-navbar-items {
+        width: 100%;
+    }
+}
+
+/*Logo orientation*/
+.st-navbar.TwoRows.Center {
+    .navbar-brand img {
+        display: block;
+        margin: auto;
+    }
+}
+
+.st-navbar.TwoRows.Right {
+    .navbar-brand img {
+        display: block;
+        float: right;
+    }
+}
+
+.st-navbar.TwoRows.Left {
+    .navbar-brand img {
+        display: block;
+        float: left;
+    }
+}

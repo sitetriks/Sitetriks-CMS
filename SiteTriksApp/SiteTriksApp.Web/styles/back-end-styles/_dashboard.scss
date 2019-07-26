@@ -35,6 +35,11 @@
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
 
+    h5 {
+        color: gray;
+        padding: 10px;
+    }
+
     .panel {
         margin-bottom: 10px;
         background-color: #fff;
@@ -67,6 +72,8 @@
         }
 
         .btn-dashboard-widget-header {
+            position: absolute;
+            right: 20px;
             padding: 0;
             color: #337ab7;
             text-decoration: none;
@@ -91,7 +98,7 @@
     .panel-body-landing {
         border-top: none;
         border-bottom: none;
-        height: 405px;
+        height: 408px;
         overflow-y: auto;
         padding: 0;
 

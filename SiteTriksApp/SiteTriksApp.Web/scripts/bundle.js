@@ -12,7 +12,7 @@ import '../wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css';
 import '../wwwroot/lib/custom/font-awesome/font-awesome.min.css';
 import '../wwwroot/fonts/navigation-icons/css/Glyphter.css';
 
-import '../styles/back-end-entry.scss';
+//import '../styles/back-end-entry.scss';
 import '../styles/front-end-entry.scss';
 import '../styles/site.scss'
 

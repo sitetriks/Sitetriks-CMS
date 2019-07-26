@@ -5,6 +5,11 @@
     border-radius: 7px;
     padding: 8% 8%;
     text-align: center;
+    margin-top: 30px;
+}
+
+.gallery-widget .gallery-container {
+    margin-top: 60px;
 }
 
     .image-widget .widget-form label,
@@ -12,13 +17,17 @@
         text-align: left;
     }
 
+    .image-widget .widget-form .form-group,
+    .gallery-widget .gallery-container .form-group {
+      margin-bottom: 10px;
+    }
+
 
     .image-widget .widget-form hr,
     .gallery-widget .widget-form hr {
         margin-top: 5px;
-        float: left;
         width: 92%;
-        height: 1.5px;
+        height: 1px;
         background: #979797;
     }
 
@@ -107,6 +116,7 @@
 .gallery-widget .widget-form input.form-control {
     width: 100%;
     max-width: 50%;
+    margin-bottom: 10px;
 }
 
 .image-widget .file-handler-wrapper {
@@ -135,13 +145,14 @@
 }
 
     .file-handler-container.active {
-        display: inherit
+        display: inherit;
+        min-height: 560px;
     }
 
 
 .select-parent {
     height: 200px;
-    width: 30%;
+    width: auto;
     margin: 1%;
     position: relative;
     float: left;
@@ -187,7 +198,7 @@
     background-color: #eee;
 }
 
- .checkmark-cover {
+.checkmark-cover {
     height: 20px;
     width: 20px;
     position: absolute;
