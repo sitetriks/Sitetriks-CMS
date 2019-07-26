@@ -1,14 +1,13 @@
 ﻿.navigation-widget.widget-container {
-    input.form-control, .multiselect, #template-selector {
-        width: 250px;
+    input.form-control, .multiselect, #template-selector{
+        min-width: 250px;
     }
 }
 
 .widget-container {
-    input.form-control, .multiselect, #template-selector {
-        width: 250px;
+    input.form-control, .multiselect, #template-selector, select.form-control {
+        min-width: 250px;
     }
-
     /*To move*/
     #video-source {
         width: 250px;

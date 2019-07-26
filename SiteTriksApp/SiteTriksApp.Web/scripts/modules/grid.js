@@ -1,15 +1,9 @@
 import { Data } from '../common/data.js';
-<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
 import { Utils } from '../common/utils.js';
 import { Pager } from './pager.js';
 import { DataSource } from './data-source.js';
 import { Handlebars } from '../common/handlebars.js';
 import { DateConversion } from '../common/date-conversion.js';
-=======
-import { Pager } from './pager.js';
-import { DataSource } from './data-source.js';
-import { Handlebars } from '../common/handlebars.js';
->>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
 
 'use strict';
 
@@ -556,18 +550,5 @@ function _Grid({ wrapperId, type, sourceConfig, pagerConfig, customActions, fiel
     };
 }
 
-<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
-=======
-//=======================================================================================
-// TODO: move
-function escapeRegExp(str) {
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
-}
-
-function replaceAll(str, find, replace) {
-    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-}
-
->>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/modules/grid.js
 window._Grid = _Grid;
 export { _Grid };

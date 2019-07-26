@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Data } from '../common/data.js';
-=======
-﻿import { Data } from '../common/data.js';
->>>>>>> origin/master
 import { Loader } from '../common/loader.js';
 import { Notifier } from '../common/notifier.js';
 import { WarningWindow } from '../modules/warning-window.js';
@@ -44,11 +40,7 @@ export function createEditThumbnailSize() {
         $sizeWidth.val(width);
     }
 
-<<<<<<< HEAD
     $('.thumbnail-sizes-multiselect').on('click', '.fa-pencil', function () {
-=======
-    $('.thumbnail-sizes-multiselect').on('click', '.glyphicon-pencil', function () {
->>>>>>> origin/master
 
         let $target = $(this).parent().find('.checkbox');
         let id = $target.find('input').val();
@@ -114,13 +106,8 @@ export function createEditThumbnailSize() {
 
 
 
-<<<<<<< HEAD
     $('.thumbnails-label-container').on('click', '.fa-times', displayDeleteThumbSizePopup);
     $('.delete-thumbnail-size').on('click', '.fa-times', hideDeleteLibraryPopup);
-=======
-    $('.thumbnails-label-container').on('click', '.glyphicon-remove', displayDeleteThumbSizePopup);
-    $('.delete-thumbnail-size').on('click', '.glyphicon-remove', hideDeleteLibraryPopup);
->>>>>>> origin/master
 
     $('.delete-thumbnail-size').on('click', '#cancel-delete', hideDeleteLibraryPopup);
     $('#delete-thumbnail-size').on('click', deleteThumbnailSize);
@@ -216,14 +203,7 @@ export function createEditThumbnailSize() {
 
 
     $sizeType.on('input', hideOffsetOptions);
-<<<<<<< HEAD
     hideOffsetOptions();
-=======
-    $(window).load(function () {
-
-        hideOffsetOptions();
-    });
->>>>>>> origin/master
 
     // check all numbers
     $fullForm.on('input', 'input', function () {

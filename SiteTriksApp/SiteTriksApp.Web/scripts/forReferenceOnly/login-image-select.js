@@ -1,9 +1,9 @@
 ﻿$(document).ready(function () {
     let windowWidth = $(window).width();
     let $image = $('.login-image');
-    let imageFourk = '/images/homepage/Login_img_4k.jpg';
-    let imageHD = '/images/homepage/Login_img_HD.jpg';
-    let imageMiddle = '/images/homepage/Login_image.jpg';
+    let imageFourk = 'https://sitetriksblob.blob.core.windows.net/static-files/images/homepage/Login_4K.jpg';
+    let imageHD = 'https://sitetriksblob.blob.core.windows.net/static-files/images/homepage/Login_Wide.jpg';
+    let imageMiddle = 'https://sitetriksblob.blob.core.windows.net/static-files/images/homepage/Login_image.jpg';
 
     function selectLoginImage() {
         if (windowWidth >= 2800) {

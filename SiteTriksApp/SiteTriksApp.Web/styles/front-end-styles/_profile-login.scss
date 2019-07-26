@@ -131,6 +131,7 @@
     height: 100vh;
     padding: 0;
     background-color: #2d424c;
+    min-height: 850px
 }
 
 .sitetriks-login {
@@ -153,7 +154,7 @@
             height: 90%;
             width: 97%;
             min-height: 700px;
-            background-image: url('/images/homepage/Login_Wide.jpg');
+            background-image: url('https://sitetriksblob.blob.core.windows.net/static-files/images/homepage/Login_Wide.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             position: absolute;
@@ -164,7 +165,6 @@
 }
 
 /* Upload license page*/
-
 #uploadLicense {
     padding: 12% 20% 23px 20%;
     font-size: 12px;
@@ -597,10 +597,14 @@
     }
 }
 
+#registerForm {
+	line-height: 12px;
+}
+
 .login-label {
-    margin: 0;
-    padding: 0;
-    font-size: 1.2em;
+	margin: 0;
+	padding: 0;
+	font-size: 1.2em;
 }
 
 .input-form {
@@ -748,9 +752,10 @@
 }
 
 #forgttenPassword, #registerForm {
-    h3, h4, p {
-        text-align: center;
-    }
+	h3, h4, p {
+		text-align: center;
+		color: #b0b0b0;
+	}
 }
 
 .user-type-wrapper {
@@ -894,7 +899,7 @@
     .sitetriks-login {
         .row {
             .login-image-container {
-                background-image: url('/images/homepage/Login_image.jpg');
+                background-image: url('https://sitetriksblob.blob.core.windows.net/static-files/images/homepage/Login_image.jpg');
             }
         }
     }
@@ -1022,7 +1027,7 @@
     .sitetriks-login {
         .row {
             .login-image-container {
-                background-image: url('/images/homepage/Login_4K.jpg');
+                background-image: url('https://sitetriksblob.blob.core.windows.net/static-files/images/homepage/Login_4K.jpg');
             }
         }
     }
@@ -1040,7 +1045,7 @@
     .sitetriks-login {
         .row {
             .login-image-container {
-                background-image: url('/images/homepage/Login_Wide4K.jpg');
+                background-image: url('https://sitetriksblob.blob.core.windows.net/static-files/images/homepage/Login_Wide4K.jpg');
             }
         }
     }

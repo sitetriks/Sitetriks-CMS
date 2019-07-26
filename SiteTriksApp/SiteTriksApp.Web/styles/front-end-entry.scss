@@ -18,6 +18,23 @@ body {
     border: 1px solid #bc3232;
 }
 
+.btn-st-blue, a.btn-st-blue {
+    border: 1px solid grey;
+    color: #fff;
+    background-color: #00aeff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.st-label-al-left {
+	text-align: left;
+	font-weight: 600;
+}
+
+.st-lable-bold {
+	font-weight: 600;
+}
+
 .layout-content {
 	@extend .st-layout-content;
 }
@@ -43,3 +60,9 @@ body {
 @import 'commоn/smtp-form';
 
 @import 'front-end-styles/multi-level-dropdown';
+
+@import 'commоn/calculators';
+
+@import 'front-end-styles/forum-widget';
+
+@import 'front-end-styles/navigation';

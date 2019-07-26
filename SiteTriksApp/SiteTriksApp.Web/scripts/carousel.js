@@ -1,10 +1,6 @@
-<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/carousel.js
 ﻿import 'slick-carousel';
 
 export function initCarousel() {
-=======
-﻿export function initCarousel() {
->>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/carousel.js
     $(document).on('initCarousel', {}, function () {
         let $carousels = $('.carousel');
         if ($carousels.length < 1) {

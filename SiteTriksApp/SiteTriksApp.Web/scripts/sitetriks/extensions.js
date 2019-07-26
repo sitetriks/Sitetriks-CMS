@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 import 'bootstrap-toggle';
 
 import { Data } from 'common/data.js';
-=======
-﻿import { Data } from 'common/data.js';
->>>>>>> origin/master
 import { Loader } from 'common/loader.js';
 import { Notifier } from 'common/notifier.js';
 import { handleApplicationRestart } from 'restart-app.js';

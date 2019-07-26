@@ -2,11 +2,7 @@ import { Data } from '../common/data.js';
 import { Notifier } from '../common/notifier.js';
 import { loadHandlebarsTemplates } from '../common/handlebars.js';
 
-<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/sitetriks/sitesync-core.js
 export function createSiteSyncCore(siteSyncModel) {
-=======
-export function createSiteSyncCore (siteSyncModel) {
->>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/sitetriks/sitesync-core.js
     let getDisplayNamesUrl;
     let getByDisplayNameUrl;
     let getByDisplayNameTargetUrl;
@@ -54,11 +50,7 @@ export function createSiteSyncCore (siteSyncModel) {
             siteSyncContainersData.stagedItems[`${displayName}`] = siteSyncContainersData.stagedItems[`${displayName}`].filter(el => el.id !== id);
         }
 
-<<<<<<< HEAD:SiteTriksApp/SiteTriksApp.Web/scripts/sitetriks/sitesync-core.js
         if ([`${displayName}`] in siteSyncContainersData.stagedItems && siteSyncContainersData.stagedItems[`${displayName}`].length === 0) {
-=======
-        if ([`${displayName}`] in siteSyncContainersData.stagedItems && siteSyncContainersData.stagedItems[`${displayName}`] === 0) {
->>>>>>> origin/master:SiteTriksApp/SiteTriksApp.Web/scripts/sitetriks/sitesync-core.js
             delete siteSyncContainersData.stagedItems[`${displayName}`];
         }
         renderStagedContainer();

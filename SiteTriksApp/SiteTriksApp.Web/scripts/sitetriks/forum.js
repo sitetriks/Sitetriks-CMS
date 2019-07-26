@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 ﻿import './layout.js';
 
 import { Comments } from '../comments.js';
-=======
-﻿import { Comments } from '../comments.js';
->>>>>>> origin/master
 import { WarningWindow } from '../modules/warning-window.js';
 
 function postDetails(postId) {

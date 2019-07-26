@@ -25,6 +25,10 @@ body, html {
     .modal-dialog {
         max-width: 35%;
     }
+
+    .table th, .table td {
+        padding: 0.5rem;
+    }
 }
 
 .sitetriks-wrapper {
@@ -33,7 +37,6 @@ body, html {
     height: 100%;
 
 }
-
     .grid.full-grid-width {
         min-width: 1100px;
     }
@@ -93,6 +96,7 @@ a:hover {
         font-weight: 600;
     }
 
+}
     .btn-st-blue, a.btn-st-blue {
         border: 1px solid grey;
         color: #fff;
@@ -100,7 +104,6 @@ a:hover {
         padding: 5px 10px;
         border-radius: 5px;
     }
-}
 
 @import 'back-end-styles/dynamics-styles';
 
@@ -155,6 +158,10 @@ a:hover {
 @import 'back-end-styles/languages';
 
 @import 'back-end-styles/permissions';
+
+@import 'commоn/calculators';
+
+@import 'back-end-styles/widget-modal-styles';
 
 /*--------------------------------------------------------------------*/
 
