@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="81" height="82" viewBox="0 0 81 82" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <filter id="a" width="118.7%" height="118.7%" x="-9.3%" y="-6.7%" filterUnits="objectBoundingBox">
+      <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1" result="shadowMatrixOuter1"/>
+      <feMerge>
+        <feMergeNode in="shadowMatrixOuter1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <rect id="b" width="53" height="53" x="11" y="11" rx="2"/>
+    <path id="c" d="M28,33.9999671 C28,30.6862768 30.6799487,28 34.0043225,28 L47.5689601,28 L47.5689601,41.0041226 C47.5689601,44.3178129 44.8890114,47.0040897 41.5646376,47.0040897 L28,47.0040897 L28,33.9999671 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd" filter="url(#a)" transform="translate(3.076 1.169)">
+    <rect width="50" height="50" x="12" y="12" fill="#2577C9" stroke="#123E7A" rx="2"/>
+    <g transform="rotate(45 37.5 37.5)">
+      <use fill="#123E7A" xlink:href="#b"/>
+      <rect width="51" height="51" x="12" y="12" stroke="#008EFF" stroke-width="2" rx="2"/>
+    </g>
+    <path stroke="#2473C3" d="M27.5,47.0877638 L42.1955821,47.0877638 C45.2376128,47.0877638 47.6997068,44.6279663 47.6997068,41.5914344 L47.6997068,27.5 L33.0041247,27.5 C29.962094,27.5 27.5,29.9597975 27.5,32.9963294 L27.5,47.0877638 Z"/>
+    <use fill="#008CFF" xlink:href="#c"/>
+    <path stroke="#123E7A" d="M28.5,46.5040897 L41.5646376,46.5040897 C44.6099846,46.5040897 47.0689601,44.0445556 47.0689601,41.0041226 L47.0689601,28.5 L34.0043225,28.5 C30.9589755,28.5 28.5,30.9595341 28.5,33.9999671 L28.5,46.5040897 Z"/>
+    <rect width="12.679" height="2.113" x="34.987" y="33.19" fill="#123E7A"/>
+    <rect width="12.679" height="2.113" x="26.371" y="39.612" fill="#123E7A"/>
+    <polyline fill="#123E7A" points="26.772 26.878 27.913 25.795 36.591 34.025 35.449 35.108"/>
+    <polyline fill="#123E7A" points="36.791 40.6 37.866 39.612 46.036 47.124 44.961 48.113"/>
+  </g>
+</svg>

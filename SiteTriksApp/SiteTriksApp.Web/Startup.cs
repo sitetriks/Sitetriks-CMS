@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using SiteTriks.Data.Models.Users;
 using SiteTriks.Extensions;
 using SiteTriksApp.Web.Data;
@@ -115,6 +116,12 @@ namespace SiteTriksApp.Web
 
             app.UseHttpsRedirection();
             app.UseSiteTriks(env, this.Configuration);
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "SiteTriks/StaticFiles")),
+                RequestPath = "/SiteTriks/StaticFiles"
+            });
 
             app.UseSession();
 

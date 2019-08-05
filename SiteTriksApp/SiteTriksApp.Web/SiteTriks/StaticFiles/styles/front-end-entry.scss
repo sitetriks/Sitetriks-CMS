@@ -1,0 +1,70 @@
+﻿
+body {
+	font-size: 10px;
+}
+
+.st-layout-content {
+	padding: 0;
+}
+
+.license-info {
+    text-align: center;
+    color: #bc3232;
+    font-size: 14px;
+    padding: 3px;
+    font-weight: 600;
+    width: 50%;
+    margin: auto;
+    border: 1px solid #bc3232;
+}
+
+.btn-st-blue, a.btn-st-blue {
+    border: 1px solid grey;
+    color: #fff;
+    background-color: #00aeff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.st-label-al-left {
+	text-align: left;
+	font-weight: 600;
+}
+
+.st-lable-bold {
+	font-weight: 600;
+}
+
+.layout-content {
+	@extend .st-layout-content;
+}
+
+@import 'helpers/fonts-frontend';
+
+@import 'front-end-styles/profile-login';
+
+@import 'front-end-styles/news-carousel';
+
+@import 'front-end-styles/front-end-footer';
+
+@import 'front-end-styles/widget-styles';
+
+@import 'front-end-styles/contact-us-widget';
+
+@import 'front-end-styles/contact-form-styles';
+
+@import 'front-end-styles/share-buttons';
+
+@import 'commоn/notifier';
+
+@import 'commоn/smtp-form';
+
+@import 'front-end-styles/multi-level-dropdown';
+
+@import 'commоn/calculators';
+
+@import 'front-end-styles/forum-widget';
+
+@import 'front-end-styles/navigation';
+
+@import 'back-end-styles/smtp-config';

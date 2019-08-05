@@ -6,8 +6,29 @@
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
     <Version>2.1.1</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="SiteTriks\StaticFiles\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!--<Content Include="SiteTriks\StaticFiles\css\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SiteTriks\StaticFiles\fonts\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SiteTriks\StaticFiles\images\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SiteTriks\StaticFiles\lib\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SiteTriks\StaticFiles\templates\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>-->
+  </ItemGroup>  
   <ItemGroup>
     <Compile Remove="Controllers\**" />
     <Compile Remove="Extensions\**" />
@@ -21,7 +42,7 @@
     <None Remove="Controllers\**" />
     <None Remove="Extensions\**" />
     <None Remove="logs\**" />
-  </ItemGroup>
+  </ItemGroup>  
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="2.2.0" />
@@ -37,37 +58,50 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="SiteTriks" Version="2.2.1" />
+    <PackageReference Include="SiteTriks" Version="2.2.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
-  </ItemGroup>  
+  </ItemGroup>
+  <!--<ItemGroup>
+    <ProjectReference Include="..\SiteTriks.BlogModule\SiteTriks.BlogModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.DocumentationModule\SiteTriks.DocumentationModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.ECommerceModule\SiteTriks.ECommerceModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.ErrorPagesModule\SiteTriks.ErrorPagesModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.ForumModule\SiteTriks.ForumModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.MarketingEmailModule\SiteTriks.MarketingEmailModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.FinTechModule\SiteTriks.FinTechModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.RssFeedModule\SiteTriks.RssFeedModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.SiteMapModule\SiteTriks.SiteMapModule.csproj" />
+    <ProjectReference Include="..\SiteTriks.SiteSync\SiteTriks.SiteSync.csproj" />
+    <ProjectReference Include="..\SiteTriks\SiteTriks.csproj" />
+  </ItemGroup>-->
   <ItemGroup>
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\AbortController.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\browser-index.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Errors.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HandshakeProtocol.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HttpClient.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HttpConnection.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HubConnection.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\HubConnectionBuilder.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\IConnection.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\IHttpConnectionOptions.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\IHubProtocol.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\ILogger.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\index.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\ITransport.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\JsonHubProtocol.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Loggers.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\LongPollingTransport.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\ServerSentEventsTransport.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Stream.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\TextMessageFormat.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\Utils.d.ts" />
-    <TypeScriptCompile Include="wwwroot\lib\signalr\dist\esm\WebSocketTransport.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\AbortController.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\browser-index.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Errors.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HandshakeProtocol.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HttpClient.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HttpConnection.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HubConnection.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HubConnectionBuilder.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\IConnection.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\IHttpConnectionOptions.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\IHubProtocol.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\ILogger.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\index.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\ITransport.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\JsonHubProtocol.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Loggers.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\LongPollingTransport.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\ServerSentEventsTransport.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Stream.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\TextMessageFormat.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Utils.d.ts" />
+    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\WebSocketTransport.d.ts" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="echo &quot;App Offline&quot; /a &gt; $(ProjectDir)app_offline.htm" />
