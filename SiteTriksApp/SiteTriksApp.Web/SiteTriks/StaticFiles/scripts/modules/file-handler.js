@@ -221,7 +221,7 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
                 let file = window.URL.createObjectURL(currentFile);
                 $fragment.append(`<img src="${file}" class="display-image">`);
             } else {
-                $fragment.append('<img src="/Images/default-document-image.png">');
+                $fragment.append('<img src="/SiteTriks/StaticFiles/images/default-document-image.png">');
             }
 
             $filesContainer.append($fragment);

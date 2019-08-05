@@ -109,7 +109,11 @@
 
 .gallery-widget .multiselect.dropdown-toggle.btn.btn-default {
     width: 100%;
-    margin-left: -35px;
+}
+
+.gallery-widget #template-selector,
+.image-widget #template-selector {
+    width: 50%;
 }
 
 .image-widget .widget-form input.form-control,
@@ -162,6 +166,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    max-width: 230px;
     padding: 0;
     overflow: hidden;
     border: 1px solid #979797;
