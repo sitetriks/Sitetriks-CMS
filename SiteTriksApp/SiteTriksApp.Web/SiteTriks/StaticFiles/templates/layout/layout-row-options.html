@@ -1,0 +1,43 @@
+﻿<div>
+    <!--<div class="options-header">[{{rowIndex}}] - {{resolution}}</div>-->
+
+    <div>
+        <label>
+            <span>Tag</span>
+            <!--<input class="input-tag" value="{{tag}}" />-->
+            <select class="select-tag">
+                {{#select tag}}
+                <option value="div">div</option>
+                <option value="main">main</option>
+                <option value="section">section</option>
+                <option value="content">content</option>
+                <option value="header">header</option>
+                <option value="footer">footer</option>
+                {{/select}}
+            </select>
+        </label>
+    </div>
+
+    <hr />
+    <div class="options-header">Advanced</div>
+
+    <div>
+        <label>
+           <span>Css Class</span>
+            <input class="input-cssClass" value="{{cssClass}}" />
+        </label>
+    </div>
+
+    {{#each columns}}
+        <a class="select-column btn btn-default" data-rowIndex="{{../rowIndex}}" data-colIndex="{{@index}}">
+            {{@index}}
+            {{#unless size}}
+                <span class="text-danger fa fa-times"></span>
+            {{/unless}}
+        </a>
+    {{/each}}
+
+    <hr />
+    <a class="update-row btn btn-backend" data-rowIndex="{{rowIndex}}">Save Row</a>
+    <a class="remove-row btn btn-backend" data-rowIndex="{{rowIndex}}">Delete Row</a>
+</div>

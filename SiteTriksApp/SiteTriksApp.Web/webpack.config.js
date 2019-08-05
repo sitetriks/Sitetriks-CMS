@@ -7,61 +7,66 @@ module.exports = {
     mode: 'development',
     entry: {
         // source files
+
         // common:
-        'common/logger': './scripts/common/logger.js',
-        'common/mediator': './scripts/common/mediator.js',
+        'common/logger': './SiteTriks/StaticFiles/scripts/common/logger.js',
+        'common/mediator': './SiteTriks/StaticFiles/scripts/common/mediator.js',
 
         // modules:
-        'grid': './scripts/modules/grid.js',
+        'grid': './SiteTriks/StaticFiles/scripts/modules/grid.js',
 
         // sitetriks specific:
-        'sitetriks/libraries': './scripts/sitetriks/libraries.js',
-        'sitetriks/files': './scripts/sitetriks/files.js',
-        'sitetriks/pages': './scripts/sitetriks/pages.js',
-        'sitetriks/edit-content': './scripts/sitetriks/edit-content.js',
-        'sitetriks/templates': './scripts/sitetriks/templates.js',
-        'sitetriks/dashboard': './scripts/sitetriks/dashboard.js',
-        'sitetriks/news': './scripts/sitetriks/news.js',
-        'sitetriks/dashboard-configuration': './scripts/sitetriks/dashboard-configuration.js',
-        'frontend-layout-scripts': './scripts/frontend-layout-scripts.js',
-        //'home-page': './scripts/home-page.js',
-        'sitetriks/users': './scripts/sitetriks/users.js',
-        'sitetriks/user-groups': './scripts/sitetriks/user-groups.js',
-        'sitetriks/roles': './scripts/sitetriks/roles.js',
-        'sitetriks/dynamics': './scripts/sitetriks/dynamics.js',
-        'sitetriks/extensions': './scripts/sitetriks/extensions.js',
-        'sitetriks/thumbnailSizes': './scripts/sitetriks/thumbnailSizes.js',
-        'sitetriks/widget-configuration': './scripts/sitetriks/widget-configuration.js',
-        'sitetriks/marketing-emails': './scripts/sitetriks/marketing-emails.js',
-        'sitetriks/blog': './scripts/sitetriks/blog.js',
-        'sitetriks/helpers': './scripts/sitetriks/helpers.js',
-        'sitetriks/forum': './scripts/sitetriks/forum.js',
-        'sitetriks/setup': './scripts/sitetriks/setup.js',
-        'sitetriks/sitemap': './scripts/sitetriks/sitemap.js',
-        'calculator':'./scripts/fintech/calculator.js',
-        'sitetriks/smtp-config': './scripts/sitetriks/smtp-config.js',
-        'sitetriks/storemanager': './scripts/sitetriks/storemanager.js',
-        'sitetriks/storeitemmanager': './scripts/sitetriks/storeitemmanager.js',
-        'sitetriks/categorymanager': './scripts/sitetriks/categorymanager.js',
-        'sitetriks/store-skins': './scripts/sitetriks/store-skins.js',
-        'sitetriks/documentation': './scripts/sitetriks/documentation.js',
-        'sitetriks/endpoints': './scripts/sitetriks/endpoints.js',
-        'sitetriks/languages': './scripts/sitetriks/languages.js',
-        'sitetriks/sitesync': './scripts/sitetriks/sitesync.js',
-        'sitetriks/dynamic-views': './scripts/sitetriks/dynamic-views.js',
-        'subscription': './scripts/subscription.js',
-        'manage-profile-index': './scripts/manage-profile-index.js',
-        'sitetriks/layout': './scripts/sitetriks/layout.js',
-        'sitetriks/permissions': './scripts/sitetriks/permissions.js',
-        'scss/site': './styles/site.scss',
-        'scss/front-end-entry': './styles/front-end-entry.scss',
-        'scss/back-end-entry': './styles/back-end-entry.scss',
-        'scss/page-builder-preview-entry': './styles/page-builder-preview-entry.scss',
-        'bundle': './scripts/bundle.js'
+        'sitetriks/libraries': './SiteTriks/StaticFiles/scripts/sitetriks/libraries.js',
+        'sitetriks/files': './SiteTriks/StaticFiles/scripts/sitetriks/files.js',
+        'sitetriks/pages': './SiteTriks/StaticFiles/scripts/sitetriks/pages.js',
+        'sitetriks/edit-content': './SiteTriks/StaticFiles/scripts/sitetriks/edit-content.js',
+        'sitetriks/templates': './SiteTriks/StaticFiles/scripts/sitetriks/templates.js',
+        'sitetriks/dashboard': './SiteTriks/StaticFiles/scripts/sitetriks/dashboard.js',
+        'sitetriks/news': './SiteTriks/StaticFiles/scripts/sitetriks/news.js',
+        'sitetriks/dashboard-configuration': './SiteTriks/StaticFiles/scripts/sitetriks/dashboard-configuration.js',
+        'frontend-layout-scripts': './SiteTriks/StaticFiles/scripts/frontend-layout-scripts.js',
+        'sitetriks/users': './SiteTriks/StaticFiles/scripts/sitetriks/users.js',
+        'sitetriks/user-groups': './SiteTriks/StaticFiles/scripts/sitetriks/user-groups.js',
+        'sitetriks/roles': './SiteTriks/StaticFiles/scripts/sitetriks/roles.js',
+        'sitetriks/dynamics': './SiteTriks/StaticFiles/scripts/sitetriks/dynamics.js',
+        'sitetriks/extensions': './SiteTriks/StaticFiles/scripts/sitetriks/extensions.js',
+        'sitetriks/thumbnailSizes': './SiteTriks/StaticFiles/scripts/sitetriks/thumbnailSizes.js',
+        'sitetriks/widget-configuration': './SiteTriks/StaticFiles/scripts/sitetriks/widget-configuration.js',
+        'sitetriks/marketing-emails': './SiteTriks/StaticFiles/scripts/sitetriks/marketing-emails.js',
+        'sitetriks/blog': './SiteTriks/StaticFiles/scripts/sitetriks/blog.js',
+        'sitetriks/helpers': './SiteTriks/StaticFiles/scripts/sitetriks/helpers.js',
+        'sitetriks/forum': './SiteTriks/StaticFiles/scripts/sitetriks/forum.js',
+        'sitetriks/setup': './SiteTriks/StaticFiles/scripts/sitetriks/setup.js',
+        'sitetriks/sitemap': './SiteTriks/StaticFiles/scripts/sitetriks/sitemap.js',
+        'sitetriks/smtp-config': './SiteTriks/StaticFiles/scripts/sitetriks/smtp-config.js',
+        'sitetriks/storemanager': './SiteTriks/StaticFiles/scripts/sitetriks/storemanager.js',
+        'sitetriks/storeitemmanager': './SiteTriks/StaticFiles/scripts/sitetriks/storeitemmanager.js',
+        'sitetriks/categorymanager': './SiteTriks/StaticFiles/scripts/sitetriks/categorymanager.js',
+        'sitetriks/store-skins': './SiteTriks/StaticFiles/scripts/sitetriks/store-skins.js',
+        'sitetriks/documentation': './SiteTriks/StaticFiles/scripts/sitetriks/documentation.js',
+        'sitetriks/endpoints': './SiteTriks/StaticFiles/scripts/sitetriks/endpoints.js',
+        'sitetriks/languages': './SiteTriks/StaticFiles/scripts/sitetriks/languages.js',
+        'sitetriks/sitesync': './SiteTriks/StaticFiles/scripts/sitetriks/sitesync.js',
+        'sitetriks/dynamic-views': './SiteTriks/StaticFiles/scripts/sitetriks/dynamic-views.js',
+        'sitetriks/layout': './SiteTriks/StaticFiles/scripts/sitetriks/layout.js',
+        'sitetriks/permissions': './SiteTriks/StaticFiles/scripts/sitetriks/permissions.js',
+
+        //Widgets
+        'calculator':'./SiteTriks/StaticFiles/scripts/fintech/calculator.js',
+        'subscription': './SiteTriks/StaticFiles/scripts/widgets-helpers/subscription.js',
+        'manage-profile-index': './SiteTriks/StaticFiles/scripts/manage-profile-index.js',
+
+        //SCSS
+        'scss/site': './SiteTriks/StaticFiles/styles/site.scss',
+        'scss/front-end-entry': './SiteTriks/StaticFiles/styles/front-end-entry.scss',
+        'scss/back-end-entry': './SiteTriks/StaticFiles/styles/back-end-entry.scss',
+        'scss/page-builder-preview-entry': './SiteTriks/StaticFiles/styles/page-builder-preview-entry.scss',
+
+        'bundle': './SiteTriks/StaticFiles/scripts/bundle.js'
     },
     resolve: {
         modules: [
-            path.resolve('./scripts'),
+            path.resolve('./SiteTriks/StaticFiles/scripts'),
             path.resolve('./node_modules')
         ],
         // file extensions
@@ -164,7 +169,7 @@ module.exports = {
         // The format for the outputted files
         filename: 'js/[name].js',
         // The output directory "wwwroot/js/"
-        path: path.resolve(__dirname, 'wwwroot/'),
+        path: path.resolve(__dirname, 'SiteTriks/StaticFiles/'),
         publicPath: '/js/'
     }
 };

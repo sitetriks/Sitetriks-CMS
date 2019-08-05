@@ -1,0 +1,193 @@
+﻿/*------------------------------------------------------------------------------------------
+ *  Skin Manager
+ *------------------------------------------------------------------------------------------*/
+
+.section-wrapper {
+    background-color: #fff;
+    position: relative;
+    padding: 10px 0;
+}
+
+    .section-wrapper > .filter-section {
+        min-height: 50px;
+        padding: 10px 5px;
+        border: 3px solid #555;
+        border-radius: 5px;
+    }
+
+    .section-wrapper > .section-name {
+        background-color: inherit;
+        position: absolute;
+        line-height: 3px;
+        left: 15px;
+        padding: 0 5px;
+    }
+
+    .section-wrapper > .delete-section {
+        position: absolute;
+        background-color: #c00;
+        right: 0;
+        top: 10px;
+        padding: 2px;
+        cursor: pointer;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+        .section-wrapper > .delete-section:hover {
+            background-color: #000;
+            color: #c00;
+        }
+
+/*------------------------------------------------------------------------------------------
+ *  Display Store
+ *------------------------------------------------------------------------------------------*/
+
+/* filters */
+.search-filters input,
+.search-filters select,
+.search-filters textarea {
+    max-width: inherit;
+    margin-bottom: 5px;
+}
+
+.search-filters .range-filter {
+    width: 120px;
+    display: inline-block;
+}
+
+.search-filters .section-wrapper .section-name {
+    cursor: pointer;
+    z-index: 5;
+    transition: left 0.5s ease-in-out;
+}
+
+    .search-filters .section-wrapper .section-name span.fa {
+        line-height: 0px;
+    }
+
+.search-filters .section-wrapper .filter-section {
+    display: inherit;
+}
+
+.filter-section .item-title {
+        margin-bottom: 15px;
+        font-family: Montserrat;
+        font-weight: 600;
+        color: #4c4c4c;
+    }
+
+.search-filters .section-wrapper.collapsed .filter-section {
+    display: none;
+}
+
+.search-filters .section-wrapper.collapsed .section-name {
+    left: 0px;
+}
+
+/* checkbox filter styles */
+
+.search-filters .section-wrapper .filter-section .filter-type-checkbox {
+    text-align: center;
+}
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    width: 20px;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+.checkmark-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 28px;
+    width: 34px;
+    border: 1px solid #979797;
+    border-radius: 3px;
+}
+
+.checkmark {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    height: 22px;
+    width: 28px;
+    border: 1px solid #979797;
+    border-radius: 3px;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #68b8ff;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 7px;
+    top: 0px;
+    width: 9px;
+    height: 14px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    border-radius: 2px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* checkbox filter styles */
+
+.filter-type-range {
+    display: flex;
+    margin-bottom: 15px;
+    line-height: 35px;
+}
+
+.search-filters .filter-type-range .item-title {
+    margin-bottom: 0px;
+    margin-right: 10px;
+}
+
+.search-filters .filter-type-range input {
+    width: 64px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #f6f6f6;
+    border: solid 1px #979797;
+    font-size: 12px;
+}
+
+    .filter-type-range ::-moz-placeholder { 
+        text-align: right;
+    }
+
+
+/* grid */
+.store-item-preview {
+    vertical-align: top;
+}

@@ -1,0 +1,236 @@
+﻿
+#add-widget-container {
+
+    .general-widget-settings {
+        background-color: #eeeeee;
+        border: 1px solid #c5c5c5;
+        border-radius: 7px;
+        padding: 8% 8%;
+
+        hr {
+            background-color: #979797;
+            height: 1px;
+            width: 95%;
+        }
+
+        .multiselect.dropdown-toggle {
+            background-color: #909090;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .row input, .row select, .row .btn-group {
+            width: 66%;
+            max-height: 40px;
+            .multiselect {
+                /*width: 100%;*/
+            }
+        }
+    }
+}
+
+/*Navigation widget modal*/
+
+.navigation-widget.widget-container {
+    select.form-control, input.form-control {
+        min-width: 100px;
+    }
+
+    .row.positions {
+        padding: 70px 0 4% 2%;
+        align-items: baseline;
+        padding-left:0;
+    }
+
+    .navigation-specific {
+        color: #686868;
+        font-weight: 600;
+        display: block;
+        margin-right: 0;
+        margin-left: 0;
+
+        input.form-control, select.form-control, .btn-group {
+            width: 100%;
+        }
+
+        .col-7 {
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        select.form-control, input.form-control {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            margin-bottom: 15px;
+            line-height: 20px;
+
+            .col {
+                padding: 0;
+            }
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 1px solid gray;
+            border-radius: 3px;
+            text-align: center;
+            /*background-color: #e8e8e8;*/
+            color: #686868;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 24px;
+
+            option {
+                background-color: #fff;
+            }
+        }
+
+        .triangle {
+            position: absolute;
+            right: 30px;
+            top: 5px;
+            width: 15px;
+            height: 30px;
+            display: inline-block;
+            padding: 10px 0;
+
+            .triangle-down {
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 6px solid #686868;
+            }
+        }
+    }
+
+    .menu-type {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        justify-content: space-around;
+        display: flex;
+        height: 30px;
+
+        span {
+            display: inline-block;
+            /*padding-bottom: 5px;*/
+            cursor: pointer;
+        }
+
+        span.active {
+            border-bottom: solid 3px #418dfe;
+        }
+    }
+
+    .logo-position, .menu-items-position {
+        display: flex;
+        justify-content: end;
+
+        span {
+            padding-bottom: 5px;
+            margin-right: 3px;
+            cursor: pointer;
+        }
+
+        span.active {
+            border-bottom: solid 3px #418dfe;
+        }
+    }
+}
+
+/* Empty checkbox sprcifics*/
+.checkbox-container .checkmark.no-tick::after {
+    border: none;
+}
+
+/*Gallery widget modal*/
+
+.gallery-widget {
+    span.selection-label {
+        margin-right: 20px;
+        font-family: LucidaGrande;
+        font-size: 18px;
+        font-weight: bold;
+        color: #414141;
+    }
+
+    .gallery-library {
+        position: relative;
+        padding: 10px;
+        line-height: 50px;
+
+        select {
+            display: inline-block;
+            width: 40%;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            text-align: center;
+            margin-left: 15px;
+        }
+
+        .arrow-down {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 9px solid #686868;
+            position: absolute;
+            top: 34px;
+            right: 25%;
+        }
+    }
+
+    .gallery-button {
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #737373;
+        font-weight: 600;
+        margin-right: 20px;
+
+        .circle {
+            margin-right: 15px;
+            margin-bottom: -4px;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            background-color: transparent;
+            border-radius: 50%;
+            border: 2px solid #d8d8d8;
+        }
+    }
+
+    .gallery-button.selected {
+        .circle {
+            background-color: #418dfe;
+        }
+    }
+}
+
+/*Tabs widgets*/
+
+.tabs-configuration {
+    .add-tab {
+        margin-bottom: 10px;
+        margin-left: -15px;
+    }
+
+    input, select {
+        margin-right: 10px;
+    }
+
+    .btn-delete-field {
+        border: 1px solid gray;
+    }
+}

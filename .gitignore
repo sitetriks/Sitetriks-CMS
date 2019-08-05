@@ -258,8 +258,8 @@ paket-files
 **/wwwroot/scripts/**/*
 **/scripts_babel/**/*
 *.lic
-*.min.js
-*.min.css
+# *.min.js
+# *.min.css
 **/wwwroot/cmsUploads/**/*
 **/SiteTriks/Configurations/config.aes
 **/wwwroot/css/scss/**/*.css
@@ -268,3 +268,7 @@ paket-files
 
 # css bundle ignore
 /SiteTriksApp/SiteTriksApp.Web/wwwroot/css/bundle.css
+**/SiteTriks/StaticFiles/css/scss/**/*.css
+**/SiteTriks/StaticFiles/css/scss/**/*.sitetriks.css
+**/SiteTriks/StaticFiles/css/scss/**/*.map
+**/SiteTriks/StaticFiles/js/**/*

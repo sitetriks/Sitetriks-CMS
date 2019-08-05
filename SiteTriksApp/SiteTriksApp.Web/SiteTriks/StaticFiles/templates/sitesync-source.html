@@ -1,0 +1,14 @@
+﻿<div class="buttons-container">
+    <div class="select-all">Select All</div>
+</div>
+
+{{#each items as |value key|}}
+
+<div id="source-{{value}}" class="main-element" data-displayName="{{value}}">
+    {{value}}<span class="fa fa-angle-right" style=""></span><span class="fa fa-angle-down" style="display: none;"></span><input type="checkbox" class="source-items">
+</div>
+<div id="source-{{value}}-content" class="content-element" data-displayName="{{value}}">
+</div>
+{{/each}}
+
+

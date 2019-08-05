@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="78" height="57" viewBox="0 0 78 57" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <rect id="a" width="77.014" height="56" y=".5"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="#213755" xlink:href="#a"/>
+    <use fill="#333333" fill-opacity=".5" xlink:href="#a"/>
+    <rect width="75.014" height="54" x="1" y="1.5" stroke="#3876CF" stroke-width="2"/>
+    <g fill="#FFFFFF" transform="translate(14 20.5)">
+      <polygon points="0 .053 25.47 .053 12.788 9.748"/>
+      <polygon points="0 .938 10.11 8.723 0 15.351"/>
+      <polygon points="15.736 8.65 25.42 1.212 25.42 15.526"/>
+      <polygon points="10.868 9.309 12.917 10.869 15.013 9.219 25.432 16.442 0 16.442"/>
+    </g>
+    <path fill="#FFFFFF" d="M58,26 L67,26 L67,32 L58,32 L58,26 Z M45,29 L58,22.5 L58,35.5 L45,29 Z"/>
+  </g>
+</svg>
