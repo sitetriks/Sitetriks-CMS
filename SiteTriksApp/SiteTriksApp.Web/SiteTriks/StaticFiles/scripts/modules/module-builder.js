@@ -75,7 +75,7 @@ var ModuleBuilder = (function () {
                 let col = layout[i].columns[j];
                 let cssClass = 'layout-preview-col';
                 for (let key in col.resolutions) {
-                    cssClass += ` col-${key}-${col.resolutions[key].size} st-col-${key}-${col.resolutions[key].size} `;
+                    cssClass += ` col-${key}-${col.resolutions[key].size} st-col-${key}-${col.resolutions[key].size} st-col-${key}-offset-${col.resolutions[key].offset}  `;
                 }
 
                 if (col.properties && col.properties.cssClass && col.properties.cssClass.trim()) {

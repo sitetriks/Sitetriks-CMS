@@ -145,6 +145,7 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         }
 
         selectElements();
+        $('.placeholder-blurred').html('');
     }
 
     // clears selected item from the control and the ui
@@ -348,7 +349,6 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         for (let i = 0; i < l.selected.length; i += 1) {
             placeholders.push(l[l.selected[i].row].columns[l.selected[i].col].properties.placeholder);
         }
-
         $wrapper[0].dispatchEvent(new CustomEvent('checkForContent', { bubbles: true, detail: { type: 'col', placeholders } }));
     }
 

@@ -15,7 +15,6 @@ export function video({ mediator, logger }) {
         var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         var match = url.match(regExp);
         var result = '';
-
         if (match && match[2].length === 11) {
             result = match[2];
         } else {
@@ -182,14 +181,14 @@ export function video({ mediator, logger }) {
             //    alert('invalid youtube url');
             //    return;
             //}
-            //let currentIds = $('#video-name').val();
+            let currentIds = $('#video-name').val();
 
-            //if (currentIds.length > 0) {
-            //    currentIds = currentIds + ';' + playlistId;
-            //} else {
-            //    currentIds = playlistId;
-            //}
-            //$('#video-name').val(currentIds);
+            if (currentIds.length > 0) {
+                currentIds = currentIds + ';' + playlistId;
+            } else {
+                currentIds = playlistId;
+            }
+            $('#video-name').val(currentIds);
 
             addVideo(playlistId);
             this.previousElementSibling.value = '';
@@ -206,7 +205,7 @@ export function video({ mediator, logger }) {
                 $('#video-name').val('');
                 let ids = '';
                 let $deafaultVideo = $('.default-video-url');
-                if ($deafaultVideo.val().length > 0) {
+                if ($deafaultVideo.length > 0) {
                     ids += $deafaultVideo.val();
                 }
 
@@ -293,11 +292,12 @@ export function video({ mediator, logger }) {
                     values = parseYoutubeVideosList(urls).join(';');
                     break;
 
-                //case 'youtubeMultiplePlaylists':
-                //    urls = [];
-                //    $('#video-widget-config').find('.video-url').each((_, e) => { urls.push(e.innerText); });
-                //    values = parseYoutubeVideosList(urls).join(';');
-                //    break;
+                case 'youtubeMultiplePlaylists':
+                    urls = [];
+                    $('#video-widget-config').find('.video-url').each((_, e) => { urls.push(e.innerText); });
+                    values = $('.default-video-url').val() + ';' + urls.join(';');
+                  //  values = parseYoutubeVideosList(urls).join(';');
+                    break;
 
                 default:
                     values = $('#video-name').val();

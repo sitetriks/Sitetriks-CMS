@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@aspnet/signalr": "^1.0.4",
+    "ajv": "^6.10.2",
     "bootstrap": "^4.3.1",
     "bootstrap-multiselect": "^0.9.13-1",
     "bootstrap-toggle": "^2.2.2",
@@ -14,7 +15,10 @@
     "handlebars": "^4.1.2",
     "jquery": "^3.4.0",
     "jquery-ui": "^1.12.1",
+    "lodash": "^4.17.15",
+    "mixin-deep": "^2.0.1",
     "popper.js": "^1.12.3",
+    "set-value": "^3.0.1",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {

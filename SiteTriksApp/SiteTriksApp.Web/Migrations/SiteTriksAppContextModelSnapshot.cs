@@ -879,6 +879,24 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_logs");
                 });
 
+            modelBuilder.Entity("SiteTriks.Data.Models.LoginSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsLogged");
+
+                    b.Property<DateTime>("LoginStamp");
+
+                    b.Property<string>("SessionId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginSessions");
+                });
+
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsMeta", b =>
                 {
                     b.Property<Guid>("Id")

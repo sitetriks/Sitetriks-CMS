@@ -10,8 +10,8 @@ using SiteTriksApp.Web.Data;
 namespace SiteTriksApp.Web.Migrations
 {
     [DbContext(typeof(SiteTriksAppContext))]
-    [Migration("20190717114403_Initial")]
-    partial class Initial
+    [Migration("20191210145912__initial")]
+    partial class _initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -879,6 +879,24 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("st_logs");
+                });
+
+            modelBuilder.Entity("SiteTriks.Data.Models.LoginSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsLogged");
+
+                    b.Property<DateTime>("LoginStamp");
+
+                    b.Property<string>("SessionId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginSessions");
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsMeta", b =>

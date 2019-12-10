@@ -40,7 +40,7 @@ export function blogWidget() {
 
     function loadDependencies() {
         let promises = [];
-        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/forum.css', 'css')); // TODO: check if loaded, move comment styles from forum
+        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/scss/forum.css', 'css')); // TODO: check if loaded, move comment styles from forum
 
         if (typeof tinymce === 'undefined') {
             promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/lib/custom/tinymce/tinymce.min.js', 'js'));

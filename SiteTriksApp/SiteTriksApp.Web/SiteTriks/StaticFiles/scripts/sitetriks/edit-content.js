@@ -14,7 +14,7 @@ import { forumWidget } from '../widgets-helpers/forum-widget.js';
 
 export function editPageContent(url, currentLanguage, currentVersion, currentTemplate, w) {
 	// Layout handling
-    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-lg-preview.css`, 'css');
+    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-lg-preview.css`, 'css');
 	$('.resolution').on('click', function (ev) {
 		let active = $('.selected-option').attr('data-type');
 		let $target = $(this);
@@ -29,12 +29,12 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 				$el.removeClass('selected');
 				let type = $el.attr('data-type');
 
-                Utils.removejscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${type}-preview.css`, 'css');
+                Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 			});
 
 			$target.addClass('selected');
 			let type = $target.attr('data-type');
-            Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${type}-preview.css`, 'css');
+            Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		}
 	});
 
@@ -76,7 +76,7 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 			$el.removeClass('selected');
 			let type = $el.attr('data-type');
 
-            Utils.removejscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${type}-preview.css`, 'css');
+            Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		});
 
 		$('.resolution[data-type="lg"]').trigger('click');
@@ -87,21 +87,19 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 		let layout = JSON.parse(layoutWidget.element);
 
 		ModuleBuilder.initializeLayout('#preview-layout', layout.layoutRows, '.resolution', '#main-layout-options', function () { return $('.selected-option').attr('data-type') === 'layout'; });
-
 		$showContent.on('click', saveLayout);
 	} else {
 		console.error('Layout was not found!');
 	}
 
-	function saveLayout() {
+    //here
+    function saveLayout() {
 		let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
 		let layout = JSON.parse(layoutWidget.element);
 		let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
-		layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
-
+        layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass }; });
 		ModuleBuilder.renderLayout(layout.layoutRows, $(`div.preview-placeholder[data-identifier="${layoutWidget.id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
 		WidgetsDraggable.init(w);
-
 		layoutWidget.element = JSON.stringify(layout);
 		if (layoutWidget.IsInherited) {
 			layoutWidget.IsModifiedOnChild = true;
@@ -403,7 +401,7 @@ export function initStickyWidgets() {
 
 export function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
 	// Layout handling
-    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-lg-preview.css`, 'css');
+    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-lg-preview.css`, 'css');
 	$('.resolution').on('click', function (ev) {
 		let active = $('.selected-option').attr('data-type');
 		let $target = $(this);
@@ -418,12 +416,12 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 				$el.removeClass('selected');
 				let type = $el.attr('data-type');
 
-                Utils.removejscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${type}-preview.css`, 'css');
+                Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 			});
 
 			$target.addClass('selected');
 			let type = $target.attr('data-type');
-            Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${type}-preview.css`, 'css');
+            Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		}
 	});
 
@@ -461,7 +459,7 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 			$el.removeClass('selected');
 			let type = $el.attr('data-type');
 
-            Utils.removejscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${type}-preview.css`, 'css');
+            Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		});
 
 		$('.resolution[data-type="lg"]').trigger('click');
