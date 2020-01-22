@@ -90,15 +90,18 @@ export function tabs({ logger }) {
         for(let i = 0; i < tabsLength; i++) {
             let $currentTabConfigurationContainer = $($tabConfigurationContainer[i]);
 
-            let tabName = $currentTabConfigurationContainer.find(tabNameClass).val();
+            let tabName = $currentTabConfigurationContainer.find(tabNameClass).val().replace(/\s/g, "");
+            let tabsDisplayName = $currentTabConfigurationContainer.find(tabNameClass).val();
             let templateName = $currentTabConfigurationContainer.find(selectTemplateClass).val();
 
             logger.log(tabName);
             logger.log(templateName);
+            logger.log(tabsDisplayName);
 
             let currModel = {
                 tabName: tabName,
-                templateName: templateName
+                templateName: templateName,
+                tabsDisplayName: tabsDisplayName
             };
 
             model.push(currModel);
@@ -115,6 +118,8 @@ export function tabs({ logger }) {
         for(let i = 0; i < model.length; i++) {
             addTab(model[i].tabName, model[i].templateName);
         }
+        $(tabsConfigurationContainerClass).on('click', addTabBtnClass, addTab);
+
     }
 
     function validate() {

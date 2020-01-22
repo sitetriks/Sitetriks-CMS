@@ -11,6 +11,7 @@ import { Tags } from '../tags.js';
 import { Multiselect } from '../common/multiselect-setup.js';
 import { WarningWindow } from '../modules/warning-window.js';
 import { Handlebars } from '../common/handlebars.js';
+import { SeoFeatures } from './seoFeatures.js';
 
 export function createPage(validateUrlUrl) {
 	Utils.populateUrl('#title', '#url', validateUrlOnChange);
@@ -42,6 +43,30 @@ export function createPage(validateUrlUrl) {
 			$('#seo-words-counter').text('Words: ' + words.length);
 		}
 	}
+
+	$('.seo-toggle-button').on('click', toggleSeoFeatures);
+
+	function toggleSeoFeatures() {
+		let $target = $(this);
+		let $arrows = $target.find('.arrow');
+		let $featuresList = $target.next('.seoFeaturesContainer');
+
+		$arrows.toggle();
+		$featuresList.toggle();
+	}
+
+    $('.description-counter').on('input change', countDescriptionSymbols);
+
+    function countDescriptionSymbols(ev) {
+        let $trigger = $(this).val();
+
+        if ($trigger.length > 0) {
+            $('#description-symbol-counter').text('Symbols:' + $trigger.length);
+        } else {
+            $('#description-symbol-counter').text('');
+        }
+    }
+
 
 	var $urlField = $('#url');
 	var $urlValidation = $('#url-validation');
@@ -136,20 +161,47 @@ export function createPage(validateUrlUrl) {
 				Loader.hide();
 				return Promise.reject('Url is invalid or already in use!');
 			}
-		}, Data.defaultError).then(function (res) {
-			if (res.success) {
-				window.location.replace('/sitetriks/pages/editcontent?url=' + res.url);
-			} else {
+		}, Data.defaultError)
+		.then(function(res) {
+			console.log('[age-res', res);			
+			if(res.success) {
+				let url = res.url;
+				return SeoFeatures.save(res.pageId).then(function(res) {
+					if (res.success) {
+						window.location.replace('/sitetriks/pages/editcontent?url=' + url);
+					} else {
+						$notfier.text(res.message);
+						Loader.hide();
+					}
+		
+					$btnSubmit.attr('disabled', false);
+				}, function (error) {
+					console.warn(error);
+					$btnSubmit.attr('disabled', false);
+					$notfier.text(error);
+				});
+			}
+			else {
 				$notfier.text(res.message);
 				Loader.hide();
 			}
+			$btnSubmit.attr('disabled', false);
 
-			$btnSubmit.attr('disabled', false);
-		}, function (error) {
-			console.warn(error);
-			$btnSubmit.attr('disabled', false);
-			$notfier.text(error);
 		});
+		// .then(function (res) {
+		// 	if (res.success) {
+		// 		window.location.replace('/sitetriks/pages/editcontent?url=' + res.url);
+		// 	} else {
+		// 		$notfier.text(res.message);
+		// 		Loader.hide();
+		// 	}
+
+		// 	$btnSubmit.attr('disabled', false);
+		// }, function (error) {
+		// 	console.warn(error);
+		// 	$btnSubmit.attr('disabled', false);
+		// 	$notfier.text(error);
+		// });
 
 		evt.preventDefault();
 		return false;
@@ -160,6 +212,7 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 	Utils.populateUrl('#title', '#url', validateUrlOnChange);
 	WarningWindow.attach();
 	Multiselect.SetupElement($('.multiselect-roles'));
+	SeoFeatures.init(pageId);
 
     Data.getJson({ url: '/SiteTriks/StaticFiles/templates/page-multilingual.html' }).then(function (res) {
 		for (var key in mlf) {
@@ -201,6 +254,18 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 	$('#seo-words').on('input change', countSEOWords);
 	countSEOWords.apply($('#seo-words'));
 
+	$('.seo-toggle-button').on('click', toggleSeoFeatures);
+
+	function toggleSeoFeatures() {
+		let $target = $(this);
+		let $arrows = $target.find('.arrow');
+		let $featuresList = $target.next('.seoFeaturesContainer');
+
+		$arrows.toggle();
+		$featuresList.toggle();
+	}
+
+
 	function countSEOWords(ev) {
 		let $trigger = $(this);
 		let words = $trigger.val().split(',');
@@ -209,7 +274,20 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 		} else {
 			$('#seo-words-counter').text('Words: ' + words.length);
 		}
-	}
+    }
+
+    $('.description-counter').on('input change', countDescriptionSymbols);
+    countDescriptionSymbols.apply('.description-counter');
+
+    function countDescriptionSymbols(ev) {
+        let $trigger = $(this).val();
+
+        if ($trigger.length > 0) {
+            $('#description-symbol-counter').text('Symbols:' + $trigger.length);
+        } else {
+            $('#description-symbol-counter').text('');
+        }
+    }
 
 	var $urlField = $('#url');
 	var $urlValidation = $('#url-validation');
@@ -273,7 +351,7 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 			});
 
 			Data.postJson({ url: mlfUrl, data: body }).then(function (res) {
-				if (res.success) {
+				if (res.success) {					
 					if (saveAndExit) {
 						window.location.replace('/sitetriks/pages');
 					}
@@ -347,22 +425,45 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 			}
 		}, Data.defaultError).then(function (res) {
 			if (res.success) {
-				if (saveAndExit) {
-					window.location.replace('/sitetriks/pages');
-					return;
-				}
-
-				WarningWindow.attach();
-				Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
-				if (url !== initialUrl) {
-					// update url if
-					if (window.history.replaceState) {
-						window.history.replaceState('', '', '/sitetriks/pages/edit?url=' + url);
+				SeoFeatures.edit(pageId).then(function(res) {
+					if(res.success) {
+						if (saveAndExit) {
+							window.location.replace('/sitetriks/pages');
+							return;
+						}
+		
+						WarningWindow.attach();
+						Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
+						if (url !== initialUrl) {
+							// update url if
+							if (window.history.replaceState) {
+								window.history.replaceState('', '', '/sitetriks/pages/edit?url=' + url);
+							} else {
+								// reload with new url for older browsers
+								window.location.replace('/sitetriks/pages/edit?url=' + url);
+							}
+						}
 					} else {
-						// reload with new url for older browsers
-						window.location.replace('/sitetriks/pages/edit?url=' + url);
+						Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' });
+						$target.removeAttr('data-exit');
 					}
-				}
+				});
+				// if (saveAndExit) {
+				// 	window.location.replace('/sitetriks/pages');
+				// 	return;
+				// }
+
+				// WarningWindow.attach();
+				// Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
+				// if (url !== initialUrl) {
+				// 	// update url if
+				// 	if (window.history.replaceState) {
+				// 		window.history.replaceState('', '', '/sitetriks/pages/edit?url=' + url);
+				// 	} else {
+				// 		// reload with new url for older browsers
+				// 		window.location.replace('/sitetriks/pages/edit?url=' + url);
+				// 	}
+				// }
 			} else {
 				Notifier.createAlert({ containerId: '#alerts', title: 'Failed', message: res.message, status: 'danger' });
 				$target.removeAttr('data-exit');

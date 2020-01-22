@@ -11,17 +11,17 @@ var textEditor = (function () {
     }
 
     function setupEditor(editor, onInitCallback) {
-        editor.addButton('custombutton', {
-            type: 'menubutton',
-            text: 'Custom',
-            icon: false,
-            menu: [{
-                text: 'Logout link',
-                onclick: function () {
-                    editor.insertContent('<a href="/logout">Logout</a>');
-                }
-            }]
-        });
+        //editor.ui.registry.addButton('custombutton', {
+        //    type: 'menubutton',
+        //    text: 'Custom',
+        //    icon: false,
+        //    menu: [{
+        //        text: 'Logout link',
+        //        onclick: function () {
+        //            editor.insertContent('<a href="/logout">Logout</a>');
+        //        }
+        //    }]
+        //});
 
         editor.on('init', function (ev) {
             if (onInitCallback && {}.toString.call(onInitCallback) === '[object Function]') {
@@ -83,21 +83,19 @@ var textEditor = (function () {
             extended_valid_elements: 'span',
             extended_valid_elements: 'div[class|id|style|span],span[class|id|style]',
             extended_valid_elements: 'div[*],span[*]',
-            theme: 'modern',
+            theme: 'silver',
             mode: 'textareas',
             force_br_newlines: false,
             force_p_newlines: false,
             forced_root_block: '',
-            width: width,
-            height: height,
+            size:"normal",
             plugins: ['advlist autolink codesample link image lists charmap print preview hr anchor pagebreak fullscreen',
-                'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table contextmenu directionality paste textcolor'],
+                'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking', 'save table directionality paste'],
             external_plugins: {
                 'codeHighl': '/SiteTriks/StaticFiles/plugins/tinymce/code-highlight-tinymce-plugin.js',
                 'htmlBlocks': '/SiteTriks/StaticFiles/plugins/tinymce/html-components-tinymce-plugin.js'
             },
             browser_spellcheck: true,
-            contextmenu: false,
             paste_as_text: true,
             image_caption: true,
             image_advtab: true,

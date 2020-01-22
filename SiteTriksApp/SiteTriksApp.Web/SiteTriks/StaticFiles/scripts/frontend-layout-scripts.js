@@ -11,6 +11,7 @@ import { licenseWidget } from './widgets-helpers/licenses-widgets.js';
 import { subscriptionWidget } from './widgets-helpers/subscription.js';
 import { socialShare } from './widgets-helpers/social-share.js';
 import { tabsWidget } from './widgets-helpers/tabs-widget';
+import { blogFullPageWidget } from './widgets-helpers/blog-full-page-widget';
 
 function treeItemsSlide() {
     $('body').on('click', '.more-items', function (event, callback, target) {
@@ -266,6 +267,7 @@ $(document).ready(function () {
 	contactFormWidget();
     socialShare();
     tabsWidget();
+    blogFullPageWidget();
 
     $(document).trigger('initCarousel');
     prettyPrintInit();

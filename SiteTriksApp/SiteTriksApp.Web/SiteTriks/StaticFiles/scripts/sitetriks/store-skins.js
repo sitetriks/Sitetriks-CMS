@@ -55,13 +55,13 @@ var StoreSkins = (function () {
                         }
 
                         $el.removeClass('selected');
-                        Utils.removejscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${type}-preview.css`, 'css');
+                        Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
                     }
                 });
 
                 if (!isActive) {
                     $target.addClass('selected');
-                    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/sitetriks/st-${targetType}-preview.css`, 'css');
+                    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${targetType}-preview.css`, 'css');
                 }
             }
         }

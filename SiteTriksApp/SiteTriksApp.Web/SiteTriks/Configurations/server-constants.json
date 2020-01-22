@@ -1,5 +1,5 @@
 {
   "MaxMegaEventYearAheadFromThisYear": 5,
-  "Initialized": false,
-  "WidgetConfigurations": { }
+  "Initialized": true,
+  "WidgetConfigurations": {}
 }

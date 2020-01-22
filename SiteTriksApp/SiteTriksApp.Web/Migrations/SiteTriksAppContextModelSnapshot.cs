@@ -162,28 +162,6 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_comments");
                 });
 
-            modelBuilder.Entity("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateModified");
-
-                    b.Property<Guid>("EntityId");
-
-                    b.Property<string>("LastUserId");
-
-                    b.Property<Guid>("SiteProviderId");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("st_componentConnections");
-                });
-
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Comments.CommentsComponent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -318,6 +296,28 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasIndex("EntityConnectionId");
 
                     b.ToTable("st_publishComponents");
+                });
+
+            modelBuilder.Entity("SiteTriks.Data.Models.Components.Tags.TagComponent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<Guid>("EntityConnectionId");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityConnectionId");
+
+                    b.ToTable("st_tagComponents");
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Config.Config", b =>
@@ -550,6 +550,8 @@ namespace SiteTriksApp.Web.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Alt");
+
+                    b.Property<string>("CacheConfiguration");
 
                     b.Property<Guid>("ComponentConnectionId");
 
@@ -879,6 +881,24 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_logs");
                 });
 
+            modelBuilder.Entity("SiteTriks.Data.Models.LoginSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsLogged");
+
+                    b.Property<DateTime>("LoginStamp");
+
+                    b.Property<string>("SessionId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_loginSessions");
+                });
+
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsMeta", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1110,30 +1130,6 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_publishData");
                 });
 
-            modelBuilder.Entity("SiteTriks.Data.Models.SEOKeywords", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateModified");
-
-                    b.Property<string>("LastUserId");
-
-                    b.Property<Guid>("ParentId");
-
-                    b.Property<Guid>("SiteProviderId");
-
-                    b.Property<int>("Type");
-
-                    b.Property<string>("Words");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("st_seoKeywords");
-                });
-
             modelBuilder.Entity("SiteTriks.Data.Models.ScheduledTasks.ScheduledTask", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1168,22 +1164,71 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_scheduledTasks");
                 });
 
-            modelBuilder.Entity("SiteTriks.Data.Models.Site", b =>
+            modelBuilder.Entity("SiteTriks.Data.Models.SeoFeatures.SEOFeature", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("CanonicalUrl");
+
                     b.Property<DateTime?>("DateCreated");
 
-                    b.Property<string>("Domain");
+                    b.Property<DateTime?>("DateModified");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("LastUserId");
+
+                    b.Property<string>("Metadata");
+
+                    b.Property<string>("OpenGraphDescription");
+
+                    b.Property<string>("OpenGraphImage");
+
+                    b.Property<string>("OpenGraphTitle");
+
+                    b.Property<Guid>("ParentId");
+
+                    b.Property<string>("SEOKeywords");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("TwitterCard");
+
+                    b.Property<string>("TwitterCardCreator");
+
+                    b.Property<string>("TwitterCardSite");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_seoFeatures");
+                });
+
+            modelBuilder.Entity("SiteTriks.Data.Models.SeoFeatures.SEOFeatureComponent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ComponentElementId");
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<Guid>("EntityConnectionId");
+
+                    b.Property<string>("LastUserId");
 
                     b.Property<Guid>("SiteProviderId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("st_sites");
+                    b.HasIndex("ComponentElementId")
+                        .IsUnique();
+
+                    b.HasIndex("EntityConnectionId");
+
+                    b.ToTable("st_seoFeaturesComponents");
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncHistory", b =>
@@ -1274,32 +1319,12 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_sitesyncStatus");
                 });
 
-            modelBuilder.Entity("SiteTriks.Data.Models.Tags.BaseMetasTags", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("BaseMetaId");
-
-                    b.Property<string>("LastUserId");
-
-                    b.Property<Guid>("SiteProviderId");
-
-                    b.Property<Guid>("TagId");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("st_baseMetas_tags");
-                });
-
             modelBuilder.Entity("SiteTriks.Data.Models.Tags.Tag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("ComponentId");
 
                     b.Property<DateTime?>("DateCreated");
 
@@ -1312,9 +1337,9 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.Property<Guid>("SiteProviderId");
 
-                    b.Property<string>("Type");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ComponentId");
 
                     b.ToTable("st_tags");
                 });
@@ -1512,6 +1537,46 @@ namespace SiteTriksApp.Web.Migrations
                     b.ToTable("st_userGroups");
                 });
 
+            modelBuilder.Entity("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<Guid>("EntityId");
+
+                    b.Property<string>("LastUserId");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_componentConnections");
+                });
+
+            modelBuilder.Entity("SiteTriks.Infrastructure.DbModels.Site", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateCreated");
+
+                    b.Property<string>("Domain");
+
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("SiteProviderId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("st_sites");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -1572,7 +1637,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Comments.CommentsComponent", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "EntityConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1580,7 +1645,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Files.FileComponent", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "EntityConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1601,7 +1666,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Links.LinkComponent", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "EntityConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1609,7 +1674,15 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Publish.PublishComponent", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "EntityConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
+                        .WithMany()
+                        .HasForeignKey("EntityConnectionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("SiteTriks.Data.Models.Components.Tags.TagComponent", b =>
+                {
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1643,7 +1716,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Files.File", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "ComponentConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1664,7 +1737,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Files.Library", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "ComponentConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1701,7 +1774,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsMeta", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "ComponentConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1709,7 +1782,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsVersion", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "ComponentConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1727,7 +1800,7 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Pages.PageMeta", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "ComponentConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1767,6 +1840,19 @@ namespace SiteTriksApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("SiteTriks.Data.Models.SeoFeatures.SEOFeatureComponent", b =>
+                {
+                    b.HasOne("SiteTriks.Data.Models.SeoFeatures.SEOFeature", "ComponentElement")
+                        .WithOne("Component")
+                        .HasForeignKey("SiteTriks.Data.Models.SeoFeatures.SEOFeatureComponent", "ComponentElementId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
+                        .WithMany()
+                        .HasForeignKey("EntityConnectionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncResponse", b =>
                 {
                     b.HasOne("SiteTriks.Data.Models.SiteSync.SiteSyncStatus", "SiteSyncStatus")
@@ -1775,17 +1861,17 @@ namespace SiteTriksApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("SiteTriks.Data.Models.Tags.BaseMetasTags", b =>
+            modelBuilder.Entity("SiteTriks.Data.Models.Tags.Tag", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Tags.Tag", "Tag")
-                        .WithMany("Parents")
-                        .HasForeignKey("TagId")
+                    b.HasOne("SiteTriks.Data.Models.Components.Tags.TagComponent", "Component")
+                        .WithMany("ComponentDataCollection")
+                        .HasForeignKey("ComponentId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Templates.TemplateMeta", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Components.BaseConnection.ComponentConnection", "ComponentConnection")
+                    b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
                         .OnDelete(DeleteBehavior.Restrict);

@@ -279,6 +279,8 @@ export function navigation() {
                 $order.append(createSortablePage($option.text(), selectedOptions[i]));
             }
 
+			$order.sortable({ opacity: 0.5 });
+
             $heightInput.val(content.height);
             $navigationTypeSelect.val(content.navigationType);
             $fileUrlInput.val(content.fileUrl);

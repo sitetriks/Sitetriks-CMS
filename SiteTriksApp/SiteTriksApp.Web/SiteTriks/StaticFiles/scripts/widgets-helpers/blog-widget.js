@@ -12,6 +12,7 @@ import { textEditor } from '../text-editor.js';
 import { DateConversion } from '../common/date-conversion.js';
 
 export function blogWidget() {
+
     let $wrapper = $('.st-blog-wrapper');
     if (!$wrapper.length) {
         return;
@@ -24,7 +25,8 @@ export function blogWidget() {
     const defaultPageSize = 20;
     let paging = { page: 1, size: defaultPageSize };
     let templatesCache = {};
-    let templates = [{ name: 'blog-list', url: '/SiteTriks/StaticFiles/templates/blog-list.html' }, { name: 'blog-post', url: '/templates/blog-post.html' }];
+    let filters = [];
+    let templates = [{ name: 'blog-list', url: '/SiteTriks/StaticFiles/templates/blog/blog-list.html' }, { name: 'blog-post', url: '/SiteTriks/StaticFiles/templates/blog/blog-post.html' }, { name:'blog-main-item', url: '/SiteTriks/StaticFiles/templates/blog/blog-main-item.html' }];
 
     loadDependencies().then(function (res) {
         return loadHandlebarsTemplates(templatesCache, templates);
@@ -40,7 +42,7 @@ export function blogWidget() {
 
     function loadDependencies() {
         let promises = [];
-        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/forum.css', 'css')); // TODO: check if loaded, move comment styles from forum
+        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/scss/forum.css', 'css')); // TODO: check if loaded, move comment styles from forum
 
         if (typeof tinymce === 'undefined') {
             promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/lib/custom/tinymce/tinymce.min.js', 'js'));
@@ -51,11 +53,14 @@ export function blogWidget() {
 
     function load() {
         Loader.show('#fff');
-        return source.getData({ paging }).then(res => {
+        return source.getData({ paging, filters }).then(res => {
+            console.log(res);
             if (res.success) {
 				$container.html('');
-				res.items.forEach(item => item.dateCreated = DateConversion.convertUtcToLocal(item.dateCreated));
+                res.items.forEach(item => item.dateCreated = DateConversion.convertUtcToLocal(item.dateCreated));
                 let html = templatesCache['blog-list'](res);
+                let htmlMainItem = templatesCache['blog-main-item'](res.items[0]);
+                $container.append(htmlMainItem);
                 $container.append(html);
             }
 
@@ -107,7 +112,7 @@ export function blogWidget() {
     }
 
     function returnToGrid(ev) {
-        textEditor.remove('blog-comment-area');//TODO: Find a better way to reinit tinyMCE
+        textEditor.remove('blog-comment-area');
         let page = this.getAttribute('data-page') || 1;
         let size = this.getAttribute('data-size') || defaultPageSize;
         pagingHandler(page, size);
@@ -127,8 +132,32 @@ export function blogWidget() {
         load();
     }
 
+    //function onSearch(ev) {
+    //    let value = $(ev.target).val();
+    //    console.log($(ev.target).val());
+
+    //    //if (value.length < 4) {
+    //    //    return;
+    //    //}
+
+    //    filters.length = 0;
+    //    paging.page = 1;
+    //    pager.setCurrentPage(1);
+
+    //    filters.push({
+    //        propertyName: 'title',
+    //        comparison: 7,
+    //        value: value
+    //    });
+
+    //    load().then(function () {
+    //        $('.search-input').val(value);
+    //    });
+    //}
+
     function bindEvents() {
         $wrapper.on('click', '.btn-back', returnToGrid);
         $wrapper.on('click', '.st-blog-details', readMore);
+        //$wrapper.on('input', '.search-input', onSearch);
     }
 }

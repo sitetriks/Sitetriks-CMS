@@ -1,5 +1,0 @@
-<div class='sprite Expandwindow'></div>
-<div class='sprite Decresewindow'></div>
-<div class='sprite Group10'></div>
-<div class='sprite Group3'></div>
-<div class='sprite Shrinkmenu'></div>

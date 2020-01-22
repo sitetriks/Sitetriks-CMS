@@ -29,6 +29,12 @@
     }
 }
 
+/*TinyMCE test*/
+
+.mce-menu {
+    position: fixed !important
+}
+
 /*Navigation widget modal*/
 
 .navigation-widget.widget-container {
@@ -232,5 +238,17 @@
 
     .btn-delete-field {
         border: 1px solid gray;
+    }
+}
+
+/*Css widget modal*/
+
+#css-widget-container {
+    #css-widget-options {
+        margin-bottom: 10px;
+    }
+
+    #raw-css-container, #url-css-container {
+        margin-top: 30px;
     }
 }

@@ -1,0 +1,37 @@
+﻿<!--<div>
+    <a class="btn btn-back st-fancy-btn" data-page="{{paging.page}}" data-size="{{paging.size}}"> <span class="fa fa-angle-left"></span> Back</a>
+</div>-->
+
+<div class="blog-post row">
+    {{#if item.mainImageID}}
+    <div class="img-holder col col-12" style="background-image:url(/files/id/{{item.mainImageID}})"> </div>
+    {{/if}}
+
+    <div class="col col-12 col-xs-12 row">
+        <div class="blog-info col col-3">
+            <div class="author"> {{item.creator}}</div>
+            <div class="date"> {{item.dateCreated}}</div>
+        </div>
+    </div>
+
+    <div class="blog-content col col-8 row">
+        <h2 class="blog-post-header"><strong>{{item.title}}</strong></h2>
+        <div class="blog-content">{{item.content}}</div>
+    </div>
+
+    <div class="comments-section col col-8 col-xs-12">
+        <h5>Comments</h5>
+        <div class="container-fluid comments-container"></div>
+        <div class="add-comment-section">
+            {{#if isAuthenticated}}
+            <textarea id="blog-comment-area" rows="5"></textarea>
+            <a class="btn btn-blog btn-add-comment">Add Comment</a>
+            {{else}}
+            <div>
+                You have to <a href="/account/login">Log in</a> in order to comment.
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+

@@ -23,18 +23,47 @@
 
     <div>
         <label>
-           <span>Css Class</span>
+            <span>Css Class</span>
             <input class="input-cssClass" value="{{cssClass}}" />
         </label>
     </div>
 
+    <div>
+        <label>
+            <span>Background color</span>
+            <span class="background-colorpicker-btn"></span>
+            <input class="background-colorpicker" value="{{backgroundColorPicker}}" hidden />
+
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Font color</span>
+            <span class="font-colorpicker-btn"></span>
+            <input class="font-colorpicker" value="{{fontColorPicker}}" hidden />
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Font Size</span>
+            <input class="font-size" value="{{fontSize}}" />
+        </label>
+    </div>
+
+    <div style="visibility: hidden;">
+        <label>
+            <span>Inline styles</span>
+            <input class="input-inlineStyles" value="{{inlineStyles}}" />
+        </label>
+    </div>
+
     {{#each columns}}
-        <a class="select-column btn btn-default" data-rowIndex="{{../rowIndex}}" data-colIndex="{{@index}}">
-            {{@index}}
-            {{#unless size}}
-                <span class="text-danger fa fa-times"></span>
-            {{/unless}}
-        </a>
+    <a class="select-column btn btn-default" data-rowIndex="{{../rowIndex}}" data-colIndex="{{@index}}">
+        {{@index}}
+        {{#unless size}}
+        <span class="text-danger fa fa-times"></span>
+        {{/unless}}
+    </a>
     {{/each}}
 
     <hr />
