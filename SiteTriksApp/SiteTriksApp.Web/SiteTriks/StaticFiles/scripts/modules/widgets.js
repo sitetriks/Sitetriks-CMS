@@ -133,6 +133,7 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
     function renderWidget(widget) {
         let body = { content: widget, preview: 'preview' };
         Loader.show(true);
+        console.log(body);
         return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body });
     }
 
@@ -269,6 +270,10 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
         order = order === -Infinity ? 0 : order || 0;
         let id = Utils.guid();
 
+        if (typeof data.element != 'string') {
+            data.element = JSON.stringify(data.element);
+        }
+
         let widget = {
             type: type,
             id: id,
@@ -276,6 +281,8 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
             cssClass: data.cssClass,
             templateName: data.templateName
         };
+
+        console.log(widget);
 
         renderWidget(widget).then(function (view) {
             $(document).trigger('removeCarousel');

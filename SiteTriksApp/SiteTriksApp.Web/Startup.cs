@@ -12,6 +12,7 @@ using Microsoft.Extensions.FileProviders;
 using SiteTriks.Data.Models.Users;
 using SiteTriks.Extensions;
 using SiteTriksApp.Web.Data;
+//using WebMarkupMin.AspNetCore2;
 
 
 namespace SiteTriksApp.Web
@@ -75,11 +76,14 @@ namespace SiteTriksApp.Web
 
             services.AddGZipConpression();
 
-            services.AddSignalR(options =>
-            {
-                options.EnableDetailedErrors = true;
-                options.KeepAliveInterval = TimeSpan.FromMinutes(1);
-            });
+			//HTML Minifier;
+			//services.WebMarkUpMinSiteTriksConfiguration();
+
+			services.AddSignalR(options =>
+			{
+				options.EnableDetailedErrors = true;
+				options.KeepAliveInterval = TimeSpan.FromMinutes(1);
+			});
 
             var storageProviderConfig = this.Configuration.GetSection("SiteTriks").GetSection("StorageProvider");
             switch (storageProviderConfig.GetSection("Name").Value)
@@ -116,12 +120,6 @@ namespace SiteTriksApp.Web
 
             app.UseHttpsRedirection();
             app.UseSiteTriks(env, this.Configuration);
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "SiteTriks/StaticFiles")),
-                RequestPath = "/SiteTriks/StaticFiles"
-            });
 
             app.UseSession();
 

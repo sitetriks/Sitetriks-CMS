@@ -72,7 +72,8 @@ export function gallery({ mediator, logger }) {
             height: $('#input-height').val(),
             type: currentType,
             showType: showType,
-            imagesFullInfo: imagesFullInfo
+            imagesFullInfo: imagesFullInfo,
+            templateName: $('#template-selector').val(),
         });
     }
 

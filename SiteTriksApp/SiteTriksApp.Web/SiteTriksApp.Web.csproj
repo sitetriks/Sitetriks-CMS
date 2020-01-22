@@ -10,24 +10,12 @@
     <Version>2.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="SiteTriks\StaticFiles\**">
+    <Content Include="SiteTriks\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <!--<Content Include="SiteTriks\StaticFiles\css\**">
+    <Content Include="Views\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SiteTriks\StaticFiles\fonts\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SiteTriks\StaticFiles\images\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SiteTriks\StaticFiles\lib\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SiteTriks\StaticFiles\templates\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>-->
   </ItemGroup>  
   <ItemGroup>
     <Compile Remove="Controllers\**" />
@@ -44,6 +32,13 @@
     <None Remove="logs\**" />
   </ItemGroup>  
   <ItemGroup>
+    <None Remove="SiteTriks\StaticFiles\scripts\modules\widgets-helper.js" />
+    <None Remove="SiteTriks\StaticFiles\scripts\sitetriks\seoFeatures.js" />
+    <None Remove="SiteTriks\StaticFiles\scripts\widgets-helpers\blog-full-page-widget.js" />
+    <None Remove="SiteTriks\StaticFiles\scripts\widgets-helpers\single-blog-widget.js" />
+    <None Remove="SiteTriks\StaticFiles\scripts\widgets\singleBlog.widget.js" />
+  </ItemGroup>  
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.1" />
@@ -58,27 +53,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="SiteTriks" Version="2.2.3" />
+    <PackageReference Include="SiteTriks" Version="2.2.14" />
     <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
-  </ItemGroup>
-  <!--<ItemGroup>
-    <ProjectReference Include="..\SiteTriks.BlogModule\SiteTriks.BlogModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.DocumentationModule\SiteTriks.DocumentationModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.ECommerceModule\SiteTriks.ECommerceModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.ErrorPagesModule\SiteTriks.ErrorPagesModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.ForumModule\SiteTriks.ForumModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.MarketingEmailModule\SiteTriks.MarketingEmailModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.FinTechModule\SiteTriks.FinTechModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.RssFeedModule\SiteTriks.RssFeedModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.SiteMapModule\SiteTriks.SiteMapModule.csproj" />
-    <ProjectReference Include="..\SiteTriks.SiteSync\SiteTriks.SiteSync.csproj" />
-    <ProjectReference Include="..\SiteTriks\SiteTriks.csproj" />
-  </ItemGroup>-->
+  </ItemGroup>  
   <ItemGroup>
     <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\AbortController.d.ts" />
     <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\browser-index.d.ts" />
@@ -102,6 +84,11 @@
     <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\TextMessageFormat.d.ts" />
     <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Utils.d.ts" />
     <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\WebSocketTransport.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="echo &quot;App Offline&quot; /a &gt; $(ProjectDir)app_offline.htm" />

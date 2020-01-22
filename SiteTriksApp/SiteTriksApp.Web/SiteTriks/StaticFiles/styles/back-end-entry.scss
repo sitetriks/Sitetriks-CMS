@@ -11,6 +11,7 @@ body, html {
     min-width: 768px;
     position: relative;
     font-family: unset;
+    font-size: 15px;
     /* Style default bootstrap*/
     .btn-default {
         color: #333;
@@ -28,6 +29,15 @@ body, html {
 
     .table th, .table td {
         padding: 0.5rem;
+        font-size: 0.8em;
+    }
+
+    .form-control {
+        font-size: 1.3rem;
+    }
+
+    .btn, .dropdown-menu {
+        font-size: 1.3rem;
     }
 }
 
@@ -40,6 +50,7 @@ body, html {
     .grid.full-grid-width {
         min-width: 1100px;
     }
+
 .st-max-w-50 .form-control {
     max-width: 50%;
 }
@@ -163,6 +174,8 @@ a:hover {
 @import 'commоn/calculators';
 
 @import 'back-end-styles/widget-modal-styles';
+
+@import 'back-end-styles/documentation';
 
 /*--------------------------------------------------------------------*/
 

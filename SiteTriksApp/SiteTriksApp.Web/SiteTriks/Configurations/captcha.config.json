@@ -1,0 +1,7 @@
+{
+  "GoogleReCaptcha": {
+    "IsCaptchaEnabled": false,
+    "Key": "",
+    "Secret": ""
+  }
+}

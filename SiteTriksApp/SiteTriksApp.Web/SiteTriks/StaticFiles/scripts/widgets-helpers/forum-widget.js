@@ -54,8 +54,8 @@ export function forumWidget () {
             promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/lib/custom/tinymce/tinymce.min.js', 'js'));
         }
 
-        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/grid.css', 'css'));
-        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/forum.css', 'css')); // TODO: check if loaded
+        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/scss/grid.css', 'css'));
+        promises.push(Utils.loadjscssfileAsync('/SiteTriks/StaticFiles/css/scss/forum.css', 'css')); // TODO: check if loaded
 
         return Promise.all(promises);
     }

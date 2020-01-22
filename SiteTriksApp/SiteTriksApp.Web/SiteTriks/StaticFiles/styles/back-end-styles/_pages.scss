@@ -10,6 +10,11 @@
 
 .page-properties {
 
+    label {
+        color: #676767;
+        font-size: 1.1em;
+    }
+
     .form-group {
         line-height: 34px;
     }
@@ -19,10 +24,11 @@
     }
 
     .form-control, .multiselect {
-        width: 500px;
+        width: 400px;
         max-width: inherit;
         z-index: 1;
         border: 1px solid #ced4da;
+
         ul {
             width: 100%;
         }
@@ -37,7 +43,7 @@
     }
 
     .date-picker-group {
-        width: 500px;
+        width: 400px;
 
         > input {
             width: 450px;
@@ -65,10 +71,109 @@
         position: absolute;
         right: -65px;
     }
+
+    .content-field {
+        display: inline-block;
+    }
+
+    #description-symbol-counter {
+        margin-left: 10px;
+    }
+
+    .properties-container-wrapper {
+        max-width: 750px;
+        padding: 3% 5%;
+        background-color: #ececec;
+        border-radius: 5px;
+        border: solid 1px #979797;
+
+        span.input-group-addon {
+            background-color: #ececec;
+        }
+
+        .btn-group {
+            width: 100%;
+        }
+    }
+}
+
+.seo-toggle-button {
+    font-size: 1.2em;
+    font-weight: 600;
+    letter-spacing: normal;
+    color: #676767;
+    cursor: pointer;
+    margin-bottom: 3em;
+    span {
+        margin-right: 10px;
+    }
+}
+
+.seoFeaturesContainer {
+    line-height: 2.4em;
+
+    label {
+        font-size: 1.1em;
+        line-height: 1.2em;
+    }
+
+    .keywords-warpper {
+        padding: 0;
+    }
+
+    .st-hint::after {
+        font-size: 12px;
+        background-color: #96BAC8;
+    }
+
+    #seo-words-counter {
+        position: absolute;
+        right: -70px;
+        top: 36px;
+    }
+
+    .options-container {
+        max-width: 760px;
+        padding: 2%;
+        border-radius: 5px;
+        color: #ffffff;
+        margin-top: 40px;
+
+        data-fields {
+            padding: 2%;
+        }
+
+
+        img {
+            width: 80%;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            text-transform: uppercase;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: center;
+        }
+    }
+
+    .options-container.twitter-container {
+        background-color: #44a5ef;
+        min-height: 300px;
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+    }
+
+    .options-container.open-graph-container {
+        background-color: #84acdd;
+    }
 }
 
 #mlf-info .form-control {
-    width: 500px;
+    width: 400px;
     max-width: unset;
 }
 

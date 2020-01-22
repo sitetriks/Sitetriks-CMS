@@ -58,7 +58,7 @@ export function css() {
         },
         save: function () {
             let $resourceUrl = $('#css-url');
-
+            let elementContent = editor.getValue();
             if ($('#option-selected-id').val() === 'url-btn') {
                 let model = {
                     IsRaw: false,
@@ -71,14 +71,30 @@ export function css() {
                 if (editor) {
                     let model = {
                         IsRaw: true,
-                        RawCode: editor.getValue()
+                        RawCode: elementContent,
+                        PreviewRawCode: previewElementSet()
                     };
+
+                    console.log(previewElementSet());
 
                     return JSON.stringify(model);
                 }
             }
 
+            function previewElementSet() {
+                let rules = elementContent.split('}');
+
+                let result =  rules.map(function (el, ind) {            
+                    return ('#stwPreviewContent ' + el + '}')
+                })
+
+                let fullString = ((result.toString()).split(',').join(''));
+                return fullString.replace('#stwPreviewContent }', '');
+            }
+
             return '';
         }
+
+
     };
 }
