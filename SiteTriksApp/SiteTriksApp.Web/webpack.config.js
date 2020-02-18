@@ -50,6 +50,7 @@ module.exports = {
         'sitetriks/dynamic-views': './SiteTriks/StaticFiles/scripts/sitetriks/dynamic-views.js',
         'sitetriks/layout': './SiteTriks/StaticFiles/scripts/sitetriks/layout.js',
         'sitetriks/permissions': './SiteTriks/StaticFiles/scripts/sitetriks/permissions.js',
+        'sitetriks/side-navigation-control': './SiteTriks/StaticFiles/scripts/side-navigation-control.js',
 
         //Widgets
         'calculator':'./SiteTriks/StaticFiles/scripts/fintech/calculator.js',

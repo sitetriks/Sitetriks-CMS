@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SiteTriksApp.Web.Migrations
@@ -65,12 +64,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     FileId = table.Column<Guid>(nullable: false),
-                    FileContent = table.Column<byte[]>(nullable: true)
+                    FileContent = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,7 +81,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -99,12 +98,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    ContainerName = table.Column<string>(nullable: true),
-                    Components = table.Column<string>(nullable: true)
+                    ContainerName = table.Column<string>(nullable: false),
+                    Components = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,13 +115,13 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     IsIdenticalToFile = table.Column<bool>(nullable: false),
-                    Content = table.Column<string>(nullable: true)
+                    Content = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,12 +133,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true)
+                    Url = table.Column<string>(nullable: false),
+                    Type = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,14 +150,14 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    WidgetName = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
+                    WidgetName = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Location = table.Column<string>(nullable: false),
+                    Content = table.Column<string>(nullable: false),
                     LastRequested = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -171,15 +170,15 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(maxLength: 150, nullable: true),
-                    MainImageUrlID = table.Column<string>(nullable: true),
-                    ImagesUrlsIDs = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(maxLength: 5000, nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18, 6)", nullable: false)
+                    Title = table.Column<string>(maxLength: 150, nullable: false),
+                    MainImageUrlID = table.Column<string>(nullable: false),
+                    ImagesUrlsIDs = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(maxLength: 5000, nullable: false),
+                    Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,14 +190,14 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Amount = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    Amount = table.Column<decimal>(nullable: false),
                     Method = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    InvoiceCode = table.Column<string>(nullable: true)
+                    InvoiceCode = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,20 +209,20 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Type = table.Column<string>(nullable: false),
                     Skip = table.Column<int>(nullable: true),
                     Take = table.Column<int>(nullable: true),
-                    Column = table.Column<string>(nullable: true),
+                    Column = table.Column<string>(nullable: false),
                     JoinTable = table.Column<string>(nullable: true),
-                    JoinKey = table.Column<string>(nullable: true),
+                    JoinKey = table.Column<string>(nullable: false),
                     JoinFields = table.Column<string>(nullable: true),
                     Order = table.Column<int>(nullable: false),
-                    RequestType = table.Column<string>(nullable: true)
+                    RequestType = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -236,8 +235,8 @@ namespace SiteTriksApp.Web.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    ExceptionInformation = table.Column<string>(nullable: true),
-                    Domain = table.Column<string>(nullable: true)
+                    ExceptionInformation = table.Column<string>(nullable: false),
+                    Domain = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -249,13 +248,13 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    Content = table.Column<string>(nullable: true)
+                    Content = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -267,12 +266,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Culture = table.Column<string>(nullable: true),
-                    UrlPrefix = table.Column<string>(nullable: true),
+                    Culture = table.Column<string>(nullable: false),
+                    UrlPrefix = table.Column<string>(nullable: false),
                     IsDefault = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -288,7 +287,7 @@ namespace SiteTriksApp.Web.Migrations
                     IsLogged = table.Column<bool>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     LoginStamp = table.Column<DateTime>(nullable: false),
-                    SessionId = table.Column<string>(nullable: true)
+                    SessionId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -300,15 +299,15 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: false),
                     TimeOfEvent = table.Column<DateTime>(nullable: false),
-                    LogLevel = table.Column<string>(nullable: true),
-                    CategoryName = table.Column<string>(nullable: true),
-                    Formatter = table.Column<string>(nullable: true)
+                    LogLevel = table.Column<string>(nullable: false),
+                    CategoryName = table.Column<string>(nullable: false),
+                    Formatter = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -320,11 +319,11 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    System = table.Column<string>(nullable: true)
+                    System = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -336,18 +335,18 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     TaskId = table.Column<Guid>(nullable: false),
-                    GenericTypes = table.Column<string>(nullable: true),
-                    ServiceType = table.Column<string>(nullable: true),
-                    MethodName = table.Column<string>(nullable: true),
-                    Params = table.Column<string>(nullable: true),
+                    GenericTypes = table.Column<string>(nullable: false),
+                    ServiceType = table.Column<string>(nullable: false),
+                    MethodName = table.Column<string>(nullable: false),
+                    Params = table.Column<string>(nullable: false),
                     DateOfExecutionUtc = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<string>(nullable: true),
-                    Info = table.Column<string>(nullable: true)
+                    Status = table.Column<string>(nullable: false),
+                    Info = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -359,7 +358,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -400,14 +399,14 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     ItemId = table.Column<Guid>(nullable: false),
-                    ItemType = table.Column<string>(nullable: true),
+                    ItemType = table.Column<string>(nullable: false),
                     TargetSiteId = table.Column<Guid>(nullable: false),
-                    ItemLastTitle = table.Column<string>(nullable: true),
+                    ItemLastTitle = table.Column<string>(nullable: false),
                     Action = table.Column<int>(nullable: false),
                     IsSynced = table.Column<bool>(nullable: false)
                 },
@@ -421,14 +420,14 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    OriginSite = table.Column<string>(nullable: true),
-                    TargetSite = table.Column<string>(nullable: true),
-                    OriginUserId = table.Column<string>(nullable: true)
+                    OriginSite = table.Column<string>(nullable: false),
+                    TargetSite = table.Column<string>(nullable: false),
+                    OriginUserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -440,18 +439,18 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     Width = table.Column<int>(nullable: false),
                     Height = table.Column<int>(nullable: false),
                     OffsetX = table.Column<int>(nullable: false),
                     OffsetY = table.Column<int>(nullable: false),
-                    MultiplyerX = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
-                    MultiplyerY = table.Column<decimal>(type: "decimal(18, 6)", nullable: false)
+                    MultiplyerX = table.Column<decimal>(nullable: false),
+                    MultiplyerY = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -463,11 +462,11 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    TypeName = table.Column<string>(maxLength: 150, nullable: true),
+                    TypeName = table.Column<string>(maxLength: 150, nullable: false),
                     DefaultPageId = table.Column<Guid>(nullable: false),
                     ContentId = table.Column<Guid>(nullable: false)
                 },
@@ -481,11 +480,11 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
                     UnsubscribedUsers = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -498,7 +497,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -519,7 +518,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -604,7 +603,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -618,7 +617,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.EntityConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -626,7 +625,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -640,7 +639,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.EntityConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -648,12 +647,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    StorageProviderName = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    StorageProviderName = table.Column<string>(nullable: false),
                     AllowedTypes = table.Column<int>(nullable: false),
                     ComponentConnectionId = table.Column<Guid>(nullable: false)
                 },
@@ -665,7 +664,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -673,7 +672,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -687,7 +686,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.EntityConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -695,11 +694,11 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 150, nullable: false),
                     ComponentConnectionId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -710,7 +709,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -718,7 +717,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -732,7 +731,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.EntityConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -740,7 +739,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -754,7 +753,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.EntityConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -762,13 +761,13 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(maxLength: 150, nullable: true),
+                    Title = table.Column<string>(maxLength: 150, nullable: false),
                     Description = table.Column<string>(maxLength: 5000, nullable: true),
-                    TemplateMetaId = table.Column<Guid>(nullable: true),
+                    ParentId = table.Column<Guid>(nullable: true),
                     ComponentConnectionId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -779,13 +778,12 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_st_templateMetas_st_templateMetas_TemplateMetaId",
-                        column: x => x.TemplateMetaId,
+                        name: "FK_st_templateMetas_st_templateMetas_ParentId",
+                        column: x => x.ParentId,
                         principalTable: "st_templateMetas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -793,13 +791,13 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     ECommerceItemId = table.Column<Guid>(nullable: false),
                     ECommercePaymentId = table.Column<Guid>(nullable: true),
-                    BuyerId = table.Column<string>(nullable: true),
+                    BuyerId = table.Column<string>(nullable: false),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -810,13 +808,13 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.BuyerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_ecommerceOrders_st_ecommerceItems_ECommerceItemId",
                         column: x => x.ECommerceItemId,
                         principalTable: "st_ecommerceItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_ecommerceOrders_st_ecommercePayments_ECommercePaymentId",
                         column: x => x.ECommercePaymentId,
@@ -830,12 +828,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    PropertyName = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true),
+                    PropertyName = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: false),
                     Comparison = table.Column<int>(nullable: false),
                     EndPointId = table.Column<Guid>(nullable: false)
                 },
@@ -847,7 +845,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.EndPointId,
                         principalTable: "st_endPoints",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -855,13 +853,13 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     ParentId = table.Column<Guid>(nullable: false),
-                    FieldName = table.Column<string>(maxLength: 150, nullable: true),
-                    Value = table.Column<string>(maxLength: 5000, nullable: true),
+                    FieldName = table.Column<string>(maxLength: 150, nullable: false),
+                    Value = table.Column<string>(maxLength: 5000, nullable: false),
                     LanguageId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -872,7 +870,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.LanguageId,
                         principalTable: "st_languages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -880,13 +878,13 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Action = table.Column<string>(nullable: true),
-                    ActionType = table.Column<string>(nullable: true),
-                    AllowedRoles = table.Column<string>(nullable: true),
+                    Action = table.Column<string>(nullable: false),
+                    ActionType = table.Column<string>(nullable: false),
+                    AllowedRoles = table.Column<string>(nullable: false),
                     PermissionSystemId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -897,7 +895,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.PermissionSystemId,
                         principalTable: "st_permissionSystems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -905,7 +903,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -920,13 +918,13 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentElementId,
                         principalTable: "st_seoFeatures",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_seoFeaturesComponents_st_componentConnections_EntityConnectionId",
                         column: x => x.EntityConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -934,15 +932,15 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     Successful = table.Column<bool>(nullable: false),
-                    Message = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
+                    Message = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: false),
                     ItemId = table.Column<Guid>(nullable: false),
-                    ItemType = table.Column<string>(nullable: true),
+                    ItemType = table.Column<string>(nullable: false),
                     SiteSyncStatusId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -953,7 +951,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.SiteSyncStatusId,
                         principalTable: "st_sitesyncStatus",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -961,14 +959,14 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     ParentId = table.Column<Guid>(nullable: false),
-                    Content = table.Column<string>(maxLength: 5000, nullable: true),
-                    CreatorId = table.Column<string>(nullable: true),
-                    ComponentId = table.Column<Guid>(nullable: true),
+                    Content = table.Column<string>(maxLength: 5000, nullable: false),
+                    CreatorId = table.Column<string>(nullable: false),
+                    ComponentId = table.Column<Guid>(nullable: false),
                     CommentComponentId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -979,13 +977,13 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentId,
                         principalTable: "st_commentsComponent",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_comments_AspNetUsers_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -993,15 +991,15 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    Extension = table.Column<string>(nullable: true),
-                    Alt = table.Column<string>(nullable: true),
-                    StorageProviderName = table.Column<string>(nullable: true),
+                    Extension = table.Column<string>(nullable: false),
+                    Alt = table.Column<string>(nullable: false),
+                    StorageProviderName = table.Column<string>(nullable: false),
                     Content = table.Column<byte[]>(nullable: true),
                     ExpirationDate = table.Column<DateTime>(nullable: true),
                     CacheConfiguration = table.Column<string>(nullable: true),
@@ -1024,7 +1022,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_files_st_libraries_LibraryId",
                         column: x => x.LibraryId,
@@ -1048,13 +1046,13 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.LibraryId,
                         principalTable: "st_libraries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_library_thumbnails_st_thumbnails_sizes_ThumbnailId",
                         column: x => x.ThumbnailId,
                         principalTable: "st_thumbnails_sizes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1062,13 +1060,13 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
-                    Url = table.Column<string>(nullable: true),
-                    ComponentId = table.Column<Guid>(nullable: true)
+                    Url = table.Column<string>(nullable: false),
+                    ComponentId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1078,7 +1076,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentId,
                         principalTable: "st_linkComponents",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1086,18 +1084,18 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     MetaId = table.Column<Guid>(nullable: false),
-                    MetaType = table.Column<string>(nullable: true),
+                    MetaType = table.Column<string>(nullable: false),
                     DateToBePublished = table.Column<DateTime>(nullable: true),
                     LastPublished = table.Column<DateTime>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     IsPublished = table.Column<bool>(nullable: false),
                     BackgroundJobId = table.Column<Guid>(nullable: true),
-                    ComponentId = table.Column<Guid>(nullable: true)
+                    ComponentId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1107,7 +1105,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentId,
                         principalTable: "st_publishComponents",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1115,12 +1113,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(maxLength: 150, nullable: true),
-                    ComponentId = table.Column<Guid>(nullable: true)
+                    Name = table.Column<string>(maxLength: 150, nullable: false),
+                    ComponentId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1130,7 +1128,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentId,
                         principalTable: "st_tagComponents",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1138,22 +1136,20 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(maxLength: 150, nullable: true),
+                    Title = table.Column<string>(maxLength: 150, nullable: false),
                     Description = table.Column<string>(maxLength: 5000, nullable: true),
                     IsInNavigation = table.Column<bool>(nullable: false),
                     IsHomePage = table.Column<bool>(nullable: false),
                     IsDocumentation = table.Column<bool>(nullable: false),
                     IsLoginPage = table.Column<bool>(nullable: false),
                     ParentId = table.Column<Guid>(nullable: true),
-                    NavigationPriority = table.Column<int>(nullable: false),
                     IsAMPPage = table.Column<bool>(nullable: false),
-                    PermittedRolesIds = table.Column<string>(nullable: true),
+                    PermittedRolesIds = table.Column<string>(maxLength: 500, nullable: true),
                     TemplateMetaId = table.Column<Guid>(nullable: true),
-                    CurrentTags = table.Column<string>(nullable: true),
                     ComponentConnectionId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -1164,7 +1160,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_pageMetas_st_pageMetas_ParentId",
                         column: x => x.ParentId,
@@ -1175,8 +1171,7 @@ namespace SiteTriksApp.Web.Migrations
                         name: "FK_st_pageMetas_st_templateMetas_TemplateMetaId",
                         column: x => x.TemplateMetaId,
                         principalTable: "st_templateMetas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1184,15 +1179,15 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
                     Version = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
-                    Contents = table.Column<string>(nullable: true),
+                    Contents = table.Column<string>(nullable: false),
                     TemplateMetaId = table.Column<Guid>(nullable: false),
-                    Culture = table.Column<string>(nullable: true)
+                    Culture = table.Column<string>(maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1202,7 +1197,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.TemplateMetaId,
                         principalTable: "st_templateMetas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1210,7 +1205,7 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
@@ -1239,12 +1234,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    UsedInPages = table.Column<string>(nullable: true),
-                    UsedInNews = table.Column<string>(nullable: true),
+                    UsedInPages = table.Column<string>(nullable: false),
+                    UsedInNews = table.Column<string>(nullable: false),
                     FileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -1255,7 +1250,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.FileId,
                         principalTable: "st_files",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1263,12 +1258,12 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
-                    DisplayTitle = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(maxLength: 5000, nullable: true),
+                    DisplayTitle = table.Column<string>(maxLength: 150, nullable: false),
+                    Content = table.Column<string>(maxLength: 5000, nullable: false),
                     NewsMetaId = table.Column<Guid>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     Version = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
@@ -1283,7 +1278,7 @@ namespace SiteTriksApp.Web.Migrations
                         column: x => x.ComponentConnectionId,
                         principalTable: "st_componentConnections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_st_newsVersions_st_files_MainImageId",
                         column: x => x.MainImageId,
@@ -1294,8 +1289,7 @@ namespace SiteTriksApp.Web.Migrations
                         name: "FK_st_newsVersions_st_newsMetas_NewsMetaId",
                         column: x => x.NewsMetaId,
                         principalTable: "st_newsMetas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1303,15 +1297,15 @@ namespace SiteTriksApp.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     SiteProviderId = table.Column<Guid>(nullable: false),
                     LastUserId = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
                     Version = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
-                    Contents = table.Column<string>(nullable: true),
+                    Contents = table.Column<string>(nullable: false),
                     PageMetaId = table.Column<Guid>(nullable: false),
-                    Culture = table.Column<string>(nullable: true)
+                    Culture = table.Column<string>(maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1320,8 +1314,7 @@ namespace SiteTriksApp.Web.Migrations
                         name: "FK_st_pageVersions_st_pageMetas_PageMetaId",
                         column: x => x.PageMetaId,
                         principalTable: "st_pageMetas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -1469,9 +1462,9 @@ namespace SiteTriksApp.Web.Migrations
                 column: "MainImageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_st_newsVersions_NewsMetaId",
+                name: "IX_st_newsVersions_NewsMetaId_Type_Version",
                 table: "st_newsVersions",
-                column: "NewsMetaId");
+                columns: new[] { "NewsMetaId", "Type", "Version" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_st_pageMetas_ComponentConnectionId",
@@ -1509,6 +1502,11 @@ namespace SiteTriksApp.Web.Migrations
                 column: "ComponentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_st_scheduledTasks_TaskId_MethodName_Status",
+                table: "st_scheduledTasks",
+                columns: new[] { "TaskId", "MethodName", "Status" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_st_seoFeaturesComponents_ComponentElementId",
                 table: "st_seoFeaturesComponents",
                 column: "ComponentElementId",
@@ -1540,14 +1538,14 @@ namespace SiteTriksApp.Web.Migrations
                 column: "ComponentConnectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_st_templateMetas_TemplateMetaId",
+                name: "IX_st_templateMetas_ParentId",
                 table: "st_templateMetas",
-                column: "TemplateMetaId");
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_st_templateVersions_TemplateMetaId",
+                name: "IX_st_templateVersions_TemplateMetaId_Culture_Version",
                 table: "st_templateVersions",
-                column: "TemplateMetaId");
+                columns: new[] { "TemplateMetaId", "Culture", "Version" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

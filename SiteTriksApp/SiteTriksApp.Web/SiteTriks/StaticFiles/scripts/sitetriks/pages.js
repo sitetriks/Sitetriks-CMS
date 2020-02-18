@@ -23,8 +23,6 @@ export function createPage(validateUrlUrl) {
 		minDate: new Date()
 	});
 
-	$('#date-picker').val('');
-	countSEOWords.apply($('#seo-words'));
 
 	Tags.init();
 
@@ -32,17 +30,8 @@ export function createPage(validateUrlUrl) {
 		$('#date-picker').focus();
 	});
 
-	$('#seo-words').on('input change', countSEOWords);
 
-	function countSEOWords(ev) {
-		let $trigger = $(this);
-		let words = $trigger.val().split(',');
-		if (words.length === 1 && words[0].trim().length === 0) {
-			$('#seo-words-counter').text('');
-		} else {
-			$('#seo-words-counter').text('Words: ' + words.length);
-		}
-	}
+	$('#date-picker').val('');
 
 	$('.seo-toggle-button').on('click', toggleSeoFeatures);
 
@@ -55,17 +44,50 @@ export function createPage(validateUrlUrl) {
 		$featuresList.toggle();
 	}
 
-    $('.description-counter').on('input change', countDescriptionSymbols);
+	$('#seo-words').on('input change', countWords.bind(this, '#seo-words-counter', '#seo-words'));
 
-    function countDescriptionSymbols(ev) {
-        let $trigger = $(this).val();
 
-        if ($trigger.length > 0) {
-            $('#description-symbol-counter').text('Symbols:' + $trigger.length);
-        } else {
-            $('#description-symbol-counter').text('');
-        }
-    }
+	$('.description-counter').on('input change', countSymbols.bind(this, '#description-symbol-counter', '.description-counter'));
+	countSymbols.apply('.description-counter', ['#description-symbol-counter', '.description-counter']);
+
+	// title
+	$('.seo-title').on('input change', countSymbols.bind(this, '#seo-title-counter', '.seo-title'));
+
+	//meta desc
+	$('.meta-description').on('input change', countSymbols.bind(this, '#seo-meta-counter', '.meta-description'));
+
+	// Fill SEO fields on Partial display
+	$('.seo-toggle-button').on('click', function () {
+		countSymbols.apply('.seo-title', ['#seo-title-counter', '.seo-title']);
+
+		countSymbols.apply('.meta-description', ['#seo-meta-counter', '.meta-description']);
+
+		countWords.apply('#seo-words', ['#seo-words-counter', '#seo-words']);
+
+	})
+
+	function countWords(counterClass, targetClass) {
+		let $target = $(targetClass);
+		let $counter = $(counterClass);
+		console.log(counterClass);
+
+		let words = $target.val().split(',');
+		if (words.length === 1 && words[0].trim().length === 0) {
+			$counter.text('Words: 0');
+		} else {
+			$counter.text('Words: ' + words.length);
+		}
+	}
+
+	function countSymbols(counterClass, targetClass) {
+		let $target = $(targetClass).val();
+		let $counter = $(counterClass);
+
+		console.log($target);
+		if ($target.length > 0) {
+			$counter.text('Characters:' + $target.length);
+		}
+	}
 
 
 	var $urlField = $('#url');
@@ -106,9 +128,34 @@ export function createPage(validateUrlUrl) {
 		}
 	});
 
+	$('.btn-save-and-content').on('click', function (ev) {
+
+		console.log("hi");
+		$('#create-page-form').removeAttr('data-exit');
+		$('#create-page-form').attr('data-content', true);
+		$('#create-page-form').submit();
+	});
+
+	$('.btn-save-and-exit-li').on('click', function (ev) {
+
+		$('#create-page-form').removeAttr('data-content');
+		$('#create-page-form').attr('data-exit', true);
+		$('#create-page-form').submit();
+	});
+
+	$('.btn-save-li').on('click', function (ev) {
+
+		$('#create-page-form').removeAttr('data-exit');
+		$('#create-page-form').removeAttr('data-content');
+		$('#create-page-form').submit();
+	});
+
 	var $notfier = $('#notifier');
 	$('#create-page-form').on('submit', function (evt) {
 		var _this = this;
+		var $target = $(this);
+		let saveAndExit = $target.attr('data-exit');
+		let saveAndContent = $target.attr('data-content');
 
 		var url = $urlField.val();
 		$notfier.text('');
@@ -162,32 +209,39 @@ export function createPage(validateUrlUrl) {
 				return Promise.reject('Url is invalid or already in use!');
 			}
 		}, Data.defaultError)
-		.then(function(res) {
-			console.log('[age-res', res);			
-			if(res.success) {
-				let url = res.url;
-				return SeoFeatures.save(res.pageId).then(function(res) {
-					if (res.success) {
-						window.location.replace('/sitetriks/pages/editcontent?url=' + url);
-					} else {
-						$notfier.text(res.message);
-						Loader.hide();
-					}
-		
-					$btnSubmit.attr('disabled', false);
-				}, function (error) {
-					console.warn(error);
-					$btnSubmit.attr('disabled', false);
-					$notfier.text(error);
-				});
-			}
-			else {
-				$notfier.text(res.message);
-				Loader.hide();
-			}
-			$btnSubmit.attr('disabled', false);
+			.then(function (res) {
+				console.log('[age-res', res);
+				if (res.success) {
+					let url = res.url;
+					return SeoFeatures.save(res.pageId).then(function (res) {
+						if (res.success) {
 
-		});
+							if (saveAndExit) {
+								window.location.replace('/sitetriks/pages');
+							}
+							if (saveAndContent) {
+								window.location.replace('/sitetriks/pages/editcontent?url=' + url);
+							}
+							
+						} else {
+							$notfier.text(res.message);
+							Loader.hide();
+						}
+
+						$btnSubmit.attr('disabled', false);
+					}, function (error) {
+						console.warn(error);
+						$btnSubmit.attr('disabled', false);
+						$notfier.text(error);
+					});
+				}
+				else {
+					$notfier.text(res.message);
+					Loader.hide();
+				}
+				$btnSubmit.attr('disabled', false);
+
+			});
 		// .then(function (res) {
 		// 	if (res.success) {
 		// 		window.location.replace('/sitetriks/pages/editcontent?url=' + res.url);
@@ -214,7 +268,7 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 	Multiselect.SetupElement($('.multiselect-roles'));
 	SeoFeatures.init(pageId);
 
-    Data.getJson({ url: '/SiteTriks/StaticFiles/templates/page-multilingual.html' }).then(function (res) {
+	Data.getJson({ url: '/SiteTriks/StaticFiles/templates/page-multilingual.html' }).then(function (res) {
 		for (var key in mlf) {
 			$('<option></option>', {
 				value: key,
@@ -251,8 +305,6 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 
 	Tags.init();
 
-	$('#seo-words').on('input change', countSEOWords);
-	countSEOWords.apply($('#seo-words'));
 
 	$('.seo-toggle-button').on('click', toggleSeoFeatures);
 
@@ -265,29 +317,50 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 		$featuresList.toggle();
 	}
 
+	$('#seo-words').on('input change', countWords.bind(this, '#seo-words-counter', '#seo-words'));
 
-	function countSEOWords(ev) {
-		let $trigger = $(this);
-		let words = $trigger.val().split(',');
+
+	$('.description-counter').on('input change', countSymbols.bind(this, '#description-symbol-counter', '.description-counter'));
+	countSymbols.apply('.description-counter', ['#description-symbol-counter', '.description-counter']);
+
+	// title
+	$('.seo-title').on('input change', countSymbols.bind(this, '#seo-title-counter', '.seo-title'));
+
+	//meta desc
+	$('.meta-description').on('input change', countSymbols.bind(this, '#seo-meta-counter', '.meta-description'));
+
+	// Fill SEO fields on Partial display
+	$('.seo-toggle-button').on('click', function () {
+		countSymbols.apply('.seo-title', ['#seo-title-counter', '.seo-title']);
+
+		countSymbols.apply('.meta-description', ['#seo-meta-counter', '.meta-description']);
+
+		countWords.apply('#seo-words', ['#seo-words-counter', '#seo-words']);
+
+	})
+
+	function countWords(counterClass, targetClass) {
+		let $target = $(targetClass);
+		let $counter = $(counterClass);
+		console.log(counterClass);
+
+		let words = $target.val().split(',');
 		if (words.length === 1 && words[0].trim().length === 0) {
-			$('#seo-words-counter').text('');
+			$counter.text('Words: 0');
 		} else {
-			$('#seo-words-counter').text('Words: ' + words.length);
+			$counter.text('Words: ' + words.length);
 		}
-    }
+	}
 
-    $('.description-counter').on('input change', countDescriptionSymbols);
-    countDescriptionSymbols.apply('.description-counter');
+	function countSymbols(counterClass, targetClass) {
+		let $target = $(targetClass).val();
+		let $counter = $(counterClass);
 
-    function countDescriptionSymbols(ev) {
-        let $trigger = $(this).val();
-
-        if ($trigger.length > 0) {
-            $('#description-symbol-counter').text('Symbols:' + $trigger.length);
-        } else {
-            $('#description-symbol-counter').text('');
-        }
-    }
+		console.log($target);
+		if ($target.length > 0) {
+			$counter.text('Characters:' + $target.length);
+		} 
+	}
 
 	var $urlField = $('#url');
 	var $urlValidation = $('#url-validation');
@@ -326,18 +399,38 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 		}
 	});
 
-	$('.btn-save-and-exit').on('click', function (ev) {
-		$('#edit-page-form').attr('data-exit', true);
+	$('.btn-save-and-new').on('click', function (ev) {
+
+		console.log("hi");
+		$('#edit-page-form').removeAttr('data-exit');
+		$('#edit-page-form').attr('data-new', true);
+		$('#edit-page-form').submit();
 	});
 
+	$('.btn-save-and-exit-li').on('click', function (ev) {
+
+		$('#edit-page-form').removeAttr('data-new');
+		$('#edit-page-form').attr('data-exit', true);
+		$('#edit-page-form').submit();
+	});
+
+	$('.btn-save-li').on('click', function (ev) {		
+
+		$('#edit-page-form').removeAttr('data-exit');
+		$('#edit-page-form').removeAttr('data-new');
+		$('#edit-page-form').submit();
+	});
 	var $notfier = $('#notifier');
+
 	$('#edit-page-form').on('submit', function (evt) {
+
 		var _this = this;
 		let $target = $(this);
 		let saveAndExit = $target.attr('data-exit');
-
+		let saveAndNew = $target.attr('data-new');
 		//--------------------------------------------------------
 		// multi lingual fields logic
+		console.log(saveAndNew)
 		let lang = $('#languages').val();
 		if (lang) {
 			Loader.show('#fff');
@@ -351,11 +444,13 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 			});
 
 			Data.postJson({ url: mlfUrl, data: body }).then(function (res) {
-				if (res.success) {					
+				if (res.success) {
 					if (saveAndExit) {
 						window.location.replace('/sitetriks/pages');
 					}
-
+					if (saveAndNew) {
+						window.location.replace('/sitetriks/pages/create');
+					}
 					WarningWindow.attach();
 					mlf = res.mlf;
 					Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
@@ -425,13 +520,17 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 			}
 		}, Data.defaultError).then(function (res) {
 			if (res.success) {
-				SeoFeatures.edit(pageId).then(function(res) {
-					if(res.success) {
+				SeoFeatures.edit(pageId).then(function (res) {
+					if (res.success) {
 						if (saveAndExit) {
 							window.location.replace('/sitetriks/pages');
 							return;
 						}
-		
+						if (saveAndNew) {
+							window.location.replace('/sitetriks/pages/create');
+							return;
+						}
+
 						WarningWindow.attach();
 						Notifier.createAlert({ containerId: '#alerts', title: 'Success', message: 'Page updated!', status: 'success' });
 						if (url !== initialUrl) {

@@ -17,8 +17,8 @@
     > .row {
         background: #d5d5d5;
         overflow-y: auto;
-        height: 100%;
-        padding: 160px 20px 0 45px;
+        height: calc(100% - 30px);
+        padding: 100px 0px 0 85px;
         margin: 0;
     }
 }
@@ -211,6 +211,14 @@
     }
 
     .dashboard-content > .row {
-        padding: 90px 3% 0 7%;
+        padding: 90px 0% 0 85px;
+
+    }
+}
+
+@media(max-width: 768px) {
+
+    .dashboard-content > .row {
+        padding: 90px 0 0 3%;
     }
 }

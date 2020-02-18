@@ -39,7 +39,15 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
         $('body').on('click', '.lock-label', mainMenuModule.toggleLockWidget);
         $('body').on('click', '.notifications-default', Notifier.displayList);
         $('body').on('click', '.close-list', Notifier.hideList);
+        $(document).on('click', hideList);
 
+    }
+
+    function hideList(ev) {
+        let $target = ev.target;
+        if (!($($target).hasClass('notifications-listed'))) {
+            Notifier.hideList();
+        }
     }
 
     function getRoles(selectedRoles) {
@@ -83,7 +91,7 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
         });
         Notifier.storeAlerts({
             containerClass: '.notifications-holder',
-            alertMessage :`${action} ${data.type} widget`,
+            alertMessage: `${action} ${data.type} widget`,
             counterClass: '.count'
         });
 
@@ -133,7 +141,6 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
     function renderWidget(widget) {
         let body = { content: widget, preview: 'preview' };
         Loader.show(true);
-        console.log(body);
         return Data.postJson({ url: '/sitetriks/Display/RenderSingleWidget', data: body });
     }
 
@@ -281,8 +288,6 @@ export function widgetsModule($widgetContainer, initFunctions, pageContent) {
             cssClass: data.cssClass,
             templateName: data.templateName
         };
-
-        console.log(widget);
 
         renderWidget(widget).then(function (view) {
             $(document).trigger('removeCarousel');

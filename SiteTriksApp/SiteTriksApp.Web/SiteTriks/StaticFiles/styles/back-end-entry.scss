@@ -63,7 +63,7 @@ a:hover {
 /**********************************************************/
 
 .backend-wrapper {
-    margin: 200px 50px 50px 50px;
+    margin: 120px 30px 50px 80px;
     padding-top: 10px;
     /*Cleanfix for UI button*/
     a.btn-backend {
@@ -106,7 +106,6 @@ a:hover {
     .st-lable-bold {
         font-weight: 600;
     }
-
 }
 .btn-st-blue, a.btn-st-blue .btn-st-blue a {
     border: 1px solid grey;
@@ -193,7 +192,7 @@ a:hover {
 @media (max-width: 1110px) {
 
     .backend-wrapper {
-        margin: 250px 50px 50px 50px;
+        margin: 120px 50px 50px 50px;
     }
 
     .form {
@@ -203,12 +202,18 @@ a:hover {
     a.live-site {
         font-size: 12px;
         margin-left: 5px;
-        width: 45px;
     }
 }
 
 @media (max-width: 1091px) {
     .form {
         font-size: 12px;
+    }
+}
+
+@media(max-width: 768px) {
+
+    .backend-wrapper {
+        margin: 230px 50px 50px 50px;
     }
 }
