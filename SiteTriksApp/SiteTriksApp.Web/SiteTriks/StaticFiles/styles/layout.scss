@@ -341,11 +341,16 @@
     color: #7c7c7c;
 }
 
-#layout-properties label span {
-    display: inline-block;
-    width: 120px;
-    float: left;
-    text-align: start;
+#layout-properties label {
+    span {
+        display: inline-block;
+        float: left;
+        text-align: start;
+    }
+
+    span.pickr-label {
+        width: 120px;
+    }
 }
 
 #layout-properties label input {

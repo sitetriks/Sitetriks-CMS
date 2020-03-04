@@ -41,6 +41,15 @@
         }
     }
 
+    .type-container, .versions-container {
+        overflow-y: hidden;
+        max-height: 300px;
+    }
+
+    .st-select-all-checkbox{
+        display:none
+    }
+
     .version-row, .type-row {
         hr {
             margin: 0;
@@ -62,10 +71,11 @@
                 float: right;
                 background-color: black;
                 padding: 3px 0;
-                width: 40px;
+                width: 45px;
                 height: 30px;
                 text-align: center;
                 border-radius: 4px;
+                color: white;
 
                 img {
                     width: 33%;
@@ -123,7 +133,7 @@
     .topicType, .editType {
         margin: 10px;
 
-        input {
+        input,select {
             width: 50%;
             margin-right: 10px;
             height: 32px;

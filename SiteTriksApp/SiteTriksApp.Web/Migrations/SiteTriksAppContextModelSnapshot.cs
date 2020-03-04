@@ -15,22 +15,25 @@ namespace SiteTriksApp.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -47,14 +50,18 @@ namespace SiteTriksApp.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -67,14 +74,18 @@ namespace SiteTriksApp.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -85,14 +96,18 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderDisplayName");
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -103,9 +118,11 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RoleId");
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -116,13 +133,17 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -132,26 +153,38 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Comment", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CommentComponentId");
+                    b.Property<Guid>("CommentComponentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ComponentId");
+                    b.Property<Guid>("ComponentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(5000);
 
-                    b.Property<string>("CreatorId");
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ParentId");
+                    b.Property<Guid>("ParentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -165,17 +198,23 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Comments.CommentsComponent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntityConnectionId");
+                    b.Property<Guid>("EntityConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -187,19 +226,28 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Configuration.ComponentsConfiguration", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Components");
+                    b.Property<string>("Components")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContainerName");
+                    b.Property<string>("ContainerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -209,17 +257,23 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Files.FileComponent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntityConnectionId");
+                    b.Property<Guid>("EntityConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -231,19 +285,26 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Files.FileFileComponent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("FileComponentId");
+                    b.Property<Guid?>("FileComponentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("FileId");
+                    b.Property<Guid?>("FileId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -257,17 +318,23 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Links.LinkComponent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntityConnectionId");
+                    b.Property<Guid>("EntityConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -279,17 +346,23 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Publish.PublishComponent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntityConnectionId");
+                    b.Property<Guid>("EntityConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -301,17 +374,23 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Tags.TagComponent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntityConnectionId");
+                    b.Property<Guid>("EntityConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -323,21 +402,31 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Config.Config", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsIdenticalToFile");
+                    b.Property<bool>("IsIdenticalToFile")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -347,25 +436,39 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.DynamicView", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("LastRequested");
+                    b.Property<DateTime?>("LastRequested")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("WidgetName");
+                    b.Property<string>("WidgetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -375,27 +478,40 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.ECommerces.ECommerceItem", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(5000);
 
-                    b.Property<string>("ImagesUrlsIDs");
+                    b.Property<string>("ImagesUrlsIDs")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MainImageUrlID");
+                    b.Property<string>("MainImageUrlID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 6)");
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.HasKey("Id");
@@ -406,23 +522,33 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.ECommerces.ECommerceOrder", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BuyerId");
+                    b.Property<string>("BuyerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ECommerceItemId");
+                    b.Property<Guid>("ECommerceItemId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ECommercePaymentId");
+                    b.Property<Guid?>("ECommercePaymentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -438,24 +564,33 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.ECommerces.ECommercePayment", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18, 6)");
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("InvoiceCode");
+                    b.Property<string>("InvoiceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Method");
+                    b.Property<int>("Method")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -465,35 +600,55 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.EndPoints.EndPoint", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Column");
+                    b.Property<string>("Column")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("JoinFields");
+                    b.Property<string>("JoinFields")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("JoinKey");
+                    b.Property<string>("JoinKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("JoinTable");
+                    b.Property<string>("JoinTable")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Order");
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
 
-                    b.Property<string>("RequestType");
+                    b.Property<string>("RequestType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Skip");
+                    b.Property<int?>("Skip")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("Take");
+                    b.Property<int?>("Take")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -503,23 +658,34 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.EndPoints.Filter", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Comparison");
+                    b.Property<int>("Comparison")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EndPointId");
+                    b.Property<Guid>("EndPointId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PropertyName");
+                    b.Property<string>("PropertyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -531,13 +697,19 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.ExceptionLog", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Domain");
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExceptionInformation");
+                    b.Property<string>("ExceptionInformation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -547,51 +719,78 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Files.File", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Alt");
+                    b.Property<string>("Alt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CacheConfiguration");
+                    b.Property<string>("CacheConfiguration")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ComponentConnectionId");
+                    b.Property<Guid>("ComponentConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Content");
+                    b.Property<byte[]>("Content")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ExpirationDate");
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Extension");
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Height");
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsUsed");
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("LibraryId");
+                    b.Property<Guid>("LibraryId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("OriginalFile");
+                    b.Property<Guid?>("OriginalFile")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RefferedInNews");
+                    b.Property<string>("RefferedInNews")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("SizeName");
+                    b.Property<string>("SizeName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StorageProviderName");
+                    b.Property<string>("StorageProviderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<string>("UsedInPages");
+                    b.Property<string>("UsedInPages")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Width");
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -605,19 +804,27 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Files.FileBinary", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("FileContent");
+                    b.Property<byte[]>("FileContent")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<Guid>("FileId");
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -627,21 +834,31 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Files.FileUse", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("FileId");
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UsedInNews");
+                    b.Property<string>("UsedInNews")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UsedInPages");
+                    b.Property<string>("UsedInPages")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -653,23 +870,34 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Files.Library", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AllowedTypes");
+                    b.Property<int>("AllowedTypes")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ComponentConnectionId");
+                    b.Property<Guid>("ComponentConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("StorageProviderName");
+                    b.Property<string>("StorageProviderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -680,9 +908,11 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("SiteTriks.Data.Models.Files.LibraryThumbnails", b =>
                 {
-                    b.Property<Guid>("ThumbnailId");
+                    b.Property<Guid>("ThumbnailId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LibraryId");
+                    b.Property<Guid>("LibraryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ThumbnailId", "LibraryId");
 
@@ -694,33 +924,45 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Files.ThumbnailSizes", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Height");
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("MultiplyerX")
-                        .HasColumnType("decimal(18, 6)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MultiplyerY")
-                        .HasColumnType("decimal(18, 6)");
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OffsetX");
+                    b.Property<int>("OffsetX")
+                        .HasColumnType("int");
 
-                    b.Property<int>("OffsetY");
+                    b.Property<int>("OffsetY")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Width");
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -730,21 +972,31 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.HtmlBlock", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -754,21 +1006,31 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Language", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Culture");
+                    b.Property<string>("Culture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDefault");
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UrlPrefix");
+                    b.Property<string>("UrlPrefix")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -778,24 +1040,35 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Languages.MultiLingualField", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FieldName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
-                    b.Property<Guid>("LanguageId");
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ParentId");
+                    b.Property<Guid>("ParentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(5000);
 
                     b.HasKey("Id");
@@ -808,19 +1081,28 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Links.DefaultLink", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Url");
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -830,21 +1112,30 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Links.Link", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ComponentId");
+                    b.Property<Guid>("ComponentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Url");
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -856,25 +1147,39 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Logging.DatabaseLog", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CategoryName");
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Formatter");
+                    b.Property<string>("Formatter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LogLevel");
+                    b.Property<string>("LogLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("TimeOfEvent");
+                    b.Property<DateTime>("TimeOfEvent")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -884,15 +1189,21 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.LoginSession", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsLogged");
+                    b.Property<bool>("IsLogged")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime>("LoginStamp");
+                    b.Property<DateTime>("LoginStamp")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("SessionId");
+                    b.Property<string>("SessionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -902,19 +1213,28 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsMeta", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ComponentConnectionId");
+                    b.Property<Guid>("ComponentConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
                     b.HasKey("Id");
 
@@ -926,28 +1246,42 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsVersion", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ComponentConnectionId");
+                    b.Property<Guid>("ComponentConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(5000);
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("DisplayTitle");
+                    b.Property<string>("DisplayTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("MainImageId");
+                    b.Property<Guid?>("MainImageId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("NewsMetaId");
+                    b.Property<Guid>("NewsMetaId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Version")
                         .HasColumnType("decimal(18, 6)");
@@ -958,7 +1292,7 @@ namespace SiteTriksApp.Web.Migrations
 
                     b.HasIndex("MainImageId");
 
-                    b.HasIndex("NewsMetaId");
+                    b.HasIndex("NewsMetaId", "Type", "Version");
 
                     b.ToTable("st_newsVersions");
                 });
@@ -966,42 +1300,56 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Pages.PageMeta", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ComponentConnectionId");
+                    b.Property<Guid>("ComponentConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CurrentTags");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(5000);
 
-                    b.Property<bool>("IsAMPPage");
+                    b.Property<bool>("IsAMPPage")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsDocumentation");
+                    b.Property<bool>("IsDocumentation")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsHomePage");
+                    b.Property<bool>("IsHomePage")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsInNavigation");
+                    b.Property<bool>("IsInNavigation")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsLoginPage");
+                    b.Property<bool>("IsLoginPage")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NavigationPriority");
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ParentId");
+                    b.Property<string>("PermittedRolesIds")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("PermittedRolesIds");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SiteProviderId");
-
-                    b.Property<Guid?>("TemplateMetaId");
+                    b.Property<Guid?>("TemplateMetaId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.HasKey("Id");
@@ -1018,23 +1366,34 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Pages.PageVersion", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Contents");
+                    b.Property<string>("Contents")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Culture");
+                    b.Property<string>("Culture")
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PageMetaId");
+                    b.Property<Guid>("PageMetaId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Version")
                         .HasColumnType("decimal(18, 6)");
@@ -1049,23 +1408,35 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Permissions.PermissionConfiguration", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Action");
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ActionType");
+                    b.Property<string>("ActionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AllowedRoles");
+                    b.Property<string>("AllowedRoles")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PermissionSystemId");
+                    b.Property<Guid>("PermissionSystemId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1077,17 +1448,24 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Permissions.PermissionSystem", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("System");
+                    b.Property<string>("System")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1097,31 +1475,45 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Publish.PublishData", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BackgroundJobId");
+                    b.Property<Guid?>("BackgroundJobId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ComponentId");
+                    b.Property<Guid>("ComponentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateToBePublished");
+                    b.Property<DateTime?>("DateToBePublished")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsPublished");
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime?>("LastPublished");
+                    b.Property<DateTime?>("LastPublished")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("MetaId");
+                    b.Property<Guid>("MetaId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("MetaType");
+                    b.Property<string>("MetaType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1133,33 +1525,54 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.ScheduledTasks.ScheduledTask", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfExecutionUtc");
+                    b.Property<DateTime>("DateOfExecutionUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("GenericTypes");
+                    b.Property<string>("GenericTypes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Info");
+                    b.Property<string>("Info")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MethodName");
+                    b.Property<string>("MethodName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Params");
+                    b.Property<string>("Params")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ServiceType");
+                    b.Property<string>("ServiceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Status");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("TaskId");
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TaskId", "MethodName", "Status");
 
                     b.ToTable("st_scheduledTasks");
                 });
@@ -1167,37 +1580,53 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.SeoFeatures.SEOFeature", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CanonicalUrl");
+                    b.Property<string>("CanonicalUrl")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Metadata");
+                    b.Property<string>("Metadata")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OpenGraphDescription");
+                    b.Property<string>("OpenGraphDescription")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OpenGraphImage");
+                    b.Property<string>("OpenGraphImage")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OpenGraphTitle");
+                    b.Property<string>("OpenGraphTitle")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ParentId");
+                    b.Property<Guid>("ParentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("SEOKeywords");
+                    b.Property<string>("SEOKeywords")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TwitterCard");
+                    b.Property<string>("TwitterCard")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TwitterCardCreator");
+                    b.Property<string>("TwitterCardCreator")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TwitterCardSite");
+                    b.Property<string>("TwitterCardSite")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1207,19 +1636,26 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.SeoFeatures.SEOFeatureComponent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ComponentElementId");
+                    b.Property<Guid>("ComponentElementId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntityConnectionId");
+                    b.Property<Guid>("EntityConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1234,27 +1670,40 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncHistory", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Action");
+                    b.Property<int>("Action")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsSynced");
+                    b.Property<bool>("IsSynced")
+                        .HasColumnType("bit");
 
-                    b.Property<Guid>("ItemId");
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ItemLastTitle");
+                    b.Property<string>("ItemLastTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ItemType");
+                    b.Property<string>("ItemType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TargetSiteId");
+                    b.Property<Guid>("TargetSiteId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1264,27 +1713,41 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncResponse", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ItemId");
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ItemType");
+                    b.Property<string>("ItemType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SiteSyncStatusId");
+                    b.Property<Guid>("SiteSyncStatusId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Successful");
+                    b.Property<bool>("Successful")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1296,23 +1759,35 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncStatus", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OriginSite");
+                    b.Property<string>("OriginSite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OriginUserId");
+                    b.Property<string>("OriginUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<string>("TargetSite");
+                    b.Property<string>("TargetSite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1322,20 +1797,28 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Tags.Tag", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ComponentId");
+                    b.Property<Guid>("ComponentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1347,31 +1830,41 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Templates.TemplateMeta", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ComponentConnectionId");
+                    b.Property<Guid>("ComponentConnectionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(5000);
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("TemplateMetaId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.HasKey("Id");
 
                     b.HasIndex("ComponentConnectionId");
 
-                    b.HasIndex("TemplateMetaId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("st_templateMetas");
                 });
@@ -1379,30 +1872,41 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Templates.TemplateVersion", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Contents");
+                    b.Property<string>("Contents")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Culture");
+                    b.Property<string>("Culture")
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TemplateMetaId");
+                    b.Property<Guid>("TemplateMetaId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Version")
                         .HasColumnType("decimal(18, 6)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TemplateMetaId");
+                    b.HasIndex("TemplateMetaId", "Culture", "Version");
 
                     b.ToTable("st_templateVersions");
                 });
@@ -1410,21 +1914,30 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Trackable", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContentId");
+                    b.Property<Guid>("ContentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DefaultPageId");
+                    b.Property<Guid>("DefaultPageId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.HasKey("Id");
@@ -1435,71 +1948,98 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Users.User", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AccessFailedCount");
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Company")
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DashboardConfiguration");
+                    b.Property<string>("DashboardConfiguration")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.Property<string>("GoogleAuthenticatorSecretKey")
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.Property<string>("Info")
+                        .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<bool>("IsApproved");
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsGoogleAuthenticatorEnabled");
+                    b.Property<bool>("IsGoogleAuthenticatorEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("LockoutEnabled");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd");
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("SecurityStamp");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("TwoFactorEnabled");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("UserGroups");
+                    b.Property<string>("UserGroups")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -1518,19 +2058,27 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Data.Models.Users.UserGroup", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UnsubscribedUsers");
+                    b.Property<string>("UnsubscribedUsers")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1540,19 +2088,26 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified");
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntityId");
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LastUserId");
+                    b.Property<string>("LastUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1562,15 +2117,20 @@ namespace SiteTriksApp.Web.Migrations
             modelBuilder.Entity("SiteTriks.Infrastructure.DbModels.Site", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreated");
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Domain");
+                    b.Property<string>("Domain")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SiteProviderId");
+                    b.Property<Guid>("SiteProviderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1579,47 +2139,53 @@ namespace SiteTriksApp.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Users.User")
+                    b.HasOne("SiteTriks.Data.Models.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Users.User")
+                    b.HasOne("SiteTriks.Data.Models.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("SiteTriks.Data.Models.Users.User")
+                    b.HasOne("SiteTriks.Data.Models.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("SiteTriks.Data.Models.Users.User")
+                    b.HasOne("SiteTriks.Data.Models.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Comment", b =>
@@ -1627,12 +2193,14 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Components.Comments.CommentsComponent", "Component")
                         .WithMany("ComponentDataCollection")
                         .HasForeignKey("ComponentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Data.Models.Users.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Comments.CommentsComponent", b =>
@@ -1640,7 +2208,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Files.FileComponent", b =>
@@ -1648,20 +2217,19 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Files.FileFileComponent", b =>
                 {
                     b.HasOne("SiteTriks.Data.Models.Components.Files.FileComponent", "FileComponent")
                         .WithMany("ComponentDataCollection")
-                        .HasForeignKey("FileComponentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("FileComponentId");
 
                     b.HasOne("SiteTriks.Data.Models.Files.File", "File")
                         .WithMany("Components")
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("FileId");
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Links.LinkComponent", b =>
@@ -1669,7 +2237,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Publish.PublishComponent", b =>
@@ -1677,7 +2246,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Components.Tags.TagComponent", b =>
@@ -1685,7 +2255,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.ECommerces.ECommerceOrder", b =>
@@ -1693,17 +2264,18 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Users.User", "Buyer")
                         .WithMany()
                         .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Data.Models.ECommerces.ECommerceItem", "ECommerceItem")
                         .WithMany()
                         .HasForeignKey("ECommerceItemId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Data.Models.ECommerces.ECommercePayment", "ECommercePayment")
                         .WithMany()
-                        .HasForeignKey("ECommercePaymentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ECommercePaymentId");
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.EndPoints.Filter", b =>
@@ -1711,7 +2283,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.EndPoints.EndPoint", "EndPoint")
                         .WithMany("Filters")
                         .HasForeignKey("EndPointId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Files.File", b =>
@@ -1719,12 +2292,14 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Data.Models.Files.Library", "Library")
                         .WithMany("Files")
                         .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Files.FileUse", b =>
@@ -1732,7 +2307,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Files.File", "File")
                         .WithMany()
                         .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Files.Library", b =>
@@ -1740,7 +2316,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Files.LibraryThumbnails", b =>
@@ -1748,12 +2325,14 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Files.Library", "Library")
                         .WithMany("LibraryThumbnails")
                         .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Data.Models.Files.ThumbnailSizes", "Thumbnail")
                         .WithMany("LibraryThumbnails")
                         .HasForeignKey("ThumbnailId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Languages.MultiLingualField", b =>
@@ -1761,7 +2340,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Links.Link", b =>
@@ -1769,7 +2349,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Components.Links.LinkComponent", "Component")
                         .WithMany("ComponentDataCollection")
                         .HasForeignKey("ComponentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsMeta", b =>
@@ -1777,7 +2358,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.News.NewsVersion", b =>
@@ -1785,17 +2367,18 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Data.Models.Files.File", "MainImage")
                         .WithMany()
-                        .HasForeignKey("MainImageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("MainImageId");
 
                     b.HasOne("SiteTriks.Data.Models.News.NewsMeta", "NewsMeta")
                         .WithMany("Versions")
                         .HasForeignKey("NewsMetaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Pages.PageMeta", b =>
@@ -1803,17 +2386,17 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Data.Models.Pages.PageMeta", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("SiteTriks.Data.Models.Templates.TemplateMeta", "TemplateMeta")
-                        .WithMany()
+                        .WithMany("Pages")
                         .HasForeignKey("TemplateMetaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Pages.PageVersion", b =>
@@ -1821,7 +2404,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Pages.PageMeta", "PageMeta")
                         .WithMany("Versions")
                         .HasForeignKey("PageMetaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Permissions.PermissionConfiguration", b =>
@@ -1829,7 +2413,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Permissions.PermissionSystem", "PermissionSystem")
                         .WithMany("Methods")
                         .HasForeignKey("PermissionSystemId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Publish.PublishData", b =>
@@ -1837,7 +2422,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Components.Publish.PublishComponent", "Component")
                         .WithMany("ComponentDataCollection")
                         .HasForeignKey("ComponentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.SeoFeatures.SEOFeatureComponent", b =>
@@ -1845,12 +2431,14 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.SeoFeatures.SEOFeature", "ComponentElement")
                         .WithOne("Component")
                         .HasForeignKey("SiteTriks.Data.Models.SeoFeatures.SEOFeatureComponent", "ComponentElementId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "EntityConnection")
                         .WithMany()
                         .HasForeignKey("EntityConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.SiteSync.SiteSyncResponse", b =>
@@ -1858,7 +2446,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.SiteSync.SiteSyncStatus", "SiteSyncStatus")
                         .WithMany("CommunicationModels")
                         .HasForeignKey("SiteSyncStatusId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Tags.Tag", b =>
@@ -1866,7 +2455,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Components.Tags.TagComponent", "Component")
                         .WithMany("ComponentDataCollection")
                         .HasForeignKey("ComponentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Templates.TemplateMeta", b =>
@@ -1874,12 +2464,13 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Infrastructure.DbModels.Components.ComponentConnection", "ComponentConnection")
                         .WithMany()
                         .HasForeignKey("ComponentConnectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("SiteTriks.Data.Models.Templates.TemplateMeta", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateMetaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("SiteTriks.Data.Models.Templates.TemplateMeta", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("SiteTriks.Data.Models.Templates.TemplateVersion", b =>
@@ -1887,7 +2478,8 @@ namespace SiteTriksApp.Web.Migrations
                     b.HasOne("SiteTriks.Data.Models.Templates.TemplateMeta", "TemplateMeta")
                         .WithMany("Versions")
                         .HasForeignKey("TemplateMetaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -49,10 +49,11 @@ var Notifier = (function () {
 
     function displayList() {
         let $notificationsContainer = $('.notifications-list-wrapper');
-        $notificationsContainer.find('.notifications-default').css('display', 'none');
-        //$notificationsContainer.find('.notifications-listed').css('display', 'block');
+        let $notificationsListed = $notificationsContainer.find('.notifications-listed');
 
-        $notificationsContainer.find('.notifications-listed').show("slide", { direction: "right" }, 700);
+        $notificationsContainer.find('.notifications-default').css('display', 'none');
+
+        $notificationsListed.show("slide", { direction: "right" }, 700);
 
         let $blurContainer = Blur.add({ hideOnBlurClick: false, color: '#fff' });
         $('.body').append($blurContainer);
@@ -64,6 +65,7 @@ var Notifier = (function () {
         $notificationsContainer.find('.notifications-listed').css('display', 'none');
 
         Blur.remove();
+
     }
 
     return {

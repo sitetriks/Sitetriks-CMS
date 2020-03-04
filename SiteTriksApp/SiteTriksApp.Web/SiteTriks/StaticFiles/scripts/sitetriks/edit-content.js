@@ -97,8 +97,8 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 		let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
 		let layout = JSON.parse(layoutWidget.element);
 		let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
+
 		layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass, inlineStyles: r.inlineStyles }; });
-		console.log('layout rows', layout.layoutRows);
 		ModuleBuilder.renderLayout(layout.layoutRows, $(`div.preview-placeholder[data-identifier="${layoutWidget.id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
 		WidgetsDraggable.init(w);
 		layoutWidget.element = JSON.stringify(layout);
@@ -167,7 +167,6 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 
 	function updatePreview(url) {
 		let lang = $('#languages').val() || 'en';
-		console.log(lang);
 
 		$previewContainer.html('');
 		Loader.show(true);
@@ -233,9 +232,16 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 	}
 
 	//publish event + handler
-	$('#btn-publish').on('click', savePublish);
+	$('.btn-publish').on('click', savePublish);
+	$('.btn-savepublish-exit').on('click', publishAndExit)
 
 	function savePublish(ev) {
+		Loader.show('#fff');
+		ev.preventDefault();
+
+		return Data.postJson({ url: '/sitetriks/Pages/PublishPageWithContent', data: prepareSave() }).then(stayOneSamePagePublish, Data.defaultError);
+	}
+	function publishAndExit(ev) {
 		Loader.show('#fff');
 		ev.preventDefault();
 
@@ -243,15 +249,22 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 	}
 
 	//save-draft event + handler
-	$('#btn-save-draft').on('click', saveDraft);
+	$('.btn-draft').on('click', saveDraft);
+	$('.btn-save-draft').on('click', saveDraftAndExit);
 
 	function saveDraft(ev) {
+		console.log("in Draft");
+		Loader.show('#fff');
+		ev.preventDefault();
+		return Data.postJson({ url: '/sitetriks/Pages/SaveDraft', data: prepareSave() }).then(stayOneSamePage);
+	}
+
+	function saveDraftAndExit(ev) {
 		Loader.show('#fff');
 		ev.preventDefault();
 
 		return Data.postJson({ url: '/sitetriks/Pages/SaveDraft', data: prepareSave() }).then(redirectToPagesGridOnSuccess);
 	}
-
 	//preview event + handler
 	$('#btn-preview-page').on('click', previewPage);
 
@@ -274,6 +287,24 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 
 		}, Data.defaultError);
 	};
+
+	function stayOneSamePage(res) {
+		Loader.hide();
+		if (res.success) {
+			Notifier.createAlert({ containerId: '#alerts', message: "Succesfuly Saved as Draft", status: "success" });
+		} else {
+			Notifier.createAlert({ containerId: '#alerts', message: res.message, isPermanent: true });
+		}
+	}
+
+	function stayOneSamePagePublish(res) {
+		Loader.hide();
+		if (res.success) {
+			Notifier.createAlert({ containerId: '#alerts', message: "Succesfuly Saved and Published", status: "success" });
+		} else {
+			Notifier.createAlert({ containerId: '#alerts', message: res.message, isPermanent: true });
+		}
+	}
 
 	function redirectToPagesGridOnSuccess(res) {
 		if (res.success) {
@@ -480,8 +511,8 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 	function saveLayout(sendToServer) {
 		let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
 		let layout = JSON.parse(layoutWidget.element);
-		console.log(layout);
 		let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
+
 		layout.layoutRows = l.map(function (r) { return { columns: r.columns, tag: r.tag || 'div', cssClass: r.cssClass, inlineStyles: r.inlineStyles }; });
 
 		ModuleBuilder.renderLayout(layout.layoutRows, $(`div.preview-placeholder[data-identifier="${layoutWidget.id}"]`).find('.layout-content').first(), l.deletedPlaceholders);
@@ -495,7 +526,6 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 
 	document.addEventListener('checkForContent', function (e) {
 		let placeholders = e.detail.placeholders;
-		console.log('checking for updateds');
 
 		for (let i = 0; i < placeholders.length; i += 1) {
 			if (typeof w.getPageContent() !== 'undefined' && w.getPageContent().find(e => e.placeholder === placeholders[i])) {
@@ -552,8 +582,6 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 	function updatePreview(url) {
 		var fullUrl = '/sitetriks/display/previewpage';
 		let lang = $('#languages').val() || 'en';
-
-		console.log(lang);
 
 		$('#preview-container').html('');
 		Loader.show(true);

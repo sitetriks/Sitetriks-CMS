@@ -105,6 +105,7 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
 
     // on selection column from the ui
     function selectColumnHandler(ev) {
+
         let $trigger = $(this);
         let $row = $trigger.parents('.row-layout');
 
@@ -212,6 +213,22 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         let size = selectedColumn.resolutions[l.resolutions[0]].size;
         let offset = selectedColumn.resolutions[l.resolutions[0]].offset || 0;
         let cssClass = selectedColumn.properties ? selectedColumn.properties.cssClass : '';
+        let inlineStyles = selectedColumn.properties ? selectedColumn.properties.inlineStyles : '';
+
+        //
+        let inputStyles = IsJsonString(inlineStyles);
+        let inlineStylesParsed;
+        let inlineStylesFullInput;
+
+        if (inputStyles) {
+            inlineStylesParsed = JSON.parse(inlineStyles);
+            inlineStylesFullInput = `background-color:${inlineStylesParsed.backgroundColorPicker}; color:${inlineStylesParsed.fontColorPicker}; font-size:${inlineStylesParsed.fontSize}; margin:${inlineStylesParsed.marginStyle}; padding:${inlineStylesParsed.paddingStyle};`
+
+        } else {
+            inlineStylesParsed = buildInlineStylesObject(inlineStyles);
+            inlineStylesFullInput = `background-color:''; color:''; font-size:''; margin:''; padding:'';`;
+        }
+        //
 
         for (let i = 1; i < l.resolutions.length; i += 1) {
             let currentSize = selectedColumn.resolutions[l.resolutions[i]].size;
@@ -256,10 +273,20 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
             resolution: JSON.stringify(l.resolutions),
             size: size,
             offset: offset,
-            cssClass: cssClass
+            cssClass: cssClass,
+            inlineStyles: inlineStylesFullInput,
+            fontColorPicker: inlineStylesParsed.fontColorPicker,
+            backgroundColorPicker: inlineStylesParsed.backgroundColorPicker,
+            fontSize: inlineStylesParsed.fontSize,
+            paddingStyle: inlineStylesParsed.padding,
+            marginStyle: inlineStylesParsed.margin
         });
 
         $options.append(html);
+        let pickrelements = ['.background-colorpicker-btn', '.font-colorpicker-btn',];
+
+        // replace with color pickrs
+        setPickrForElement(pickrelements);
     }
 
     // updates columm properties
@@ -270,6 +297,13 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         let size = $options.find('.input-size').val();
         let offset = $options.find('.input-offset').val();
         let cssClass = $options.find('.input-cssClass').val();
+        let margin = $options.find('.margin-style').val();
+        let padding = $options.find('.padding-style').val();
+
+        let inlineStyles = buildInlineStyles();
+
+        let inlineStylesStringified = `background-color:${inlineStyles.backgroundColorPicker}; color:${inlineStyles.fontColorPicker}; font-size:${inlineStyles.fontSize};  margin:${inlineStyles.margin}; padding:${inlineStyles.padding};`
+
 
         if (size !== multiple && (size > 12 || size < 0)) {
             $notifier.text('size must be between 0 and 12!');
@@ -309,11 +343,12 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
 
             if (l[rowIndex].columns[colIndex].properties) {
                 l[rowIndex].columns[colIndex].properties.cssClass = updateCssClass;
+                l[rowIndex].columns[colIndex].properties.inlineStyles = inlineStylesStringified;
             } else {
-                l[rowIndex].columns[colIndex].properties = { cssClass: updateCssClass };
+                l[rowIndex].columns[colIndex].properties = { cssClass: updateCssClass, inlineStyles: inlineStylesStringified };
+
             }
         }
-
         buildLayout($wrapper, l);
     }
 
@@ -425,7 +460,9 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
             inlineStyles: inlineStylesFullInput,
             fontColorPicker: inlineStylesParsed.fontColorPicker,
             backgroundColorPicker: inlineStylesParsed.backgroundColorPicker,
-            fontSize: inlineStylesParsed.fontSize
+            fontSize: inlineStylesParsed.fontSize,
+            marginStyle: inlineStylesParsed.margin,
+            paddingStyle: inlineStylesParsed.padding,
         });
 
         $options.append(html);
@@ -460,12 +497,11 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
 
         let tag = $options.find('.select-tag').val();
         let cssClass = $options.find('.input-cssClass').val();
-      //  let inlineStyles = $options.find('.input-inlineStyles').val();
 
 
         let inlineStyles = buildInlineStyles();
 
-        let inlineStylesStringified = `background-color:${inlineStyles.backgroundColorPicker}; color:${inlineStyles.fontColorPicker}; font-size:${inlineStyles.fontSize};`
+        let inlineStylesStringified = `background-color:${inlineStyles.backgroundColorPicker}; color:${inlineStyles.fontColorPicker}; font-size:${inlineStyles.fontSize}; margin:${inlineStyles.margin}; padding:${inlineStyles.padding};`
 
         l[rowIndex].tag = tag;
         l[rowIndex].cssClass = cssClass;
@@ -482,12 +518,17 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         let backgroundColorPicker = $('.background-colorpicker').val();
         let fontColorPicker = $('.font-colorpicker').val();
         let fontSize = $('.font-size').val();
+        let margin = $('.margin-style').val();
+        let padding = $('.padding-style').val();
 
         // replace them in the object
         let inlineStylesHash = {
             backgroundColorPicker: backgroundColorPicker,
             fontColorPicker: fontColorPicker,
-            fontSize: fontSize
+            fontSize: fontSize,
+            margin: margin,
+            padding: padding
+
         }
 
         // return the object as a string
@@ -503,9 +544,11 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
 
         // replace them in the object
         let inlineStylesHash = {
-            backgroundColorPicker: typeof(stylesArray[0]) !== 'undefined' ? (stylesArray[0].split(':'))[1] : "",
+            backgroundColorPicker: typeof (stylesArray[0]) !== 'undefined' ? (stylesArray[0].split(':'))[1] : "",
             fontColorPicker: typeof (stylesArray[1]) !== 'undefined' ? (stylesArray[1].split(':'))[1] : "",
-            fontSize: typeof (stylesArray[2]) !== 'undefined' ? (stylesArray[2].split(':'))[1]: "",
+            fontSize: typeof (stylesArray[2]) !== 'undefined' ? (stylesArray[2].split(':'))[1] : "",
+            margin: typeof (stylesArray[3]) !== 'undefined' ? (stylesArray[3].split(':'))[1] : "",
+            padding: typeof (stylesArray[4]) !== 'undefined' ? (stylesArray[4].split(':'))[1] : "",
         }
 
         // return the object
@@ -529,6 +572,22 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
         let selectedColumn = l[rowIndex].columns[colIndex];
         l.selected = [{ row: rowIndex, col: colIndex }];
 
+        //
+        let inputStyles = IsJsonString(selectedRow.inlineStyles);
+        let inlineStylesParsed;
+        let inlineStylesFullInput;
+
+        if (inputStyles) {
+            inlineStylesParsed = JSON.parse(selectedRow.inlineStyles);
+            inlineStylesFullInput = `background-color:${inlineStylesParsed.backgroundColorPicker}; color:${inlineStylesParsed.fontColorPicker}; font-size:${inlineStylesParsed.fontSize}; margin:${inlineStylesParsed.marginStyle}; padding:${inlineStylesParsed.paddingStyle};`
+
+        } else {
+            inlineStylesParsed = buildInlineStylesObject(selectedRow.inlineStyles);
+            inlineStylesFullInput = `background-color:''; color:''; font-size:''; margin:''; padding:'';`
+        }
+
+        //
+
         $options.html('');
 
         let template = templates['layout-column-options'];
@@ -537,7 +596,13 @@ export function initLayout($wrapper, l, $resolutions, $options, resolutionValida
             resolution: JSON.stringify(l.resolutions),
             size: selectedColumn.resolutions[resolution].size,
             offset: selectedColumn.resolutions[resolution].offset || 0,
-            cssClass: selectedColumn.properties ? selectedColumn.properties.cssClass : ''
+            cssClass: selectedColumn.properties ? selectedColumn.properties.cssClass : '',
+            inlineStyles: inlineStylesFullInput,
+            fontColorPicker: inlineStylesParsed.fontColorPicker,
+            backgroundColorPicker: inlineStylesParsed.backgroundColorPicker,
+            fontSize: inlineStylesParsed.fontSize,
+            paddingStyle: inlineStylesParsed.padding,
+            marginStyle: inlineStylesParsed.margin
         });
 
         $options.append(html);
