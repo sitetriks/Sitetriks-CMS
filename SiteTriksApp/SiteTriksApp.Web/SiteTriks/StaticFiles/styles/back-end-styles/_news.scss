@@ -3,7 +3,7 @@
 
 .images-container {
     margin-top: 50px;
-
+    
     div.image-buttons-container {
         padding: 20px 15px;
         /*border-top: 1px solid black;*/
@@ -78,4 +78,22 @@
     color: #fff;
     border: 1px solid #758fa8;
     font-weight: bold;
+}
+
+.news-wrapper, .news-edit-wrapper {
+    > lable {
+        font-family: Open Sans;
+    }
+
+    .page-properties .row {
+        flex-wrap: nowrap;
+    }
+
+    .images-container {
+        flex-wrap: wrap !important;
+    }
+}
+.tox-tinymce {
+    max-width: 90% !important;
+    margin-bottom: 34px !important;
 }

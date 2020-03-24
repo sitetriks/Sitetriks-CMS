@@ -54,10 +54,17 @@
         font-family: OpenSans;
         font-weight: 600;
         color: #484848;
-        margin-right: 0;
+        margin-right: 10%;
     }
 }
-
+.edit-library-form {
+    .control-label {
+        font-family: OpenSans;
+        font-weight: 600;
+        color: #484848;
+        margin-right: 10%;
+    }
+}
 #multiselect-sizes {
     width: 600px;
     padding-bottom: 10px;
@@ -71,6 +78,7 @@
 .display-add-form {
     color: #00aeff;
     cursor: pointer;
+    font-family: OpenSans;
 }
 
 #create-thumbnail-size {
@@ -137,14 +145,11 @@
     margin-top: 10px;
     display: block;
     font-size: 14px;
-    text-align: right;
+    
+    margin-right: -3%;
+    font-family: OpenSans;
 }
 
-.control-label[for="Prefix"],
-.control-label[for="StorageProviderName"] {
-    margin-right: 12px;
-    line-height: 18px;
-}
 
 /*********************************************************************
     Delete thumbnail sizes popup
@@ -168,3 +173,32 @@
         margin-top: 25px;
     }
 }
+.libraries-wrapper {
+    .form-control, .multiselect {
+        width: 600px;
+        max-width: unset;
+        z-index: 1;
+        border: 1px solid #ced4da;
+
+        ul {
+            width: 100%;
+        }
+    }
+
+    .page-properties .row {
+        flex-wrap: nowrap;
+        margin-bottom: 20px;
+        margin-right: 30px;
+    }
+
+    .create-thumbnail-size-form {
+        .control-label {
+            margin-right: 120px
+        }
+    }
+}
+.thumbnail-lable {
+    margin-right: 10%;
+}
+
+
