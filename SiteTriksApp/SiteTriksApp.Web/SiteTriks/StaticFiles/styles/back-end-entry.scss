@@ -45,11 +45,11 @@ body, html {
     border-bottom: 2px solid #0089fa;
     padding-left: 2.5%;
     height: 100%;
-
 }
-    .grid.full-grid-width {
-        min-width: 1100px;
-    }
+
+.grid.full-grid-width {
+    min-width: 1100px;
+}
 
 .st-max-w-50 .form-control {
     max-width: 50%;
@@ -107,6 +107,7 @@ a:hover {
         font-weight: 600;
     }
 }
+
 .btn-st-blue, a.btn-st-blue .btn-st-blue a {
     border: 1px solid grey;
     color: #fff;
@@ -175,6 +176,21 @@ a:hover {
 @import 'back-end-styles/widget-modal-styles';
 
 @import 'back-end-styles/documentation';
+
+.backend-wrapper {
+    .page-properties {
+        .row {
+            flex-wrap: nowrap;
+            margin-bottom: 20px;
+            margin-right: 30px;
+
+            label {
+                font-family: OpenSans;
+            }
+        }
+    }
+}
+
 
 /*--------------------------------------------------------------------*/
 

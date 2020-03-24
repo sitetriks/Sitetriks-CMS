@@ -303,14 +303,11 @@
 /*form styles*/
 .add-target-form,
 .edit-target-form {
-    margin-left: -63px;
-    margin-top: 30px;
+   
+    margin-top: 5rem;
     width: 265px;
 }
 
-.edit-target-form {
-    margin-left: -31px;
-}
 
 .add-target-form .control-label,
 .edit-target-form .control-label {
@@ -330,12 +327,14 @@
 .btn-add-target,
 .btn-edit-target {
     width: 107px;
-    float: right;
+    float: left;
     border-radius: 6px;
     border: 1px solid #979797;
     background-color: #02d500;
     font-weight: bold;
     color: white;
+    margin-top:1rem;
+    margin-bottom:1rem;
 }
 
 /*arrow styles*/

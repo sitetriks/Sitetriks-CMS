@@ -132,6 +132,8 @@ function fileHandlerUpload(logger, $container, mediator, libraryId, isMultiple) 
         $uploadBtn = $container.find('.btn-submit-images');
         $cancelUploadBtn = $container.find('.btn-cancel');
 
+        logger.log('log-librarires', $libraries);
+
         return loadHandlebarsTemplates(templatesCache, templates);
     }, Data.defaultError).then(function (res) {
         bindEvents();
