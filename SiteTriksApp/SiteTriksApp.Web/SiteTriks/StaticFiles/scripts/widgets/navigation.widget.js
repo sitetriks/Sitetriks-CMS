@@ -130,7 +130,7 @@ export function navigation() {
     }
 
     function buildSelectWithParentPages() {
-        Data.getJson({ url: getAllParentPagesUrl }).then(function (res) { 
+        Data.getJson({ url: getAllParentPagesUrl }).then(function (res) {
             let pages = res.pages;
 
             let $select = $('select[data-sub-level="1"]');
@@ -228,14 +228,31 @@ export function navigation() {
         }
 
         Multiselect.Destroy($multiselect.attr('id'));
-        Multiselect.Setup($multiselect.attr('id'), function (option, checked, select) {
-            let $option = $(option);
-            if (!checked) {
-                $order.children(`li[data-identifier="${$option.val()}"]`).first().remove();
-            } else {
-                //generateSubLevelMenu(0);
-                $order.append(createSortablePage($option.text(), $option.val()));
+
+        Multiselect.Setup($multiselect.attr('id'));
+
+        $multiselect.on('change', function () {
+
+            let $options = $($(this).find("option"));
+
+            for (let option of $options) {
+
+                let selectoption = $(option);
+
+                if (selectoption.is(':selected')) {
+                    if ($(($order).children()).attr('data-identifier') !== selectoption.val()) {
+                        $order.append(createSortablePage(selectoption.text(), selectoption.val()));
+                    }
+                } else {
+                    if ($(($order).children()).attr('data-identifier') === selectoption.val()) {
+
+                        $order.children(`li[data-identifier="${selectoption.val()}"]`).remove();
+                    }
+                }
+
             }
+
+
         });
     }
 
