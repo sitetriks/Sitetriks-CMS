@@ -17,8 +17,8 @@
     > .row {
         background: #d5d5d5;
         overflow-y: auto;
-        height: 100%;
-        padding: 160px 20px 0 45px;
+        height: calc(100% - 30px);
+        padding: 100px 0px 0 85px;
         margin: 0;
     }
 }
@@ -38,6 +38,7 @@
     h5 {
         color: gray;
         padding: 10px;
+        font-size: 1em;
     }
 
     .panel {
@@ -118,6 +119,7 @@
 
     tr td {
         padding: 10px;
+        font-size: 0.8em;
     }
 
     tr:nth-child(even) {
@@ -187,6 +189,7 @@
 
     .panel.panel-primary {
         margin: 0 0 10px 0;
+        font-size: 0.9em;
     }
 
     .panel {
@@ -208,6 +211,14 @@
     }
 
     .dashboard-content > .row {
-        padding: 90px 3% 0 7%;
+        padding: 90px 0% 0 85px;
+
+    }
+}
+
+@media(max-width: 768px) {
+
+    .dashboard-content > .row {
+        padding: 90px 0 0 3%;
     }
 }

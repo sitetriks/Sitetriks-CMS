@@ -38,14 +38,18 @@ export function subscription() {
                 model = JSON.parse(element);
             } catch (e) {}
 
-            fillMarketingGroupsSelect(model);
+            fillMarketingGroupsSelect(model.ids);
         },
         save: function () {
             let val = $('#multiselect-groups').val();
-            console.log('val', val);       
-            
+            let templateName = $('#template-selector').val();
 
-            return JSON.stringify(val);
+            let model = {
+                ids: val,
+                templateName
+            };
+
+            return JSON.stringify(model);
         }
     };
 }

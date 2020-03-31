@@ -38,19 +38,20 @@
 }
 
 
-.navigation {
+.st-navigation.navigation {
     width: 100%;
     background-image: linear-gradient(-180deg, #045CA4 0%, #00357D 100%);
     height: 84px;
     position: fixed;
     z-index: 91;
     top: 0;
+    display: none;
 }
 
 .nav-section-separator {
-    height: 2px;
+    height: 1px;
     margin: 20px 5px 11px 5px;
-    background-color: #e5e5e5;
+    background-color: #9f9f9f;
     position: relative;
 
     > span {
@@ -67,14 +68,51 @@
 }
 
 .side-navigation-tree {
-    .nav-section-separator {
-        margin-left: 5px;
+    padding-left: 60px;
+
+    li {
+        padding-left: 20px;
+        font-size: 1em;
+        line-height: 1.8em;
+    }
+
+
+    a {
+        text-decoration: none;
+        color: #9f9f9f;
+    }
+
+    .category {
         padding-left: 0;
 
-        > span {
-            background-color: #F8F8F8;
-            margin-left: 0;
-            top: -10px;
+        .nav-section-separator {
+            padding: 0;
+            margin-left: 5px;
+            margin-bottom: 15px;
+
+            > span {
+                background-color: #4d4d4d;
+                color: #fff;
+                top: -10px;
+                font-size: 1.1em;
+            }
+        }
+
+        li {
+            a {
+                display: block;
+                width: 100%;
+                text-decoration: none;
+                padding: 3px 0 3px 20px;
+            }
+        }
+
+        li:hover {
+            background-color: #d8d8d8;
+
+            a {
+                color: #313131;
+            }
         }
     }
 }
@@ -114,7 +152,7 @@
     float: right;
 }
 
-#logoutForm{
+#logoutForm {
     display: inline-block;
     float: right;
 }
@@ -255,17 +293,16 @@
 }
 
 a.live-site {
-    text-align: center;
-    float: right;
-    border-left: 1px solid #073b79;
-    margin-left: 10px;
-    height: 100%;
-    margin-right: -10px;
-    word-spacing: 100vw;
     width: 60px;
     line-height: 18px;
-    padding: 23px 0;
-    color: #0089fa;
+    padding: 0;
+    color: #b5b5b5;
+    position: absolute;
+    right: 30px;
+    height: 0;
+    top: 16px;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .form {
@@ -273,6 +310,28 @@ a.live-site {
 }
 
 /******************Side navigation *********************/
+
+@mixin active-nav-button {
+    background-color: #4d4d4d;
+
+    img.dark {
+        display: none;
+    }
+
+    img.light {
+        display: inline-block;
+    }
+}
+
+@mixin default-nav-button {
+    img.dark {
+        display: inline-block;
+    }
+
+    img.light {
+        display: none;
+    }
+}
 
 .dashboard-wrapper > .row > .side-navigation {
     height: 100vh;
@@ -284,16 +343,209 @@ a.live-site {
     /* padding-bottom should be same as fixed footer */
 }
 
+
+.side-navigation-control {
+    width: 60px;
+    height: 100%;
+    display: block;
+    position: fixed;
+    top: 0;
+    z-index: 101;
+    background-color: #000;
+    text-align: center;
+
+    > div {
+
+        .btn-icon {
+            padding: 10px 0 10px 0;
+            @include default-nav-button;
+            margin-bottom: 20px;
+
+            .direct-link a {
+                height: 45px;
+                width: 65%;
+                margin-bottom: -10px;
+                display: inline-block;
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+
+            .direct-link.pages a {
+                background-image: url("/SiteTriks/StaticFiles/images/side-navigation/pages-dark.svg");
+            }
+
+
+
+            #logoutForm {
+                height: 45px;
+                width: 85%;
+                display: inline-block;
+                background-image: url('/SiteTriks/StaticFiles/images/side-navigation/logout-dark.svg');
+                background-repeat: no-repeat;
+                background-size: contain;
+
+                .login-partial-loged {
+                    margin: 0;
+                }
+            }
+
+            #logoutForm:hover {
+                background-image: url('/SiteTriks/StaticFiles/images/side-navigation/logout-light.svg');
+            }
+
+
+            img {
+                width: 65%;
+            }
+
+            span.st-tooltip {
+                width: auto;
+                min-width: unset;
+                height: 36px;
+                position: absolute;
+                top: 18px;
+                left: 83px;
+                padding: 6px 26px;
+                border: none;
+                background: #b5b5b5;
+                box-shadow: none;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 600;
+                border: 1px solid #000;
+                border-radius: 3px 3px 3px 3px;
+            }
+        }
+
+        .btn-icon[data-category=pages]:hover {
+            .direct-link.pages a {
+                background-image: url("/SiteTriks/StaticFiles/images/side-navigation/pages-light.svg");
+            }
+        }
+
+        .triangle-left {
+            width: 0;
+            height: 0;
+            border-top: 18px solid transparent;
+            border-bottom: 18px solid transparent;
+            border-right: 25px solid #000;
+            position: absolute;
+            left: -25px;
+            top: -1px;
+        }
+
+        .triangle-left:after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-top: 18px solid transparent;
+            border-bottom: 18px solid transparent;
+            border-right: 25px solid #b5b5b5;
+            position: absolute;
+            top: -18px;
+            right: -26px;
+        }
+
+        .btn-icon:hover {
+            @include active-nav-button;
+        }
+
+        .btn-icon.selected {
+            @include active-nav-button;
+        }
+    }
+
+    .logo-leaf-holder {
+        margin-bottom: 0;
+
+        .btn-icon:hover {
+            background-color: #000;
+        }
+    }
+
+    .side-live-site {
+        display: block;
+        margin-bottom: 80px;
+        color: #b5b5b5;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        line-height: 0px;
+    }
+
+    .login-holder {
+        bottom: 35px;
+        position: absolute;
+        width: 100%;
+
+        span.st-tooltip {
+            width: 100px;
+            min-width: unset;
+            height: 36px;
+            position: absolute;
+            top: 5px;
+            left: 75px;
+            padding: 6px 10px;
+            border: none;
+            background: #b5b5b5;
+            box-shadow: none;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #000;
+            border-radius: 3px 3px 3px 3px;
+        }
+
+        .btn-icon {
+            padding: 0;
+            margin: 0;
+
+
+
+            .btn-account {
+                display: block;
+                height: 50px;
+                color: transparent;
+            }
+        }
+    }
+}
+
+.side-nav-collapse {
+    .category {
+        display: none;
+    }
+}
+
+.side-nav-collapse.active {
+    width: 20%;
+    min-width: 300px;
+
+    .side-navigation-tree {
+        opacity: 1;
+    }
+
+    .category {
+        display: none;
+    }
+
+    .category.current {
+        display: block;
+    }
+}
+
+
+
 .side-nav-collapse {
     position: fixed;
     top: 0;
     height: 100vh;
-    background-color: #F8F8F8;
+    background-color: #4d4d4d;
     border-right: 1px solid #989898;
     font-size: 13px;
     width: 0;
     transition: width 0.5s, top 0.3s, height 0.3s, padding 0.3s linear;
-    padding: 166px 0 35px 0;
+    padding: 55px 0 35px 0;
     z-index: 10;
 
     .side-nav-control {
@@ -324,37 +576,30 @@ a.live-site {
     transition: opacity 0.3s ease;
 }
 
-.side-nav-collapse:hover {
-    width: 20%;
-
-    .side-nav-control .open-side-nav {
-        opacity: 0;
-    }
-
-    .side-navigation-tree {
-        opacity: 1;
-    }
-}
 
 .side-navigation-tree {
     height: 100%;
-    overflow-y: auto;
+    overflow-y: hidden;
     line-height: 18px;
     padding-top: 20px;
 
     ul {
         list-style: none;
-        padding-left: 30px;
+        padding: 0;
 
         li {
             padding-left: 10px;
         }
 
         .section {
-            color: #9B9B9B;
-            text-transform: uppercase;
+            color: #fff;
             margin-top: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 14px;
+            text-align: center;
+            text-transform: capitalize;
+            font-size: 1.7em;
+            margin-left: -10px;
+            padding-bottom: 10px;
         }
 
         .sub-section {
@@ -366,9 +611,17 @@ a.live-site {
     }
 }
 
-
+.st-right-border {
+    height: 100%;
+    width: 7px;
+    position: fixed;
+    right: 0;
+    background-color: #000;
+    display: block;
+    top: 0;
+    z-index: 100;
+}
 /* Responsive styles */
-
 @media (max-width: 1400px) {
     .navbar-nav > li > a {
         padding-left: 50px;
@@ -444,10 +697,17 @@ a.live-site {
         padding-left: 10px;
     }
 }
-
 /*Making the mobile resolution 767 to be compatible with the bootstrap hamburger menu */
-
 @media (max-width: 767px) {
+
+
+    .st-navigation.navigation {
+        display: block;
+    }
+
+    .side-navigation-control, .side-nav-collapse {
+        display: none;
+    }
 
     .nav-section-separator {
         background-color: inherit;
@@ -461,7 +721,6 @@ a.live-site {
     .dropdown-toggle::after {
         display: none;
     }
-
     /*Clearfix bootstrap*/
     .container > .navbar-header,
     .container-fluid > .navbar-header,
@@ -519,7 +778,10 @@ a.live-site {
             padding-left: 30px;
             font-size: 24px;
 
-              >a{  display: block;}
+            > a {
+                display: block;
+            }
+
             a {
                 font-size: 17px;
             }
@@ -600,7 +862,6 @@ a.live-site {
             }
         }
     }
-
     /*#hamburger-menu img {
         height: 25px;
     }*/
@@ -635,7 +896,6 @@ a.live-site {
         top: 20px;
         left: 20px;
     }
-
     /*Cover the background in mobile view*/
     .hidden-nested-divs div:nth-of-type(1),
     .hidden-nested-divs div:nth-of-type(2) {

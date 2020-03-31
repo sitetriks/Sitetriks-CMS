@@ -10,6 +10,8 @@ export function html() {
         $list.on('change', function (ev) {
             SharedBlocks.init(ev.target.value, $container, element);
         });
+
+        $('.widget-control-modal').on('scroll', function () { $('.mce-menu').css('display', 'none'); })
     }
 
     return {

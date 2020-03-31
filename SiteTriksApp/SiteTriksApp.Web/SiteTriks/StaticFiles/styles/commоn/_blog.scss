@@ -29,31 +29,226 @@
 }
 
 .st-blog-container {
-    font-size: 16px;
+    font-size: 10px;
     font-weight: 300;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
 
-    .st-blog-item {
-        margin-bottom: 100px;
+    .search-wrapper {
+        width: 100%;
+        padding: 1% 2%;
+
+        input {
+            border: none;
+            border-bottom-color: currentcolor;
+            border-bottom-style: none;
+            border-bottom-width: medium;
+            color: #8c8c8c;
+            font-weight: 400;
+            font-size: 3em;
+            border-bottom: 2px solid #0892ff;
+            font-style: italic;
+        }
+    }
+
+    .st-blog-item.main-item.row {
+        width: 100%;
+
+        .st-blog-summary {
+            min-height: 14em;
+            max-height: 22em;
+        }
+    }
+
+    .st-blog-item.row {
+        width: 46%;
+        min-width: 350px;
+        margin: 2%;
+        border: 1px solid lightgray;
+
+        div.blog-content {
+            padding: 2%;
+        }
+        /*img {
+            width: 100%;
+            height: 100%;
+        }*/
+        .img-holder {
+            padding: 3px;
+            height: 100%;
+            height: 100%;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
     }
 
     .st-blog-info {
         color: #a6a6a6;
         line-height: 21px;
-        margin-bottom: 25px;
         font-size: 14px;
 
         > span {
             margin-right: 20px;
         }
+
+        .date {
+            font-size: .8em;
+        }
     }
 
     .st-blog-post-header {
-        margin-bottom: 45px;
-        font-size: 35px;
+        margin-bottom: 20px;
+        font-size: 2em;
     }
 
     .st-blog-summary, .st-blog-content {
         letter-spacing: 1px;
-        line-height: 30px;
+        line-height: 3em;
+    }
+
+    .st-blog-summary {
+        min-height: 4em;
+        max-height: 8em;
+        overflow: hidden;
+        margin: 1em .5em;
+    }
+
+
+    .btn.st-blog-details {
+        color: #0892ff;
+        font-weight: 400;
+        border: 2px solid #0892ff;
+        border-radius: 0;
+
+        i {
+            margin-left: 25px;
+        }
+    }
+}
+
+.blog-post {
+    width: 100%;
+    margin: 0;
+    font-size: 10px;
+
+    .row {
+        width: 100%;
+        margin: 0;
+
+        .col {
+            margin: 0;
+        }
+    }
+
+    .img-holder {
+        width: 100%;
+        min-height: 50vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .blog-content {
+        margin: auto;
+        margin-top: 2%;
+        margin-bottom: 3%;
+        font-size: 1.3em;
+        line-height: 2em;
+
+        .blog-post-header {
+            font-size: 1.7rem;
+            font-weight: normal;
+        }
+    }
+
+    .blog-info {
+        margin-top: 1%;
+        margin-bottom: 1%;
+
+        div {
+            width: 50%;
+            margin: auto;
+        }
+
+        .author {
+            font-size: 2em;
+            color: #1b1b1b;
+        }
+
+        .date {
+            font-size: 1.4em;
+            color: #676767;
+        }
+    }
+
+    .comments-section {
+        margin: auto;
+
+        .comment-wrapper {
+            width: 100%;
+            margin: 10px 0;
+
+            .panel-body {
+                width: 50%;
+                padding: 10px;
+                border-radius: 5px;
+                min-height: 58px;
+                height: auto;
+
+                img {
+                    width: 20px;
+                    opacity: .4;
+                }
+
+                img:hover {
+                    opacity: 1;
+                }
+            }
+
+            .panel-body:hover {
+                border: 1px solid lightgray;
+            }
+        }
+
+        .add-comment-section {
+            width: 100%;
+            margin-left: 10px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            color: grey;
+            background-color: #fff;
+            font-weight: 600;
+            display: inline-block;
+            cursor: pointer;
+
+            textarea {
+                width: 50%;
+                border: 1px solid lightgray;
+            }
+
+            .btn-add-comment {
+                border: 1px solid lightgray;
+                color: gray;
+                font-weight: 600;
+                margin: -20px 0 0 10px;
+                
+            }
+        }
+
+    }
+}
+
+
+
+
+@media only screen and (max-width: 761px) {
+    .st-blog-container {
+        justify-content: center;
+
+        .st-blog-item.row {
+            width: 75%;
+        }
     }
 }

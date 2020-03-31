@@ -1,2 +1,2 @@
-﻿User-agent: *
-Disallow: /
+User-agent: *
+Sitemap: https://localhost:8877/sitemap

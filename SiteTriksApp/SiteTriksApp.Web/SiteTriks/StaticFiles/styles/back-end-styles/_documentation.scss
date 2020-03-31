@@ -1,0 +1,153 @@
+﻿.documentation-tree-wrapper {
+    .st.btn-secondary {
+        width: 100%;
+        height: 60px;
+        position: relative;
+        margin: 3% 0;
+        border-radius: 5px;
+        font-size: 1.2em;
+        background-color: #d8d8d8;
+        color: #535353;
+        border: none;
+
+        .selection-state {
+            width: 20px;
+            height: 20px;
+            display: block;
+            border-radius: 2px;
+            background-color: #ffffff;
+            position: absolute;
+            top: 20px;
+            left: 5%;
+            border: 2px solid #fff;
+        }
+    }
+
+    .st.btn-secondary.current {
+        background-color: #7d7d7d;
+        color: #fff;
+
+        .selection-state {
+            background-color: #3876cf;
+        }
+    }
+
+    .st.btn-secondary.done {
+        background-color: #d8d8d8;
+        color: #535353;
+
+        .selection-state {
+            background-color: #72c01c;
+        }
+    }
+
+    .type-container, .versions-container {
+        overflow-y: hidden;
+        max-height: 300px;
+    }
+
+    .st-select-all-checkbox{
+        display:none
+    }
+
+    .version-row, .type-row {
+        hr {
+            margin: 0;
+        }
+
+        padding: 0 5px 0 15px;
+        color: #535353;
+        font-weight: 600;
+        font-size: .9em;
+
+        > div {
+            line-height: 3em;
+
+            input {
+                margin-right: 15px;
+            }
+
+            .btn {
+                float: right;
+                background-color: black;
+                padding: 3px 0;
+                width: 45px;
+                height: 30px;
+                text-align: center;
+                border-radius: 4px;
+                color: white;
+
+                img {
+                    width: 33%;
+                }
+            }
+        }
+    }
+
+    .btn.create {
+        width: 80px;
+        background-color: #3876cf;
+        margin-right: 5px;
+        float: right;
+        color: #fff;
+        font-weight: 600;
+        font-size: 1em;
+        height: 27px;
+        line-height: 0px;
+
+        img {
+            width: 20%;
+            height: auto;
+        }
+    }
+    // Content
+    .content-container {
+        display: block;
+        line-height: 3em;
+        color: #656565;
+        font-size: 1.2em;
+
+        input {
+            height: 35px;
+            font-size: 19px;
+        }
+
+        input:disabled {
+            background-color: #d8d8d8;
+        }
+
+        .create.create-content {
+            width: 110px;
+            font-weight: 400;
+            font-size: .9em;
+            height: 40px;
+        }
+    }
+    // Topics
+    .btn.delete-topic, .btn.edit-topic {
+        background-color: #383838;
+        height: 32px;
+        width: 40px;
+    }
+
+    .topicType, .editType {
+        margin: 10px;
+
+        input,select {
+            width: 50%;
+            margin-right: 10px;
+            height: 32px;
+            margin-left: 5px;
+        }
+
+        button {
+            width: 110px;
+            font-weight: 400;
+            font-size: .9em;
+            height: 28px;
+            color: #fff;
+            background-color: #3876cf;
+            margin-top: -5px;
+        }
+    }
+}

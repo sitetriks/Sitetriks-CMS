@@ -52,16 +52,19 @@ export function navigation() {
     }
 
     function createSortablePage(text, id) {
-        let $li = $('<li></li>', {
-            'class': 'ui-state-default',
-            'data-identifier': id
-        });
-        $('<span></span>', {
-            class: 'ui-icon ui-icon-arrowthick-2-n-s'
-        }).appendTo($li);
+        if (text.trim() !== '' && text !== undefined) {
 
-        $li.append(text);
-        return $li;
+            let $li = $('<li></li>', {
+                'class': 'ui-state-default',
+                'data-identifier': id
+            });
+            $('<span></span>', {
+                class: 'ui-icon ui-icon-arrowthick-2-n-s'
+            }).appendTo($li);
+
+            $li.append(text);
+            return $li;
+        }
     }
 
     function generateSubLevelMenu(count) {
@@ -127,7 +130,7 @@ export function navigation() {
     }
 
     function buildSelectWithParentPages() {
-        Data.getJson({ url: getAllParentPagesUrl }).then(function (res) {
+        Data.getJson({ url: getAllParentPagesUrl }).then(function (res) { 
             let pages = res.pages;
 
             let $select = $('select[data-sub-level="1"]');
@@ -166,11 +169,11 @@ export function navigation() {
             if (isForParentPages && selectedPageIds.indexOf(pages[i].id) === -1) {
                 continue;
             }
-
-            $('<option>', {
-                value: pages[i].id,
-                text: pages[i].title
-            }).appendTo($select);
+            if (pages[i].title.trim() !== "" || pages[i].title !== undefined)
+                $('<option>', {
+                    value: pages[i].id,
+                    text: pages[i].title
+                }).appendTo($select);
         }
     }
 
@@ -178,6 +181,7 @@ export function navigation() {
         let selectedPageIds = [];
 
         $order.children().each(function () {
+
             selectedPageIds.push($(this).attr('data-identifier'));
         });
 
@@ -278,6 +282,8 @@ export function navigation() {
                 let $option = $multiselect.find('option[value="' + selectedOptions[i] + '"]').attr('selected', 'selected');
                 $order.append(createSortablePage($option.text(), selectedOptions[i]));
             }
+
+            $order.sortable({ opacity: 0.5 });
 
             $heightInput.val(content.height);
             $navigationTypeSelect.val(content.navigationType);

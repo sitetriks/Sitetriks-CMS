@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using SiteTriks.Data.Models.Users;
 using SiteTriks.Extensions;
 using SiteTriksApp.Web.Data;
@@ -18,17 +18,16 @@ namespace SiteTriksApp.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
-            this.Configuration = configuration;
-            this.Environment = environment;
+            this._config = configuration;
+            this._env = environment;
 
         }
 
-        public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<IISOptions>(options =>
@@ -36,7 +35,7 @@ namespace SiteTriksApp.Web
                 options.ForwardClientCertificate = false;
             });
 
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
             services.Configure<RouteOptions>(options =>
             {
@@ -52,10 +51,10 @@ namespace SiteTriksApp.Web
 
             // -----------------------------------------------------------------------------------------------------------
             // IoC
-            services.InitDatabase<SiteTriksAppContext>(this.Configuration, "DefaultConnection")
-                .InjectModules();
+            services.InitDatabase<SiteTriksAppContext>(this._config, "DefaultConnection")
+                .InjectModules(this._env);
 
-            services.AddSingleton<IConfiguration>(this.Configuration);
+            services.AddSingleton<IConfiguration>(this._config);
 
             services.AddDynamicViews();
 
@@ -69,11 +68,14 @@ namespace SiteTriksApp.Web
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = new PathString("/sitetriks/login/");
-                options.Cookie.Expiration = TimeSpan.FromHours(4);
+                options.ExpireTimeSpan = TimeSpan.FromHours(4);
 
             });
 
             services.AddGZipConpression();
+
+            //HTML Minifier;
+            //services.WebMarkUpMinSiteTriksConfiguration();
 
             services.AddSignalR(options =>
             {
@@ -81,7 +83,7 @@ namespace SiteTriksApp.Web
                 options.KeepAliveInterval = TimeSpan.FromMinutes(1);
             });
 
-            var storageProviderConfig = this.Configuration.GetSection("SiteTriks").GetSection("StorageProvider");
+            var storageProviderConfig = this._config.GetSection("SiteTriks").GetSection("StorageProvider");
             switch (storageProviderConfig.GetSection("Name").Value)
             {
                 case "azure":
@@ -102,9 +104,9 @@ namespace SiteTriksApp.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (this._env.IsDevelopment())
             {
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
@@ -115,13 +117,7 @@ namespace SiteTriksApp.Web
             }
 
             app.UseHttpsRedirection();
-            app.UseSiteTriks(env, this.Configuration);
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "SiteTriks/StaticFiles")),
-                RequestPath = "/SiteTriks/StaticFiles"
-            });
+            app.UseSiteTriks(this._env, this._config);
 
             app.UseSession();
 

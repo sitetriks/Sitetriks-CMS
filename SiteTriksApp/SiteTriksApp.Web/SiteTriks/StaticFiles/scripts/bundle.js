@@ -4,11 +4,9 @@
 import '../lib/bootstrap/dist/css/bootstrap.css';
 import '../lib/custom/slick/slick.css';
 import '../lib/custom/slick/slick-theme.css';
-import '../css/toggle-menu.css';
+//import '../css/toggle-menu.css';
 import '../css/multi-level-dropdown.css';
-//import '../wwwroot/css/home-page.css';
 import '../lib/custom/jquery-ui/jquery-ui.css';
-import '../lib/custom/tinymce/plugins/codesample/css/prism.css';
 import '../lib/custom/font-awesome/font-awesome.min.css';
 import '../fonts/navigation-icons/css/Glyphter.css';
 
@@ -22,6 +20,6 @@ import '../styles/site.scss';
 import 'bootstrap';
 import 'jquery-ui';
 
-import '../lib/custom/tinymce/plugins/codesample/prism.js';
+
 import '../lib/custom/code-prettify/src/run_prettify.js';
 import './frontend-layout-scripts.js';

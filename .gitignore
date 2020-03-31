@@ -272,3 +272,4 @@ paket-files
 **/SiteTriks/StaticFiles/css/scss/**/*.sitetriks.css
 **/SiteTriks/StaticFiles/css/scss/**/*.map
 **/SiteTriks/StaticFiles/js/**/*
+/nupkgs

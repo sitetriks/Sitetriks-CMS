@@ -34,6 +34,8 @@ export function subscriptionWidget() {
         let flag = true;
         let $name = $('.subscription-widget input[name="name"]');
         let $email = $('.subscription-widget input[name="email"]');
+        let $company = $('.subscription-widget input[name="company"]');
+        let $country = $('.subscription-widget input[name="country"]');
 
         if (!Validator.validate($email, 'Must enter valid email', function (val) {
             return Validator.validateEmail(val);
@@ -49,6 +51,8 @@ export function subscriptionWidget() {
 
         let groupCheckboxes = $('.subscription-widget > .group-checkboxes').find('.subscription-radio-group');
 
+        console.log(groupCheckboxes);
+
         if (groupCheckboxes.length == 0) {
             return;
         }
@@ -56,21 +60,21 @@ export function subscriptionWidget() {
         for (let i = 0; i < groupCheckboxes.length; i++) {
             let $currItem = $(groupCheckboxes[i]);
             let inputOfItem = $currItem.find(`input[name="${$currItem.data('groupname')}"]:checked`)
+            console.log(inputOfItem);
             console.log('input', $(inputOfItem).val());
 
             if (!inputOfItem.length > 0) {
                 $currItem.find('.validation-output').text('Please check one of the options.')
-            }
-            if (inputOfItem.val() <= 0){
-                Notifier.createAlert({ containerId: '.subscription-form-wrapper', message: 'You faild to subscribed', status: 'danger', seconds: 5 });
-                flag = false;
-            }
+                flag = false
+            }         
         }
        
         if (flag) {
             var subscriptionModel = {
                 name: $name.val(),
                 email: $email.val(),
+                company: $company.val(),
+                country: $country.val(),
                 groupIds: getGroupIds()
             }
 

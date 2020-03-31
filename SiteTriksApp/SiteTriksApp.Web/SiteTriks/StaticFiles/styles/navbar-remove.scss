@@ -1,0 +1,30 @@
+﻿.st-body-content .fixed-top-2 {
+    top: 0;
+}
+
+.st-body-content .fixed-top-2.layout-builder-nav {
+    z-index: 1;
+}
+
+.sitetriks-body .navigation {
+    display: none;
+}
+
+.sitetriks-body .side-navigation-control {
+    display: none;
+}
+
+.st-body-content .backend-wrapper {
+    margin: 150px 50px 50px 50px;
+    padding-top: 10px;
+}
+
+.side-nav-collapse {
+    padding-top: 85px;
+    /* should not exist in these pages */
+    display: none;
+}
+
+.side-nav-collapse.small {
+    padding-top: 56px;
+}

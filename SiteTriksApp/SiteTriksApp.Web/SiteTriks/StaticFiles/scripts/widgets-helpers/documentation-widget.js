@@ -12,6 +12,7 @@ export function documentationModule() {
     let $docMenu = $wrapper.find('.docs-menu');
     let $btnNext = $wrapper.find('.next-doc').hide();
     let $btnPrev = $wrapper.find('.prev-doc').hide();
+    let $btnExport = $wrapper.find('.export-pdf');
     let $versions = $wrapper.find('.documentation-versions');
     let $topicDetails = $wrapper.find('.topic-details');
     let $inputSearch = $wrapper.find('.documentation-search');
@@ -41,6 +42,7 @@ export function documentationModule() {
         $btnNext.on('click', paging);
         $btnPrev.on('click', paging);
         $versions.on('change', loadVersion);
+        $btnExport.on('click', exportDoc);
         HashRouter.onChange('docs', onRouteUpdate, 'documentationWidget');
 
         // autocomplete search
@@ -94,6 +96,7 @@ export function documentationModule() {
                 prettify();
             }
         });
+
     }
 
     function toggleDocs(ev) {
@@ -167,6 +170,28 @@ export function documentationModule() {
         if (id) {
             HashRouter.set('docs', currentVersion ? [id, currentVersion] : [id]);
         }
+    }
+
+    function exportDoc() {
+        return Data.postJson({ url: '/sitetriks/documentation/exportpdf', data: { id: currentId, version: currentVersion } }).then(function (res) {
+
+            if (!res.success) {
+                console.log(res.message);
+            }
+
+            var binaryString = window.atob(res.file);
+            var binaryLen = binaryString.length;
+            var bytes = new Uint8Array(binaryLen);
+            for (var i = 0; i < binaryLen; i++) {
+                var ascii = binaryString.charCodeAt(i);
+                bytes[i] = ascii;
+            }
+            let blob = new Blob([bytes], { type: "application/pdf" });
+            let link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `${res.topicName}.pdf`;
+            link.click();
+        });
     }
 
     const SUGGESTED_CLASS = 'suggested';
@@ -245,7 +270,6 @@ export function documentationModule() {
         $searchResults.html('');
         $inputSearch.val('');
     }
-
 
     function loadVersion(ev) {
         let version = $versions.val();

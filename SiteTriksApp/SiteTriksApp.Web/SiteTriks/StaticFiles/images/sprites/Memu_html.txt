@@ -1,5 +1,0 @@
-<div class='sprite Decrease'></div>
-<div class='sprite Decreasewindow'></div>
-<div class='sprite Expandwindow'></div>
-<div class='sprite Expand'></div>
-<div class='sprite leaf'></div>

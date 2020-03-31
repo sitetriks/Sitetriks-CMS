@@ -50,6 +50,7 @@ module.exports = {
         'sitetriks/dynamic-views': './SiteTriks/StaticFiles/scripts/sitetriks/dynamic-views.js',
         'sitetriks/layout': './SiteTriks/StaticFiles/scripts/sitetriks/layout.js',
         'sitetriks/permissions': './SiteTriks/StaticFiles/scripts/sitetriks/permissions.js',
+        'sitetriks/side-navigation-control': './SiteTriks/StaticFiles/scripts/side-navigation-control.js',
 
         //Widgets
         'calculator':'./SiteTriks/StaticFiles/scripts/fintech/calculator.js',
@@ -61,6 +62,25 @@ module.exports = {
         'scss/front-end-entry': './SiteTriks/StaticFiles/styles/front-end-entry.scss',
         'scss/back-end-entry': './SiteTriks/StaticFiles/styles/back-end-entry.scss',
         'scss/page-builder-preview-entry': './SiteTriks/StaticFiles/styles/page-builder-preview-entry.scss',
+
+        //Separate SCSS not yet categorized
+        'scss/ecommerce': './SiteTriks/StaticFiles/styles/ecommerce.scss',
+        'scss/extensions': './SiteTriks/StaticFiles/styles/extensions.scss',
+        'scss/file-handler': './SiteTriks/StaticFiles/styles/file-handler.scss',
+        'scss/forum': './SiteTriks/StaticFiles/styles/forum.scss',
+        'scss/grid': './SiteTriks/StaticFiles/styles/grid.scss',
+        'scss/st-grid': './SiteTriks/StaticFiles/styles/st-grid.scss',
+        'scss/layout': './SiteTriks/StaticFiles/styles/layout.scss',
+        'scss/progress-bar': './SiteTriks/StaticFiles/styles/progress-bar.scss',
+        'scss/navbar-remove': './SiteTriks/StaticFiles/styles/navbar-remove.scss',
+        'scss/page-content-edit': './SiteTriks/StaticFiles/styles/page-content-edit.scss',
+
+        'scss/sitetriks/st-lg-preview': './SiteTriks/StaticFiles/styles/sitetriks/st-lg-preview.scss',
+        'scss/sitetriks/st-md-preview': './SiteTriks/StaticFiles/styles/sitetriks/st-md-preview.scss',
+        'scss/sitetriks/st-sm-preview': './SiteTriks/StaticFiles/styles/sitetriks/st-sm-preview.scss',
+        'scss/sitetriks/st-xs-preview': './SiteTriks/StaticFiles/styles/sitetriks/st-xs-preview.scss',
+
+
 
         'bundle': './SiteTriks/StaticFiles/scripts/bundle.js'
     },

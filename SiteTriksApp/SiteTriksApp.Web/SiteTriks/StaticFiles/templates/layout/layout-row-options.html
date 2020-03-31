@@ -23,18 +23,59 @@
 
     <div>
         <label>
-           <span>Css Class</span>
+            <span>Css Class</span>
             <input class="input-cssClass" value="{{cssClass}}" />
         </label>
     </div>
 
+    <div>
+        <label>
+            <span class="pickr-label">Background color</span>
+            <span class="background-colorpicker-btn"></span>
+            <input class="background-colorpicker" value="{{backgroundColorPicker}}" hidden />
+
+        </label>
+    </div>
+    <div>
+        <label>
+            <span class="pickr-label">Font color</span>
+            <span class="font-colorpicker-btn"></span>
+            <input class="font-colorpicker" value="{{fontColorPicker}}" hidden />
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Font Size</span>
+            <input placeholder="use px or em/rem" class="font-size" value="{{fontSize}}" />
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Margin</span>
+            <input placeholder="use px or %" class="margin-style" value="{{marginStyle}}" />
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Padding</span>
+            <input placeholder="use px or %" class="padding-style" value="{{paddingStyle}}" />
+        </label>
+    </div>
+
+    <div style="visibility: hidden;">
+        <label>
+            <span>Inline styles</span>
+            <input class="input-inlineStyles" value="{{inlineStyles}}" />
+        </label>
+    </div>
+
     {{#each columns}}
-        <a class="select-column btn btn-default" data-rowIndex="{{../rowIndex}}" data-colIndex="{{@index}}">
-            {{@index}}
-            {{#unless size}}
-                <span class="text-danger fa fa-times"></span>
-            {{/unless}}
-        </a>
+    <a class="select-column btn btn-default" data-rowIndex="{{../rowIndex}}" data-colIndex="{{@index}}">
+        {{@index}}
+        {{#unless size}}
+        <span class="text-danger fa fa-times"></span>
+        {{/unless}}
+    </a>
     {{/each}}
 
     <hr />

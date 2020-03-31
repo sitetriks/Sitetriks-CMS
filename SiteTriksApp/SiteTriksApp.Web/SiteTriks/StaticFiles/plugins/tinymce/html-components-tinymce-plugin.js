@@ -1,5 +1,5 @@
 ﻿/* globals tinymce */
-
+"use strict";
 tinymce.PluginManager.add('htmlBlocks', function (editor, url) {    
     function createButtons(data) {
         console.log("tinymce");
@@ -36,9 +36,9 @@ tinymce.PluginManager.add('htmlBlocks', function (editor, url) {
         return title;
     }
 
-    editor.addMenuItem('htmlBlocks', {
+  editor.ui.registry.addMenuItem('htmlBlocks', {
         text: 'Html Blocks',
-        context: 'insert',
+       
         onclick: function () {
             $.getJSON('/sitetriks/htmlblocks/getalltitles')
                 .then(function (data) {
@@ -49,8 +49,7 @@ tinymce.PluginManager.add('htmlBlocks', function (editor, url) {
 
                     editor.windowManager.open({
                         title: 'Html Blocks Plugin',
-                        width: 800,
-                        height: 600,
+                        size:'normal',
                         id: 'html-blocks-window',
                         body: bodyArray,
                         buttons: [{
