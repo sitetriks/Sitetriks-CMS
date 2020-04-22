@@ -1,5 +1,5 @@
 ﻿import 'bootstrap';
-import 'bootstrap-multiselect';
+import 'bootstrap-select';
 
 var Multiselect = (function () {
     function setup(id, onChangeCallback) {
@@ -7,12 +7,12 @@ var Multiselect = (function () {
     }
 
     function setupElement($element, callback) {
-        $element.multiselect({
+        $element.selectpicker({
             multiple: true,
             height: '105px',
             header: '',
             noneSelectedText: 'None',
-            numberDisplayed: '',
+            selectedTextFormat: 'count > 3',
             selectedText: function (numChecked, numTotal, checkedItems) {
                 return numChecked + ' of ' + numTotal + ' checked';
             },
@@ -23,16 +23,15 @@ var Multiselect = (function () {
                 my: 'left top',
                 at: 'left bottom'
             },
-            onChange: callback
         });
     }
 
     function refresh(id) {
-        $('#' + id).multiselect('refresh');
+        $('#' + id).selectpicker('refresh');
     }
 
     function destroy(id) {
-        $('#' + id).multiselect('destroy');
+        $('#' + id).selectpicker('destroy');
     }
 
     return {
