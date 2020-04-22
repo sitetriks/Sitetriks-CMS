@@ -12,6 +12,7 @@ import '../fonts/navigation-icons/css/Glyphter.css';
 
 //import '../styles/back-end-entry.scss';
 import '../styles/front-end-entry.scss';
+import '../../../Assets/styles/stw-front-end-entry.scss';
 import '../styles/site.scss';
 
 //-----------------------------------------------------------------------------

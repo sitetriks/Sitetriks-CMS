@@ -16,6 +16,7 @@ export function initLibraries(grid, mediator, logger) {
     let $btnDeleteLibrary = $('#btn-delete-lib');
     let $deletePopup = $('.delete-popup-wrapper');
     let $removePopup = $('.delete-popup-wrapper .fa-times');
+    let $removeNoDelete = $('.no-delete .fa-times');
     let $cancelDeleteButton = $('#cancel-delete');
     let $deleteLibraryButton = $('#delete-library');
 
@@ -103,18 +104,25 @@ export function initLibraries(grid, mediator, logger) {
     }
 
     function displayDeleteLibraryPopup(ev) {
-        $deletePopup.css('display', 'block');
         let $selectedLib = $('#libs option:selected').html();
+        if ($selectedLib === "Default") {
+            $('.no-delete').css('display', 'block');
+        } else {
+            $deletePopup.css('display', 'block');
 
-        $('.library-name').html('');
+            $('.library-name').html('');
 
-        $('.library-name').html($selectedLib);
+            $('.library-name').html($selectedLib);
+        }
+
     }
 
     function hideDeleteLibraryPopup(ev) {
         $deletePopup.css('display', 'none');
     }
-
+    function hideNoneDelete(ev) {
+        $('.no-delete').css('display', 'none');
+    }
 
     function deleteLibrary(ev) {
         let id = $('#libs').val();
@@ -151,6 +159,7 @@ export function initLibraries(grid, mediator, logger) {
         $btnDeleteLibrary.on('click', displayDeleteLibraryPopup);
         $deleteLibraryButton.on('click', deleteLibrary);
         $removePopup.on('click', hideDeleteLibraryPopup);
+        $removeNoDelete.on('click', hideNoneDelete)
         $cancelDeleteButton.on('click', hideDeleteLibraryPopup);
         $btnEditLibrary.on('click', editLibrary);
         $modal.on('show.bs.modal hidden.bs.modal', cleanUp);

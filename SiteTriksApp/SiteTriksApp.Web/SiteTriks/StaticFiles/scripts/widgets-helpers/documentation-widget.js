@@ -95,8 +95,12 @@ export function documentationModule() {
             if ($('.prettyprint').length > 0) {
                 prettify();
             }
-        });
-
+        }).then(Data.getJson({ url: `/sitetriks/documentation/gettopicname?topicId=${currentId}` }).then(function (res) {
+            if (res.success) {
+                $('head').find('title').html(res.topicName);
+            }
+            console.log('res', res);
+        }));
     }
 
     function toggleDocs(ev) {

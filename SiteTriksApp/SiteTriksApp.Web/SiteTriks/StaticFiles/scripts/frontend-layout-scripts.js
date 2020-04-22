@@ -10,8 +10,22 @@ import { allNewsWidget } from './widgets-helpers/all-news.js';
 import { licenseWidget } from './widgets-helpers/licenses-widgets.js';
 import { subscriptionWidget } from './widgets-helpers/subscription.js';
 import { socialShare } from './widgets-helpers/social-share.js';
-import { tabsWidget } from './widgets-helpers/tabs-widget';
-import { blogFullPageWidget } from './widgets-helpers/blog-full-page-widget';
+import { tabsWidget } from './widgets-helpers/tabs-widget.js';
+import { stwNavigation } from '../../../Assets/scripts/website/stw-navigation-widget.js';
+import { stwVideoModal } from '../../../Assets/scripts/website/stw-navigation-widget.js';
+//import { stwGetStartedModal } from './website/stw-navigation-widget.js';
+import { stwWidgetPresentationMenu } from '../../../Assets/scripts/website/widget-presentation-menu.js';
+import { stwScheduleDemoWidget } from './widgets-helpers/schedule-demo.js';
+import { stwContactUsTemplate } from '../../../Assets/scripts/website/contact-us-template.js';
+import { mobileMenuFunctionality } from '../../../Assets/scripts/website/stw-hp-custom.js';
+import { termsAndConditions } from '../../../Assets/scripts/website/stw-hp-custom.js';
+import { homepageCustomization } from '../../../Assets/scripts/website/stw-hp-custom.js';
+import { stwLicenseApplication } from './widgets-helpers/license-application.js';
+import { stwSupport } from '../../../Assets/scripts/website/stw-support.js';
+import { stwSubscriptionWidget } from '../../../Assets/scripts/website/stw-subscription-widget';
+//import { stwWoorankMetadata } from '../../../Assets/scripts/website/stw-woorank-metadata';
+import { stwLoadDropdown } from '../../../Assets/scripts/website/stw-load-role-country-dropdowns.js';
+import { stwCanonicalUrl } from '../../../Assets/scripts/website/stw-canonical-url.js';
 
 function treeItemsSlide() {
     $('body').on('click', '.more-items', function (event, callback, target) {
@@ -263,15 +277,32 @@ $(document).ready(function () {
     forumWidget();
     allNewsWidget();
     licenseWidget();
-    subscriptionWidget();
-	contactFormWidget();
+    subscriptionWidget.init();
+    contactFormWidget();
     socialShare();
+    stwNavigation();
     tabsWidget();
-    blogFullPageWidget();
+    stwWidgetPresentationMenu();
+    stwScheduleDemoWidget();
+    stwVideoModal();
+    //  stwGetStartedModal();
+    mobileMenuFunctionality.toggleDetailedMenu();
+    mobileMenuFunctionality.enterpriseFeaturesMenu();
+    stwContactUsTemplate();
+    stwLicenseApplication();
+    termsAndConditions.toggleContent();
+    stwSupport();
+	stwSubscriptionWidget();
+	//stwWoorankMetadata();
+	stwLoadDropdown();
+	stwCanonicalUrl();
+    //$(document).ready(function () {
+    //    homepageCustomization.setNiceScroll();
+    //})
 
     $(document).trigger('initCarousel');
     prettyPrintInit();
-    
+
     //gallery
     $('body').on('click', 'img.display-image, img.gallery-image', function (ev) {
         let $target = $(ev.target);

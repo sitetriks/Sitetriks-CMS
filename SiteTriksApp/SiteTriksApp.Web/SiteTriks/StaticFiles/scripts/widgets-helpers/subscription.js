@@ -2,11 +2,21 @@
 import { Validator } from '../common/validator.js';
 import { Notifier } from '../common/notifier.js';
 
-export function subscriptionWidget() {  
+let subscriptionWidget = (function () {
+    console.log('subscriptionWidget');
+
+    let formUlr = '/sitetriks/marketingEmailGroups/subscribe';
+    let emailValidationMessage = 'Please, enter valid email.';
+    let nameValidationMessage = 'Please, enter a name with at least 3 symbols.';
+
+    let subscriptionWidgetContainerClass = '.subscription-widget';
+    let checkBoxesContainerClass = '.group-checkboxes';
+    let subscriptionRadioGroupClass = '.subscription-radio-group';
+    let subscriptionFormWrapperClass = '.subscription-form-wrapper';
 
     function getGroupIds() {
         let groupIds = [];
-        let groupCheckboxes = $('.subscription-widget > .group-checkboxes').find('.subscription-radio-group');
+        let groupCheckboxes = $(`${subscriptionWidgetContainerClass} > ${checkBoxesContainerClass}`).find(subscriptionRadioGroupClass);
 
         if (groupCheckboxes.length == 0) {
             return;
@@ -14,12 +24,12 @@ export function subscriptionWidget() {
 
         for (let i = 0; i < groupCheckboxes.length; i++) {
             let $currItem = $(groupCheckboxes[i]);
-            console.log($currItem)
-            console.log($currItem.data('groupname'));
+
             let inputOfItem = $currItem.find(`input[name="${$currItem.data('groupname')}"]:checked`)
-            console.log('input', $(inputOfItem).val());
 
             let value = $(inputOfItem).val();
+
+            console.log('value', value);
 
             if (value == 1) {
                 groupIds.push($currItem.data('id'));
@@ -29,68 +39,79 @@ export function subscriptionWidget() {
         return groupIds;
     }
 
-    $('.subscription-widget').on('click', '.subscription-submit', function (e) {
-        getGroupIds();
-        let flag = true;
-        let $name = $('.subscription-widget input[name="name"]');
-        let $email = $('.subscription-widget input[name="email"]');
-        let $company = $('.subscription-widget input[name="company"]');
-        let $country = $('.subscription-widget input[name="country"]');
+    function getInputByName(name) {
+        let $item = $(subscriptionWidgetContainerClass).find(`input[name="${name}"]`)
 
-        if (!Validator.validate($email, 'Must enter valid email', function (val) {
-            return Validator.validateEmail(val);
-        })) {
-            flag = false;
-        }
+        return $item;
+    }
 
-        if (!Validator.validate($name, 'Name must be at least 3 letters.', function (val) {
-            return Validator.hasMinimumLength(val.trim(), 3) && Validator.isStartingWithLetter(val.trim());
-        })) {
-            flag = false;
-        }
+    function init() {
+        $('.subscription-widget').on('click', '.subscription-submit', function (e) {
+            getGroupIds();
+            let flag = true;
+            let $name = getInputByName('name');
+            let $email = getInputByName('email');
+            let $company = getInputByName('company');
+            let $country = getInputByName('country');
 
-        let groupCheckboxes = $('.subscription-widget > .group-checkboxes').find('.subscription-radio-group');
-
-        console.log(groupCheckboxes);
-
-        if (groupCheckboxes.length == 0) {
-            return;
-        }
-
-        for (let i = 0; i < groupCheckboxes.length; i++) {
-            let $currItem = $(groupCheckboxes[i]);
-            let inputOfItem = $currItem.find(`input[name="${$currItem.data('groupname')}"]:checked`)
-            console.log(inputOfItem);
-            console.log('input', $(inputOfItem).val());
-
-            if (!inputOfItem.length > 0) {
-                $currItem.find('.validation-output').text('Please check one of the options.')
-                flag = false
-            }         
-        }
-       
-        if (flag) {
-            var subscriptionModel = {
-                name: $name.val(),
-                email: $email.val(),
-                company: $company.val(),
-                country: $country.val(),
-                groupIds: getGroupIds()
+            if (!Validator.validate($email, nameValidationMessage, function (val) {
+                return Validator.validateEmail(val);
+            })) {
+                flag = false;
             }
 
-            console.log('subscription-model', subscriptionModel);
+            if (!Validator.validate($name, emailValidationMessage, function (val) {
+                return Validator.hasMinimumLength(val.trim(), 3) && Validator.isStartingWithLetter(val.trim());
+            })) {
+                flag = false;
+            }
 
+            let groupCheckboxes = $(`${subscriptionWidgetContainerClass} > ${checkBoxesContainerClass}`).find(subscriptionRadioGroupClass);
 
-            Data.postJson({ url: '/sitetriks/marketingEmailGroups/subscribe', data: subscriptionModel }).then(function (res) {
-                if (res.success) {
-                    Notifier.createAlert({ containerId: '.subscription-form-wrapper', message: res.message, status: (res.success ? 'info' : 'warning'), seconds: 5 });
-                    $name.val('');
-                    $email.val('');
-                } else {
-                    Notifier.createAlert({ containerId: '.subscription-form-wrapper', message: res.message, status: 'danger', seconds: 5 });
+            if (groupCheckboxes.length == 0) {
+                return;
+            }
+
+            for (let i = 0; i < groupCheckboxes.length; i++) {
+                let $currItem = $(groupCheckboxes[i]);
+                let inputOfItem = $currItem.find(`input[name="${$currItem.data('groupname')}"]:checked`)
+
+                if (!inputOfItem.length > 0) {
+                    $currItem.find('.validation-output').text('Please check one of the options.')
+                    flag = false
                 }
-              
-            }, Data.defaultError);
-        }
-    });    
-}
+            }
+
+            if (flag) {
+                var subscriptionModel = {
+                    name: $name.val(),
+                    email: $email.val(),
+                    company: $company.val(),
+                    country: $country.val(),
+                    groupIds: getGroupIds()
+                }
+
+                console.log('subscription-model', subscriptionModel);
+
+
+                Data.postJson({ url: formUlr, data: subscriptionModel }).then(function (res) {
+                    if (res.success) {
+                        Notifier.createAlert({ containerId: subscriptionFormWrapperClass, message: res.message, status: (res.success ? 'info' : 'warning'), seconds: 5 });
+                        $name.val('');
+                        $email.val('');
+                    } else {
+                        Notifier.createAlert({ containerId: subscriptionFormWrapperClass, message: res.message, status: 'danger', seconds: 5 });
+                    }
+
+                }, Data.defaultError);
+            }
+        });
+    }
+
+    return {
+        getGroupIds,
+        init
+    }
+})();
+
+export { subscriptionWidget }

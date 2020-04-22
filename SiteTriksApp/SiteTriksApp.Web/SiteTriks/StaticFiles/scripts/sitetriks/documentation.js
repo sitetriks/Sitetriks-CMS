@@ -10,6 +10,9 @@ import { Notifier } from '../common/notifier.js';
 import { _Grid } from '../modules/grid.js';
 
 
+
+
+
 function createDocumentation() {
     let $parentInput = $('#parent');
     let $form = $('#create-topic-form');
@@ -212,7 +215,7 @@ function editDocumentation(ev) {
             Loader.show('#fff');
 
             Data.postJson({ url: '/sitetriks/documentation/deleteversion', data: { id: versionId } }).then(function (res) {
-
+                console.log(res);
                 if (res.success) {
                     $(versionDropDownSelected).remove();
                     loadVersion($(versionDropDownSelected).val());
@@ -337,6 +340,7 @@ function documentationInit() {
     let $versionRow = $('.version-row');
     let versionNames = [];
     let versionIds = [];
+
     let docButton = $('.document-button');
     let versionButton = $('.versions-button');
     let topicButton = $('.topic-button');
@@ -345,12 +349,9 @@ function documentationInit() {
 
     bindEvents();
 
-
-
-
     //Documentation Type functions
     function createType() {
-        $('.dialog-ovelay').remove()
+
         if ($('.createInput').length < 1) {
             let $div = $('<div/>', {
                 'class': 'docType',
@@ -360,55 +361,30 @@ function documentationInit() {
 
             }).appendTo($div);
 
-
-            $('<button/>', {
-                'class': 'btn btn-default cancel-type',
-                text: 'Cancel',
-            }).appendTo($div);
-
             $('<button/>', {
                 'class': 'btn btn-default save-type',
                 text: 'Save',
             }).appendTo($div);
 
-
-
             $row.append($div)
 
             $('.save-type').on('click', saveType);
-            $('.cancel-type').on('click', cancelCreateType);
         }
     }
 
     function editType() {
-        $('.dialog-ovelay').remove()
-        let editInput = $('.editInput');
-        if (editInput.length < 1) {
-            let $target = $(this);
-            let parent = $($target).parent();
-            let typename = $target.siblings('span').text();
-            $target.siblings('span').remove();
-            $target.siblings('.delete-type').remove();
-            $target.siblings('input').prop('type', 'text');
-            $target.siblings('input').prop('value', typename);
-            $target.siblings('input').removeClass('doc-checkbox').addClass('editInput');
-            $target.text('Save');
-            $target.removeClass('edit-type').addClass('save-edit');
 
-            $('<button/>', {
-                'class': 'btn btn-default cancelEdit-type',
-                text: 'Cancel',
-            }).prependTo(parent);
+        let $target = $(this);
+        let typename = $target.siblings('span').text();
+        $target.siblings('span').remove();
+        $target.siblings('.delete-type').remove();
+        $target.siblings('input').prop('type', 'text');
+        $target.siblings('input').prop('value', typename);
+        $target.siblings('input').removeClass('doc-checkbox').addClass('editInput');
+        $target.text('Save');
+        $target.removeClass('edit-type').addClass('save-edit');
 
-
-
-            $('.save-edit').on('click', saveEditedType);
-            $('.cancelEdit-type').on('click', cancelEditType);
-
-        } else {
-            Notifier.createAlert(Notifier.createAlert({ containerId: '#alerts', title: '', message: 'Plese finish editing the previously selected type', status: 'warning' }));
-        }
-
+        $('.save-edit').on('click', saveEditedType);
 
     }
 
@@ -421,13 +397,8 @@ function documentationInit() {
             let data = new FormData()
             data.append('name', name);
             Data.postForm({ url: '/sitetriks/documentation/createType?', formData: data }).then(function (res) {
-                if (res.message == undefined) {
-                    $typeInput.parent().remove();
-                    $row.append($(res));
-                } else {
-                    Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
-                }
-
+                $typeInput.parent().remove();
+                $row.append($(res));
             });
 
 
@@ -436,68 +407,50 @@ function documentationInit() {
         }
     }
 
-    function cancelCreateType() {
-        let ev = $(this).parent();
-        ev.remove();
-    }
-
     function saveEditedType() {
         let $typeInput = $('.editInput');
         let target = $(this).parent();
         let id = target.attr('value');
         let data = new FormData();
-        let stringInput = $typeInput.val();
 
-        if (stringInput !== undefined && stringInput.trim() !== "") {
-            if (/^[a-zA-Z- ]*$/.test(stringInput) === true) {
-                let name = $typeInput.val();
-                data.append('name', name);
-                data.append('id', id);
+        if ($typeInput.val() !== undefined && $typeInput.val().trim() !== "") {
 
-                Data.postForm({ url: '/sitetriks/documentation/editType', formData: data }).then(function (res) {
-                    if (res.message == undefined) {
-                        $typeInput.siblings('.save-edit').remove();
-                        $typeInput.remove();
-                        target.append(res);
-                    } else {
-                        Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
-                    }
+            let name = $typeInput.val();
+            data.append('name', name);
+            data.append('id', id);
+
+            Data.postForm({ url: '/sitetriks/documentation/editType', formData: data }).then(function (res) {
+                if (res.message == undefined) {
+                    $typeInput.siblings('.save-edit').remove();
+                    $typeInput.remove();
+                    target.append(res);
+                } else {
+                    Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
+                }
 
 
-                });
-            } else {
-                Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'The field you want to add must contain only letters or/and "-" ', status: 'danger' });
-            }
-
+            });
 
         } else {
             Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'The field you want to add is empty', status: 'danger' });
         }
     }
 
-    function cancelEditType() {
-        let target = $(this).parent();
-        let id = target.attr('value');
-        target.remove();
-        Data.getJson({ url: "/sitetriks/documentation/getType?id=" + id }).then(function (res) {
-            $('.type-row').append(res);
-        });
-    }
-
     function deleteType() {
         let target = $(this).parent();
-        let name = $(this).siblings('span').text()
         let id;
-        $('.dialog-ovelay').remove()
+
         if (target !== undefined) {
             if (target.attr('value') !== undefined) {
-                id = target.attr('value');
-                let title = 'Deleteing this type will remove all version and topics connected to it.';
-                let msg = `Are you sure you want to delete ${name}?`;
-                let selector = '.confirm';
-                let url = '/sitetriks/documentation/deleteType?id=';
 
-                confirm(title, msg, selector, url, id, target);
+                id = target.attr('value');
+                Data.postJson({ url: '/sitetriks/documentation/deleteType?id=' + id }).then(function (res) {
+                    if (res.success == true) {
+                        $(target).remove();
+                    } else {
+                        Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
+                    }
+                });
 
             }
 
@@ -509,17 +462,17 @@ function documentationInit() {
     //Version Functions
 
     function loadVersions() {
-        $('.dialog-ovelay').remove()
+
         let docCheckbox = $('input:checkbox[class=doc-checkbox]:checked');
 
 
         if (docButton.val() === undefined || docButton.val().trim() === "") {
             $('.versions-button').text("Versions");
-            Notifier.createAlert({ containerId: '#alerts', title: '', message: 'Plese select a documentation type', status: 'warning' });
+            Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'Plese select a documentation type', status: 'danger' });
         } else {
 
             if (docCheckbox.length < 1) {
-                Notifier.createAlert({ containerId: '#alerts', title: '', message: 'Plese select a documentation type', status: 'warning' });
+                Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'Plese select a documentation type', status: 'danger' });
             } else {
                 versionButton.removeClass('done').addClass('current');
                 docButton.removeClass('current').addClass('done')
@@ -564,11 +517,6 @@ function documentationInit() {
             }).appendTo($div);
 
             $('<button/>', {
-                'class': 'btn btn-default cancel-version',
-                text: 'Cancel',
-            }).appendTo($div);
-
-            $('<button/>', {
                 'class': 'btn btn-default save-versionType',
                 text: 'Save',
             }).appendTo($div);
@@ -576,7 +524,6 @@ function documentationInit() {
             $versionRow.append($div)
 
             $('.save-versionType').on('click', saveVersion);
-            $('.cancel-version').on('click', cancelCreateVersion);
         }
 
     }
@@ -584,12 +531,10 @@ function documentationInit() {
     function saveVersion() {
 
         let $versionInput = $('.createVersionInput');
-
         if ($versionInput.val() !== undefined && $versionInput.val().trim() !== "") {
+            if (Validator.isDecimalNumber($versionInput.val())) {
 
-            if (Validator.isNumber($versionInput.val())) {
-
-                let version = parseFloat($versionInput.val());
+                let version = $versionInput.val();
                 let data = new FormData()
                 let $documentButton = $('.document-button');
                 let id = $documentButton.val();
@@ -611,37 +556,19 @@ function documentationInit() {
         }
     }
 
-    function cancelCreateVersion() {
-        let ev = $(this).parent();
-        ev.remove();
-    }
-
     function editVersion() {
-        let versionInput = $('.editVersionInput')
-        if (versionInput.length < 1) {
-            let $target = $(this);
-            let parent = $($target.parent());
-            let version = $target.siblings('span').text().replace("version ", "");
-            $target.siblings('span').remove();
-            $target.siblings('.delete-version').remove();
-            $target.siblings('input').prop('type', 'text');
-            $target.siblings('input').prop('value', version);
-            $target.siblings('input').removeClass('version-checkbox').addClass('editVersionInput');
-            $target.text('Save');
-            $target.removeClass('edit-version').addClass('save-versionedit');
 
-            $('<button/>', {
-                'class': 'btn btn-default cancel-Editversion',
-                text: 'Cancel',
-            }).prependTo(parent);
+        let $target = $(this);
+        let version = $target.siblings('span').text().replace("version ", "");
+        $target.siblings('span').remove();
+        $target.siblings('.delete-version').remove();
+        $target.siblings('input').prop('type', 'text');
+        $target.siblings('input').prop('value', version);
+        $target.siblings('input').removeClass('version-checkbox').addClass('editVersionInput');
+        $target.text('Save');
+        $target.removeClass('edit-version').addClass('save-versionedit');
 
-            $('.save-versionedit').on('click', saveEditedVersion);
-            $('.cancel-Editversion').on('click', cancelEditVerion);
-        } else {
-            Notifier.createAlert(Notifier.createAlert({ containerId: '#alerts', title: '', message: 'Plese finish editing the previously version', status: 'warning' }));
-        }
-
-
+        $('.save-versionedit').on('click', saveEditedVersion);
 
     }
 
@@ -650,9 +577,10 @@ function documentationInit() {
         let target = $(this).parent();
         let id = target.attr('value');
         let data = new FormData();
+
         if ($versionInput.val() !== undefined && $versionInput.val().trim() !== "") {
-            if (Validator.isNumber($versionInput.val())) {
-                let version = parseFloat($versionInput.val());
+            if (Validator.isDecimalNumber($versionInput.val())) {
+                let version = $versionInput.val();
                 data.append('version', version);
                 data.append('id', id);
 
@@ -675,30 +603,21 @@ function documentationInit() {
         }
     }
 
-    function cancelEditVerion() {
-        let target = $(this).parent();
-        let id = target.attr('value');
-        target.remove();
-        Data.getJson({ url: "/sitetriks/documentation/GetSingleTopic?id=" + id }).then(function (res) {
-            $versionRow.append(res);
-        });
-    }
-
     function deleteVersion() {
         let target = $(this).parent();
-        let name = $(this).siblings('span').text()
         let id;
-        $('.dialog-ovelay').remove();
+
         if (target !== undefined) {
             if (target.attr('value') !== undefined) {
 
                 id = target.attr('value');
-                let title = 'Deleteing version';
-                let msg = `Are you sure you want to delete ${name}?`;
-                let selector = '.confirm';
-                let url = '/sitetriks/documentation/deleteVersion?id=';
-
-                confirm(title, msg, selector, url, id, target);
+                Data.postJson({ url: '/sitetriks/documentation/deleteVersion?id=' + id }).then(function (res) {
+                    if (res.success == true) {
+                        $(target).remove();
+                    } else {
+                        Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
+                    }
+                });
 
             }
 
@@ -707,66 +626,58 @@ function documentationInit() {
         }
     }
 
+
     //Topic Functions
     function createTopic() {
 
         $('.grid').remove();
-        let url = '/sitetriks/documentation/createtopicsview'
 
-        Data.getJson({ url: url }).then(function (res) {
-            $('.grid-container').append(res);
-            $('.cancel-topicType').on('click', cancelTopicCreate)
-            $('.save-topicType').on('click', saveTopic);
+        let $div = $('<div/>', {
+            'class': 'topicType',
         });
+        $('<lable>', {
+            text:"Name"
+        }).appendTo($div);
 
-       
+        $('<input/>', {
+            'class': "createTopicInput"
 
-       
+        }).appendTo($div);
 
+        $('<button/>', {
+            'class': 'btn btn-default save-topicType',
+            text: 'Save',
+        }).appendTo($div);
+
+        $('.grid-container').append($div);
+
+        $('.save-topicType').on('click', saveTopic);
 
     }
 
     function saveTopic() {
 
         let $topicInput = $('.createTopicInput');
-        let parent = $('.topic-parent').val();
-        let order = $('.topic-order').val();
-
         if ($topicInput.val() !== undefined && $topicInput.val().trim() !== "") {
-            let topic = $topicInput.val();
-            if (Validator.isNumber(order)) {
 
-                let data = new FormData();
-                data.append('topic', topic);
-                data.append('parent', parent);
-                data.append('order', order);
-                console.log(order);
-                Data.postForm({ url: '/sitetriks/documentation/createtopic', formData: data }).then(function (res) {
-                    if (res.success) {
-                        $('.topicType').remove();
-                        createGrid();
-                    } else {
-                        Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
-                    }
-                });
-            }
-            else {
-                Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'Order need to be a number', status: 'warning' })
-            }
+            let topic = $topicInput.val();
+            let data = new FormData();
+            data.append('topic', topic);
+            Data.postForm({ url: '/sitetriks/documentation/createtopic', formData: data }).then(function (res) {
+                if (res.success) {
+                    $('.topicType').remove();
+                    createGrid();
+                }
+            });
+
         } else {
             Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'The field you want to add is empty', status: 'danger' });
         }
     }
 
-    function cancelTopicCreate() {
-        let target = $(this).parent();
-        target.remove()
-        createGrid();
-    }
-
     function deleteTopic() {
         let id = $(this).attr('data-id');
-
+        console.log(id);
         if (id !== undefined) {
 
             Data.postJson({ url: '/sitetriks/documentation/deleteTopic?id=' + id }).then(function (res) {
@@ -787,18 +698,33 @@ function documentationInit() {
 
     function editTopic() {
         let id = $(this).attr('data-id');
-      
+        let $target = $(this).parent();
+        let topic = $target.siblings('.col-5').text();
+
         $('.grid').remove();
 
-
-        let url = `/sitetriks/documentation/edittopicsview?id=${id}`
-
-        Data.getJson({ url: url }).then(function (res) {
-            $('.grid-container').append(res);
-            $('.save-topicedit').on('click', saveEditedTopic);
-            $('.cancel-topicEdit').on('click', cancelTopicEdit);
+        let $div = $('<div/>', {
+            'class': 'editType',
+            value: id
         });
+         $('<lable>', {
+            text: 'Name'
+        }).appendTo($div);
        
+       $('<input/>', {
+            'class': "editTopicInput",
+            value: topic
+        }).appendTo($div);
+
+        
+      $('<button/>', {
+            'class': 'btn btn-default save-topicedit',
+           text: 'Save',
+       }).appendTo($div);
+
+        $('.grid-container').append($div);
+
+        $('.save-topicedit').on('click', saveEditedTopic);
 
     }
 
@@ -807,48 +733,35 @@ function documentationInit() {
         let target = $(this).parent();
         let id = target.attr('value');
         let data = new FormData();
-        let parent = $('.topic-parent').val();
-        let order = $('.topic-order').val();
-
 
         if ($topicInput.val() !== undefined && $topicInput.val().trim() !== "") {
-            if (Validator.isNumber(order)) {
-                let topic = $topicInput.val();
-                data.append('topic', topic);
-                data.append('id', id);
-                data.append('parent', parent);
-                data.append('order', order);
 
-                Data.postForm({ url: '/sitetriks/documentation/editTopic', formData: data }).then(function (res) {
-                    if (res.message == undefined) {
-                        $('.editType').remove();
-                        createGrid();
-                    } else {
-                        Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
-                    }
+            let topic = $topicInput.val();
+            data.append('topic', topic);
+            data.append('id', id);
 
-                    
-                });
-            } else {
-                Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'Order need to be a number', status: 'warning' })
-            }
+            Data.postForm({ url: '/sitetriks/documentation/editTopic', formData: data }).then(function (res) {
+                if (res.message == undefined) {
+                    $('.editType').remove();
+                    createGrid();
+                } else {
+                    Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
+                }
+
+
+            });
         } else {
             Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'The field you want to add is empty', status: 'danger' });
         }
     }
 
-    function cancelTopicEdit() {
-        let target = $(this).parent();
-        target.remove()
-        createGrid();
-    }
-
     //Content Functions
     function loadContent() {
-        $('.dialog-ovelay').remove()
+
         let versionIds = [];
         let selectedVersions = $('input:checkbox[class=version-checkbox]:checked');
         let selectedTopic = $('input:checkbox[class=st-grid-checkbox]:checked').attr('data-id');
+       
         GoogleAnalyticsSend(selectedTopic);
 
 
@@ -872,16 +785,16 @@ function documentationInit() {
                 Data.postForm({ url: '/sitetriks/documentation/content', formData: data }).then(function (res) {
                     $('.content-type').remove();
                     $contentContainer.append(res);
-
+                   
                     textEditor.init('#content-area');
                 });
 
             } else {
-                Notifier.createAlert({ containerId: '#alerts', title: '', message: "Please select a topic", status: 'warning' });
+                Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: "Please select a topic", status: 'danger' });
             }
 
         } else {
-            Notifier.createAlert({ containerId: '#alerts', title: '', message: "Please select a topic", status: 'warning' });
+            Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: "Please select a topic", status: 'danger' });
         }
 
     }
@@ -902,16 +815,13 @@ function documentationInit() {
                 data.append("topicId", topicId);
                 data.append("topicOrder", topicOrder);
                 data.append("versionIds", versionIds);
-                data.append("content", content);
+                data.append("content", content)
 
                 Data.postForm({ url: '/sitetriks/documentation/createContent', formData: data }).then(function (res) {
                     if (res.success) {
-                        $('#contentModal').modal();
-
-                    } else {
-                        Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
+                        window.location.href = window.location.href;
+                        Notifier.createAlert({ containerId: '#alerts', title: 'Success:', message: 'Successfuly created Documentation!', status: 'success' })
                     }
-
                 });
 
             } else {
@@ -940,9 +850,6 @@ function documentationInit() {
         docButton.removeClass('done').addClass('current');
 
         if (docButton.hasClass('current')) {
-            versionIds = []
-            versionNames = []
-            $('.versions-button').text("Versions");
             $typeContainer.css('display', 'block');
             versionButton.removeClass(['current', 'done']);
             topicButton.removeClass(['current', 'done']);
@@ -960,7 +867,7 @@ function documentationInit() {
 
     function toggleVersions() {
 
-
+      
         if (versionButton.hasClass('current')) {
             $typeContainer.css('display', 'none');
             $versionContainer.css('display', 'block');
@@ -975,11 +882,11 @@ function documentationInit() {
     }
 
     function toggleGrid() {
-        $('.dialog-ovelay').remove()
-        let versionCheckbox = versionIds;
+        let versionCheckbox = $('input:checkbox[class=version-checkbox]:checked');
+      
 
         if (versionCheckbox.length < 1) {
-            Notifier.createAlert({ containerId: '#alerts', title: '', message: 'Plese select at least one version', status: 'warning' });
+            Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: 'Plese select at least one version', status: 'danger' });
         } else {
             topicButton.removeClass('done').addClass('current');
             versionButton.removeClass('current').addClass('done');
@@ -991,20 +898,19 @@ function documentationInit() {
                 $('.topicType').remove();
                 $('.editType').remove();
             }
-            if ($('.grid').length < 1) {
-                createGrid();
-            }
         }
-
+        if ($('.grid').length < 1) {
+            createGrid();
+        }
 
     }
 
     function toggleContent() {
-
+        
         textEditor.removeAll();
 
         if (contentButton.hasClass('current')) {
-            $contentContainer.show();
+            $contentContainer.show(); 
             $('.grid-container').css('display', 'none');
         }
     }
@@ -1100,7 +1006,7 @@ function documentationInit() {
         if ($(this).prop('checked') == true) {
             $('.st-grid-checkbox').prop('checked', false);
             $(this).prop('checked', true);
-
+         
         } else {
             $('.st-grid-checkbox').prop('checked', false);
             $(this).prop('checked', false);
@@ -1109,40 +1015,6 @@ function documentationInit() {
 
     }
 
-    function confirm(title, msg, selector, url, id, target) {
-        var $content = "<div class='dialog-ovelay'>" +
-            "<div class='dialog'><header>" +
-            " <h3> " + title + " </h3> " +
-            "</header>" +
-            "<div class='dialog-msg'>" +
-            " <p> " + msg + " </p> " +
-            "</div>" +
-            "<footer>" +
-            "<div class='controls'>" +
-            " <button class='btn btn-success doAction'> YES </button> " +
-            " <button class='btn btn-danger cancelAction'> NO </button> " +
-            "</div>" +
-            "</footer>" +
-            "</div>" +
-            "</div>";
-
-        $(selector).prepend($content);
-        $('.doAction').click(function () {
-            if (target)
-                Data.postJson({ url: url + id }).then(function (res) {
-                    if (res.success == true) {
-                        $(target).remove();
-                    } else {
-                        Notifier.createAlert({ containerId: '#alerts', title: 'Error:', message: res.message, status: 'danger' });
-                    }
-                });
-            $('.dialog-ovelay').remove();
-
-        });
-        $('.cancelAction').click(function () {
-            $('.dialog-ovelay').remove();
-        });
-    }
 
     function bindEvents() {
 
@@ -1166,13 +1038,8 @@ function documentationInit() {
         $wrapper.on('click', '.edit-topic', editTopic);
 
         $wrapper.on('click', '.content-button', loadContent);
-        $contentContainer.on('click', '.create-content', createCotent)
+        $contentContainer.one('click', '.create-content', createCotent)
         $('.grid-container').on('change', 'input:checkbox[class=st-grid-checkbox]', gridSelect);
-
-        //Modal Buttons
-        $('.dashboard-button').on('click', function () { window.location = window.location.origin + '/sitetriks/' });
-        $('.contents-list').on('click', function () { window.location = window.location.origin + '/sitetriks/documentation/topiccontents' });
-        $('.add-another').on('click', function () { window.location.reload() })
     }
 }
 

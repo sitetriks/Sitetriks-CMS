@@ -16,8 +16,8 @@ import { FileHandler } from '../modules/file-handler.js';
 function blogDetails(id) {
     Comments.init(id, $('#comments-container'), 'blog-comment-area');
     WarningWindow.attach();
-	let element = document.querySelector('.comment-date');
-	element.textContent = DateConversion.convertUtcToLocal(element.getAttribute('data-original-date'));
+    let element = document.querySelector('.comment-date');
+    element.textContent = DateConversion.convertUtcToLocal(element.getAttribute('data-original-date'));
 }
 
 function blogForm() {
@@ -35,7 +35,7 @@ let Blog = (function () {
         let $modal = $('#file-upload-modal');
         let $container = $modal.find('.file-handler-wrapper');
         let fileHandler = FileHandler($container, ['Upload', 'Select', 'Selected'], '', mediator, logger, true);
-        
+
         //Classes and 
         let containerClass = '.blog-container';
         let createFormClass = '.blog-create-form';
@@ -58,13 +58,13 @@ let Blog = (function () {
             let flag = validateInput.apply($(this));
             ev.preventDefault();
 
-            if(flag) {                
+            if (flag) {
                 let form = ev.target;
                 logger.log(form);
-                
+
                 Loader.show(true);
-                
-                Data.postForm({ url: form.action, formData: new FormData(form) }).then(function(res) {
+
+                Data.postForm({ url: form.action, formData: new FormData(form) }).then(function (res) {
                     if (res.success) {
                         window.location.replace('/sitetriks/blog');
                     } else {
@@ -113,11 +113,11 @@ let Blog = (function () {
         let $modal = $('#file-upload-modal');
         let $container = $modal.find('.file-handler-wrapper');
         let fileHandler = FileHandler($container, ['Upload', 'Select', 'Selected'], '', mediator, logger, true);
-        
+
         //Classes and 
         let containerClass = '.blog-container';
         let editFormClass = '.blog-edit-form';
-       
+
         let $mainImageInput = $('#en-main-image');
 
         let validateInput = Validator.createFieldsValidation();
@@ -131,13 +131,13 @@ let Blog = (function () {
             let flag = validateInput.apply($(this));
             ev.preventDefault();
 
-            if(flag) {                
+            if (flag) {
                 let form = ev.target;
                 logger.log(form);
-                
+
                 Loader.show(true);
-                
-                Data.postForm({ url: form.action, formData: new FormData(form) }).then(function(res) {
+
+                Data.postForm({ url: form.action, formData: new FormData(form) }).then(function (res) {
                     if (res.success) {
                         window.location.replace('/sitetriks/blog');
                     } else {
@@ -181,7 +181,7 @@ let Blog = (function () {
     }
 
     function blogCommon(mediator, logger, $mainImageInput) {
-       
+
 
         function selectMainImage(ev) {
             mediator.dispatch('fileHandlerTypeChange', { type: 'single', requester: 'main-image' });
@@ -233,7 +233,7 @@ let Blog = (function () {
         return {
             selectMainImage,
             selectFiles,
-            createImageView, 
+            createImageView,
             removeImage
         }
     }

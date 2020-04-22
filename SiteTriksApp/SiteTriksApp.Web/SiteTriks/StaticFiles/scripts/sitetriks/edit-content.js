@@ -14,7 +14,7 @@ import { forumWidget } from '../widgets-helpers/forum-widget.js';
 
 export function editPageContent(url, currentLanguage, currentVersion, currentTemplate, w) {
 	// Layout handling
-    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-lg-preview.css`, 'css');
+	Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-lg-preview.css`, 'css');
 	$('.resolution').on('click', function (ev) {
 		let active = $('.selected-option').attr('data-type');
 		let $target = $(this);
@@ -29,12 +29,12 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 				$el.removeClass('selected');
 				let type = $el.attr('data-type');
 
-                Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
+				Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 			});
 
 			$target.addClass('selected');
 			let type = $target.attr('data-type');
-            Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
+			Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		}
 	});
 
@@ -76,7 +76,7 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 			$el.removeClass('selected');
 			let type = $el.attr('data-type');
 
-            Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
+			Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		});
 
 		$('.resolution[data-type="lg"]').trigger('click');
@@ -92,8 +92,8 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 		console.error('Layout was not found!');
 	}
 
-    //here
-    function saveLayout() {
+	//here
+	function saveLayout() {
 		let layoutWidget = w.getPageContent().find(c => c.placeholder === 'main' && c.type === 'layoutBuilder' && c.order === 0);
 		let layout = JSON.parse(layoutWidget.element);
 		let l = ModuleBuilder.getInstance('#preview-layout', ModuleBuilder.LAYOUT);
@@ -195,10 +195,10 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 				ModuleBuilder.setInstance('#preview-layout', ModuleBuilder.LAYOUT, layout.layoutRows);
 				document.getElementById('preview-layout').dispatchEvent(new CustomEvent('rebuildLayout', { detail: { l: layout.layoutRows } }));
 				mainMenuModule.setMenuOnChange();
-            }
-            allNewsWidget();
-            blogWidget();
-            forumWidget();
+			}
+			allNewsWidget();
+			blogWidget();
+			forumWidget();
 
 		}, Data.defaultError);
 	}
@@ -280,10 +280,10 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 
 		};
 
-        Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {    
+		Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
 			Utils.openInNewTab(res)
 			Loader.hide();
-            
+
 
 		}, Data.defaultError);
 	};
@@ -329,18 +329,18 @@ export function editPageContent(url, currentLanguage, currentVersion, currentTem
 				e.style.display = 'none';
 			}
 		});
-    });
+	});
 
-    let $widgetList = $('.widgets-list');
-    let $pageEditContent = $('.page-content-wrapper');
+	let $widgetList = $('.widgets-list');
+	let $pageEditContent = $('.page-content-wrapper');
 
-    $('.toggle-widget-container').on('click', function () {
+	$('.toggle-widget-container').on('click', function () {
 
-        let $arrows = $(this).children();
-        $arrows.toggle();
-        $widgetList.toggle("slide", { direction: "left" }, 300);
-        $pageEditContent.toggleClass('full-width');
-    })
+		let $arrows = $(this).children();
+		$arrows.toggle();
+		$widgetList.toggle("slide", { direction: "left" }, 300);
+		$pageEditContent.toggleClass('full-width');
+	})
 }
 
 export function revisionControl(url, type, $languages, $versions, $versionControl) {
@@ -433,7 +433,7 @@ export function initStickyWidgets() {
 
 export function editTemplateContent(url, currentLanguage, currentVersion, currentCulture, currentTemplate, w) {
 	// Layout handling
-    Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-lg-preview.css`, 'css');
+	Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-lg-preview.css`, 'css');
 	$('.resolution').on('click', function (ev) {
 		let active = $('.selected-option').attr('data-type');
 		let $target = $(this);
@@ -448,12 +448,12 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 				$el.removeClass('selected');
 				let type = $el.attr('data-type');
 
-                Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
+				Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 			});
 
 			$target.addClass('selected');
 			let type = $target.attr('data-type');
-            Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
+			Utils.loadjscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		}
 	});
 
@@ -491,7 +491,7 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 			$el.removeClass('selected');
 			let type = $el.attr('data-type');
 
-            Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
+			Utils.removejscssfile(`/SiteTriks/StaticFiles/css/scss/sitetriks/st-${type}-preview.css`, 'css');
 		});
 
 		$('.resolution[data-type="lg"]').trigger('click');
@@ -743,12 +743,12 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 			language: currentLanguage
 		};
 
-        return Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
-            
-        
-                Utils.openInNewTab(res);
-            Loader.hide();
-        }, Data.defaultError);
+		return Data.postJson({ url: '/sitetriks/Display/Preview', data: body }).then(function (res) {
+
+
+			Utils.openInNewTab(res);
+			Loader.hide();
+		}, Data.defaultError);
 	};
 
 	$('#btn-reset').on('click', updatePreview.bind(document, url));
@@ -766,7 +766,7 @@ export function editTemplateContent(url, currentLanguage, currentVersion, curren
 				e.style.display = 'none';
 			}
 		});
-    });
+	});
 
 }
 

@@ -174,7 +174,7 @@ var News = (function () {
                 $dateTimePicker.datetimepicker().val(' ');
             }
            
-            //Utils.populateUrl('#title', '#url', common.validateUrlOnChange);
+            Utils.populateUrl('#title', '#url', common.validateUrlOnChange);
           
         }, Data.defaultError);
 

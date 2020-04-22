@@ -240,13 +240,22 @@ export function navigation() {
                 let selectoption = $(option);
 
                 if (selectoption.is(':selected')) {
-                    if ($(($order).children()).attr('data-identifier') !== selectoption.val()) {
-                        $order.append(createSortablePage(selectoption.text(), selectoption.val()));
+                    let children = $('.ui-state-default');
+                    if (children.length > 0) {
+
+                        if (!$order.children(`li[data-identifier="${selectoption.val()}"]`).length) {
+                            $order.append(createSortablePage(selectoption.text(), selectoption.val()));
+                        }
+                    } else {
+                        $order.append(createSortablePage(selectoption.text(), selectoption.val()))
                     }
                 } else {
-                    if ($(($order).children()).attr('data-identifier') === selectoption.val()) {
-
-                        $order.children(`li[data-identifier="${selectoption.val()}"]`).remove();
+                    if ($('.ui-sortable').children().length > 0) {
+                        if ($('.ui-state-default').attr(`data-identifier`) === selectoption.val()) {
+                            $order.children(`li[data-identifier="${selectoption.val()}"]`).remove();
+                        } else {
+                            $order.children(`li[data-identifier="${selectoption.val()}"]`).remove();
+                        }
                     }
                 }
 
