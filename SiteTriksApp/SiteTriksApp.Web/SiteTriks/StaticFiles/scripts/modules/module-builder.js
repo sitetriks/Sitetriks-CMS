@@ -48,6 +48,7 @@ var ModuleBuilder = (function () {
     function initializeLayout(wrapperSelector, layout, resolutionsSelector, optionsSelector, resolutionValidation) {
         let $wrapper = $(wrapperSelector);
 
+		console.log('container new', layout);
         initLayout($wrapper, layout, $(resolutionsSelector), $(optionsSelector), resolutionValidation);
 
         instancesCache[wrapperSelector] = { 'layout-control': layout };
@@ -57,7 +58,7 @@ var ModuleBuilder = (function () {
     }
 
     function renderLayout(layout, $container, deletedPlaceholders, widgets) {
-        if (!$container || !$container.length) { return false; }
+		if (!$container || !$container.length) { return false; }
         for (let i = 0; i < (deletedPlaceholders || []).length; i += 1) {
             $container.find(`div[data-placeholder="${deletedPlaceholders[i]}"]`).remove();
             w.removeWidgetForPlaceholder(deletedPlaceholders[i], widgets);
@@ -73,16 +74,13 @@ var ModuleBuilder = (function () {
             $row.css({
                 'background-color': inlineStylesParsed.backgroundColorPicker,
                 'color': inlineStylesParsed.fontColorPicker,
-                'font-size': inlineStylesParsed.fontSize,
-                'margin': inlineStylesParsed.margin,
-                'padding': inlineStylesParsed.padding
-            })
+                'font-size': inlineStylesParsed.fontSize
+            } )
 
 
             for (let j = 0; j < layout[i].columns.length; j++) {
                 let col = layout[i].columns[j];
                 let cssClass = 'layout-preview-col';
-                let inlineStylesParsed = buildInlineStylesObject(col.properties.inlineStyles);
                 for (let key in col.resolutions) {
                     cssClass += ` col-${key}-${col.resolutions[key].size} st-col-${key}-${col.resolutions[key].size} st-col-${key}-offset-${col.resolutions[key].offset}  `;
                 }
@@ -91,36 +89,21 @@ var ModuleBuilder = (function () {
                     cssClass += ' ' + (col.properties.cssClass || '') + ' ';
                 }
 
-
-
                 let $col = $container.find(`div[data-placeholder="${col.properties.placeholder}"]`);
 
                 if ($col.length > 0) {
-                    $col.attr('class', cssClass + 'drop drop-layout connected-widget-container placeholder')
-                        .css({
-                            'background-color': inlineStylesParsed.backgroundColorPicker,
-                            'color': inlineStylesParsed.fontColorPicker,
-                            'font-size': inlineStylesParsed.fontSize,
-                            'margin': inlineStylesParsed.margin,
-                            'padding': inlineStylesParsed.padding
-                        })
+                    $col.attr('class', cssClass + 'drop drop-layout connected-widget-container placeholder');
                 } else {
                     $col = $('<div></div>', {
                         class: cssClass + 'drop drop-layout connected-widget-container placeholder',
                         'data-placeholder': col.properties.placeholder
-                    }).css({
-                        'background-color': inlineStylesParsed.backgroundColorPicker,
-                        'color': inlineStylesParsed.fontColorPicker,
-                        'font-size': inlineStylesParsed.fontSize,
-                        'margin': inlineStylesParsed.margin,
-                        'padding': inlineStylesParsed.padding
                     }).appendTo($row);
                 }
             }
 
             if (!isExistingRow) {
                 $row.appendTo($container);
-                // addColorEditOption($row);
+               // addColorEditOption($row);
             }
         }
     }
@@ -137,8 +120,6 @@ var ModuleBuilder = (function () {
             backgroundColorPicker: typeof (stylesArray[0]) !== 'undefined' ? (stylesArray[0].split(':'))[1] : "",
             fontColorPicker: typeof (stylesArray[1]) !== 'undefined' ? (stylesArray[1].split(':'))[1] : "",
             fontSize: typeof (stylesArray[2]) !== 'undefined' ? (stylesArray[2].split(':'))[1] : "",
-            margin: typeof (stylesArray[3]) !== 'undefined' ? (stylesArray[3].split(':'))[1] : "",
-            padding: typeof (stylesArray[4]) !== 'undefined' ? (stylesArray[4].split(':'))[1] : "",
         }
 
         // return the object

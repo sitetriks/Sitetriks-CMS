@@ -296,7 +296,7 @@ export function video({ mediator, logger }) {
                     urls = [];
                     $('#video-widget-config').find('.video-url').each((_, e) => { urls.push(e.innerText); });
                     values = $('.default-video-url').val() + ';' + urls.join(';');
-                  //  values = parseYoutubeVideosList(urls).join(';');
+                    //  values = parseYoutubeVideosList(urls).join(';');
                     break;
 
                 default:
@@ -334,8 +334,8 @@ export function video({ mediator, logger }) {
                         values = 'missing default url';
                     } else {
 
-                    values = $('.default-video-url').val() + ';' + urls.join(';');
-                    $('#video-name').val(values);
+                        values = $('.default-video-url').val() + ';' + urls.join(';');
+                        $('#video-name').val(values);
                     }
                     break;
 
@@ -353,7 +353,7 @@ export function video({ mediator, logger }) {
             }
 
             if (values === 'missing default url') {
-                return {isValid: false, message : 'Missing default video Id!' }
+                return { isValid: false, message: 'Missing default video Id!' }
             }
 
             return { isValid: true };

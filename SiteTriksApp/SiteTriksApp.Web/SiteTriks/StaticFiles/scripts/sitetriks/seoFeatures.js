@@ -5,12 +5,12 @@ let SeoFeatures = (function () {
     //Main
     let seoFeaturesContainerClass = '.seoFeaturesContainer';
     let seoMainInputClass = '.seo-main-input';
-    
+
     //OpenGraph
     let openGraphContainerClass = '.open-graph-container';
     let openGraphInputClass = '.open-graph-input';
 
-    
+
     //Twitter
     let twitterContainerClass = '.twitter-container';
     let twitterInputClass = '.twitter-input';
@@ -27,16 +27,16 @@ let SeoFeatures = (function () {
 
 
     function init(parentId) {
-        Data.getJson({url: getUrl + parentId}).then(function(res) {
+        Data.getJson({ url: getUrl + parentId }).then(function (res) {
             console.log('initRes', res);
-            if(res.success) {
+            if (res.success) {
                 $(seoFeaturesContainerClass).find(`input[data-for="title"]`).val(res.seoFeature.title);
                 $(seoFeaturesContainerClass).find(`input[data-for="metadata"]`).val(res.seoFeature.metadata);
                 $(seoFeaturesContainerClass).find(`#seo-words`).val(res.seoFeature.seoKeywords);
                 $(seoFeaturesContainerClass).find(`input[data-for="canonicalUrl"]`).val(res.seoFeature.canonicalUrl);
 
                 $(openGraphContainerClass).find(`input[data-for="title"]`).val(res.seoFeature.openGraphTitle);
-                 $(openGraphContainerClass).find(`textarea[data-for="description"]`).text(res.seoFeature.openGraphDescription);
+                $(openGraphContainerClass).find(`textarea[data-for="description"]`).text(res.seoFeature.openGraphDescription);
                 $(openGraphContainerClass).find(`input[data-for="image"]`).val(res.seoFeature.openGraphImage);
 
                 $(twitterContainerClass).find(cardTypeSelector).val(res.seoFeature.twitterCard);

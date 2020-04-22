@@ -1,6 +1,7 @@
 import { Data } from '../common/data.js';
 import { Notifier } from '../common/notifier.js';
 import { loadHandlebarsTemplates } from '../common/handlebars.js';
+import { Loader } from '../common/loader.js';
 
 export function createSiteSyncCore(siteSyncModel) {
     let getDisplayNamesUrl;
@@ -9,7 +10,7 @@ export function createSiteSyncCore(siteSyncModel) {
     let $historyContainer = $('.history-content-results');
     let targetDomain = $('#targets-select').val();
     let templatesCache = {};
-    let templates = [{ name: 'sitesync-source', url: '/SiteTriks/StaticFiles/templates/sitesync-source.html' }, { name: 'sitesync-destination', url: '/templates/sitesync-destination.html' }, { name: 'sitesync-staged', url: '/templates/sitesync-staged.html' }, { name: 'sitesync-history', url: '/templates/sitesync-history.html' }, { name: 'sitesync-source-listed', url: '/templates/sitesync-source-listed.html' }, { name: 'sitesync-destination-listed', url: '/templates/sitesync-destination-listed.html' }];
+    let templates = [{ name: 'sitesync-source', url: '/SiteTriks/StaticFiles/templates/sitesync-source.html' }, { name: 'sitesync-destination', url: '/SiteTriks/StaticFiles/templates/sitesync-destination.html' }, { name: 'sitesync-staged', url: '/SiteTriks/StaticFiles/templates/sitesync-staged.html' }, { name: 'sitesync-history', url: '/SiteTriks/StaticFiles/templates/sitesync-history.html' }, { name: 'sitesync-source-listed', url: '/SiteTriks/StaticFiles/templates/sitesync-source-listed.html' }, { name: 'sitesync-destination-listed', url: '/SiteTriks/StaticFiles/templates/sitesync-destination-listed.html' }];
 
     loadHandlebarsTemplates(templatesCache, templates).then(() => {
         //   console.log(templatesCache);
@@ -26,7 +27,7 @@ export function createSiteSyncCore(siteSyncModel) {
     /* Staged container related functions*/
 
     function addElementToSyncData(displayName, id, title) {
-      //  console.log(siteSyncContainersData.stagedItems);
+        //  console.log(siteSyncContainersData.stagedItems);
         if (!([`${displayName}`] in siteSyncContainersData.stagedItems)) {
             siteSyncContainersData.stagedItems[`${displayName}`] = [{ id: id, title: title }] || [];
         }
@@ -59,7 +60,7 @@ export function createSiteSyncCore(siteSyncModel) {
     function removeCategoryFromStaged(displayName) {
         siteSyncContainersData.stagedItems[displayName] = [];
         delete siteSyncContainersData.stagedItems[`${displayName}`];
-       // console.log(siteSyncContainersData);
+        // console.log(siteSyncContainersData);
 
     }
 
@@ -179,13 +180,13 @@ export function createSiteSyncCore(siteSyncModel) {
     function getDataByDisplayName(displayName) {
         var currDomain = getCurrentSelectedSite();
         var url = `?displayName=${displayName}&domain=${currDomain}`;
-   //     $(`#source-${displayName}-content`).html('Loading ...');
+        //     $(`#source-${displayName}-content`).html('Loading ...');
 
         return getDisplayNameForCurrentDomain(displayName, getByDisplayNameUrl + url, siteSyncContainersData.sourceData).then((res) => {
 
             let sourceItemsHtml = templatesCache['sitesync-source-listed']({ items: siteSyncContainersData.sourceData[`${displayName}`] });
             $(`#source-${displayName}-content`).html(sourceItemsHtml);
-          //  console.log(siteSyncContainersData);
+            //  console.log(siteSyncContainersData);
         });
 
     }
@@ -208,6 +209,7 @@ export function createSiteSyncCore(siteSyncModel) {
             if (!res || !res.success) {
                 console.error(res);
                 return Promise.reject();
+                Loader.hide()
             }
 
             elementToStore[`${displayName}`] = res.siteSyncItems || [];
@@ -223,7 +225,7 @@ export function createSiteSyncCore(siteSyncModel) {
         return Data.getJson({ url: url }).then((res) => {
             if (res.success) {
                 items = res.siteSyncItems;
-             //   console.log(items);
+                //   console.log(items);
             }
 
             if (items.length > 0) {
@@ -233,7 +235,10 @@ export function createSiteSyncCore(siteSyncModel) {
                     addElementToSyncData(displayName, item.id, item.title);
                 });
             }
+
+
             return res.siteSyncItems;
+
         });
     }
 
@@ -263,21 +268,11 @@ export function createSiteSyncCore(siteSyncModel) {
             status = 0;
             return status;
         } else if ($($dependencies[0]).prop('checked') === true) {
-            Notifier.createAlert({
-                containerId: '#alerts',
-                message: 'Your items are being synced with their related dependencies.',
-                status: 'success',
-                seconds: 5
-            });
+
             status = 1;
             return status;
         } else if ($($dependencies[1]).prop('checked') === true) {
-            Notifier.createAlert({
-                containerId: '#alerts',
-                message: 'Your items are being synced without their related dependencies.',
-                status: 'success',
-                seconds: 5
-            });
+
             status = 2;
             return status;
         }

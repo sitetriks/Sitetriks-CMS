@@ -4,6 +4,7 @@ import { Data } from '../common/data.js';
 import { Notifier } from '../common/notifier.js';
 import { createSiteSyncModel } from './sitesync-model.js';
 import { createSiteSyncCore } from './sitesync-core';
+import { Loader } from '../common/loader.js';
 
 window.siteSyncModule = (function () {
     function init(connectToTargetUrl, postSyncUrl, getDisplayNamesUrl, getByDisplayNameUrl, getByDisplayNameTargetUrl) {
@@ -135,6 +136,7 @@ window.siteSyncModule = (function () {
             let $popup = $('.delete-popup');
 
             $popup.css('display', 'none');
+            location.reload();
         }
 
         function displaySyncedFiles() {
@@ -161,13 +163,6 @@ window.siteSyncModule = (function () {
                     $('#connect-target').addClass('grayed-out');
                     status = 'success';
                 }
-
-                Notifier.createAlert({
-                    containerId: '#alerts',
-                    message: res.message,
-                    seconds: 5,
-                    status: status
-                });
             });
         }
 
@@ -205,6 +200,7 @@ window.siteSyncModule = (function () {
         function onClickSourceContainerDisplayName() {
             let mainContainer = $(this);
             var displayName = $(this).attr('data-displayName');
+            Loader.show();
 
             siteSyncCore.getDataByDisplayName(displayName).then(function () {
                 let content = mainContainer.next();
@@ -212,7 +208,9 @@ window.siteSyncModule = (function () {
                 });
                 var $fas = mainContainer.find('.fa');
                 $fas.toggle();
+                Loader.hide();
             })
+
 
         }
 
@@ -304,6 +302,12 @@ window.siteSyncModule = (function () {
             }).then(function (res) {
                 deselectAllItems();
                 $siteSyncButton.removeClass('grayed-out');
+                Notifier.createAlert({
+                    containerId: '#alerts',
+                    message: "Please, note that depending on size, the files may require additional time to get transferred.In order to see an update of the destination target, you need to reselect the file",
+                    seconds: 20,
+                    status: 'warning'
+                });
             });
         }
 
@@ -349,12 +353,6 @@ window.siteSyncModule = (function () {
                 data: data
             }).then((res) => {
                 if (res.success) {
-                    Notifier.createAlert({
-                        containerId: '#alerts',
-                        message: res.message,
-                        seconds: 10,
-                        status: 'success'
-                    });
                     $('.edit-target-form').css('display', 'none');
                 } else {
                     Notifier.createAlert({
@@ -406,7 +404,7 @@ window.siteSyncModule = (function () {
 
                     Notifier.createAlert({
                         containerId: '#alerts',
-                        message: res.message,
+                        message: 'The Site Sync target has been created successfully',
                         seconds: 10,
                         status: 'success'
                     });
@@ -442,7 +440,7 @@ window.siteSyncModule = (function () {
 
             $('.btn-no').on('click', closeDeleteMessage);
 
-      //      $('#history-button').on('click', displayHistoryContainer);
+            //      $('#history-button').on('click', displayHistoryContainer);
 
             $('.history-data').on('click', '.details', displaySyncedFiles);
 

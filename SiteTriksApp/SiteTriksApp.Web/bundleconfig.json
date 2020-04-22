@@ -15,12 +15,13 @@
       "wwwroot/css/site.css",
       "wwwroot/lib/custom/slick/slick.css",
       "wwwroot/lib/custom/slick/slick-theme.css",
-      //"wwwroot/css/multi-level-dropdown.css",
+      "wwwroot/css/toggle-menu.css",
+      "wwwroot/css/multi-level-dropdown.css",
       "wwwroot/css/front-end.css",
-      //"wwwroot/css/home-page.css",
-      //"wwwroot/css/extensions.css",
+      "wwwroot/css/home-page.css",
+      "wwwroot/css/extensions.css",
       "wwwroot/lib/custom/jquery-ui/jquery-ui.css",
-      "wwwroot/lib/custom/font-awesome/font-awesome.min.css",
+      "wwwroot/lib/custom/tinymce/plugins/codesample/css/prism.css",
       "wwwroot/fonts/navigation-icons/css/Glyphter.css"
     ]
   },
@@ -44,6 +45,11 @@
       "wwwroot/lib/jquery/dist/jquery.min.js",
       "wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
       "wwwroot/lib/custom/jquery-ui/jquery-ui-1.10.4.js",
+      "wwwroot/lib/custom",
+
+      "wwwroot/lib/custom/tinymce/plugins/codesample/prism.js",
+      "wwwroot/lib/custom/nicescroll/dist/jquery.nicescroll.min.js",
+
       "scripts_babel/data.js",
       "scripts_babel/loader.js",
       "scripts_babel/validation.js",

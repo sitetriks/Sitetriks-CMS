@@ -77,6 +77,7 @@
 
     a:hover {
         text-decoration: none;
+        color: #d4d4d4 !important;
     }
 
     #btn-preview-page {
@@ -169,9 +170,9 @@
         }
     }
 
-    .dropdown-menu{
-        li:hover{
-            background-color:#D8D8D8;
+    .dropdown-menu {
+        li:hover {
+            background-color: #D8D8D8;
         }
     }
 }

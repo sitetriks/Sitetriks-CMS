@@ -4,49 +4,24 @@
     Layout = "_Layout";
 }
 
-@* Overwrite the wrapper navigation from the Layout leaving just the logo link *@
+<div class="backend-wrapper" style="margin-top: 84px">
+    <h1 class="text-danger">Page can not be found.</h1>
+    @*<h2 class="text-danger"></h2>*@
 
-<div class="navigation">
-    <div class="navigation-bar sitetriks-wrapper">
-        <div class="row">
-            <div class="col-md-2 col-sm-2 nav-col">
-                <div class="nav-logo">
-                    <a href="/sitetriks">
-                        <img src="~/SiteTriks/StaticFiles/images/LOGOBE.svg" />
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-7 col-sm-7 nav-col">
-                <div class="navbar-collapse collapse row">
-                    <div class="offset-md-1 offset-sm-1 nav-col">
+    @*@if (Model.ShowRequestId)
+        {
+            <p>
+                <strong>Request ID:</strong> <code>@Model.RequestId</code>
+            </p>
+        }
 
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-3 nav-col">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="backend-wrapper">
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
-
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
+        <h3>Development Mode</h3>
+        <p>
+            Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+        </p>
+        <p>
+            <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
+        </p>*@
 </div>
 
 

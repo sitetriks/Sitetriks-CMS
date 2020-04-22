@@ -130,6 +130,7 @@ export function createPage(validateUrlUrl) {
 
 	$('.btn-save-and-content').on('click', function (ev) {
 
+		console.log("hi");
 		$('#create-page-form').removeAttr('data-exit');
 		$('#create-page-form').attr('data-content', true);
 		$('#create-page-form').submit();
@@ -221,7 +222,7 @@ export function createPage(validateUrlUrl) {
 							if (saveAndContent) {
 								window.location.replace('/sitetriks/pages/editcontent?url=' + url);
 							}
-							
+
 						} else {
 							$notfier.text(res.message);
 							Loader.hide();
@@ -266,12 +267,6 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 	WarningWindow.attach();
 	Multiselect.SetupElement($('.multiselect-roles'));
 	SeoFeatures.init(pageId);
-
-	$('#PageViewModel_PageTemplateMetaId').on('change', function () {
-		
-		Notifier.createAlert({ containerId: '#alerts', title: 'Warning:', message: 'Changing the Template will result in changing all your current content', status: 'warning' });
-	});
-
 
 	Data.getJson({ url: '/SiteTriks/StaticFiles/templates/page-multilingual.html' }).then(function (res) {
 		for (var key in mlf) {
@@ -364,7 +359,7 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 		console.log($target);
 		if ($target.length > 0) {
 			$counter.text('Characters:' + $target.length);
-		} 
+		}
 	}
 
 	var $urlField = $('#url');
@@ -419,7 +414,7 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 		$('#edit-page-form').submit();
 	});
 
-	$('.btn-save-li').on('click', function (ev) {		
+	$('.btn-save-li').on('click', function (ev) {
 
 		$('#edit-page-form').removeAttr('data-exit');
 		$('#edit-page-form').removeAttr('data-new');
@@ -586,8 +581,6 @@ export function editPage(validateUrlUrl, mlf, pageId, mlfUrl, initialUrl) {
 		evt.preventDefault();
 		return false;
 	});
-
-	
 }
 
 window.createPage = createPage;

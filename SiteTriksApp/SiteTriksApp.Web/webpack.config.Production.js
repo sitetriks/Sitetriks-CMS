@@ -1,4 +1,4 @@
-﻿const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+﻿const TerserPlugin = require('terser-webpack-plugin');
 const config = require('./webpack.config');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -11,23 +11,24 @@ module.exports = {
     module: config.module,
     optimization: {
         minimizer: [
-            new UglifyJsPlugin({
+            new TerserPlugin({
                 cache: true,
                 parallel: true,
-                uglifyOptions: {
+                terserOptions: {
                     compress: false,
                     ecma: 6,
                     mangle: true
                 },
                 sourceMap: false,
-                uglifyOptions: {
+                terserOptions: {
                     output: {
                         comments: false
                     }
                 }
             }),
             new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: { discardComments: { removeAll: true } },
+                cssProcessor: require('cssnano'),
+                cssProcessorPluginOptions: ['default', { discardComments: { removeAll: true } }],
                 canPrint: true
             })
         ]

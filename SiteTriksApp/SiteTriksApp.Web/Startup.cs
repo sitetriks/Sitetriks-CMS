@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using SiteTriks.Data.Models.Users;
 using SiteTriks.Extensions;
@@ -25,9 +26,9 @@ namespace SiteTriksApp.Web
         {
             this._config = configuration;
             this._env = environment;
+        }      
 
-        }
-
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<IISOptions>(options =>
@@ -35,7 +36,7 @@ namespace SiteTriksApp.Web
                 options.ForwardClientCertificate = false;
             });
 
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(options => options.EnableEndpointRouting = false).AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.Configure<RouteOptions>(options =>
             {
@@ -69,13 +70,9 @@ namespace SiteTriksApp.Web
             {
                 options.LoginPath = new PathString("/sitetriks/login/");
                 options.ExpireTimeSpan = TimeSpan.FromHours(4);
-
             });
 
             services.AddGZipConpression();
-
-            //HTML Minifier;
-            //services.WebMarkUpMinSiteTriksConfiguration();
 
             services.AddSignalR(options =>
             {
@@ -108,16 +105,26 @@ namespace SiteTriksApp.Web
         {
             if (this._env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
                 app.UseHsts();
             }
 
+            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "Assets")),
+                RequestPath = "/Assets"
+            });
+
             app.UseHttpsRedirection();
-            app.UseSiteTriks(this._env, this._config);
+            app.UseSiteTriks(this._env, this._config);            
 
             app.UseSession();
 

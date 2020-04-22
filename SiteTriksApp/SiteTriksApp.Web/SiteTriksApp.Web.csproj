@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-SiteTriksApp.Web-F71A9A06-9896-4C70-BC66-76DAE646A823</UserSecretsId>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
-    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
+
   <ItemGroup>
     <Content Include="SiteTriks\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -15,7 +16,26 @@
     <Content Include="Views\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>  
+    <Content Include="wwwroot\templates\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.Production.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\sitemap.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.Production.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Controllers\**" />
     <Compile Remove="Extensions\**" />
@@ -29,70 +49,81 @@
     <None Remove="Controllers\**" />
     <None Remove="Extensions\**" />
     <None Remove="logs\**" />
-  </ItemGroup>  
+  </ItemGroup>
+
   <ItemGroup>
-    <None Remove="SiteTriks\StaticFiles\scripts\modules\widgets-helper.js" />
-    <None Remove="SiteTriks\StaticFiles\scripts\sitetriks\seoFeatures.js" />
-    <None Remove="SiteTriks\StaticFiles\scripts\widgets-helpers\blog-full-page-widget.js" />
-    <None Remove="SiteTriks\StaticFiles\scripts\widgets-helpers\single-blog-widget.js" />
-    <None Remove="SiteTriks\StaticFiles\scripts\widgets\singleBlog.widget.js" />
-  </ItemGroup>  
+    <None Remove="Assets\fonts\Avenir.ttc" />
+    <None Remove="Assets\scripts\website\contact-us-template.js" />
+    <None Remove="Assets\scripts\website\stw-hp-custom.js" />
+    <None Remove="Assets\scripts\website\stw-navigation-widget.js" />
+    <None Remove="Assets\scripts\website\stw-subscription-widget.js" />
+    <None Remove="Assets\scripts\website\stw-support.js" />
+    <None Remove="Assets\scripts\website\widget-presentation-menu.js" />
+    <None Remove="SiteTriks\Configurations\captcha.config.json" />
+    <None Remove="SiteTriks\StaticFiles\scripts\widgets-helpers\license-application.js" />
+    <None Remove="SiteTriks\StaticFiles\styles\website\_stw-support-form.scss" />
+    <None Remove="SiteTriks\StaticFiles\styles\website\_timeline.scss" />
+    <None Remove="SiteTriks\StaticFiles\templates\stw-navigation\community-and-partners.html" />
+    <None Remove="SiteTriks\StaticFiles\templates\stw-navigation\contact-us.html" />
+    <None Remove="SiteTriks\StaticFiles\templates\stw-navigation\products-and-licenses.html" />
+    <None Remove="SiteTriks\StaticFiles\templates\stw-navigation\resources.html" />
+    <None Remove="SiteTriks\StaticFiles\templates\stw-navigation\services.html" />
+    <None Remove="SiteTriks\StaticFiles\templates\stw-navigation\try-now.html" />
+    <None Remove="Views\Shared\Components\LicenseApplicationWidget\Default.cshtml" />
+  </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
-    <!-- <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" /> -->
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
-    <PackageReference Include="SiteTriks" Version="3.0.4" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
+    <!--<PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />-->
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="19.2.0" />
+    <PackageReference Include="SiteTriks" Version="3.0.6" />
+    <!--<PackageReference Include="SiteTriks" Version="2.2.10" />-->
+    <PackageReference Include="SiteTriks.BlogModule" Version="3.0.6" />
+    <!--<PackageReference Include="SiteTriks.BlogModule" Version="2.2.5.1" />-->
+    <PackageReference Include="SiteTriks.DocumentationModule" Version="3.0.6" />
+    <PackageReference Include="SiteTriks.ErrorPagesModule" Version="3.0.6" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="3.0.6" />
+    <PackageReference Include="SiteTriks.SiteMapModule" Version="3.0.6" />
+    <PackageReference Include="SiteTriks.SiteSync" Version="3.0.6" />
+    <!--<PackageReference Include="SiteTriks.SiteSync" Version="2.2.1" />-->
+    
   </ItemGroup>
-  <ItemGroup>
+
+  <!--<ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
-  </ItemGroup>  
+  </ItemGroup>-->
+
   <ItemGroup>
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\AbortController.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\browser-index.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Errors.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HandshakeProtocol.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HttpClient.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HttpConnection.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HubConnection.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\HubConnectionBuilder.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\IConnection.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\IHttpConnectionOptions.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\IHubProtocol.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\ILogger.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\index.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\ITransport.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\JsonHubProtocol.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Loggers.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\LongPollingTransport.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\ServerSentEventsTransport.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Stream.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\TextMessageFormat.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\Utils.d.ts" />
-    <TypeScriptCompile Include="SiteTriks\StaticFiles\lib\signalr\dist\esm\WebSocketTransport.d.ts" />
+    <Folder Include="Views\Shared\Components\NavigationWidget\" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Update="appsettings.Production.json">
+    <None Update="Properties\launchSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+
+  <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="echo &quot;App Offline&quot; /a &gt; $(ProjectDir)app_offline.htm" />
   </Target>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="del $(ProjectDir)app_offline.htm" />
-  </Target>
+  </Target>-->
 </Project>

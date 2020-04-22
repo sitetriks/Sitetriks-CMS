@@ -38,6 +38,8 @@ body, html {
 
     .btn, .dropdown-menu {
         font-size: 1.3rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 }
 
@@ -84,7 +86,6 @@ a:hover {
 
     .btn-danger {
         padding: 4px 7px;
-        font-size: 16px;
     }
 
     .btn-delete-field {
