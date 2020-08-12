@@ -22,7 +22,7 @@
     "mixin-deep": "^2.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "popper.js": "^1.16.1",
-    "serialize-javascript": "^3.0.0",
+    "serialize-javascript": "^3.1.0",
     "set-value": "^3.0.1",
     "slick-carousel": "^1.8.1",
     "terser-webpack-plugin": "^2.3.5"
