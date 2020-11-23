@@ -89,14 +89,14 @@
     </PackageReference>
     <!--<PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />-->
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
-    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="19.2.0" />
-    <PackageReference Include="SiteTriks" Version="3.0.6" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="20.1.0" />
+    <PackageReference Include="SiteTriks" Version="3.0.6.1" />
     <!--<PackageReference Include="SiteTriks" Version="2.2.10" />-->
     <PackageReference Include="SiteTriks.BlogModule" Version="3.0.6" />
     <!--<PackageReference Include="SiteTriks.BlogModule" Version="2.2.5.1" />-->
     <PackageReference Include="SiteTriks.DocumentationModule" Version="3.0.6" />
     <PackageReference Include="SiteTriks.ErrorPagesModule" Version="3.0.6" />
-    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="3.0.6" />
+    <PackageReference Include="SiteTriks.MarketingEmailModule" Version="3.0.6.1" />
     <PackageReference Include="SiteTriks.SiteMapModule" Version="3.0.6" />
     <PackageReference Include="SiteTriks.SiteSync" Version="3.0.6" />
     <!--<PackageReference Include="SiteTriks.SiteSync" Version="2.2.1" />-->
