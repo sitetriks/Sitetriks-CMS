@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
-    "ajv": "^6.12.0",
+    "ajv": "^6.12.3",
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "bootstrap-toggle": "^2.2.2",
