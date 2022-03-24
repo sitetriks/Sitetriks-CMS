@@ -18,7 +18,7 @@
     "jquery-ui": "^1.12.1",
     "kind-of": "^6.0.3",
     "lodash": "^4.17.20",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mixin-deep": "^2.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "popper.js": "^1.16.1",
